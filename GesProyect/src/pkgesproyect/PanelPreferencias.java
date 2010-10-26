@@ -1,8 +1,8 @@
 package pkgesproyect;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-
 import javax.swing.*;
+//Creamos un panel con varios objetos para demostracion
 public class PanelPreferencias extends JPanel {
 	JButton Boton1 = new JButton("Boton 1");
 	JProgressBar jpb = new JProgressBar();
