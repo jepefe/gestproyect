@@ -1,6 +1,14 @@
 package pkgesproyect;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.*;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+
+
 import javax.swing.*;
 //Creamos un panel con varios objetos para demostracion
 public class PanelPreferencias extends JPanel {
@@ -25,6 +33,25 @@ public class PanelPreferencias extends JPanel {
 		this.add(jcb2);
 		this.add(jcb3);
 		this.add(jrb);
+		// Prueba con la base de datos 
+		try {
+			MysqlDataSource dataSource = new MysqlDataSource();
+			dataSource.setUser("gesproyect");
+			dataSource.setPassword("proyecto2010");
+			dataSource.setDatabaseName("gesproyect");
+			dataSource.setServerName("93.189.94.177");
+			Connection conexion = dataSource.getConnection ();
+			Statement s = conexion.createStatement(); 
+			ResultSet rs = s.executeQuery ("select * from pedidos");
+			while (rs.next()) 
+			{ 
+			    System.out.println (rs.getInt (1) + " " + rs.getInt (2)+ " " + rs.getInt(3) + " " + rs.getDate(4) + " " + rs.getInt (5)+ " " + rs.getInt(6) ); 
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		
 	}
