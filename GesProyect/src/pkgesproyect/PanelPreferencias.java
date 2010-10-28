@@ -11,7 +11,7 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import javax.swing.*;
 //Creamos un panel con varios objetos para demostracion
-public class PanelPreferencias extends JPanel {
+public class PanelPreferencias extends JLayeredPane {
 	JButton Boton1 = new JButton("Boton 1");
 	JProgressBar jpb = new JProgressBar();
 	JProgressBar jpb2 = new JProgressBar();	
@@ -20,6 +20,7 @@ public class PanelPreferencias extends JPanel {
 	JCheckBox jcb3 = new JCheckBox("Casilla 3");
 	JRadioButton jrb = new JRadioButton("Hola!!");
 	public PanelPreferencias(){
+		this.setOpaque(true);
 		this.setLayout(new FlowLayout());
 		this.add(jpb);
 		jpb.setMinimum(0);
@@ -33,6 +34,7 @@ public class PanelPreferencias extends JPanel {
 		this.add(jcb2);
 		this.add(jcb3);
 		this.add(jrb);
+		this.add(new panelLogin());
 		// Prueba con la base de datos 
 		try {
 			MysqlDataSource dataSource = new MysqlDataSource();
