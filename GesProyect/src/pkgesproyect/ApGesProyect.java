@@ -13,6 +13,6 @@ public class ApGesProyect {
 			} catch (UnsupportedLookAndFeelException ex) {
 			
 			}
-		frmppal ppal = new frmppal("GesProyect", 40,80,800,600);
+		frmppal ppal = new frmppal("GesProyect", 40,80,640,480);
 	}
 }

@@ -6,6 +6,7 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 import java.awt.*;
+
 import com.seaglasslookandfeel.SeaGlassLookAndFeel;
 import com.seaglasslookandfeel.ui.SeaGlassRootPaneUI;
 
@@ -19,9 +20,15 @@ public class frmppal extends JFrame{
 //Creamos un array en el que introducimos los iconos
 		
 	ImageIcon[] icpref = { 
-				new ImageIcon(ApGesProyect.class.getResource("imagenes/preferencias3.png")),
+				new ImageIcon(ApGesProyect.class.getResource("imagenes/preferencias.png")),
 				new ImageIcon(ApGesProyect.class.getResource("imagenes/informes.png")),
 				new ImageIcon(ApGesProyect.class.getResource("imagenes/usuarios.png")),
+				new ImageIcon(ApGesProyect.class.getResource("imagenes/pincel.png")),
+				new ImageIcon(ApGesProyect.class.getResource("imagenes/tampon.png")),
+				new ImageIcon(ApGesProyect.class.getResource("imagenes/informacion.png")),
+				new ImageIcon(ApGesProyect.class.getResource("imagenes/pizarra.png")),
+				new ImageIcon(ApGesProyect.class.getResource("imagenes/folio.png")),
+				new ImageIcon(ApGesProyect.class.getResource("imagenes/bandera.png")),
 				
 		};
 	//Constructor
@@ -30,21 +37,38 @@ public class frmppal extends JFrame{
 		super(titulo);
 		this.getRootPane().putClientProperty(SeaGlassRootPaneUI.UNIFIED_TOOLBAR_LOOK, Boolean.TRUE);
 		
-		
+	
 		JButton jb = new JButton();
-		JButton jb2 = new JButton("Usuarios",icpref[0]);
+		JButton jb2 = new JButton(icpref[0]);
+		JButton jb3 = new JButton(icpref[2]);
+		JButton jb4 = new JButton(icpref[3]);
+		JButton jb5 = new JButton(icpref[4]);
+		JButton jb6 = new JButton(icpref[5]);
+		JButton jb7 = new JButton(icpref[6]);
+		JButton jb8 = new JButton(icpref[7]);
+		JButton jb9 = new JButton(icpref[8]);
+		
+		
 		this.setBounds(x,y,ancho,alto);
 		JTabbedPane jtp = new JTabbedPane();
 		JToolBar jmb = new JToolBar();
 		jb2.setVerticalTextPosition(SwingConstants.BOTTOM);
 		jb2.setHorizontalTextPosition(SwingConstants.CENTER);
 		jmb.setFloatable(false);
-		jmb.setLayout(new FlowLayout());
 		
-		
-		jb.setIcon(icpref[0]);
+				
+		jb.setIcon(icpref[1]);
 		jmb.add(jb);
 		jmb.add(jb2);
+		jmb.add(jb3);
+		jmb.add(jb4);
+		jmb.add(jb5);
+		jmb.add(jb6);
+		jmb.add(jb7);
+		jmb.add(jb8);
+		jmb.add(jb9);
+		
+		
 		this.setLayout(new BorderLayout());
 		//Creamos un panel 
 		JPanel panelInformes = new JPanel();  //Creamos un panel para la pestaña Informes
