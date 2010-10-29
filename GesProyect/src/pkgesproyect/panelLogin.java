@@ -3,9 +3,11 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+/*ESTA CLASE LA HE CREADO PARA PROBAR COSAS 
+ * BORRAR SI ES NECESARIO
+ */
 
-
-public class panelLogin extends JLayeredPane {
+public class panelLogin extends JPanel {
 	public panelLogin() {
 		JTextField jtb = new JTextField();
 		JTextField jtb2 = new JTextField();

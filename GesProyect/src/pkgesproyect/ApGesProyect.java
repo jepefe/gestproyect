@@ -6,6 +6,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.seaglasslookandfeel.SeaGlassLookAndFeel;
 
 public class ApGesProyect {
+	
 	public static void main(String[] args){
 		//Cargamos el lookandfeel seaglasss que debemos de tener importado en eclipse
 		try {
@@ -13,6 +14,7 @@ public class ApGesProyect {
 			} catch (UnsupportedLookAndFeelException ex) {
 			
 			}
-		frmppal ppal = new frmppal("GesProyect", 40,80,640,480);
+			 frmppal formularioPrincipal = new frmppal("GesProyect", 40,80,640,480);
+		 
 	}
 }

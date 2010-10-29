@@ -13,13 +13,11 @@ import com.seaglasslookandfeel.ui.SeaGlassRootPaneUI;
 import java.awt.*;
 
 public class frmppal extends JFrame{
-	public final static String UNIFIED_TOOLBAR_LOOK = "true";
-	public final static boolean  MenuInTitle = Boolean.TRUE;
+
 	//Creamos un objeto JTabbedPane
 	
 //Creamos un array en el que introducimos los iconos
-		
-	ImageIcon[] icpref = { 
+		public ImageIcon[] icpref = { 
 				new ImageIcon(ApGesProyect.class.getResource("imagenes/preferencias.png")),
 				new ImageIcon(ApGesProyect.class.getResource("imagenes/informes.png")),
 				new ImageIcon(ApGesProyect.class.getResource("imagenes/usuarios.png")),
@@ -35,10 +33,15 @@ public class frmppal extends JFrame{
 	public frmppal(String titulo, int x, int y, int ancho, int alto){
 
 		super(titulo);
+		/*Definir esta propiedad crea un degradado desde la barra de titulo
+		 * hasta el final del frame, debido a esto se hace necesario fijar 
+		 * setOpaque de todos los JPanel y otros elementos.
+		 */
 		this.getRootPane().putClientProperty(SeaGlassRootPaneUI.UNIFIED_TOOLBAR_LOOK, Boolean.TRUE);
 		
-	
-		JButton jb = new JButton();
+		this.setBounds(x,y,ancho,alto);
+		//BOTONES DE PRUEBA BORRAR SI ES NECESARIO BORRAR TAMBIEN LOS ADD
+		JButton jb = new JButton(icpref[1]);
 		JButton jb2 = new JButton(icpref[0]);
 		JButton jb3 = new JButton(icpref[2]);
 		JButton jb4 = new JButton(icpref[3]);
@@ -50,14 +53,14 @@ public class frmppal extends JFrame{
 		
 		
 		this.setBounds(x,y,ancho,alto);
-		JTabbedPane jtp = new JTabbedPane();
+		
 		JToolBar jmb = new JToolBar();
 		jb2.setVerticalTextPosition(SwingConstants.BOTTOM);
 		jb2.setHorizontalTextPosition(SwingConstants.CENTER);
 		jmb.setFloatable(false);
 		
 				
-		jb.setIcon(icpref[1]);
+		
 		jmb.add(jb);
 		jmb.add(jb2);
 		jmb.add(jb3);
@@ -67,39 +70,43 @@ public class frmppal extends JFrame{
 		jmb.add(jb7);
 		jmb.add(jb8);
 		jmb.add(jb9);
-		
-		
+		//Con este layout tenemos NORTH, SOUTH, WEST, EAST Y CENTER para fijar los objetos
 		this.setLayout(new BorderLayout());
-		//Creamos un panel 
-		JPanel panelInformes = new JPanel();  //Creamos un panel para la pestaña Informes
 		
-		//Añadimos el panel creado anteriormente 
-		
-		jtp.addTab(null,icpref[1],panelInformes,"Informes");
-		JPanel panelUsuarios = new JPanel();  //Creamos un panel para la pestaña usuarios
-		jtp.addTab(null,icpref[2],panelUsuarios,"Usuarios");
 		
 		//Creamos un panel de tipo PanelPreferencias que hemos creado anteriormente
-		PanelPreferencias panelPreferencias = new PanelPreferencias();  //Creamos un panel para la pestaña Preferencias
-		jtp.addTab(null,icpref[0],panelPreferencias,"Preferencias");
+		PanelPreferencias panelPreferencias = new PanelPreferencias(this);  //Creamos un panel para la pestaña Preferencias
 		
-			//this.add(jtp);
+		//Fijamos SeaGlass como Look and feel
 		try {
 			UIManager.setLookAndFeel(new SeaGlassLookAndFeel());
 			} catch (UnsupportedLookAndFeelException ex) {
 			
 			}
-			
+		//Los JPanel que deben ser fijados como CENTER	
 		this.add(panelPreferencias,BorderLayout.CENTER);
 		
 		jmb.setVisible(true);
 		this.setVisible(true);
+		//La ToolBar debe de estar en NORTH 
 		this.add(jmb,BorderLayout.NORTH);
 		//Opción para que cierre el probrama al cerrar la ventana si no hacemos esto
 		//aunque cerremos la ventan seguira la aplicación en ejecucion
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-
+		
+		
+	}
+	//Metodo en construccion, no funciona
+	public void muestraDialogo(JPanel panelDialogo){
+		//Metodo para mostrar un dialogo
+		JPanel panelContenedorDialogo = new JPanel();
+		panelContenedorDialogo.setOpaque(false);
+		panelContenedorDialogo.add(panelDialogo);
+		this.add(panelContenedorDialogo);
+		
+		
+		
 		
 	}
 

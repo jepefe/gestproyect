@@ -1,3 +1,9 @@
+/* ESTA CLASE LA PODRIAMOS TENER COMO CLASE PARA EXPERIMENTOS
+ * 
+ * 
+ * AQUI PODEMOS IMPLEMENTAR COSAS PARA NO IR ENSUCIANDO EL CODIGO
+ * 
+ */
 package pkgesproyect;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -20,12 +26,18 @@ public class PanelPreferencias extends JPanel {
 	JCheckBox jcb3 = new JCheckBox("Casilla 3");
 	JRadioButton jrb = new JRadioButton("Hola!!");
 	JTextField	jtf = new JTextField("Buscar...");
+	frmppal principal;
 	
-	public PanelPreferencias(){
+	public PanelPreferencias(frmppal principal){//Estamos tomando como referencia al frame principal
+	//Asi podemos comunicarnos con la clase de la ventana principal
+		this.principal = principal;
+	//	principal.setSize(1024, 768);
+		
+		
 		this.setOpaque(true);
 		jtf.putClientProperty("JTextField.variant", "search");
 		jtf.putClientProperty("JTextField.Search.PlaceholderText", Boolean.TRUE);
-		//this.setLayout(new GridLayout(34,34));
+	//	this.setLayout(new GridLayout());
 		this.add(jpb);
 		jpb.setMinimum(0);
 		jpb.setMaximum(100);
@@ -40,7 +52,8 @@ public class PanelPreferencias extends JPanel {
 		this.add(jcb3);
 		this.add(jrb);
 		this.add(jtf);
-		this.add(new panelLogin());
+		
+	
 		// Prueba con la base de datos 
 		try {
 			MysqlDataSource dataSource = new MysqlDataSource();
