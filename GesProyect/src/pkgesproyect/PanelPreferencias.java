@@ -43,7 +43,7 @@ public class PanelPreferencias extends JPanel {
 		jpb.setMaximum(100);
 		jpb.getModel().setValue(33);
 		jpb.setStringPainted(true);
-		jpb2.setIndeterminate(true);
+		//jpb2.setIndeterminate(true);
 		
 		this.add(jpb2);
 		this.add(Boton1);
@@ -63,7 +63,7 @@ public class PanelPreferencias extends JPanel {
 			dataSource.setServerName("93.189.94.177");
 			Connection conexion = dataSource.getConnection ();
 			Statement s = conexion.createStatement(); 
-			ResultSet rs = s.executeQuery ("select * from pedidos");
+			ResultSet rs = s.executeQuery ("select * from staff");
 			while (rs.next()) 
 			{ 
 			    System.out.println (rs.getInt (1) + " " + rs.getInt (2)+ " " + rs.getInt(3) + " " + rs.getDate(4) + " " + rs.getInt (5)+ " " + rs.getInt(6) ); 

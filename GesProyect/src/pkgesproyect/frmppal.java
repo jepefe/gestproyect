@@ -29,6 +29,7 @@ public class frmppal extends JFrame{
 				new ImageIcon(ApGesProyect.class.getResource("imagenes/bandera.png")),
 				
 		};
+		JToolBar jmb = new JToolBar();
 	//Constructor
 	public frmppal(String titulo, int x, int y, int ancho, int alto){
 
@@ -54,7 +55,7 @@ public class frmppal extends JFrame{
 		
 		this.setBounds(x,y,ancho,alto);
 		
-		JToolBar jmb = new JToolBar();
+	
 		jb2.setVerticalTextPosition(SwingConstants.BOTTOM);
 		jb2.setHorizontalTextPosition(SwingConstants.CENTER);
 		jmb.setFloatable(false);
@@ -93,21 +94,56 @@ public class frmppal extends JFrame{
 		//Opción para que cierre el probrama al cerrar la ventana si no hacemos esto
 		//aunque cerremos la ventan seguira la aplicación en ejecucion
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//----------------------------------------------
+		this.DlgLogin(170, 330, new dlgLogin());
+		  }
+	    
+	    
+	    
 		
 		
 		
-	}
+		
+	
 	//Metodo en construccion, no funciona
-	public void muestraDialogo(JPanel panelDialogo){
-		//Metodo para mostrar un dialogo
-		JPanel panelContenedorDialogo = new JPanel();
-		panelContenedorDialogo.setOpaque(false);
-		panelContenedorDialogo.add(panelDialogo);
-		this.add(panelContenedorDialogo);
+	public void DlgLogin(int x, int y, JPanel dlg){
+		final JPanel glass = (JPanel) this.getGlassPane();
+		//JPanel dlg = new JPanel();
+		int i=0,j=0;
+		dlg.setOpaque(true);
+		JPanel jp = new JPanel();
 		
+		jp.setBorder(new DropShadowBorder());
+		jp.setLayout(new BorderLayout());
+		jp.add(dlg,BorderLayout.CENTER);
+		glass.add(jp);
+    	glass.setVisible(true);
+    	dlg.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
+    	
+	    for (i=y;i<=x+y;i++){
+	    	if (j<x){
+	    		j++;
+	    		dlg.setSize(y,j);
+	    		jp.setSize(y+9,j+9);
+	    		glass.repaint();
+	    	}
+	    	
+	    if (i%2 == 0){
+	    	try {
+	    		Thread.sleep(0,100);
+	    		} catch (InterruptedException ex) {
+	    		// aquí tratamos la excepción como queramos, haciendo nada, sacando por pantalla el error, ...
+	    		}
+	    		
+	    		}
+	    if (i==x+y){
+	    	jp.setPreferredSize(new Dimension(y+9,x+9));
+	    	dlg.setPreferredSize(new Dimension(y,x));
+	    }
+	    
 		
-		
-		
+	    }
+	    jmb.setEnabled(false);
 	}
 
 }
