@@ -11,8 +11,12 @@ import com.seaglasslookandfeel.SeaGlassLookAndFeel;
 import com.seaglasslookandfeel.ui.SeaGlassRootPaneUI;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.MouseAdapter;
 
-public class frmppal extends JFrame{
+public class frmppal extends JFrame implements ActionListener{
 
 	//Creamos un objeto JTabbedPane
 	
@@ -30,6 +34,7 @@ public class frmppal extends JFrame{
 				
 		};
 		JToolBar jmb = new JToolBar();
+	
 	//Constructor
 	public frmppal(String titulo, int x, int y, int ancho, int alto){
 
@@ -95,55 +100,88 @@ public class frmppal extends JFrame{
 		//aunque cerremos la ventan seguira la aplicación en ejecucion
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		//----------------------------------------------
+		//Prueba, quitar o comentar para normal funcionamiento de la aplicación
 		this.DlgLogin(170, 330, new dlgLogin());
 		  }
 	    
 	    
-	    
+	public void actionPerformed(ActionEvent e)
+	{
+		
+	}
 		
 		
 		
 		
 	
-	//Metodo en construccion, no funciona
+	//Metodo para mostrar un dialogo modal de tipo login
 	public void DlgLogin(int x, int y, JPanel dlg){
 		final JPanel glass = (JPanel) this.getGlassPane();
-		//JPanel dlg = new JPanel();
 		int i=0,j=0;
 		dlg.setOpaque(true);
 		JPanel jp = new JPanel();
+		//glass.setOpaque(true);
+		glass.setLayout(null);
+	//	dlg.setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.GRAY));
+		dlg.setBackground(new Color(0xED,0xED,0xED));
+		jp.setLocation(200, 83);
 		
-		jp.setBorder(new DropShadowBorder());
+		glass.setBackground(new Color(0,0,0,10));
 		jp.setLayout(new BorderLayout());
 		jp.add(dlg,BorderLayout.CENTER);
+		jp.setBorder(new DropShadowBorder(UIManager.getColor("Control"), 1, 5, .5f, 12, false, true, true, true));
 		glass.add(jp);
-    	glass.setVisible(true);
-    	dlg.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
+		glass.setVisible(true);    	
     	
-	    for (i=y;i<=x+y;i++){
+	    for (i=x;i<=x+y;i++){
 	    	if (j<x){
-	    		j++;
+	    		j+=7;
 	    		dlg.setSize(y,j);
-	    		jp.setSize(y+9,j+9);
+	    		jp.setSize(dlg.getWidth()+12,dlg.getHeight()+9);
 	    		glass.repaint();
 	    	}
 	    	
-	    if (i%2 == 0){
+	 
 	    	try {
-	    		Thread.sleep(0,100);
+	    		Thread.sleep(1);
 	    		} catch (InterruptedException ex) {
 	    		// aquí tratamos la excepción como queramos, haciendo nada, sacando por pantalla el error, ...
 	    		}
 	    		
-	    		}
+	    		
 	    if (i==x+y){
-	    	jp.setPreferredSize(new Dimension(y+9,x+9));
 	    	dlg.setPreferredSize(new Dimension(y,x));
+	    	jp.setPreferredSize(new Dimension(dlg.getWidth()+12,dlg.getHeight()+9));
 	    }
 	    
 		
+	    
 	    }
-	    jmb.setEnabled(false);
+	    
+	    try {
+    		Thread.sleep(5000);
+    		} catch (InterruptedException ex) {
+    		// aquí tratamos la excepción como queramos, haciendo nada, sacando por pantalla el error, ...
+    		}
+	    
+	    
+	    
+	    
+	    for (i=x;i>0;i--){
+	    	
+	    		
+	    		dlg.setSize(dlg.getWidth(),dlg.getHeight()-7);
+	    		jp.setSize(dlg.getWidth()+12,dlg.getHeight()+9);
+	    		//glass.repaint();
+	    
+	 
+	    	try {
+	    		Thread.sleep(1);
+	    		} catch (InterruptedException ex) {
+	    		// aquí tratamos la excepción como queramos, haciendo nada, sacando por pantalla el error, ...
+	    		}
+	    }
+	    		   
 	}
 
 }

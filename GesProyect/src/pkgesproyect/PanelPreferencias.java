@@ -5,12 +5,9 @@
  * 
  */
 package pkgesproyect;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.*;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
@@ -52,7 +49,7 @@ public class PanelPreferencias extends JPanel {
 		this.add(jcb3);
 		this.add(jrb);
 		this.add(jtf);
-		
+		this.setBackground(new Color(0xED,0xED,0xED));
 	
 		// Prueba con la base de datos 
 		try {
@@ -63,7 +60,9 @@ public class PanelPreferencias extends JPanel {
 			dataSource.setServerName("93.189.94.177");
 			Connection conexion = dataSource.getConnection ();
 			Statement s = conexion.createStatement(); 
-			ResultSet rs = s.executeQuery ("select * from staff");
+			ResultSet rs = s.executeQuery ("select * from partners");
+			conexion.commit();
+			conexion.close();
 			while (rs.next()) 
 			{ 
 			    System.out.println (rs.getInt (1) + " " + rs.getInt (2)+ " " + rs.getInt(3) + " " + rs.getDate(4) + " " + rs.getInt (5)+ " " + rs.getInt(6) ); 
@@ -73,7 +72,11 @@ public class PanelPreferencias extends JPanel {
 			e.printStackTrace();
 		}
 		
-		
+				
+	}
+	public void setEnabled(boolean b){
+		b = !jpb2.isEnabled();
+		System.out.println(b);
 		
 	}
 	

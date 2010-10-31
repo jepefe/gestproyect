@@ -83,9 +83,9 @@ public class DropShadowBorder implements Border {
         
         //compute the edges of the component -- not including the border
         Insets borderInsets = getBorderInsets(c);
-        int leftEdge = x + borderInsets.left - lineWidth;
+        int leftEdge = x + borderInsets.left  - lineWidth;
         int rightEdge = x + width - borderInsets.right;
-        int topEdge = y + borderInsets.top - lineWidth;
+        int topEdge = y + borderInsets.top - lineWidth - 5;
         int bottomEdge = y + height - borderInsets.bottom;
         Graphics2D g2 = (Graphics2D)graphics;
         g2.setColor(lineColor);
@@ -146,7 +146,7 @@ public class DropShadowBorder implements Border {
         }
         
         if (showLeftShadow) {
-            Rectangle leftShadowRect = new Rectangle(x, (int)(topLeftShadowPoint.getY() + shadowSize), shadowSize, (int)(bottomLeftShadowPoint.getY() - topLeftShadowPoint.getY() - shadowSize));
+            Rectangle leftShadowRect = new Rectangle(x, (int)(topLeftShadowPoint.getY()-4), shadowSize, (int)(bottomLeftShadowPoint.getY() - topLeftShadowPoint.getY() +4));
             g2.drawImage(images.get(Position.LEFT).getScaledInstance(leftShadowRect.width, leftShadowRect.height, Image.SCALE_FAST), leftShadowRect.x, leftShadowRect.y, null);
         }
 
@@ -156,7 +156,7 @@ public class DropShadowBorder implements Border {
         }
         
         if (showRightShadow) {
-            Rectangle rightShadowRect = new Rectangle(x + width - shadowSize, (int)(topRightShadowPoint.getY() + shadowSize), shadowSize, (int)(bottomRightShadowPoint.getY() - topRightShadowPoint.getY() - shadowSize));
+            Rectangle rightShadowRect = new Rectangle(x + width - shadowSize, (int)(topRightShadowPoint.getY() - 4 ), shadowSize, (int)(bottomRightShadowPoint.getY() - topRightShadowPoint.getY()+4 ));
             g2.drawImage(images.get(Position.RIGHT).getScaledInstance(rightShadowRect.width, rightShadowRect.height, Image.SCALE_FAST), rightShadowRect.x, rightShadowRect.y, null);
         }
         
