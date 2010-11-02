@@ -50,7 +50,8 @@ public class PanelPreferencias extends JPanel {
 		this.add(jrb);
 		this.add(jtf);
 		this.setBackground(new Color(0xED,0xED,0xED));
-	
+	}
+	/*
 		// Prueba con la base de datos 
 		try {
 			MysqlDataSource dataSource = new MysqlDataSource();
@@ -73,13 +74,13 @@ public class PanelPreferencias extends JPanel {
 		}
 		
 				
-	}
+	}*/
 	public void setEnabled(boolean b){
 		b = !jpb2.isEnabled();
 		System.out.println(b);
 		
+
 	}
-	
 
 
 

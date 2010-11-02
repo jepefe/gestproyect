@@ -44,7 +44,7 @@ public class frmppal extends JFrame implements ActionListener{
 		 * setOpaque de todos los JPanel y otros elementos.
 		 */
 		this.getRootPane().putClientProperty(SeaGlassRootPaneUI.UNIFIED_TOOLBAR_LOOK, Boolean.TRUE);
-		
+		jmb.setSize(80, 80);
 		this.setBounds(x,y,ancho,alto);
 		//BOTONES DE PRUEBA BORRAR SI ES NECESARIO BORRAR TAMBIEN LOS ADD
 		JButton jb = new JButton(icpref[1]);
@@ -123,9 +123,9 @@ public class frmppal extends JFrame implements ActionListener{
 		//glass.setOpaque(true);
 		glass.setLayout(null);
 	//	dlg.setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.GRAY));
-		dlg.setBackground(new Color(0xED,0xED,0xED));
-		jp.setLocation(200, 83);
-		
+		dlg.setBackground(new Color(0xED,0xED,0xED,240));
+		//jp.setLocation(200, 83);
+		jp.setLocation(((jmb.getSize().width/2)-(jp.getSize().width/2)),jmb.getSize().height-1);
 		glass.setBackground(new Color(0,0,0,10));
 		jp.setLayout(new BorderLayout());
 		jp.add(dlg,BorderLayout.CENTER);
@@ -133,11 +133,19 @@ public class frmppal extends JFrame implements ActionListener{
 		glass.add(jp);
 		glass.setVisible(true);    	
     	
+		try {
+    		Thread.sleep(4000);
+    		} catch (InterruptedException ex) {
+    		// aquí tratamos la excepción como queramos, haciendo nada, sacando por pantalla el error, ...
+    		}
+    		
+		
 	    for (i=x;i<=x+y;i++){
 	    	if (j<x){
-	    		j+=7;
+	    		j+=2;
 	    		dlg.setSize(y,j);
 	    		jp.setSize(dlg.getWidth()+12,dlg.getHeight()+9);
+	    		jp.setLocation(((jmb.getSize().width/2)-(jp.getSize().width/2)),jmb.getSize().height-1);
 	    		glass.repaint();
 	    	}
 	    	
@@ -173,15 +181,16 @@ public class frmppal extends JFrame implements ActionListener{
 	    		dlg.setSize(dlg.getWidth(),dlg.getHeight()-7);
 	    		jp.setSize(dlg.getWidth()+12,dlg.getHeight()+9);
 	    		//glass.repaint();
-	    
+	    		jp.setLocation(((jmb.getSize().width/2)-(jp.getSize().width/2)),jmb.getSize().height-1);
+
 	 
 	    	try {
 	    		Thread.sleep(1);
 	    		} catch (InterruptedException ex) {
-	    		// aquí tratamos la excepción como queramos, haciendo nada, sacando por pantalla el error, ...
+	    		// aqui tratamos la excepción como queramos, haciendo nada, sacando por pantalla el error, ...
 	    		}
 	    }
-	    		   
+	    		
 	}
 
 }

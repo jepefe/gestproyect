@@ -15,6 +15,6 @@ public class ApGesProyect {
 			
 			}
 			 frmppal formularioPrincipal = new frmppal("GesProyect", 40,80,640,480);
-		 
+		
 	}
 }
