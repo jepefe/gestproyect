@@ -13,10 +13,17 @@ public class RsGesproject {
 	 * Constructor privado
 	 */
 	private RsGesproject(){} //Lo hacemos privado para que solo se pueda instanciar a si mismo
-	static RsGesproject instancia = new RsGesproject();
-	private int frmppalWidth = 800; //Alto por defecto de la ventana principal
-	private int frmppalHeight = 600; //Ancho por defecto de la ventana principal
+	/**Variable que consiene la unica instancia de la clase*/
+	static RsGesproject instancia = new RsGesproject(); //Instancia unica de esta clase
+	/**Variable que referencia al objeto de la ventana principal*/
 	private FrmPrincipal Rfrmppal;  //Referencia a la ventana principal
+	/**Alto de la ventana principal*/
+	private int frmppalWidth = 800; //Alto por defecto de la ventana principal
+	/**Ancho de la ventana principal*/
+	private int frmppalHeight = 600; //Ancho por defecto de la ventana principal
+	/**String constante que contiene el titulo de la aplicaion*/
+	final String APNAME = "GesProyect - Florida"; //Constante que contiene el nombre de la aplicacion
+	
 	
 
 	
