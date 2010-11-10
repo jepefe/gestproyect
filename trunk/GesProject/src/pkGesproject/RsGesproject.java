@@ -1,5 +1,9 @@
 package pkGesproject;
 
+import javax.swing.ImageIcon;
+
+
+
 /**
  * 
  * @author Jesus Perez
@@ -21,9 +25,15 @@ public class RsGesproject {
 	private int frmppalWidth = 800; //Alto por defecto de la ventana principal
 	/**Ancho de la ventana principal*/
 	private int frmppalHeight = 600; //Ancho por defecto de la ventana principal
+	final String DBSERVER = "93.189.94.177";
+	final String DBUSER	  = "gesproyect";
+	final String DBPASS	  = "proyecto2010";
+	final String DBNAME	  = "gesproyect";
 	/**String constante que contiene el titulo de la aplicaion*/
 	final String APNAME = "GesProyect - Florida"; //Constante que contiene el nombre de la aplicacion
-	
+	public ImageIcon[] icono = { 
+			new ImageIcon(getClass().getResource("imagenes/informacionusuario.png")),
+	};
 	
 
 	
