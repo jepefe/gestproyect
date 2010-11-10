@@ -12,7 +12,7 @@ public class ApGesproject {
 			
 			}
 		FrmPrincipal vppal = new FrmPrincipal();
-		
+		vppal.setVisible(true);
 	}
 
 }
