@@ -57,10 +57,13 @@ public class FrmPrincipal extends JFrame {
 	 */
 	public void Carga_toolbar(){
 		JToggleButton jbtnUsuarios = new JToggleButton(recursos.icono[0]);
+		JToggleButton jbtnSocios = new JToggleButton(recursos.icono[1]);
 		jtlbFrmppal.setFloatable(false); //Impedimos que el toolbar se pueda separar de la ventana
 		jtlbFrmppal.setPreferredSize(new Dimension(this.getWidth(),70));
 		jtlbFrmppal.setVisible(true);
 		jtlbFrmppal.add(jbtnUsuarios);
+		jtlbFrmppal.add(jbtnSocios);
+		
 		this.add(jtlbFrmppal,BorderLayout.NORTH);
 	}
 	

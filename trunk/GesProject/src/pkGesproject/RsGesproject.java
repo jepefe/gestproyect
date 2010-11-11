@@ -33,6 +33,7 @@ public class RsGesproject {
 	final String APNAME = "GesProyect - Florida"; //Constante que contiene el nombre de la aplicacion
 	public ImageIcon[] icono = { 
 			new ImageIcon(getClass().getResource("imagenes/informacionusuario.png")),
+			new ImageIcon(getClass().getResource("imagenes/gestionsocios.png")),
 	};
 	
 
