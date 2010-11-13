@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -37,6 +39,8 @@ public class FrmPrincipal extends JFrame {
 		this.setLayout(new BorderLayout());
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.inicializar();
+		PnlAltasocio nu = new PnlAltasocio();
+		this.add(nu,BorderLayout.CENTER);
 	}
 	
 	/**
@@ -62,7 +66,10 @@ public class FrmPrincipal extends JFrame {
 		jtlbFrmppal.setPreferredSize(new Dimension(this.getWidth(),70));
 		jtlbFrmppal.setVisible(true);
 		jtlbFrmppal.add(jbtnUsuarios);
+		//jbtnSocios.addActionListener();
+
 		jtlbFrmppal.add(jbtnSocios);
+		//jbtnSocios.setSelected(true);
 		
 		this.add(jtlbFrmppal,BorderLayout.NORTH);
 	}
