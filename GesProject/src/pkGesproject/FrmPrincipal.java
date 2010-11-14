@@ -42,9 +42,9 @@ public class FrmPrincipal extends JFrame {
 		this.setLayout(new BorderLayout());
 		this.getRootPane().putClientProperty(SeaGlassRootPaneUI.UNIFIED_TOOLBAR_LOOK, Boolean.TRUE);//Esta linea es necesaria para que la barra de titulo y el jtoolbar sean homogeneos
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.add(nu,BorderLayout.CENTER);
+		//this.add(nu,BorderLayout.CENTER);
 		//nu.setVisible(false);
-		this.add(pnlbienvenida,BorderLayout.CENTER);
+		//this.add(pnlbienvenida,BorderLayout.CENTER);
 		this.setVisible(true);
 		this.inicializar();
 		try {
@@ -68,19 +68,27 @@ public class FrmPrincipal extends JFrame {
 		//Creamos un action listener para los botones de la jtoolbar
 		ActionListener jtlbAcListener = new ActionListener() {
 	         public void actionPerformed(ActionEvent e) {
+	        	 
+	        	
+	        	remove(pnlbienvenida);
+	        	remove(nu);
+	        	remove(pnlbienvenida);
 	        	jbtnUsuarios.setSelected(false);
 	        	jbtnSocios.setSelected(false);
-	        	nu.setVisible(false);
-	        	pnlbienvenida.setVisible(false);
+	        	
 	         if (e.getActionCommand().equals("socios")){
 	        	jbtnSocios.setSelected(true);
+	        	recursos.getRfrmppal().add(nu, BorderLayout.CENTER);
 	        	nu.setVisible(true);
-	        	
-	        	
+	        	repaint();
+	 
 	        	
 	        	}
 	         if (e.getActionCommand().equals("usuarios")){
 		        	jbtnUsuarios.setSelected(true); 
+		        	recursos.getRfrmppal().add(pnlbienvenida, BorderLayout.CENTER);
+		        	pnlbienvenida.setVisible(true);
+		        	repaint();
 		        //new DlgSiNo("Seguro que desea salir?").start();
 		        
 		         }
