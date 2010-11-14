@@ -35,7 +35,7 @@ public class RsGesproject {
 			new ImageIcon(getClass().getResource("imagenes/informacionusuario.png")),
 			new ImageIcon(getClass().getResource("imagenes/gestionsocios.png")),
 	};
-	
+	static String SistemaOp = System.getProperty("os.name");
 
 	
 	/**

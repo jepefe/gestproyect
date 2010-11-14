@@ -23,14 +23,17 @@ public class DlgSiNo extends Thread  {
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	FrmPrincipal frmppal = recursos.getRfrmppal();
 	GridBagConstraints cons = new GridBagConstraints();
+	int anchojtoolbar = 23;
 	public DlgSiNo(String msg){
 		dlg.setBackground(new Color(0xED,0xED,0xED,240));
 		dlg.setVisible(false);
 		dlg.setOpaque(true);
 		this.msg.setText(msg); 
 		dlg.setLayout(new GridBagLayout());
-		
 		dlg.setSize(new Dimension(380, 180));
+		if (RsGesproject.SistemaOp.equals("Mac OS X")){
+			anchojtoolbar=-1;
+		}
 		
 		
 		
@@ -71,7 +74,7 @@ public class DlgSiNo extends Thread  {
 		JPanel glass = (JPanel) frmppal.getGlassPane();
 		JPanel jpcontenedor = new JPanel();
 		glass.setLayout(null);
-		jpcontenedor.setLocation(((frmppal.getSize().width/2)-(x/2)),frmppal.jtlbFrmppal.getSize().height+23);
+		jpcontenedor.setLocation(((frmppal.getSize().width/2)-(x/2)),frmppal.jtlbFrmppal.getSize().height+this.anchojtoolbar);
 		dlg.setSize(0,0);
 		//jpcontenedor.setSize(0,0);
 		jpcontenedor.setBorder(new DropShadowBorder(UIManager.getColor("Control"), 1, 5, .5f, 12, false, true, true, true));
