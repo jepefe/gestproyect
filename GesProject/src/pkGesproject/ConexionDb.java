@@ -14,7 +14,7 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 public class ConexionDb {
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	Connection conexion;
-	Statement estatuto;
+	Statement st;
 	public void Conectardb(){
 		
 	MysqlDataSource dataSource = new MysqlDataSource();
@@ -28,6 +28,13 @@ public class ConexionDb {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
+		try {
+			st = conexion.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		
+	}
 	
 
 	
@@ -35,14 +42,9 @@ public class ConexionDb {
 	}
 	public ResultSet ConsultaSQL(String consultaSQL){
 		ResultSet rs=null;
+		
 		try {
-			estatuto = conexion.createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			rs = estatuto.executeQuery(consultaSQL);
+			rs = st.executeQuery(consultaSQL);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,5 +54,16 @@ public class ConexionDb {
 		
 	}
 	
-
+	public void executeUpdate(String consultaSQL){
+		try {
+			st.executeUpdate(consultaSQL);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 }
+
+
