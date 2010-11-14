@@ -39,24 +39,24 @@ public class FrmPrincipal extends JFrame {
 		this.setTitle(recursos.APNAME);
 		recursos.setRfrmppal(this);	
 		this.setLayout(new BorderLayout());
+		this.getRootPane().putClientProperty(SeaGlassRootPaneUI.UNIFIED_TOOLBAR_LOOK, Boolean.TRUE);//Esta linea es necesaria para que la barra de titulo y el jtoolbar sean homogeneos
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.add(nu,BorderLayout.CENTER);
 		this.setVisible(true);
 		this.inicializar();
-	}
-	
-	/**
-	 * Este metodo se encarga de inicializar todas las propiedades de la ventana principal que sean necesarias
-	 */
-	public void inicializar(){
-	
-		this.getRootPane().putClientProperty(SeaGlassRootPaneUI.UNIFIED_TOOLBAR_LOOK, Boolean.TRUE);//Esta linea es necesaria para que la barra de titulo y el jtoolbar sean homogeneos
-		this.Carga_toolbar();
 		try {
 			UIManager.setLookAndFeel(new SeaGlassLookAndFeel());
 			} catch (UnsupportedLookAndFeelException ex) {
 			
 			}
+
+	}
+	
+	/**
+	 * Este metodo se encarga de inicializar todas las propiedades de la ventana principal que sean necesarias
+	 */
+	public void inicializar(){		
+			this.Carga_toolbar();
 	}
 	/*
 	 * Metodo de carga de la barra de herramientas
