@@ -34,6 +34,7 @@ public class RsGesproject {
 	public ImageIcon[] icono = { 
 			new ImageIcon(getClass().getResource("imagenes/informacionusuario.png")),
 			new ImageIcon(getClass().getResource("imagenes/gestionsocios.png")),
+			new ImageIcon(getClass().getResource("imagenes/inicio.png")),
 	};
 	static String SistemaOp = System.getProperty("os.name");
 

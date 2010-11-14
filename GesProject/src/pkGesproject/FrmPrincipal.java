@@ -29,6 +29,7 @@ public class FrmPrincipal extends JFrame {
 
 	JToolBar jtlbFrmppal = new JToolBar();
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
+	JToggleButton jbtnInicio = new JToggleButton(recursos.icono[2]);
 	JToggleButton jbtnUsuarios = new JToggleButton(recursos.icono[0]);
 	JToggleButton jbtnSocios = new JToggleButton(recursos.icono[1]);
 	PnlAltasocio nu = new PnlAltasocio();
@@ -44,7 +45,7 @@ public class FrmPrincipal extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		//this.add(nu,BorderLayout.CENTER);
 		//nu.setVisible(false);
-		//this.add(pnlbienvenida,BorderLayout.CENTER);
+		this.add(pnlbienvenida,BorderLayout.CENTER);
 		this.setVisible(true);
 		this.inicializar();
 		try {
@@ -75,10 +76,11 @@ public class FrmPrincipal extends JFrame {
 	        	remove(pnlbienvenida);
 	        	jbtnUsuarios.setSelected(false);
 	        	jbtnSocios.setSelected(false);
+	        	jbtnInicio.setSelected(false);
 	        	
 	         if (e.getActionCommand().equals("socios")){
 	        	jbtnSocios.setSelected(true);
-	        	recursos.getRfrmppal().add(nu, BorderLayout.CENTER);
+	        	add(nu, BorderLayout.CENTER);
 	        	nu.setVisible(true);
 	        	repaint();
 	 
@@ -86,23 +88,33 @@ public class FrmPrincipal extends JFrame {
 	        	}
 	         if (e.getActionCommand().equals("usuarios")){
 		        	jbtnUsuarios.setSelected(true); 
-		        	recursos.getRfrmppal().add(pnlbienvenida, BorderLayout.CENTER);
+		        	//add(pnlbienvenida, BorderLayout.CENTER);
 		        	pnlbienvenida.setVisible(true);
 		        	repaint();
 		        //new DlgSiNo("Seguro que desea salir?").start();
 		        
 		         }
+	         if (e.getActionCommand().equals("inicio")){
+	        	 jbtnInicio.setSelected(true);
+	        	 add(pnlbienvenida, BorderLayout.CENTER);
+	        	 repaint();
+	        	 
+	        	 
+	         	}
 	         } 
 		};
 		jbtnUsuarios.addActionListener(jtlbAcListener);
 		jbtnSocios.addActionListener(jtlbAcListener);
+		jbtnInicio.addActionListener(jtlbAcListener);
 		jbtnUsuarios.setActionCommand("usuarios");
 		jbtnSocios.setActionCommand("socios");
+		jbtnInicio.setActionCommand("inicio");
 		jtlbFrmppal.setFloatable(false); //Impedimos que el toolbar se pueda separar de la ventana
 		jtlbFrmppal.setPreferredSize(new Dimension(this.getWidth(),70));
 		jtlbFrmppal.setVisible(true);
+		jtlbFrmppal.add(jbtnInicio);
+		jbtnInicio.setSelected(true);
 		jtlbFrmppal.add(jbtnUsuarios);
-		//jbtnSocios.addActionListener();
 		jtlbFrmppal.add(jbtnSocios);
 		this.add(jtlbFrmppal,BorderLayout.NORTH);
 		
