@@ -32,6 +32,7 @@ public class FrmPrincipal extends JFrame {
 	JToggleButton jbtnUsuarios = new JToggleButton(recursos.icono[0]);
 	JToggleButton jbtnSocios = new JToggleButton(recursos.icono[1]);
 	PnlAltasocio nu = new PnlAltasocio();
+	PnlBienvenida pnlbienvenida = new PnlBienvenida();
 	private Rectangle maxBounds;
 	
 	public FrmPrincipal(){
@@ -42,6 +43,8 @@ public class FrmPrincipal extends JFrame {
 		this.getRootPane().putClientProperty(SeaGlassRootPaneUI.UNIFIED_TOOLBAR_LOOK, Boolean.TRUE);//Esta linea es necesaria para que la barra de titulo y el jtoolbar sean homogeneos
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.add(nu,BorderLayout.CENTER);
+		//nu.setVisible(false);
+		this.add(pnlbienvenida,BorderLayout.CENTER);
 		this.setVisible(true);
 		this.inicializar();
 		try {
@@ -68,15 +71,17 @@ public class FrmPrincipal extends JFrame {
 	        	jbtnUsuarios.setSelected(false);
 	        	jbtnSocios.setSelected(false);
 	        	nu.setVisible(false);
+	        	pnlbienvenida.setVisible(false);
 	         if (e.getActionCommand().equals("socios")){
-	        	jbtnSocios.setSelected(true); 
+	        	jbtnSocios.setSelected(true);
 	        	nu.setVisible(true);
+	        	
 	        	
 	        	
 	        	}
 	         if (e.getActionCommand().equals("usuarios")){
 		        	jbtnUsuarios.setSelected(true); 
-		        new DlgSiNo("Seguro que desea salir?").start();
+		        //new DlgSiNo("Seguro que desea salir?").start();
 		        
 		         }
 	         } 
