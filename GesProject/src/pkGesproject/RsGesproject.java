@@ -35,8 +35,10 @@ public class RsGesproject {
 			new ImageIcon(getClass().getResource("imagenes/informacionusuario.png")),
 			new ImageIcon(getClass().getResource("imagenes/gestionsocios.png")),
 			new ImageIcon(getClass().getResource("imagenes/inicio.png")),
-	};
+			new ImageIcon(getClass().getResource("imagenes/idiomas.png")),
+			};
 	static String SistemaOp = System.getProperty("os.name");
+	public int eleidioma;
 
 	
 	/**
