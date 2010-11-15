@@ -3,6 +3,8 @@ package pkGesproject;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -39,6 +41,7 @@ public class FrmPrincipal extends JFrame {
 	public FrmPrincipal(){
 		super.setBounds(0, 0, recursos.getFrmppalWidth(), recursos.getFrmppalHeight());
 		this.setTitle(recursos.APNAME);
+		this.setLocationRelativeTo(null);
 		recursos.setRfrmppal(this);	
 		this.setLayout(new BorderLayout());
 		this.getRootPane().putClientProperty(SeaGlassRootPaneUI.UNIFIED_TOOLBAR_LOOK, Boolean.TRUE);//Esta linea es necesaria para que la barra de titulo y el jtoolbar sean homogeneos
@@ -66,6 +69,7 @@ public class FrmPrincipal extends JFrame {
 	 * Metodo de carga de la barra de herramientas
 	 */
 	public void Carga_toolbar(){
+		jtlbFrmppal.setLayout(new GridBagLayout());
 		//Creamos un action listener para los botones de la jtoolbar
 		ActionListener jtlbAcListener = new ActionListener() {
 	         public void actionPerformed(ActionEvent e) {
@@ -88,10 +92,10 @@ public class FrmPrincipal extends JFrame {
 	        	}
 	         if (e.getActionCommand().equals("usuarios")){
 		        	jbtnUsuarios.setSelected(true); 
-		        	//add(pnlbienvenida, BorderLayout.CENTER);
+		        	add(pnlbienvenida, BorderLayout.CENTER);
 		        	pnlbienvenida.setVisible(true);
 		        	repaint();
-		        //new DlgSiNo("Seguro que desea salir?").start();
+		        	new DlgSiNo("Seguro que desea salir?").start();
 		        
 		         }
 	         if (e.getActionCommand().equals("inicio")){
