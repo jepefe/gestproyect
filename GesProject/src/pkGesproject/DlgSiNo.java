@@ -23,7 +23,7 @@ public class DlgSiNo extends Thread  {
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	FrmPrincipal frmppal = recursos.getRfrmppal();
 	GridBagConstraints cons = new GridBagConstraints();
-	int anchojtoolbar = 23;
+	int anchojtoolbar = 23; //Ancho de la barra de titulo en sistemas no MacOS
 	public DlgSiNo(String msg){
 		dlg.setBackground(new Color(0xED,0xED,0xED,240));
 		dlg.setVisible(false);
@@ -31,7 +31,7 @@ public class DlgSiNo extends Thread  {
 		this.msg.setText(msg); 
 		dlg.setLayout(new GridBagLayout());
 		dlg.setSize(new Dimension(380, 180));
-		if (RsGesproject.SistemaOp.equals("Mac OS X")){
+		if (RsGesproject.SistemaOp.equals("Mac OS X")){ //En MacOs no tenemos en cuenta el tamaño de la barra de titulo
 			anchojtoolbar=-1;
 		}
 		
@@ -86,16 +86,15 @@ public class DlgSiNo extends Thread  {
 		this.setConst();
 		System.out.println(Integer.toString(x) + "," + Integer.toString(y));
 		
-		//this.setConst();
+		//Vamos incrementando el tamaño para simular un efecto persiana
 		for (i=0;i<=y;i+=4){
 	    	dlg.setVisible(false);
-	   
-			dlg.setSize(x, i);	
+	   		dlg.setSize(x, i);	
 	    	jpcontenedor.setSize(x+12,i+7);
 	    	glass.repaint();
 	    	dlg.repaint();
 	    	jpcontenedor.repaint();
-	    	dlg.setVisible(true);
+	    	dlg.setVisible(true); //Alternamos entre false ya que de otra manera no dibuja bien sus componentes
 	    	
 	    	
 	    	try {
