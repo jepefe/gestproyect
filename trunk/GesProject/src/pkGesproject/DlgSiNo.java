@@ -69,35 +69,35 @@ public class DlgSiNo extends Thread  {
 		dlg.add(no, cons);
 	}
 	public void run() {
-		int x=dlg.getWidth(),y=dlg.getHeight(),i=0,j=0;
+		int x=dlg.getWidth(),y=dlg.getHeight(),i=0;
 		
-		JPanel glass = (JPanel) frmppal.getGlassPane();
-		JPanel jpcontenedor = new JPanel();
-		glass.setLayout(null);
-		jpcontenedor.setLocation(((frmppal.getSize().width/2)-(x/2)),frmppal.jtlbFrmppal.getSize().height+this.anchojtoolbar);
+		JPanel glass = (JPanel) frmppal.getGlassPane();  //Glasspanel de JFrame principal
+		JPanel jpcontenedor = new JPanel(); //Introducimos el dialogo en este panel que es transparente y gestiona bien las sombras
+		glass.setLayout(null);//Layout del glasspanel a null para posicionar el dialogo donde queremos
+		jpcontenedor.setLocation(((frmppal.getSize().width/2)-(x/2)),frmppal.jtlbFrmppal.getSize().height+this.anchojtoolbar);//Calculamos la posicion de la ventana y la fijamos
 		dlg.setSize(0,0);
-		//jpcontenedor.setSize(0,0);
 		jpcontenedor.setBorder(new DropShadowBorder(UIManager.getColor("Control"), 1, 5, .5f, 12, false, true, true, true));
 		jpcontenedor.setLayout(new BorderLayout());
-		jpcontenedor.add(dlg,BorderLayout.CENTER);
-		glass.add(jpcontenedor);
-		glass.setVisible(true);
+		jpcontenedor.add(dlg, BorderLayout.CENTER);//Agregamos el dialogo en el centro de l panel contenedor
+		glass.add(jpcontenedor);//Añadimos el panel contenedor al glasspanel
+		glass.setVisible(true);//Hacemos visible al glasspanel hay que setearlo a false cuando terminemos
 		jpcontenedor.setVisible(true);
 		dlg.setVisible(true);
+		this.setConst();
 		System.out.println(Integer.toString(x) + "," + Integer.toString(y));
 		
 		//this.setConst();
-		for (i=0;i<=y;i++){
-	    	dlg.setSize(x, i);	
+		for (i=0;i<=y;i+=4){
+	    	dlg.setVisible(false);
+	   
+			dlg.setSize(x, i);	
 	    	jpcontenedor.setSize(x+12,i+7);
 	    	glass.repaint();
 	    	dlg.repaint();
 	    	jpcontenedor.repaint();
+	    	dlg.setVisible(true);
 	    	
-	    	for (j=0;j<dlg.getComponentCount();j++){
-	    		dlg.getComponent(j).repaint();
-	    		this.setConst();
-	    	}
+	    	
 	    	try {
 	    		Thread.sleep(1);
 	    		} catch (InterruptedException ex) {
@@ -108,7 +108,7 @@ public class DlgSiNo extends Thread  {
 		   jpcontenedor.setPreferredSize(new Dimension(x+12,y+9));
 		   this.setConst();
 		   dlg.repaint();
-			System.out.println(Integer.toString(x) + "," + Integer.toString(y));
+			System.out.println(Integer.toString(x) + "," + Integer.toString(y) +"," + RsGesproject.SistemaOp);
 
 		   
 	   }
