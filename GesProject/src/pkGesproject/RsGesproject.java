@@ -37,7 +37,7 @@ public class RsGesproject {
 			new ImageIcon(getClass().getResource("imagenes/inicio.png")),
 			new ImageIcon(getClass().getResource("imagenes/idiomas.png")),
 			};
-	static String SistemaOp = System.getProperty("os.name");
+	static String SistemaOp = System.getProperty("os.name"); //Nombre del S.O por si necesitamos condicionar codigo 
 	public int eleidioma;
 
 	
