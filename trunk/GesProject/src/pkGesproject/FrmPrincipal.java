@@ -26,7 +26,7 @@ import com.seaglasslookandfeel.ui.SeaGlassRootPaneUI;
  *
  */
 public class FrmPrincipal extends JFrame {
-
+	
 	JToolBar jtlbFrmppal = new JToolBar();
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	JToggleButton jbtnInicio = new JToggleButton(recursos.icono[2]);
