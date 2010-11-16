@@ -38,6 +38,7 @@ public class FrmPrincipal extends JFrame {
 	JToggleButton jbtnProyectos = new JToggleButton(recursos.icono[4]);
 	PnlAltasocio nu = new PnlAltasocio();
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
+	pnlAlta_staff pnlalta_staff = new pnlAlta_staff();
 	private Rectangle maxBounds;
 	
 	public FrmPrincipal(){
@@ -79,6 +80,7 @@ public class FrmPrincipal extends JFrame {
 	        	remove(pnlbienvenida);
 	        	remove(nu);
 	        	remove(pnlbienvenida);
+	        	remove(pnlalta_staff);
 	        	jbtnUsuarios.setSelected(false);
 	        	jbtnSocios.setSelected(false);
 	        	jbtnInicio.setSelected(false);
@@ -94,8 +96,8 @@ public class FrmPrincipal extends JFrame {
 	        	}
 	         if (e.getActionCommand().equals("usuarios")){
 		        	jbtnUsuarios.setSelected(true); 
-		        	//add(pnlbienvenida, BorderLayout.CENTER);
-		        	//pnlbienvenida.setVisible(true);
+		        	add(pnlalta_staff, BorderLayout.CENTER);
+		        	pnlalta_staff.setVisible(true);
 		        	repaint();
 		        	//new DlgSiNo("Seguro que desea salir?").start();
 		        
