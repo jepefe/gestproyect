@@ -1,4 +1,4 @@
-package pkGesproject.Alta_staff;
+package pkGesproject;
 
 import java.lang.*;
 import java.awt.*;
@@ -54,6 +54,7 @@ public class pnlAlta_staff extends JPanel {
 
 	public pnlAlta_staff() {
 
+		this.setOpaque(true);
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints poslblstaff = new GridBagConstraints();
 		poslblstaff.gridx = 1;
@@ -413,5 +414,6 @@ public class pnlAlta_staff extends JPanel {
 		this.add(jbtnCrear, posBtnaceptar);
 		this.add(jbtnSalir, posBtncancelar);
 		this.add(jbtnExaminar, posBtnExaminar);
+		
 	}
 }
