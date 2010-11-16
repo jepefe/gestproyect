@@ -1,0 +1,124 @@
+package pkGesproject;
+
+import java.awt.GridBagConstraints;
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.seaglasslookandfeel.ui.SeaGlassRootPaneUI;
+
+public class FrmLogin extends JFrame implements ActionListener{
+	RsGesproject recursos = RsGesproject.Obtener_Instancia();
+	JButton jbtnaceptar = new JButton(GesIdioma.idioma[recursos.eleidioma][0]);
+	JButton jbtncancelar = new JButton(GesIdioma.idioma[recursos.eleidioma][1]);
+	JTextField jtxfUsuario = new JTextField("prueba");
+	JTextField jpwfPassword = new JTextField("Password1");
+	GridBagConstraints cons = new GridBagConstraints();
+	JLabel jlblUsuario = new JLabel(GesIdioma.idioma[recursos.eleidioma][9]);
+	JLabel jlblPassword = new JLabel(GesIdioma.idioma[recursos.eleidioma][10]);
+	public FrmLogin(String titulo, int x, int y){
+		super(titulo);
+		this.setSize(x,y);
+		this.getRootPane().putClientProperty(SeaGlassRootPaneUI.UNIFIED_TOOLBAR_LOOK, Boolean.TRUE);//Esta linea es necesaria para que la barra de titulo y el jtoolbar sean homogeneos
+		this.setVisible(true);
+		this.setLayout(new GridBagLayout());
+		this.inicializar();
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
+
+	}
+	
+	public void inicializar(){
+		jbtnaceptar.setActionCommand("aceptar");
+		jbtnaceptar.addActionListener(this);
+		jtxfUsuario.setColumns(10);
+		jpwfPassword.setColumns(10);
+		
+		cons.gridx = 0;
+		cons.gridy = 0;
+		cons.gridwidth=1;
+		cons.gridheight=1;
+		cons.weighty = 0;
+		this.add(jlblUsuario, cons);
+		
+		cons.gridx = 0;
+		cons.gridy = 1;
+		cons.gridwidth=1;
+		cons.gridheight=1;
+		cons.weighty = 0;
+		this.add(jlblPassword, cons);
+		
+		cons.gridx = 1;
+		cons.gridy = 0;
+		cons.gridwidth=2;
+		cons.gridheight=1;
+		cons.weighty = 0;
+		this.add(jtxfUsuario, cons);
+		cons.gridx = 1;
+		cons.gridy = 1;
+		cons.gridwidth=2;
+		cons.gridheight=1;
+		cons.weighty = 0;
+		this.add(jpwfPassword, cons);
+		
+		cons.gridx = 0;
+		cons.gridy = 2;
+		cons.gridwidth=1;
+		cons.gridheight=1;
+		cons.weighty = 0;
+		cons.anchor = GridBagConstraints.WEST;
+		this.add(jbtnaceptar, cons);
+		
+		cons.gridx = 1;
+		cons.gridy = 2;
+		cons.gridwidth=1;
+		cons.gridheight=1;
+		cons.weighty = 0;
+		cons.anchor = GridBagConstraints.EAST;
+		this.add(jbtncancelar, cons);
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand().equals("aceptar")){
+			ConexionDb conexdb = new ConexionDb();
+			ResultSet rs;
+			conexdb.Conectardb();
+			rs = conexdb.ConsultaSQL("Select ID,password,username from USUARIOS where username = '" + jtxfUsuario.getText()+ "'");
+		try {
+			while (rs.next()) 
+			{ 
+				if ((rs.getString(2).compareTo(jpwfPassword.getText())==0) && (rs.getString(3).compareTo(jtxfUsuario.getText())==0)){
+					recursos.setIdusuario(rs.getInt(1));
+					System.out.println(recursos.getIdusuario());
+					recursos.getRfrmppal().inicializar();
+					this.dispose();
+				}
+				else{
+					System.out.println("Contraseña incorrecta");
+		
+			}
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+			conexdb.cerrarConexion();
+		try {
+			System.out.println(Boolean.toString(conexdb.conexion.isClosed()));
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		}
+	}
+}

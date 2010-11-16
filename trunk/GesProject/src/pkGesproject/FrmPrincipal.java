@@ -19,6 +19,7 @@ import javax.swing.JToolBar;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
+import javax.swing.BorderFactory;
 
 import com.seaglasslookandfeel.SeaGlassLookAndFeel;
 import com.seaglasslookandfeel.ui.SeaGlassRootPaneUI;
@@ -50,9 +51,7 @@ public class FrmPrincipal extends JFrame {
 		//this.add(nu,BorderLayout.CENTER);
 		//nu.setVisible(false);
 		this.add(pnlbienvenida,BorderLayout.CENTER);
-		this.setVisible(true);
-		this.inicializar();
-		try {
+				try {
 			UIManager.setLookAndFeel(new SeaGlassLookAndFeel());
 			} catch (UnsupportedLookAndFeelException ex) {
 			
@@ -64,6 +63,7 @@ public class FrmPrincipal extends JFrame {
 	 * Este metodo se encarga de inicializar todas las propiedades de la ventana principal que sean necesarias
 	 */
 	public void inicializar(){		
+			this.setVisible(true);
 			this.Carga_toolbar();
 	}
 	/*
@@ -97,7 +97,7 @@ public class FrmPrincipal extends JFrame {
 		        	//add(pnlbienvenida, BorderLayout.CENTER);
 		        	//pnlbienvenida.setVisible(true);
 		        	repaint();
-		        	//new DlgSiNo("Seguro que desea salir?").start();
+		        	new DlgSiNo("Seguro que desea salir?").start();
 		        
 		         }
 	         if (e.getActionCommand().equals("inicio")){
@@ -114,6 +114,7 @@ public class FrmPrincipal extends JFrame {
 	         	}
 	         } 
 		};
+		jtlbFrmppal.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
 		jbtnUsuarios.addActionListener(jtlbAcListener);
 		jbtnSocios.addActionListener(jtlbAcListener);
 		jbtnInicio.addActionListener(jtlbAcListener);
@@ -123,7 +124,7 @@ public class FrmPrincipal extends JFrame {
 		jbtnInicio.setActionCommand("inicio");
 		jbtnProyectos.setActionCommand("proyectos");
 		jtlbFrmppal.setFloatable(false); //Impedimos que el toolbar se pueda separar de la ventana
-		jtlbFrmppal.setPreferredSize(new Dimension(this.getWidth(),70));
+		jtlbFrmppal.setPreferredSize(new Dimension(this.getWidth(),66));
 		jtlbFrmppal.setVisible(true);
 		jtlbFrmppal.add(jbtnInicio);
 		jbtnInicio.setSelected(true);

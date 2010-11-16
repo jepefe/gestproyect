@@ -40,7 +40,7 @@ public class RsGesproject {
 			};
 	static String SistemaOp = System.getProperty("os.name"); //Nombre del S.O por si necesitamos condicionar codigo 
 	public int eleidioma;
-
+	private int idusuario;
 	
 	/**
 	 * @return Referencia a la instancia de la clase
@@ -96,6 +96,14 @@ public class RsGesproject {
 
 	public FrmPrincipal getRfrmppal() {
 		return Rfrmppal;
+	}
+
+	public void setIdusuario(int idusuario) {
+		this.idusuario = idusuario;
+	}
+
+	public int getIdusuario() {
+		return idusuario;
 	}
 	
 	
