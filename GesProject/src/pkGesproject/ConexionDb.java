@@ -35,11 +35,19 @@ public class ConexionDb {
 			e.printStackTrace();
 		
 	}
-	
-
+		
 	
 	
 	}
+	public void cerrarConexion(){
+		try {
+            st.close();
+            conexion.close();
+        }catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+	}
+	
 	public ResultSet ConsultaSQL(String consultaSQL){
 		ResultSet rs=null;
 		

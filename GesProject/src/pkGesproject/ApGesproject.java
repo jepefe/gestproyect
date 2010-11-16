@@ -7,15 +7,19 @@ public class ApGesproject {
 	
 	public static void main(String[] args){
 		
-		GesIdioma nidioma = new GesIdioma();
-		nidioma.eleccionidioma();
+		
 		try {
 			UIManager.setLookAndFeel(new SeaGlassLookAndFeel());
 			} catch (UnsupportedLookAndFeelException ex) {
 			
 			}
-		FrmPrincipal vppal = new FrmPrincipal();
-		vppal.setVisible(true);
+			GesIdioma nidioma = new GesIdioma();
+		
+			nidioma.eleccionidioma();
+			new FrmLogin("Login - Gesproject", 200,300);
+			FrmPrincipal vppal = new FrmPrincipal();
+		
+		
 	}
 
 }

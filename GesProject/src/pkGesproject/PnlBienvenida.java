@@ -11,8 +11,7 @@ public class PnlBienvenida extends JPanel{
 	PnlBienvenida(){
 		
 		this.setLayout(new GridBagLayout());
-		
-		
+		this.setBackground(new Color(0xED,0xED,0xED,0xED));
 		jlblbienvenida = new JLabel(nidioma.idioma[recursos.eleidioma][5]);
 		GridBagConstraints poslblbienvenida = new GridBagConstraints();
 		titulo = new JLabel("Titulo");
