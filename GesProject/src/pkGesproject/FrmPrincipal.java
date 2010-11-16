@@ -39,6 +39,7 @@ public class FrmPrincipal extends JFrame {
 	PnlAltasocio nu = new PnlAltasocio();
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
 	pnlAlta_staff pnlalta_staff = new pnlAlta_staff();
+	JPanel pnlcontenedor = new JPanel();
 	private Rectangle maxBounds;
 	
 	public FrmPrincipal(){
@@ -87,8 +88,12 @@ public class FrmPrincipal extends JFrame {
 	        	jbtnProyectos.setSelected(false);
 	        	
 	         if (e.getActionCommand().equals("socios")){
+	        	
+	        	add(pnlcontenedor);
+	        	pnlcontenedor.add(nu,BorderLayout.WEST);
+	        	pnlcontenedor.add(pnlalta_staff);
+	        	pnlcontenedor.setOpaque(true);
 	        	jbtnSocios.setSelected(true);
-	        	add(nu, BorderLayout.CENTER);
 	        	nu.setVisible(true);
 	        	repaint();
 	 
