@@ -89,10 +89,11 @@ public class FrmPrincipal extends JFrame {
 	        	
 	         if (e.getActionCommand().equals("socios")){
 	        	
-	        	add(pnlcontenedor);
-	        	pnlcontenedor.add(nu,BorderLayout.WEST);
-	        	pnlcontenedor.add(pnlalta_staff);
-	        	pnlcontenedor.setOpaque(true);
+	        	//add(pnlcontenedor);
+	        	//pnlcontenedor.add(nu,BorderLayout.WEST);
+	        	//pnlcontenedor.add(pnlalta_staff);
+	        	//pnlcontenedor.setOpaque(true);
+	        	add(nu,BorderLayout.CENTER);
 	        	jbtnSocios.setSelected(true);
 	        	nu.setVisible(true);
 	        	repaint();
