@@ -97,7 +97,7 @@ public class FrmPrincipal extends JFrame {
 		        	//add(pnlbienvenida, BorderLayout.CENTER);
 		        	//pnlbienvenida.setVisible(true);
 		        	repaint();
-		        	new DlgSiNo("Seguro que desea salir?").start();
+		        	//new DlgSiNo("Seguro que desea salir?").start();
 		        
 		         }
 	         if (e.getActionCommand().equals("inicio")){
