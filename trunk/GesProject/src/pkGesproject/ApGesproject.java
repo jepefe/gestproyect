@@ -13,11 +13,11 @@ public class ApGesproject {
 			} catch (UnsupportedLookAndFeelException ex) {
 			
 			}
-			GesIdioma nidioma = new GesIdioma();
+			//GesIdioma nidioma = new GesIdioma();
 		
-			nidioma.eleccionidioma();
+			//nidioma.eleccionidioma();
 			new FrmLogin("Login - Gesproject", 200,300);
-			FrmPrincipal vppal = new FrmPrincipal();
+			//FrmPrincipal vppal = new FrmPrincipal();
 		
 		
 	}

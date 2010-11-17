@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.UIManager;
@@ -39,7 +40,9 @@ public class FrmPrincipal extends JFrame {
 	PnlAltasocio nu = new PnlAltasocio();
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
 	pnlAlta_staff pnlalta_staff = new pnlAlta_staff();
-	JPanel pnlcontenedor = new JPanel();
+	JPanel pnlcontenedor = new JPanel(true);
+	JSplitPane splitpane = new JSplitPane();
+	
 	private Rectangle maxBounds;
 	
 	public FrmPrincipal(){
@@ -67,6 +70,7 @@ public class FrmPrincipal extends JFrame {
 	public void inicializar(){		
 			this.setVisible(true);
 			this.Carga_toolbar();
+			repaint();
 	}
 	/*
 	 * Metodo de carga de la barra de herramientas
@@ -82,11 +86,12 @@ public class FrmPrincipal extends JFrame {
 	        	remove(nu);
 	        	remove(pnlbienvenida);
 	        	remove(pnlalta_staff);
+	        	remove(splitpane);
 	        	jbtnUsuarios.setSelected(false);
 	        	jbtnSocios.setSelected(false);
 	        	jbtnInicio.setSelected(false);
 	        	jbtnProyectos.setSelected(false);
-	        	
+	        	repaint();
 	         if (e.getActionCommand().equals("socios")){
 	        	
 	        	//add(pnlcontenedor);
@@ -117,6 +122,18 @@ public class FrmPrincipal extends JFrame {
 	         	}
 	         
 	         if (e.getActionCommand().equals("proyectos")){
+	        	 //splitpane.setOneTouchExpandable(true);
+	        	 //splitpane.setDividerLocation(150);
+	        	//getContentPane().add(pnlcontenedor, BorderLayout.CENTER);
+	        	
+	        	splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, nu, pnlalta_staff);
+	        	splitpane.setOneTouchExpandable(true);
+	        	getContentPane().add(splitpane);
+	        	splitpane.setOpaque(true);
+	        	//splitpane.setPreferredSize(new Dimension(800, 600));
+	        	//splitpane.setLeftComponent(nu);
+	        	//pnlcontenedor.add(splitpane);
+	        	//splitpane.setVisible(true);
 	        	jbtnProyectos.setSelected(true);
 	        	repaint();
 	         	}
