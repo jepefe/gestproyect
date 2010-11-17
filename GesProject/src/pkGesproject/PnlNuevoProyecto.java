@@ -1,23 +1,28 @@
 package pkGesproject;
 
-import GesIdioma;
-import RsGesproject;
+
+
+import java.lang.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class PnlNuevoProyecto {
+public class PnlNuevoProyecto extends JPanel{
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
-	GesIdioma nidioma = new GesIdioma () ;
-			JButton BtnAceptar = new JButton(nidioma.idioma[recursos.eleidioma][0]); 
-			JButton BtnCancelar = new JButton (nidioma.idioma[recursos.eleidioma][1]); 
+	GesIdioma rec = GesIdioma.obtener_instancia();
+	
+			JButton BtnAceptar = new JButton(rec.idioma[rec.eleidioma][0]); 
+			JButton BtnCancelar = new JButton (rec.idioma[rec.eleidioma][1]); 
 			JTextField txt_proyecto = new JTextField(20); 
 			JTextArea txtarea_coment = new JTextArea( null, 5, 20 ); 
 			JTextField txt_presupuesto = new JTextField(20); 
-			JLabel lblproyecto = new JLabel(nidioma.idioma[recursos.eleidioma][11]); 
-			JLabel lblpresupuesto = new JLabel (nidioma.idioma[recursos.eleidioma][12]);
+			JLabel lblproyecto = new JLabel(rec.idioma[rec.eleidioma][11]); 
+			JLabel lblpresupuesto = new JLabel (rec.idioma[rec.eleidioma][12]);
 			// Calendario
 		
 			public PnlNuevoProyecto(){
@@ -49,6 +54,6 @@ public class PnlNuevoProyecto {
 					this.setVisible(true);
 					
 		
-			}		
+				}		
 }
 
