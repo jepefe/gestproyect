@@ -1,5 +1,6 @@
 package pkGesproject;
 
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 
 import javax.swing.JFrame;
@@ -16,15 +17,17 @@ import java.sql.SQLException;
 import com.seaglasslookandfeel.ui.SeaGlassRootPaneUI;
 
 public class FrmLogin extends JFrame implements ActionListener{
+	
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	JButton jbtnaceptar = new JButton(rec.idioma[rec.eleidioma][0]);
 	JButton jbtncancelar = new JButton(rec.idioma[rec.eleidioma][1]);
-	JTextField jtxfUsuario = new JTextField("prueba");
-	JTextField jpwfPassword = new JTextField("Password1");
+	JTextField jtxfUsuario = new JTextField("berna");
+	JPasswordField jpwfPassword = new JPasswordField("123");
 	GridBagConstraints cons = new GridBagConstraints();
 	JLabel jlblUsuario = new JLabel(rec.idioma[rec.eleidioma][9]);
 	JLabel jlblPassword = new JLabel(rec.idioma[rec.eleidioma][10]);
+	
 	public FrmLogin(String titulo, int x, int y){
 		super(titulo);
 		this.setSize(x,y);
@@ -42,6 +45,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 		jbtnaceptar.addActionListener(this);
 		jtxfUsuario.setColumns(10);
 		jpwfPassword.setColumns(10);
+		this.setResizable(false);
 		
 		cons.gridx = 0;
 		cons.gridy = 0;
@@ -49,6 +53,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 		cons.gridheight=1;
 		cons.weighty = 0;
 		this.add(jlblUsuario, cons);
+		jlblUsuario.setFont(recursos.f);
 		
 		cons.gridx = 0;
 		cons.gridy = 1;
@@ -56,6 +61,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 		cons.gridheight=1;
 		cons.weighty = 0;
 		this.add(jlblPassword, cons);
+		jlblPassword.setFont(recursos.f);
 		
 		cons.gridx = 1;
 		cons.gridy = 0;
@@ -63,12 +69,15 @@ public class FrmLogin extends JFrame implements ActionListener{
 		cons.gridheight=1;
 		cons.weighty = 0;
 		this.add(jtxfUsuario, cons);
+		jtxfUsuario.setFont(recursos.f);
+		
 		cons.gridx = 1;
 		cons.gridy = 1;
 		cons.gridwidth=2;
 		cons.gridheight=1;
 		cons.weighty = 0;
 		this.add(jpwfPassword, cons);
+		
 		
 		cons.gridx = 0;
 		cons.gridy = 2;
@@ -77,6 +86,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 		cons.weighty = 0;
 		cons.anchor = GridBagConstraints.WEST;
 		this.add(jbtnaceptar, cons);
+		jbtnaceptar.setFont(recursos.f);
 		
 		cons.gridx = 1;
 		cons.gridy = 2;
@@ -85,6 +95,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 		cons.weighty = 0;
 		cons.anchor = GridBagConstraints.EAST;
 		this.add(jbtncancelar, cons);
+		jbtncancelar.setFont(recursos.f);
 		
 	}
 

@@ -1,5 +1,7 @@
 package pkGesproject;
 
+import java.awt.Font;
+
 import javax.swing.ImageIcon;
 
 
@@ -44,7 +46,7 @@ public class RsGesproject {
 	static String SistemaOp = System.getProperty("os.name"); //Nombre del S.O por si necesitamos condicionar codigo 
 	
 	private int idusuario;
-	
+	Font f = new Font( "arial",0,14 );
 	/**
 	 * @return Referencia a la instancia de la clase
 	 */

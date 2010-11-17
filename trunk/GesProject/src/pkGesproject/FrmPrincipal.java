@@ -16,6 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
@@ -46,7 +47,9 @@ public class FrmPrincipal extends JFrame {
 	JPanel pnlcontenedor = new JPanel(true);
 	PnlMenusocio pnlmenusocio = new PnlMenusocio();
 	JSplitPane splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlmenusocio, nu);
+	JScrollPane jspnContenedor= new JScrollPane();
 	GesIdioma rec = GesIdioma.obtener_instancia();
+	
 	
 	private Rectangle maxBounds;
 	
@@ -93,6 +96,7 @@ public class FrmPrincipal extends JFrame {
 	        	remove(pnlalta_staff);
 	        	remove(splitpane);
 	        	remove(jtlbLateral);
+	        	remove(jspnContenedor);
 	        	jbtnUsuarios.setSelected(false);
 	        	jbtnSocios.setSelected(false);
 	        	jbtnInicio.setSelected(false);
@@ -114,7 +118,9 @@ public class FrmPrincipal extends JFrame {
 	        	}
 	         if (e.getActionCommand().equals("usuarios")){
 		        	jbtnUsuarios.setSelected(true); 
-		        	add(pnlalta_staff, BorderLayout.CENTER);
+		        	jspnContenedor.setViewportView(pnlalta_staff);
+		        	jspnContenedor.setOpaque(false);
+		        	add(jspnContenedor, BorderLayout.CENTER);
 		        	pnlalta_staff.setVisible(true);
 		        	repaint();
 		        	validate();
