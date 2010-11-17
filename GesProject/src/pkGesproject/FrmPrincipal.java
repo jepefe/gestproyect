@@ -5,11 +5,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -32,6 +34,7 @@ import com.seaglasslookandfeel.ui.SeaGlassRootPaneUI;
 public class FrmPrincipal extends JFrame {
 	
 	JToolBar jtlbFrmppal = new JToolBar();
+	JToolBar jtlbLateral = new JToolBar();
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	JToggleButton jbtnInicio = new JToggleButton(recursos.icono[2]);
 	JToggleButton jbtnUsuarios = new JToggleButton(recursos.icono[0]);
@@ -41,7 +44,8 @@ public class FrmPrincipal extends JFrame {
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
 	pnlAlta_staff pnlalta_staff = new pnlAlta_staff();
 	JPanel pnlcontenedor = new JPanel(true);
-	JSplitPane splitpane = new JSplitPane();
+	PnlMenusocio pnlmenusocio = new PnlMenusocio();
+	JSplitPane splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlmenusocio, nu);
 	
 	private Rectangle maxBounds;
 	
@@ -87,11 +91,13 @@ public class FrmPrincipal extends JFrame {
 	        	remove(pnlbienvenida);
 	        	remove(pnlalta_staff);
 	        	remove(splitpane);
+	        	remove(jtlbLateral);
 	        	jbtnUsuarios.setSelected(false);
 	        	jbtnSocios.setSelected(false);
 	        	jbtnInicio.setSelected(false);
 	        	jbtnProyectos.setSelected(false);
 	        	repaint();
+	        	validate();
 	         if (e.getActionCommand().equals("socios")){
 	        	
 	        	//add(pnlcontenedor);
@@ -102,7 +108,7 @@ public class FrmPrincipal extends JFrame {
 	        	jbtnSocios.setSelected(true);
 	        	nu.setVisible(true);
 	        	repaint();
-	 
+	        	validate();
 	        	
 	        	}
 	         if (e.getActionCommand().equals("usuarios")){
@@ -110,6 +116,7 @@ public class FrmPrincipal extends JFrame {
 		        	add(pnlalta_staff, BorderLayout.CENTER);
 		        	pnlalta_staff.setVisible(true);
 		        	repaint();
+		        	validate();
 		        	//new DlgSiNo("Seguro que desea salir?").start();
 		        
 		         }
@@ -117,7 +124,7 @@ public class FrmPrincipal extends JFrame {
 	        	 jbtnInicio.setSelected(true);
 	        	 add(pnlbienvenida, BorderLayout.CENTER);
 	        	 repaint();
-	        	 
+	        	 validate();
 	        	 
 	         	}
 	         
@@ -125,8 +132,24 @@ public class FrmPrincipal extends JFrame {
 	        	 //splitpane.setOneTouchExpandable(true);
 	        	 //splitpane.setDividerLocation(150);
 	        	//getContentPane().add(pnlcontenedor, BorderLayout.CENTER);
+	        	splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jtlbLateral, nu);
+	        	jtlbLateral.setLayout(new GridLayout(7,1));
+	        	jtlbLateral.setOpaque(true);
+	       
+	        	JToggleButton bt = new JToggleButton(recursos.icono[5]);
+	        	bt.setText("Nuevo Staff");
+	        	jtlbLateral.add(bt);
 	        	
-	        	splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, nu, pnlalta_staff);
+	        	JToggleButton bt1 = new JToggleButton(recursos.icono[6]);
+	        	bt1.setText("Modificar / Eliminar");
+	        	bt1.setHorizontalAlignment(0);
+	        	jtlbLateral.add(bt1);
+	        	
+	        	JToggleButton bt2 = new JToggleButton(recursos.icono[7]);
+	        	bt2.setText("Mostar Staff");
+	        	bt2.setHorizontalAlignment(0);
+	        	jtlbLateral.add(bt2);
+	        	
 	        	splitpane.setOneTouchExpandable(true);
 	        	getContentPane().add(splitpane);
 	        	splitpane.setOpaque(true);
@@ -136,6 +159,7 @@ public class FrmPrincipal extends JFrame {
 	        	//splitpane.setVisible(true);
 	        	jbtnProyectos.setSelected(true);
 	        	repaint();
+	        	validate();
 	         	}
 	         } 
 		};
