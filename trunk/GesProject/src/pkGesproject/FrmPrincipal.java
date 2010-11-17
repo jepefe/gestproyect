@@ -46,6 +46,7 @@ public class FrmPrincipal extends JFrame {
 	JPanel pnlcontenedor = new JPanel(true);
 	PnlMenusocio pnlmenusocio = new PnlMenusocio();
 	JSplitPane splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlmenusocio, nu);
+	GesIdioma rec = GesIdioma.obtener_instancia();
 	
 	private Rectangle maxBounds;
 	
@@ -137,16 +138,17 @@ public class FrmPrincipal extends JFrame {
 	        	jtlbLateral.setOpaque(true);
 	       
 	        	JToggleButton bt = new JToggleButton(recursos.icono[5]);
-	        	bt.setText("Nuevo Staff");
+	        	bt.setText(rec.idioma[rec.eleidioma][13]);
 	        	jtlbLateral.add(bt);
 	        	
 	        	JToggleButton bt1 = new JToggleButton(recursos.icono[6]);
-	        	bt1.setText("Modificar / Eliminar");
+	        	bt1.setText(rec.idioma[rec.eleidioma][14]);
 	        	bt1.setHorizontalAlignment(0);
+	        	//bt1.setBackground(new Color(200,200,200));
 	        	jtlbLateral.add(bt1);
 	        	
 	        	JToggleButton bt2 = new JToggleButton(recursos.icono[7]);
-	        	bt2.setText("Mostar Staff");
+	        	bt2.setText(rec.idioma[rec.eleidioma][15]);
 	        	bt2.setHorizontalAlignment(0);
 	        	jtlbLateral.add(bt2);
 	        	
