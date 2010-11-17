@@ -26,14 +26,16 @@ public class ConexionDb {
 		conexion = dataSource.getConnection();
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
+		System.out.println("Fallo conexi—n");
 		e.printStackTrace();
 	}
 		try {
+			System.out.println("Fallo al crear st");
 			st = conexion.createStatement();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		
+			
 	}
 		
 	

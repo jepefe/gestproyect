@@ -16,7 +16,8 @@ public class ApGesproject {
 			//GesIdioma nidioma = new GesIdioma();
 		
 			//nidioma.eleccionidioma();
-			new FrmLogin("Login - Gesproject", 200,300);
+			new FrmLogin("Login - Gesproject", 300,200);
+			
 			//FrmPrincipal vppal = new FrmPrincipal();
 		
 		

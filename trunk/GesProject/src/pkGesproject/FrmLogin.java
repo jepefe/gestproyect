@@ -34,7 +34,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 		this.inicializar();
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-
+		validate();
 	}
 	
 	public void inicializar(){
@@ -90,7 +90,9 @@ public class FrmLogin extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getActionCommand().equals("aceptar")){
+		FrmPrincipal vppal = new FrmPrincipal();
+		recursos.getRfrmppal().inicializar();
+		/*if(e.getActionCommand().equals("aceptar")){
 			ConexionDb conexdb = new ConexionDb();
 			ResultSet rs;
 			conexdb.Conectardb();
@@ -123,6 +125,6 @@ public class FrmLogin extends JFrame implements ActionListener{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		}
+		}*/
 	}
 }
