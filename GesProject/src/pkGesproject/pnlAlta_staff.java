@@ -8,7 +8,7 @@ import javax.swing.text.MaskFormatter;
 
 public class pnlAlta_staff extends JPanel {
 
-	JButton jbtnCrear = new JButton("Crear");
+	public JButton jbtnCrear = new JButton("Crear");
 	JButton jbtnSalir = new JButton("Salir");
 	JButton jbtnExaminar = new JButton("Examinar");
 	JTextField jtxtIDstaff = new JTextField(20);
@@ -30,7 +30,7 @@ public class pnlAlta_staff extends JPanel {
 	JTextField jtxt16 = new JTextField(20);
 	JCheckBox jcb1 = new JCheckBox();
 	JLabel jlblstaff = new JLabel(
-			"<html><b><font color=#81BEF7 size=5>Dar de alta STAFF</font></b></html>"); //metemos codigo html para dar formato a label
+			"<html><b><font color=#81BEF7 size=5> </font></b></html>"); //metemos codigo html para dar formato a label
 	JLabel jlblempty = new JLabel("    "); // creamos labels vacios para hacer
 											// espacios entre los controles
 	JLabel jlblempty2 = new JLabel("    ");

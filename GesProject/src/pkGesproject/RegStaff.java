@@ -1,0 +1,31 @@
+package pkGesproject;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+
+/**
+ * Esta clase se encarga del evento genrado al dar de alta un nuevo Staff
+ * crea una nueva ficha de Staff en la base de tados.
+ * 
+ * @author Freyder Espinosa Valencia
+ *
+ */
+public class RegStaff extends pnlAlta_staff implements java.awt.event.ActionListener{
+
+	@Override
+	/*Redefinimos el método action performe para ejecutarlo como
+	 * respuesta al eventeo evt producido 
+	 */
+	public void actionPerformed(ActionEvent e) {
+	
+		java.awt.event.ActionListener crear = new RegStaff();
+		
+		
+		
+		jbtnCrear.addActionListener(crear);
+		System.out.println("Usuario añadido correctamente");
+	}
+
+}
