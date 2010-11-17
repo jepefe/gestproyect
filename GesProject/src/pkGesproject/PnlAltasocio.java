@@ -14,15 +14,15 @@ public class PnlAltasocio extends JPanel{
 	JButton jbtnaceptar, jbtncancelar;
 	JLabel jlblnombre, jlblmail;
 	JTextField jtxtnombre, jtxtmail;
-	GesIdioma nidioma = new GesIdioma();
+	GesIdioma rec = GesIdioma.obtener_instancia();
 	
 	public PnlAltasocio (){
 		RsGesproject recursos = RsGesproject.Obtener_Instancia();
 		
 		this.setLayout(new GridBagLayout());
 		
-		
-		jlblnombre = new JLabel(nidioma.idioma[recursos.eleidioma][2]);
+		System.out.println("idioma pnlsocio"+rec.eleidioma);
+		jlblnombre = new JLabel(rec.idioma[rec.eleidioma][2]);
 		GridBagConstraints poslblnombre = new GridBagConstraints();
 		poslblnombre.gridx = 0; // El ·rea de texto empieza en la columna 2.
 		poslblnombre.gridy = 1; // El ·rea de texto empieza en la fila 0
@@ -41,7 +41,7 @@ public class PnlAltasocio extends JPanel{
 		postxtnombre.fill = GridBagConstraints.HORIZONTAL;
 		
 		
-		JLabel jlblsector = new JLabel(nidioma.idioma[recursos.eleidioma][3]);
+		JLabel jlblsector = new JLabel(rec.idioma[rec.eleidioma][3]);
 		GridBagConstraints poslblsector = new GridBagConstraints();
 		poslblsector.gridx = 0; // El ·rea de texto empieza en la columna 2.
 		poslblsector.gridy = 2; // El ·rea de texto empieza en la fila 0
@@ -60,7 +60,7 @@ public class PnlAltasocio extends JPanel{
 		postxtsector.fill = GridBagConstraints.HORIZONTAL;
 		
 		
-		JLabel jlbldireccion = new JLabel(nidioma.idioma[recursos.eleidioma][6]);
+		JLabel jlbldireccion = new JLabel(rec.idioma[rec.eleidioma][6]);
 		GridBagConstraints poslbldireccion = new GridBagConstraints();
 		poslbldireccion.gridx = 0; // El ·rea de texto empieza en la columna 2.
 		poslbldireccion.gridy = 3; // El ·rea de texto empieza en la fila 0
@@ -80,7 +80,7 @@ public class PnlAltasocio extends JPanel{
 		postxtdireccion.fill = GridBagConstraints.HORIZONTAL;
 		
 		
-		JLabel jlblcodpostal = new JLabel(nidioma.idioma[recursos.eleidioma][7]);
+		JLabel jlblcodpostal = new JLabel(rec.idioma[rec.eleidioma][7]);
 		GridBagConstraints poslblcodpostal = new GridBagConstraints();
 		poslblcodpostal.gridx = 0; // El ·rea de texto empieza en la columna 2.
 		poslblcodpostal.gridy = 4; // El ·rea de texto empieza en la fila 0
@@ -100,7 +100,7 @@ public class PnlAltasocio extends JPanel{
 		postxtcodpostal.fill = GridBagConstraints.HORIZONTAL;
 		
 		
-		JLabel jlbltelf = new JLabel(nidioma.idioma[recursos.eleidioma][4]);
+		JLabel jlbltelf = new JLabel(rec.idioma[rec.eleidioma][4]);
 		GridBagConstraints poslbltelf = new GridBagConstraints();
 		poslbltelf.gridx = 0; // El ·rea de texto empieza en la columna 2.
 		poslbltelf.gridy = 5; // El ·rea de texto empieza en la fila 0
@@ -120,7 +120,7 @@ public class PnlAltasocio extends JPanel{
 		postxttelf.fill = GridBagConstraints.HORIZONTAL;
 		
 		
-		jlblmail = new JLabel(nidioma.idioma[recursos.eleidioma][8]);
+		jlblmail = new JLabel(rec.idioma[rec.eleidioma][8]);
 		GridBagConstraints poslblmail = new GridBagConstraints();
 		poslblmail.gridx = 0; // El ·rea de texto empieza en la columna 2.
 		poslblmail.gridy = 6; // El ·rea de texto empieza en la fila 0
@@ -140,7 +140,7 @@ public class PnlAltasocio extends JPanel{
 		postxtmail.fill = GridBagConstraints.HORIZONTAL;
 		
 		
-		jbtnaceptar = new JButton(nidioma.idioma[recursos.eleidioma][0]);
+		jbtnaceptar = new JButton(rec.idioma[rec.eleidioma][0]);
 		GridBagConstraints posbtnaceptar = new GridBagConstraints();
 		posbtnaceptar.gridx = 0; // El ·rea de texto empieza en la columna 2.
 		posbtnaceptar.gridy = 8; // El ·rea de texto empieza en la fila 0
@@ -150,7 +150,7 @@ public class PnlAltasocio extends JPanel{
 		posbtnaceptar.anchor = GridBagConstraints.WEST;
 		
 		
-		jbtncancelar = new JButton(nidioma.idioma[recursos.eleidioma][1]);
+		jbtncancelar = new JButton(rec.idioma[rec.eleidioma][1]);
 		GridBagConstraints posbtncancelar = new GridBagConstraints();
 		posbtncancelar.gridx = 1; // El ·rea de texto empieza en la columna 2.
 		posbtncancelar.gridy = 8; // El ·rea de texto empieza en la fila 0

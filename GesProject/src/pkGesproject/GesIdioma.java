@@ -16,8 +16,9 @@ public class GesIdioma {
 	static String idioma[][] = new String[2][100];
 	String listaidiomas[]= new String[20];
 	int eleccion;
+	int eleidioma;
 	
-	public GesIdioma(){
+	private GesIdioma(){
 		
 		File f = new File("src/pkGesproject/idioma.data");
 		Scanner s;
@@ -82,16 +83,21 @@ public class GesIdioma {
 		*/
 	}
 	
+	static GesIdioma instancia = new GesIdioma();
+	public static GesIdioma obtener_instancia(){
+		return instancia;
+	}
+	
 	public static void eleccionidioma(){
 		RsGesproject recursos = RsGesproject.Obtener_Instancia();
 		Object seleccion = JOptionPane.showInputDialog(null, "Choose language",
 				"Language", JOptionPane.QUESTION_MESSAGE, recursos.icono[3], new Object[] {"Espa–ol", "English"}, "Espa–ol");
-		
+		/*
 		if(seleccion.equals("Espa–ol")){
-			recursos.eleidioma = 0;
+			recursos.setEleidioma(0);
 		}else
-			recursos.eleidioma = 1;	
-			
+			recursos.setEleidioma(1);	
+		*/	
 	}
 	
 	public static void nuevo_idioma(){
@@ -127,4 +133,8 @@ public class GesIdioma {
 			}
 		}
 	}
+
+	/**
+	 * @param eleidioma the eleidioma to set
+	 */
 }

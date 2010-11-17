@@ -17,13 +17,14 @@ import com.seaglasslookandfeel.ui.SeaGlassRootPaneUI;
 
 public class FrmLogin extends JFrame implements ActionListener{
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
-	JButton jbtnaceptar = new JButton(GesIdioma.idioma[recursos.eleidioma][0]);
-	JButton jbtncancelar = new JButton(GesIdioma.idioma[recursos.eleidioma][1]);
+	GesIdioma rec = GesIdioma.obtener_instancia();
+	JButton jbtnaceptar = new JButton(rec.idioma[rec.eleidioma][0]);
+	JButton jbtncancelar = new JButton(rec.idioma[rec.eleidioma][1]);
 	JTextField jtxfUsuario = new JTextField("prueba");
 	JTextField jpwfPassword = new JTextField("Password1");
 	GridBagConstraints cons = new GridBagConstraints();
-	JLabel jlblUsuario = new JLabel(GesIdioma.idioma[recursos.eleidioma][9]);
-	JLabel jlblPassword = new JLabel(GesIdioma.idioma[recursos.eleidioma][10]);
+	JLabel jlblUsuario = new JLabel(rec.idioma[rec.eleidioma][9]);
+	JLabel jlblPassword = new JLabel(rec.idioma[rec.eleidioma][10]);
 	public FrmLogin(String titulo, int x, int y){
 		super(titulo);
 		this.setSize(x,y);
@@ -93,14 +94,17 @@ public class FrmLogin extends JFrame implements ActionListener{
 			ConexionDb conexdb = new ConexionDb();
 			ResultSet rs;
 			conexdb.Conectardb();
-			rs = conexdb.ConsultaSQL("Select ID,password,username from USUARIOS where username = '" + jtxfUsuario.getText()+ "'");
+			rs = conexdb.ConsultaSQL("Select ID,password,username,idioma from USUARIOS where username = '" + jtxfUsuario.getText()+ "'");
 		try {
 			while (rs.next()) 
 			{ 
 				if ((rs.getString(2).compareTo(jpwfPassword.getText())==0) && (rs.getString(3).compareTo(jtxfUsuario.getText())==0)){
 					recursos.setIdusuario(rs.getInt(1));
-					System.out.println(recursos.getIdusuario());
+					rec.eleidioma = rs.getInt(4);
+					System.out.println(recursos.getIdusuario() + "idioma:"+rec.eleidioma);
+					FrmPrincipal vppal = new FrmPrincipal();
 					recursos.getRfrmppal().inicializar();
+					//if (rs.getInt(4) != null)
 					this.dispose();
 				}
 				else{

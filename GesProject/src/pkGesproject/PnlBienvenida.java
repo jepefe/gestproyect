@@ -7,12 +7,12 @@ import javax.swing.*;
 public class PnlBienvenida extends JPanel{
 	JLabel jlblbienvenida, titulo;
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
-	GesIdioma nidioma = new GesIdioma();
+	GesIdioma rec = GesIdioma.obtener_instancia();
 	PnlBienvenida(){
 		
 		this.setLayout(new GridBagLayout());
 		this.setBackground(new Color(0xED,0xED,0xED,0xED));
-		jlblbienvenida = new JLabel(nidioma.idioma[recursos.eleidioma][5]);
+		jlblbienvenida = new JLabel(rec.idioma[rec.eleidioma][5]);
 		GridBagConstraints poslblbienvenida = new GridBagConstraints();
 		titulo = new JLabel("Titulo");
 		
