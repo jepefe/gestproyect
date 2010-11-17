@@ -44,6 +44,7 @@ public class FrmPrincipal extends JFrame {
 	PnlAltasocio nu = new PnlAltasocio();
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
 	pnlAlta_staff pnlalta_staff = new pnlAlta_staff();
+	PnlNuevoProyecto pnlnuevoproyecto = new PnlNuevoProyecto();
 	JPanel pnlcontenedor = new JPanel(true);
 	PnlMenusocio pnlmenusocio = new PnlMenusocio();
 	JSplitPane splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlmenusocio, nu);
@@ -139,7 +140,7 @@ public class FrmPrincipal extends JFrame {
 	        	 //splitpane.setOneTouchExpandable(true);
 	        	 //splitpane.setDividerLocation(150);
 	        	//getContentPane().add(pnlcontenedor, BorderLayout.CENTER);
-	        	splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jtlbLateral, nu);
+	        	splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jtlbLateral, pnlnuevoproyecto);
 	        	jtlbLateral.setLayout(new GridLayout(7,1));
 	        	jtlbLateral.setOpaque(true);
 	       
