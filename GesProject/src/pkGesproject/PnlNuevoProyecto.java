@@ -34,19 +34,15 @@ public class PnlNuevoProyecto extends JPanel{
 				  */
 				this.setOpaque(true);
 				// Para poder centrar todos los botones. Hay que centrar boton por boton.
+				
+				// para centrar objetos.
 				this.setLayout (new GridBagLayout());
-				GridBagConstraints poslblusuario = new GridBagConstraints();
-				
-				/*poslblusuario.gridx = 1; // El área de texto empieza en la columna 0.
-				poslblusuario.gridy = 1;  // El área de texto empieza en la fila 0.
-				poslblusuario.gridwidth = 2; // El área de texto ocupa 2 columnas. 
-				poslblusuario.gridheight = 1; // El área de texto ocupa 1 filas.
-				poslblusuario.weighty = 1.0;/*Para estirar filas y columnas,
-				   							  dentro del GridBagConstraints 
-				   							  tenemos los campos weigthx y weigthy*/
+				GridBagConstraints lbl1  = new GridBagConstraints();
+				pkGesproject.CentrarObjetos.CentrarObjetos(lbl1,1,1,1,1);
 				
 				
-					this.add(lblproyecto);
+				
+					this.add(lblproyecto,lbl1);
 					this.add(txt_proyecto);
 					this.add(lblpresupuesto); 
 					this.add(txt_presupuesto);
