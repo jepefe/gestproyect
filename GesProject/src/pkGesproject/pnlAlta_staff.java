@@ -3,19 +3,23 @@ package pkGesproject;
 import java.lang.*;
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 
 public class pnlAlta_staff extends JScrollPane {
 
-	public JButton jbtnCrear = new JButton("Crear");
+	JButton jbtnCrear = new JButton("Crear");
 	JButton jbtnSalir = new JButton("Salir");
 	JButton jbtnExaminar = new JButton("Examinar");
-	JTextField jtxtIDstaff = new JTextField(20);
-	JTextField jtxtDNI = new JTextField(20);
-	JTextField jtxtNombre = new JTextField(20);
-	JTextField jtxtCategoria = new JTextField(20);
-	JTextField jtxtFec_nac = new JTextField(20);
+	int seleccion;
+	String numCadena= seleccion+"";
+	
+	JTextField jtxt1 = new JTextField(20);
+	JTextField jtxt2 = new JTextField(20);
+	JTextField jtxt3 = new JTextField(20);
+	JTextField jtxt4 = new JTextField(20);
+	JTextField jtxt5 = new JTextField(20);
 	//JTextField jtxt6 = new JTextField(20);
 	JComboBox jcmbPais = new JComboBox();
 	JTextField jtxt7 = new JTextField(20);
@@ -25,12 +29,12 @@ public class pnlAlta_staff extends JScrollPane {
 	JTextField jtxt11 = new JTextField(20);
 	JTextField jtxt12 = new JTextField(20);
 	JTextField jtxt13 = new JTextField(20);
-	JPasswordField jpswContraseña = new JPasswordField(20); //JPasswordField se usa especialmente para campos de contraseña
+	JTextField jtxt14 = new JTextField(20);
 	JTextField jtxt15 = new JTextField(20);
 	JTextField jtxt16 = new JTextField(20);
 	JCheckBox jcb1 = new JCheckBox();
 	JLabel jlblstaff = new JLabel(
-			"<html><b><font color=#81BEF7 size=5> </font></b></html>"); //metemos codigo html para dar formato a label
+			"<html><b><font color=#81BEF7 size=5>Dar de alta STAFF</font></b></html>");
 	JLabel jlblempty = new JLabel("    "); // creamos labels vacios para hacer
 											// espacios entre los controles
 	JLabel jlblempty2 = new JLabel("    ");
@@ -54,7 +58,6 @@ public class pnlAlta_staff extends JScrollPane {
 	JPanel jp = new JPanel();
 	public pnlAlta_staff() {
 
-		jp.setOpaque(true);
 		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblstaff = new GridBagConstraints();
 		poslblstaff.gridx = 1;
@@ -78,11 +81,11 @@ public class pnlAlta_staff extends JScrollPane {
 		poslblidstaff.weighty = 1.0;
 		poslblidstaff.anchor = GridBagConstraints.WEST;
 
-		GridBagConstraints postxtIDstaff = new GridBagConstraints();
-		postxtIDstaff.gridx = 2;
-		postxtIDstaff.gridy = 2;
-		postxtIDstaff.gridwidth = 2;
-		postxtIDstaff.gridheight = 1;
+		GridBagConstraints postxt1 = new GridBagConstraints();
+		postxt1.gridx = 2;
+		postxt1.gridy = 2;
+		postxt1.gridwidth = 2;
+		postxt1.gridheight = 1;
 
 		GridBagConstraints poslbldni = new GridBagConstraints();
 		poslbldni.gridx = 0;
@@ -92,11 +95,11 @@ public class pnlAlta_staff extends JScrollPane {
 		poslblidstaff.weighty = 0.0;
 		poslbldni.anchor = GridBagConstraints.WEST;
 
-		GridBagConstraints postxtDNI = new GridBagConstraints();
-		postxtDNI.gridx = 2;
-		postxtDNI.gridy = 3;
-		postxtDNI.gridwidth = 2;
-		postxtDNI.gridheight = 1;
+		GridBagConstraints postxt2 = new GridBagConstraints();
+		postxt2.gridx = 2;
+		postxt2.gridy = 3;
+		postxt2.gridwidth = 2;
+		postxt2.gridheight = 1;
 
 		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblnombre = new GridBagConstraints();
@@ -106,11 +109,11 @@ public class pnlAlta_staff extends JScrollPane {
 		poslblnombre.gridheight = 1;
 		poslblnombre.anchor = GridBagConstraints.WEST;
 
-		GridBagConstraints postxtNombre = new GridBagConstraints();
-		postxtNombre.gridx = 2;
-		postxtNombre.gridy = 4;
-		postxtNombre.gridwidth = 2;
-		postxtNombre.gridheight = 1;
+		GridBagConstraints postxt3 = new GridBagConstraints();
+		postxt3.gridx = 2;
+		postxt3.gridy = 4;
+		postxt3.gridwidth = 2;
+		postxt3.gridheight = 1;
 
 		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblCategoria = new GridBagConstraints();
@@ -120,11 +123,11 @@ public class pnlAlta_staff extends JScrollPane {
 		poslblCategoria.gridheight = 1;
 		poslblCategoria.anchor = GridBagConstraints.WEST;
 
-		GridBagConstraints postxtCategoria = new GridBagConstraints();
-		postxtCategoria.gridx = 2;
-		postxtCategoria.gridy = 5;
-		postxtCategoria.gridwidth = 2;
-		postxtCategoria.gridheight = 1;
+		GridBagConstraints postxt4 = new GridBagConstraints();
+		postxt4.gridx = 2;
+		postxt4.gridy = 5;
+		postxt4.gridwidth = 2;
+		postxt4.gridheight = 1;
 
 		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblFec_nac = new GridBagConstraints();
@@ -134,11 +137,11 @@ public class pnlAlta_staff extends JScrollPane {
 		poslblFec_nac.gridheight = 1;
 		poslblFec_nac.anchor = GridBagConstraints.WEST;
 
-		GridBagConstraints postxtFec_nac = new GridBagConstraints();
-		postxtFec_nac.gridx = 2;
-		postxtFec_nac.gridy = 6;
-		postxtFec_nac.gridwidth = 2;
-		postxtFec_nac.gridheight = 1;
+		GridBagConstraints postxt5 = new GridBagConstraints();
+		postxt5.gridx = 2;
+		postxt5.gridy = 6;
+		postxt5.gridwidth = 2;
+		postxt5.gridheight = 1;
 
 		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblPais = new GridBagConstraints();
@@ -267,11 +270,11 @@ public class pnlAlta_staff extends JScrollPane {
 		poslblContrasemia.gridheight = 1;
 		poslblContrasemia.anchor = GridBagConstraints.WEST;
 
-		GridBagConstraints posjpswContraseña = new GridBagConstraints();
-		posjpswContraseña.gridx = 2;
-		posjpswContraseña.gridy = 15;
-		posjpswContraseña.gridwidth = 2;
-		posjpswContraseña.gridheight = 1;
+		GridBagConstraints postxt14 = new GridBagConstraints();
+		postxt14.gridx = 2;
+		postxt14.gridy = 15;
+		postxt14.gridwidth = 2;
+		postxt14.gridheight = 1;
 
 		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblPermisos = new GridBagConstraints();
@@ -342,20 +345,21 @@ public class pnlAlta_staff extends JScrollPane {
 		jp.add(jlblempty2, poslblempty2);
 		jp.add(jlblIDstaff, poslblidstaff);
 		poslblidstaff.weighty = 0.0;
-		jp.add(jtxtIDstaff, postxtIDstaff);
-		jtxtIDstaff.setEditable(false); //impide la modificación del campo ID STAFF
+		jp.add(jtxt1, postxt1);
+		jtxt1.setEditable(false); //impide la modificación del campo ID STAFF
 		jp.add(jlblDNI, poslbldni);
-		jp.add(jtxtDNI, postxtDNI);
+		jp.add(jtxt2, postxt2);
 		jp.add(jlblNombre, poslblnombre);
-		jp.add(jtxtNombre, postxtNombre);
+		jp.add(jtxt3, postxt3);
 		jp.add(jlblCategoria, poslblCategoria);
-		jp.add(jtxtCategoria, postxtCategoria);
+		jp.add(jtxt4, postxt4);
 		jp.add(jlblFec_nac, poslblFec_nac);
-		jp.add(jtxtFec_nac, postxtFec_nac);
+		jp.add(jtxt5, postxt5);
 
 		//jp.add(jtxt6, postxt6);
 		jp.add(jcmbPais,posjcmbPais);
-		jcmbPais.addItem("España                                   ");//metemos espacios en blanco para que combobox ocupe el mismo tamaño que los campos de texto (hay que buscar otra solución)
+		jcmbPais.setPreferredSize(new Dimension(233,30));
+		jcmbPais.addItem("España");
 		jcmbPais.addItem("Inglaterra");
 		jcmbPais.addItem("Alemania");
 		jcmbPais.addItem("Francia");
@@ -368,19 +372,34 @@ public class pnlAlta_staff extends JScrollPane {
 		jp.add(jtxt9, postxt9);
 		jp.add(jlblDireccion, poslblDireccion);
 		jp.add(jtxt10, postxt10);
-		jp.add(jlblCod_post, poslblCod_post);
-		jp.add(jtxt11, postxt11);
 		
-		jtxt11.addKeyListener(new KeyAdapter()// creamos KeyListener
+		jtxt10.addKeyListener(new KeyAdapter()
 		{
-		   public void keyTyped(KeyEvent e)//creamos evento de KeyListener
+		   public void keyTyped(KeyEvent e)
 		   {
 		      char caracter = e.getKeyChar();
 
+		      if(((caracter < '0') ||
+		         (caracter > '9')) &&
+		         (caracter != KeyEvent.VK_BACK_SPACE))
+		      {
+		         e.consume();  
+		      }
+		   }
+		});
+		
+		jp.add(jlblCod_post, poslblCod_post);
+		jp.add(jtxt11, postxt11);
+		
+		jtxt11.addKeyListener(new KeyAdapter()
+		{
+		   public void keyTyped(KeyEvent e)
+		   {
+		      char caracter = e.getKeyChar();
 		      
 		      if(((caracter < '0') ||
 		         (caracter > '9')) &&
-		         (caracter != KeyEvent.VK_BACK_SPACE)) //keylistener impide la introducción de las letras
+		         (caracter != KeyEvent.VK_BACK_SPACE))
 		      {
 		         e.consume();  
 		      }
@@ -392,17 +411,7 @@ public class pnlAlta_staff extends JScrollPane {
 		jp.add(jlblFoto, poslblFoto);
 		jp.add(jtxt13, postxt13);
 		jp.add(jlblNick, poslblNick);
-		jp.add(jpswContraseña, posjpswContraseña);
-		
-		jpswContraseña.addKeyListener(new KeyAdapter()// creamos KeyListener
-		{
-			public void keyTyped(KeyEvent e)//creamos evento de KeyListener
-			{
-				if (jpswContraseña.getText().length()==18)//limitamos el número de caracteres que se puede introducir a 18
-					e.consume();
-			}
-		});
-		
+		jp.add(jtxt14, postxt14);
 		jp.add(jlblContrasenia, poslblContrasemia);
 		jp.add(jtxt15, postxt15);
 		jp.add(jlblPermisos, poslblPermisos);
@@ -414,6 +423,20 @@ public class pnlAlta_staff extends JScrollPane {
 		jp.add(jbtnCrear, posBtnaceptar);
 		jp.add(jbtnSalir, posBtncancelar);
 		jp.add(jbtnExaminar, posBtnExaminar);
+		
+		jbtnExaminar.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				JFileChooser filechooser = new JFileChooser();
+				Component areaTexto = null;
+				seleccion = filechooser.showOpenDialog(areaTexto);
+				System.out.println(seleccion);
+				
+			
+			}		
+		});
 		this.setViewportView(jp);
 	}
 }
