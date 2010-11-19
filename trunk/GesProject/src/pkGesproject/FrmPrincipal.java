@@ -142,6 +142,7 @@ public class FrmPrincipal extends JFrame {
 	        	splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jtlbLateral, pnlnuevoproyecto);
 	        	jtlbLateral.setLayout(new GridLayout(7,1));
 	        	jtlbLateral.setOpaque(true);
+	        	jtlbLateral.setFloatable(false);
 	       
 	        	JToggleButton bt = new JToggleButton(recursos.icono[5]);
 	        	bt.setText(rec.idioma[rec.eleidioma][13]);
