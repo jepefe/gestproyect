@@ -8,7 +8,7 @@ import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 
 public class pnlAlta_staff extends JScrollPane {
-
+	GesIdioma rec = GesIdioma.obtener_instancia();
 	JButton jbtnCrear = new JButton("Crear");
 	JButton jbtnSalir = new JButton("Salir");
 	JButton jbtnExaminar = new JButton("Examinar");
@@ -40,7 +40,7 @@ public class pnlAlta_staff extends JScrollPane {
 	JLabel jlblempty2 = new JLabel("    ");
 	JLabel jlblIDstaff = new JLabel("ID STAFF:");
 	JLabel jlblDNI = new JLabel("DNI:");
-	JLabel jlblNombre = new JLabel("Nombre:");
+	JLabel jlblNombre = new JLabel(rec.idioma[rec.eleidioma][2]);
 	JLabel jlblCategoria = new JLabel("Categoria:");
 	JLabel jlblFec_nac = new JLabel("Fecha de nacimiento: ");
 	JLabel jlblPais = new JLabel("País:");
@@ -359,7 +359,7 @@ public class pnlAlta_staff extends JScrollPane {
 		//jp.add(jtxt6, postxt6);
 		jp.add(jcmbPais,posjcmbPais);
 		jcmbPais.setPreferredSize(new Dimension(233,30));
-		jcmbPais.addItem("España");
+		jcmbPais.addItem(rec.idioma[rec.eleidioma][17]);
 		jcmbPais.addItem("Inglaterra");
 		jcmbPais.addItem("Alemania");
 		jcmbPais.addItem("Francia");

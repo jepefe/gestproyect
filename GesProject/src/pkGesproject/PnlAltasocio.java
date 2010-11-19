@@ -26,10 +26,10 @@ public class PnlAltasocio extends JPanel{
 	      this.setLayout(new GridBagLayout());
 	      
 	      String[] fieldNames = {
-	         rec.idioma[rec.eleidioma][2],"Forenames","Country","Email Address",
-	         "Land Line","Mobile/Cell Phone"
+	         rec.idioma[rec.eleidioma][2],"prueba","Country","Email Address",
+	         "Land Line","Mobile/Cell Phone","Nuevo campo","dni","otro","otromas"
 	      };
-	      int[] fieldWidths = {10,20,30,30,15,15};
+	      int[] fieldWidths = {10,20,30,30,15,15,10,9,15,12};
 
 	      GridBagConstraints gbc = new GridBagConstraints();
 
