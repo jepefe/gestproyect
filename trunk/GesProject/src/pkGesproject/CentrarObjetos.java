@@ -9,19 +9,18 @@ import javax.swing.*;
 
 /**
 * Clase para centrar los objetos, para realizar la llamada realizamos los siguientes pasos.
-* 1ero--> GridBagConstraints lbl1  = new GridBagConstraints();--> 
-* creamos un nuevo GridBagConstrain con su nombre(lbl1)
-*2ndo -->	pkGesproject.CentrarObjetos.CentrarObjetos(lbl1,1,1,1,1); 
+* 1ero--> GridBagConstraints gbc  = new GridBagConstraints();--> 
+* creamos un nuevo GridBagConstrain con su nombre(gbc)
+*2ndo -->	pkGesproject.CentrarObjetos.CentrarObjetos(gbc,1,1,1,1); 
 *llamamos al metodo de la clase Centrar Objetos y introducimos (nombre,x,y ancho, alto)
-*y pasamos el nombre al objet--> this.add(lblproyecto,lbl1);
+*y pasamos el nombre al objet--> this.add(lblproyecto,gbc);
 * 
 *
  */
 public class CentrarObjetos {
 
 	// metodo para centrar los objetso
-	public static void CentrarObjetos(GridBagConstraints nombre, int x, int y,
-			int ancho, int alto) {
+	public static void CentrarObjetos(GridBagConstraints nombre, int x, int y,int ancho, int alto) {
 
 		nombre.gridx = x; // El área de texto empieza en la columna 0.
 		nombre.gridy = y;  // El área de texto empieza en la fila 0.
