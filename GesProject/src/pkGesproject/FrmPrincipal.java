@@ -119,9 +119,8 @@ public class FrmPrincipal extends JFrame {
 	        	}
 	         if (e.getActionCommand().equals("usuarios")){
 		        	jbtnUsuarios.setSelected(true); 
-		        	jspnContenedor.setViewportView(pnlalta_staff);
-		        	jspnContenedor.setOpaque(false);
-		        	add(jspnContenedor, BorderLayout.CENTER);
+		        
+		        	add(pnlalta_staff, BorderLayout.CENTER);
 		        	pnlalta_staff.setVisible(true);
 		        	repaint();
 		        	validate();

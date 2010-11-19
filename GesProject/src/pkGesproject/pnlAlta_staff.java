@@ -6,7 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 
-public class pnlAlta_staff extends JPanel {
+public class pnlAlta_staff extends JScrollPane {
 
 	public JButton jbtnCrear = new JButton("Crear");
 	JButton jbtnSalir = new JButton("Salir");
@@ -51,25 +51,25 @@ public class pnlAlta_staff extends JPanel {
 	JLabel jlblPermisos = new JLabel("Permisos: ");
 	JLabel jlblCod_partner = new JLabel("Codigo partner:");
 	JLabel jlblRepresentante = new JLabel("Representante:");
-
+	JPanel jp = new JPanel();
 	public pnlAlta_staff() {
 
-		this.setOpaque(true);
-		this.setLayout(new GridBagLayout());
+		jp.setOpaque(true);
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblstaff = new GridBagConstraints();
 		poslblstaff.gridx = 1;
 		poslblstaff.gridy = 0;
 		poslblstaff.gridwidth = 3;
 		poslblstaff.gridheight = 1;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblempty = new GridBagConstraints();
 		poslblempty.gridx = 1;
 		poslblempty.gridy = 1;
 		poslblempty.gridwidth = 1;
 		poslblempty.gridheight = 1;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblidstaff = new GridBagConstraints();
 		poslblidstaff.gridx = 0;
 		poslblidstaff.gridy = 2;
@@ -98,7 +98,7 @@ public class pnlAlta_staff extends JPanel {
 		postxtDNI.gridwidth = 2;
 		postxtDNI.gridheight = 1;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblnombre = new GridBagConstraints();
 		poslblnombre.gridx = 0;
 		poslblnombre.gridy = 4;
@@ -112,7 +112,7 @@ public class pnlAlta_staff extends JPanel {
 		postxtNombre.gridwidth = 2;
 		postxtNombre.gridheight = 1;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblCategoria = new GridBagConstraints();
 		poslblCategoria.gridx = 0;
 		poslblCategoria.gridy = 5;
@@ -126,7 +126,7 @@ public class pnlAlta_staff extends JPanel {
 		postxtCategoria.gridwidth = 2;
 		postxtCategoria.gridheight = 1;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblFec_nac = new GridBagConstraints();
 		poslblFec_nac.gridx = 0;
 		poslblFec_nac.gridy = 6;
@@ -140,7 +140,7 @@ public class pnlAlta_staff extends JPanel {
 		postxtFec_nac.gridwidth = 2;
 		postxtFec_nac.gridheight = 1;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblPais = new GridBagConstraints();
 		poslblPais.gridx = 0;
 		poslblPais.gridy = 7;
@@ -155,7 +155,7 @@ public class pnlAlta_staff extends JPanel {
 		posjcmbPais.gridheight = 1;
 		
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblRegion = new GridBagConstraints();
 		poslblRegion.gridx = 0;
 		poslblRegion.gridy = 8;
@@ -169,7 +169,7 @@ public class pnlAlta_staff extends JPanel {
 		postxt7.gridwidth = 2;
 		postxt7.gridheight = 1;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblCiudad = new GridBagConstraints();
 		poslblCiudad.gridx = 0;
 		poslblCiudad.gridy = 9;
@@ -183,7 +183,7 @@ public class pnlAlta_staff extends JPanel {
 		postxt8.gridwidth = 2;
 		postxt8.gridheight = 1;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblDireccion = new GridBagConstraints();
 		poslblDireccion.gridx = 0;
 		poslblDireccion.gridy = 10;
@@ -197,7 +197,7 @@ public class pnlAlta_staff extends JPanel {
 		postxt9.gridwidth = 2;
 		postxt9.gridheight = 1;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblCod_post = new GridBagConstraints();
 		poslblCod_post.gridx = 0;
 		poslblCod_post.gridy = 11;
@@ -211,7 +211,7 @@ public class pnlAlta_staff extends JPanel {
 		postxt10.gridwidth = 2;
 		postxt10.gridheight = 1;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblTelefono = new GridBagConstraints();
 		poslblTelefono.gridx = 0;
 		poslblTelefono.gridy = 12;
@@ -225,7 +225,7 @@ public class pnlAlta_staff extends JPanel {
 		postxt11.gridwidth = 2;
 		postxt11.gridheight = 1;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblFoto = new GridBagConstraints();
 		poslblFoto.gridx = 0;
 		poslblFoto.gridy = 13;
@@ -245,7 +245,7 @@ public class pnlAlta_staff extends JPanel {
 		posBtnExaminar.gridwidth = 1;
 		posBtnExaminar.gridheight = 1;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblNick = new GridBagConstraints();
 		poslblNick.gridx = 0;
 		poslblNick.gridy = 14;
@@ -259,7 +259,7 @@ public class pnlAlta_staff extends JPanel {
 		postxt13.gridwidth = 2;
 		postxt13.gridheight = 1;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblContrasemia = new GridBagConstraints();
 		poslblContrasemia.gridx = 0;
 		poslblContrasemia.gridy = 15;
@@ -273,7 +273,7 @@ public class pnlAlta_staff extends JPanel {
 		posjpswContraseña.gridwidth = 2;
 		posjpswContraseña.gridheight = 1;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblPermisos = new GridBagConstraints();
 		poslblPermisos.gridx = 0;
 		poslblPermisos.gridy = 16;
@@ -287,7 +287,7 @@ public class pnlAlta_staff extends JPanel {
 		postxt15.gridwidth = 2;
 		postxt15.gridheight = 1;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblCod_part = new GridBagConstraints();
 		poslblCod_part.gridx = 0;
 		poslblCod_part.gridy = 17;
@@ -301,7 +301,7 @@ public class pnlAlta_staff extends JPanel {
 		postxt16.gridwidth = 2;
 		postxt16.gridheight = 1;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblRepresentante = new GridBagConstraints();
 		poslblRepresentante.gridx = 0;
 		poslblRepresentante.gridy = 18;
@@ -316,7 +316,7 @@ public class pnlAlta_staff extends JPanel {
 		poscb1.gridheight = 1;
 		poscb1.anchor = GridBagConstraints.WEST;
 
-		this.setLayout(new GridBagLayout());
+		jp.setLayout(new GridBagLayout());
 		GridBagConstraints poslblempty2 = new GridBagConstraints();
 		poslblempty2.gridx = 0;
 		poslblempty2.gridy = 19;
@@ -337,39 +337,39 @@ public class pnlAlta_staff extends JPanel {
 		posBtncancelar.anchor = GridBagConstraints.WEST;
 		
 		
-		this.add(jlblstaff, poslblstaff);
-		this.add(jlblempty, poslblempty);
-		this.add(jlblempty2, poslblempty2);
-		this.add(jlblIDstaff, poslblidstaff);
+		jp.add(jlblstaff, poslblstaff);
+		jp.add(jlblempty, poslblempty);
+		jp.add(jlblempty2, poslblempty2);
+		jp.add(jlblIDstaff, poslblidstaff);
 		poslblidstaff.weighty = 0.0;
-		this.add(jtxtIDstaff, postxtIDstaff);
+		jp.add(jtxtIDstaff, postxtIDstaff);
 		jtxtIDstaff.setEditable(false); //impide la modificación del campo ID STAFF
-		this.add(jlblDNI, poslbldni);
-		this.add(jtxtDNI, postxtDNI);
-		this.add(jlblNombre, poslblnombre);
-		this.add(jtxtNombre, postxtNombre);
-		this.add(jlblCategoria, poslblCategoria);
-		this.add(jtxtCategoria, postxtCategoria);
-		this.add(jlblFec_nac, poslblFec_nac);
-		this.add(jtxtFec_nac, postxtFec_nac);
+		jp.add(jlblDNI, poslbldni);
+		jp.add(jtxtDNI, postxtDNI);
+		jp.add(jlblNombre, poslblnombre);
+		jp.add(jtxtNombre, postxtNombre);
+		jp.add(jlblCategoria, poslblCategoria);
+		jp.add(jtxtCategoria, postxtCategoria);
+		jp.add(jlblFec_nac, poslblFec_nac);
+		jp.add(jtxtFec_nac, postxtFec_nac);
 
-		//this.add(jtxt6, postxt6);
-		this.add(jcmbPais,posjcmbPais);
+		//jp.add(jtxt6, postxt6);
+		jp.add(jcmbPais,posjcmbPais);
 		jcmbPais.addItem("España                                   ");//metemos espacios en blanco para que combobox ocupe el mismo tamaño que los campos de texto (hay que buscar otra solución)
 		jcmbPais.addItem("Inglaterra");
 		jcmbPais.addItem("Alemania");
 		jcmbPais.addItem("Francia");
 		jcmbPais.addItem("Italia");
-		this.add(jlblPais, poslblPais);
-		this.add(jtxt7, postxt7);
-		this.add(jlblRegion, poslblRegion);
-		this.add(jtxt8, postxt8);
-		this.add(jlblCiudad, poslblCiudad);
-		this.add(jtxt9, postxt9);
-		this.add(jlblDireccion, poslblDireccion);
-		this.add(jtxt10, postxt10);
-		this.add(jlblCod_post, poslblCod_post);
-		this.add(jtxt11, postxt11);
+		jp.add(jlblPais, poslblPais);
+		jp.add(jtxt7, postxt7);
+		jp.add(jlblRegion, poslblRegion);
+		jp.add(jtxt8, postxt8);
+		jp.add(jlblCiudad, poslblCiudad);
+		jp.add(jtxt9, postxt9);
+		jp.add(jlblDireccion, poslblDireccion);
+		jp.add(jtxt10, postxt10);
+		jp.add(jlblCod_post, poslblCod_post);
+		jp.add(jtxt11, postxt11);
 		
 		jtxt11.addKeyListener(new KeyAdapter()// creamos KeyListener
 		{
@@ -387,12 +387,12 @@ public class pnlAlta_staff extends JPanel {
 		   }
 		});
 		
-		this.add(jlblTelefono, poslblTelefono);
-		this.add(jtxt12, postxt12);
-		this.add(jlblFoto, poslblFoto);
-		this.add(jtxt13, postxt13);
-		this.add(jlblNick, poslblNick);
-		this.add(jpswContraseña, posjpswContraseña);
+		jp.add(jlblTelefono, poslblTelefono);
+		jp.add(jtxt12, postxt12);
+		jp.add(jlblFoto, poslblFoto);
+		jp.add(jtxt13, postxt13);
+		jp.add(jlblNick, poslblNick);
+		jp.add(jpswContraseña, posjpswContraseña);
 		
 		jpswContraseña.addKeyListener(new KeyAdapter()// creamos KeyListener
 		{
@@ -403,17 +403,17 @@ public class pnlAlta_staff extends JPanel {
 			}
 		});
 		
-		this.add(jlblContrasenia, poslblContrasemia);
-		this.add(jtxt15, postxt15);
-		this.add(jlblPermisos, poslblPermisos);
-		this.add(jtxt16, postxt16);
-		this.add(jlblCod_partner, poslblCod_part);
-		this.add(jcb1, poscb1);
-		this.add(jlblRepresentante, poslblRepresentante);
+		jp.add(jlblContrasenia, poslblContrasemia);
+		jp.add(jtxt15, postxt15);
+		jp.add(jlblPermisos, poslblPermisos);
+		jp.add(jtxt16, postxt16);
+		jp.add(jlblCod_partner, poslblCod_part);
+		jp.add(jcb1, poscb1);
+		jp.add(jlblRepresentante, poslblRepresentante);
 
-		this.add(jbtnCrear, posBtnaceptar);
-		this.add(jbtnSalir, posBtncancelar);
-		this.add(jbtnExaminar, posBtnExaminar);
-		
+		jp.add(jbtnCrear, posBtnaceptar);
+		jp.add(jbtnSalir, posBtncancelar);
+		jp.add(jbtnExaminar, posBtnExaminar);
+		this.setViewportView(jp);
 	}
 }
