@@ -101,8 +101,6 @@ public class FrmLogin extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//FrmPrincipal vppal = new FrmPrincipal();
-		//recursos.getRfrmppal().inicializar();
 		if(e.getActionCommand().equals("aceptar")){
 			ConexionDb conexdb = new ConexionDb();
 			ResultSet rs;
