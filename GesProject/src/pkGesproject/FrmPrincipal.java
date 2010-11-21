@@ -35,21 +35,15 @@ import com.seaglasslookandfeel.ui.SeaGlassRootPaneUI;
 public class FrmPrincipal extends JFrame {
 	
 	JToolBar jtlbFrmppal = new JToolBar();
-	JToolBar jtlbLateral = new JToolBar();
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	JToggleButton jbtnInicio = new JToggleButton(recursos.icono[2]);
 	JToggleButton jbtnUsuarios = new JToggleButton(recursos.icono[0]);
 	JToggleButton jbtnSocios = new JToggleButton(recursos.icono[1]);
 	JToggleButton jbtnProyectos = new JToggleButton(recursos.icono[4]);
-	PnlAltasocio nu = new PnlAltasocio();
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
-	pnlAlta_staff pnlalta_staff = new pnlAlta_staff();
-	PnlNuevoProyecto pnlnuevoproyecto = new PnlNuevoProyecto();
-	JPanel pnlcontenedor = new JPanel(true);
-	PnlMenusocio pnlmenusocio = new PnlMenusocio();
-	JSplitPane splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlmenusocio, nu);
-	JScrollPane jspnContenedor= new JScrollPane();
 	SpnStaff spnstaff = new SpnStaff();
+	SpnSocios spnsocios = new SpnSocios();
+	SpnProyectos spnproyectos = new SpnProyectos();
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	
 	
@@ -93,9 +87,9 @@ public class FrmPrincipal extends JFrame {
 	        	 
 	        	
 	        	remove(pnlbienvenida);
-	        	remove(nu);
+	        	remove(spnsocios);
 	        	remove(pnlbienvenida);
-	        	remove(pnlnuevoproyecto);
+	        	remove(spnproyectos);
 	        	remove(spnstaff);
 	        	jbtnUsuarios.setSelected(false);
 	        	jbtnSocios.setSelected(false);
@@ -104,14 +98,8 @@ public class FrmPrincipal extends JFrame {
 	        	repaint();
 	        	validate();
 	         if (e.getActionCommand().equals("socios")){
-	        	
-	        	//add(pnlcontenedor);
-	        	//pnlcontenedor.add(nu,BorderLayout.WEST);
-	        	//pnlcontenedor.add(pnlalta_staff);
-	        	//pnlcontenedor.setOpaque(true);
-	        	add(nu,BorderLayout.CENTER);
 	        	jbtnSocios.setSelected(true);
-	        	nu.setVisible(true);
+	        	add(spnsocios);
 	        	repaint();
 	        	validate();
 	        	
@@ -134,13 +122,8 @@ public class FrmPrincipal extends JFrame {
 	         	}
 	         
 	         if (e.getActionCommand().equals("proyectos")){
-	        	 //splitpane.setOneTouchExpandable(true);
-	        	 //splitpane.setDividerLocation(150);
-	        	//getContentPane().add(pnlcontenedor, BorderLayout.CENTER);
-	        	
 	        	jbtnProyectos.setSelected(true);
-	        	
-	        	add(pnlnuevoproyecto);
+	        	add(spnproyectos);
 	        	repaint();
 	        	validate();
 	         	}
