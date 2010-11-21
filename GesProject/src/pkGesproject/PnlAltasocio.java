@@ -26,17 +26,17 @@ public class PnlAltasocio extends JPanel{
 	      this.setLayout(new GridBagLayout());
 	      
 	      String[] fieldNames = {
-	         rec.idioma[rec.eleidioma][2],"prueba","Country","Email Address",
-	         "Land Line","Mobile/Cell Phone","Nuevo campo","dni","otro","otromas"
+	         rec.idioma[rec.eleidioma][2],rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][6],
+	         rec.idioma[rec.eleidioma][7],rec.idioma[rec.eleidioma][4]
 	      };
-	      int[] fieldWidths = {10,20,30,30,15,15,10,9,15,12};
+	      int[] fieldWidths = {20,20,30,11,15};
 
 	      GridBagConstraints gbc = new GridBagConstraints();
 
 	      gbc.gridwidth = GridBagConstraints.REMAINDER;
 	      gbc.anchor = GridBagConstraints.CENTER;
 	      gbc.insets = new Insets(20,0,15,0);
-	      this.add(new JLabel("Personal Information Form"),gbc);
+	      this.add(new JLabel("Alta Partner"),gbc);
 
 	      gbc.anchor = GridBagConstraints.WEST;
 	      gbc.insets = new Insets(5,10,5,5);
