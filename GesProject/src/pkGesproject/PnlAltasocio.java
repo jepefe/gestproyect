@@ -15,6 +15,8 @@ public class PnlAltasocio extends JPanel{
 
 
 	GesIdioma rec = GesIdioma.obtener_instancia();
+	JTextField[] jtxt;
+	JLabel[] jlbl;
 	
 	public PnlAltasocio (){
 		RsGesproject recursos = RsGesproject.Obtener_Instancia();
@@ -30,6 +32,8 @@ public class PnlAltasocio extends JPanel{
 	         rec.idioma[rec.eleidioma][7],rec.idioma[rec.eleidioma][4]
 	      };
 	      int[] fieldWidths = {20,10,30,6,8};
+	      jtxt = new JTextField[fieldNames.length];
+	      jlbl = new JLabel[fieldNames.length];
 
 	      GridBagConstraints gbc = new GridBagConstraints();
 
@@ -43,11 +47,12 @@ public class PnlAltasocio extends JPanel{
 
 	      for(int i=0;i<fieldNames.length;++i) {
 	         gbc.gridwidth = GridBagConstraints.RELATIVE;
-	         this.add(new JLabel(fieldNames[i]),gbc);
+	         this.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 	         gbc.gridwidth = GridBagConstraints.REMAINDER;
-	         this.add(new JTextField(fieldWidths[i]),gbc);
+	         this.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 	      }
-
+	     
+	      jtxt[1].setText("Construcción");
 	      /*frame.pack();
 	      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	      frame.setVisible(true);*/
