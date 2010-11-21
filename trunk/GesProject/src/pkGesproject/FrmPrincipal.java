@@ -49,6 +49,7 @@ public class FrmPrincipal extends JFrame {
 	PnlMenusocio pnlmenusocio = new PnlMenusocio();
 	JSplitPane splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlmenusocio, nu);
 	JScrollPane jspnContenedor= new JScrollPane();
+	SpnStaff spnstaff = new SpnStaff();
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	
 	
@@ -94,10 +95,8 @@ public class FrmPrincipal extends JFrame {
 	        	remove(pnlbienvenida);
 	        	remove(nu);
 	        	remove(pnlbienvenida);
-	        	remove(pnlalta_staff);
-	        	remove(splitpane);
-	        	remove(jtlbLateral);
-	        	remove(jspnContenedor);
+	        	remove(pnlnuevoproyecto);
+	        	remove(spnstaff);
 	        	jbtnUsuarios.setSelected(false);
 	        	jbtnSocios.setSelected(false);
 	        	jbtnInicio.setSelected(false);
@@ -120,8 +119,7 @@ public class FrmPrincipal extends JFrame {
 	         if (e.getActionCommand().equals("usuarios")){
 		        	jbtnUsuarios.setSelected(true); 
 		        
-		        	add(pnlalta_staff, BorderLayout.CENTER);
-		        	pnlalta_staff.setVisible(true);
+		        	add(spnstaff);
 		        	repaint();
 		        	validate();
 		        	//new DlgSiNo("Seguro que desea salir?").start();
@@ -139,34 +137,10 @@ public class FrmPrincipal extends JFrame {
 	        	 //splitpane.setOneTouchExpandable(true);
 	        	 //splitpane.setDividerLocation(150);
 	        	//getContentPane().add(pnlcontenedor, BorderLayout.CENTER);
-	        	splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jtlbLateral, pnlnuevoproyecto);
-	        	jtlbLateral.setLayout(new GridLayout(7,1));
-	        	jtlbLateral.setOpaque(true);
-	        	jtlbLateral.setFloatable(false);
-	       
-	        	JToggleButton bt = new JToggleButton(recursos.icono[5]);
-	        	bt.setText(rec.idioma[rec.eleidioma][13]);
-	        	jtlbLateral.add(bt);
 	        	
-	        	JToggleButton bt1 = new JToggleButton(recursos.icono[6]);
-	        	bt1.setText(rec.idioma[rec.eleidioma][14]);
-	        	bt1.setHorizontalAlignment(0);
-	        	//bt1.setBackground(new Color(200,200,200));
-	        	jtlbLateral.add(bt1);
-	        	
-	        	JToggleButton bt2 = new JToggleButton(recursos.icono[7]);
-	        	bt2.setText(rec.idioma[rec.eleidioma][15]);
-	        	bt2.setHorizontalAlignment(0);
-	        	jtlbLateral.add(bt2);
-	        	
-	        	splitpane.setOneTouchExpandable(true);
-	        	getContentPane().add(splitpane);
-	        	splitpane.setOpaque(true);
-	        	//splitpane.setPreferredSize(new Dimension(800, 600));
-	        	//splitpane.setLeftComponent(nu);
-	        	//pnlcontenedor.add(splitpane);
-	        	//splitpane.setVisible(true);
 	        	jbtnProyectos.setSelected(true);
+	        	
+	        	add(pnlnuevoproyecto);
 	        	repaint();
 	        	validate();
 	         	}
