@@ -29,7 +29,7 @@ public class PnlAltasocio extends JPanel{
 	         rec.idioma[rec.eleidioma][2],rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][6],
 	         rec.idioma[rec.eleidioma][7],rec.idioma[rec.eleidioma][4]
 	      };
-	      int[] fieldWidths = {20,20,30,11,15};
+	      int[] fieldWidths = {20,10,30,6,8};
 
 	      GridBagConstraints gbc = new GridBagConstraints();
 
