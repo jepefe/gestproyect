@@ -24,8 +24,9 @@ public class PnlNuevoProyecto extends JScrollPane{
 		  jpnl.setLayout(new GridBagLayout());
 	      
 	      String[] fieldNames = {
-	    		  rec.idioma[rec.eleidioma][11],rec.idioma[rec.eleidioma][12]};
-	      int[] fieldWidths = {10,5};
+	    		  rec.idioma[rec.eleidioma][11],rec.idioma[rec.eleidioma][12],
+	    		  rec.idioma[rec.eleidioma][24],rec.idioma[rec.eleidioma][25]};
+	      int[] fieldWidths = {10,5,7,7};
 
 	      GridBagConstraints gbc = new GridBagConstraints();
 
@@ -37,12 +38,14 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      gbc.insets = new Insets(5,10,5,5);
 
 	      for(int i=0;i<fieldNames.length;++i) {
-	         gbc.gridwidth = GridBagConstraints.RELATIVE;
+	    	 gbc.gridwidth = GridBagConstraints.RELATIVE;
 	         jpnl.add(new JLabel(fieldNames[i]),gbc);
-	       
-	         gbc.gridwidth = GridBagConstraints.REMAINDER;
-	         jpnl.add(new JTextField(fieldWidths[i]),gbc);     
-	        
+	         if (i == 3 ){
+	        	 jpnl.add( new JTextField(fieldWidths[3]),gbc);
+	        	 jpnl.add(new JButton(""),gbc);
+	          }
+	         gbc.gridwidth = GridBagConstraints.REMAINDER; 
+	         if (i != 3 ){jpnl.add(new JTextField(fieldWidths[i]),gbc);}
 	      }
 	     
 	      gbc.gridwidth = GridBagConstraints.RELATIVE;
