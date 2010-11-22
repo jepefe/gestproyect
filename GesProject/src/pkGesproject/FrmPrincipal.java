@@ -28,7 +28,7 @@ import javax.swing.BorderFactory;
 import com.seaglasslookandfeel.SeaGlassLookAndFeel;
 import com.seaglasslookandfeel.ui.SeaGlassRootPaneUI;
 /**
- * Clase de la ventana principal de la aplicación
+ * Clase de la ventana principal de la aplicaciï¿½n
  * @author Jesus Perez
  *
  */
@@ -139,7 +139,7 @@ public class FrmPrincipal extends JFrame {
 		jbtnInicio.setActionCommand("inicio");
 		jbtnProyectos.setActionCommand("proyectos");
 		jtlbFrmppal.setFloatable(false); //Impedimos que el toolbar se pueda separar de la ventana
-		jtlbFrmppal.setPreferredSize(new Dimension(this.getWidth(),66));
+		jtlbFrmppal.setPreferredSize(new Dimension(this.getWidth(),50));
 		jtlbFrmppal.setVisible(true);
 		jtlbFrmppal.add(jbtnInicio);
 		jbtnInicio.setSelected(true);
