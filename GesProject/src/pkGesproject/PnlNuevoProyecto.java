@@ -32,25 +32,32 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      gbc.gridwidth = GridBagConstraints.REMAINDER;
 	      gbc.anchor = GridBagConstraints.CENTER;
 	      gbc.insets = new Insets(20,0,15,0);
-	   //   jpnl.add(new JLabel("Personal Information Form"),gbc);
-
+	      
 	      gbc.anchor = GridBagConstraints.WEST;
 	      gbc.insets = new Insets(5,10,5,5);
 
 	      for(int i=0;i<fieldNames.length;++i) {
 	         gbc.gridwidth = GridBagConstraints.RELATIVE;
 	         jpnl.add(new JLabel(fieldNames[i]),gbc);
+	       
 	         gbc.gridwidth = GridBagConstraints.REMAINDER;
 	         jpnl.add(new JTextField(fieldWidths[i]),gbc);     
+	        
 	      }
+	     
 	      gbc.gridwidth = GridBagConstraints.RELATIVE;
-	      jpnl.add(new JTextField(rec.idioma[rec.eleidioma][16]),gbc); 
-	      gbc.gridwidth = GridBagConstraints.REMAINDER;    
-	      jpnl.add(new JTextArea(5,3));
-	      gbc.gridwidth = GridBagConstraints.RELATIVE;
-	      jpnl.add(new JButton(rec.idioma[rec.eleidioma][0]),gbc);
-	      gbc.gridwidth = GridBagConstraints.REMAINDER;
-	      jpnl.add(new JButton(rec.idioma[rec.eleidioma][1]),gbc);
+	      jpnl.add(new JLabel(rec.idioma[rec.eleidioma][16]),gbc); 
+	      gbc.gridwidth = GridBagConstraints.REMAINDER;   
+	      jpnl.add(new JTextArea(3,15),gbc);
+	      
+	      gbc.anchor = GridBagConstraints.EAST;
+			gbc.insets = new Insets(30,10,5,5);
+			gbc.gridwidth = GridBagConstraints.RELATIVE;
+			jpnl.add(new JButton(rec.idioma[rec.eleidioma][0]),gbc);
+			gbc.anchor = GridBagConstraints.WEST;
+			gbc.gridwidth = GridBagConstraints.REMAINDER;
+			jpnl.add(new JButton(rec.idioma[rec.eleidioma][1]),gbc);
+	   //   gbc.gridwidth = GridBagConstraints.REMAINDER;
 	      jpnl.setVisible(true);
 			this.setViewportView(jpnl);
 	}		
