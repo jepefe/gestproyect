@@ -25,17 +25,13 @@ public class SpnStaff extends JSplitPane{
 	
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
-	JToolBar jtlbLateral = new JToolBar();
 	JTable jtblLateral;
 	JSplitPane jsplpane;
-	Vector botones = new Vector(3,2);
 	JPanel panel = new JPanel();
 	Component[] panlsStaff = {
 	 new pnlAlta_staff(),
 	 new PnlAltasocio(),
 	 new PnlNuevoProyecto()};
-	int i;
-	//JToggleButton bt = new JToggleButton(recursos.icono[5]);
 	
 	public SpnStaff(){
 		this.setOneTouchExpandable(true);
@@ -46,9 +42,7 @@ public class SpnStaff extends JSplitPane{
 		/*
 		 * Ponemos propiedades adecuadas al toolbar
 		 */
-		//jtlbLateral.setLayout(new GridBagLayout());
-    	//jtblLateral.setOpaque(true);
-    	//jtlbLateral.setFloatable(false);
+
     	jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {
             @Override
             public Class<?> getColumnClass(int column) {
@@ -78,40 +72,10 @@ public class SpnStaff extends JSplitPane{
 			public void valueChanged(ListSelectionEvent e) {
 				if(e.getValueIsAdjusting()){
 					
-					System.out.println(Integer.toString(e.getLastIndex()));
 					setRightComponent(panlsStaff[jtblLateral.getSelectedRow()]);
 				}
 			}});
         
-      
-    /*	ActionListener jtlbactionlistener = new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				bt.setSelected(false);
-				bt1.setSelected(false);
-				bt2.setSelected(false);
-				remove(pnlalta_staff);
-				remove(pnlaltasocio);
-				remove(pnlnuevoproyecto);
-				if(e.getActionCommand().equals("alta")){
-					bt.setSelected(true);
-					setRightComponent(pnlalta_staff);
-				}
-				
-				if(e.getActionCommand().equals("modificacion")){
-					bt1.setSelected(true);
-					setRightComponent(pnlaltasocio);
-				}
-				
-				if(e.getActionCommand().equals("mostrar")){
-					bt2.setSelected(true);
-					setRightComponent(pnlnuevoproyecto);
-				}
-			}
-    		
-    	};*/
     	
     	
     	this.setLeftComponent(jtblLateral);

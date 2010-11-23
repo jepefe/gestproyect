@@ -67,8 +67,6 @@ public class SpnProyectos extends JSplitPane{
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if(e.getValueIsAdjusting()){
-					
-					System.out.println(Integer.toString(e.getLastIndex()));
 					setRightComponent(panlsStaff[jtblLateral.getSelectedRow()]);
 				}
 			}});
