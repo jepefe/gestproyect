@@ -50,10 +50,12 @@ public class PnlNuevoProyecto extends JScrollPane{
 	    	
 	    	  gbc.gridwidth = GridBagConstraints.RELATIVE;
 	         jpnl.add(new JLabel(fieldNames[i]),gbc);
-	         gbc.gridwidth = GridBagConstraints.REMAINDER; 
+	         if (i != 2 ){  gbc.gridwidth = GridBagConstraints.REMAINDER;  } 
 	         // limite de caracteres
 	         jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);	  
-    
+	         if (i == 2 ){ gbc.gridwidth = GridBagConstraints.REMAINDER;
+	         	jpnl.add(new JButton(" "),gbc); 
+	         	}
 		}
 	      
 	  //    jtxt[i] = (new JTextFieldLimit(10));
