@@ -1,14 +1,20 @@
 package pkGesproject;
 
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 public class SpnProyectos extends JSplitPane{
 
@@ -17,79 +23,57 @@ public class SpnProyectos extends JSplitPane{
 	JToolBar jtlbLateral = new JToolBar();
 	JSplitPane jsplpane;
 	JPanel panel = new JPanel();
-	pnlAlta_staff pnlalta_staff = new pnlAlta_staff();
-	PnlAltasocio pnlaltasocio = new PnlAltasocio();
-	PnlNuevoProyecto pnlnuevoproyecto = new PnlNuevoProyecto();
+	JTable jtblLateral;
+	Component[] panlsStaff = {
+			new PnlNuevoProyecto(),
+			 new PnlAltasocio(),
+			 new pnlAlta_staff()};
 	
 	public SpnProyectos(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
 		
-		/*
-		 * Ponemos propiedades adecuadas al toolbar
-		 */
-		jtlbLateral.setLayout(new GridBagLayout());
-    	jtlbLateral.setOpaque(true);
-    	jtlbLateral.setFloatable(false);
-    	
-    	
-    	GridBagConstraints gbc = new GridBagConstraints();
-    	gbc.gridwidth = GridBagConstraints.REMAINDER;
-    	gbc.anchor = GridBagConstraints.NORTHWEST;
-    	//gbc.fill = GridBagConstraints.WEST;
-    	
-    	
-    	final JToggleButton bt = new JToggleButton(recursos.icono[5]);
-    	bt.setText(rec.idioma[rec.eleidioma][11]);
-    	bt.setActionCommand("alta");
-    	
-    	jtlbLateral.add(bt,gbc);
-    	
-    	final JToggleButton bt1 = new JToggleButton(recursos.icono[6]);
-    	bt1.setText(rec.idioma[rec.eleidioma][21]);
-    	bt1.setActionCommand("modificacion");
-    	jtlbLateral.add(bt1,gbc);
-    	
-    	final JToggleButton bt2 = new JToggleButton(recursos.icono[7]);
-    	bt2.setText(rec.idioma[rec.eleidioma][22]);
-    	bt2.setActionCommand("mostrar");
-    	jtlbLateral.add(bt2,gbc);
-    	
-    	
-    	ActionListener jtlbactionlistener = new ActionListener(){
+		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][18]},
+				{recursos.icono[6],rec.idioma[rec.eleidioma][19]},
+				{recursos.icono[7],rec.idioma[rec.eleidioma][20]}};
+		
+		
+		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {
+            @Override
+            public Class<?> getColumnClass(int column) {
+                if (convertColumnIndexToModel(column) == 0) {
+                    return ImageIcon.class;
+                } else {
+                    return Object.class;
+                }
+            }
+            public boolean isCellEditable(int rowIndex, int mColIndex) {
+                return false;
+              }
+        };
+        
+        jtblLateral.setCellEditor(null);
+        jtblLateral.getColumnModel().getColumn(0).setMaxWidth(32);//Fijamos este tamaño como maximo para que no se vea feo cuando cambiemos tamaño
+        jtblLateral.getColumnModel().getColumn(0).setMinWidth(32);
+        jtblLateral.getColumnModel().getColumn(0).setPreferredWidth(32);//Tamaño por defecto de la primera columna
+        jtblLateral.setRowHeight(32);//Tamaño de cada fila
+        jtblLateral.getColumnModel().getColumn(1).setPreferredWidth(170);
+        jtblLateral.getColumnModel().getColumn(1).setMinWidth(170);
+        jtblLateral.setColumnSelectionAllowed(false);
+        
+        
+        jtblLateral.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				bt.setSelected(false);
-				bt1.setSelected(false);
-				bt2.setSelected(false);
-				remove(pnlalta_staff);
-				remove(pnlaltasocio);
-				remove(pnlnuevoproyecto);
-				if(e.getActionCommand().equals("alta")){
-					bt.setSelected(true);
-					setRightComponent(pnlnuevoproyecto);
+			public void valueChanged(ListSelectionEvent e) {
+				if(e.getValueIsAdjusting()){
+					
+					System.out.println(Integer.toString(e.getLastIndex()));
+					setRightComponent(panlsStaff[jtblLateral.getSelectedRow()]);
 				}
-				
-				if(e.getActionCommand().equals("modificacion")){
-					bt1.setSelected(true);
-					setRightComponent(pnlalta_staff);
-				}
-				
-				if(e.getActionCommand().equals("mostrar")){
-					bt2.setSelected(true);
-					setRightComponent(pnlnuevoproyecto);
-				}
-			}
-    		
-    	};
-    	
-    	bt.addActionListener(jtlbactionlistener);
-    	bt1.addActionListener(jtlbactionlistener);
-    	bt2.addActionListener(jtlbactionlistener);
-    
-    	this.setLeftComponent(jtlbLateral);
+			}});
+        
+    	this.setLeftComponent(jtblLateral);
     	this.setRightComponent(panel);
 	}
 }
