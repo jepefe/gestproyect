@@ -32,9 +32,10 @@ public class PnlAltawp extends JScrollPane{
 		String[] fieldNames = {
 		   rec.idioma[rec.eleidioma][2],rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][6],
 		   rec.idioma[rec.eleidioma][7],rec.idioma[rec.eleidioma][4],rec.idioma[rec.eleidioma][8],
-		   rec.idioma[rec.eleidioma][9]
+		   rec.idioma[rec.eleidioma][9],rec.idioma[rec.eleidioma][13],rec.idioma[rec.eleidioma][10],
+		   rec.idioma[rec.eleidioma][11],rec.idioma[rec.eleidioma][12]
 		};
-		int[] fieldWidths = {20,20,30,20,15,10,10};
+		int[] fieldWidths = {20,20,30,20,15,10,10,10,10,20,10};
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
 		
