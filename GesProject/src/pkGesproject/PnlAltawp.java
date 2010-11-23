@@ -48,6 +48,7 @@ public class PnlAltawp extends JScrollPane{
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(5,10,5,5);
 		
+		
 		/*
 		 * Con el bucle for vamos creando tantos labels y textfields como 
 		 * nombres de campos hayamos metido en fieldNames.
