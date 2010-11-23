@@ -21,7 +21,6 @@ public class SpnSocios extends JSplitPane{
 	
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
-	JToolBar jtlbLateral = new JToolBar();
 	JSplitPane jsplpane;
 	JPanel panel = new JPanel();
 	JTable jtblLateral;
@@ -68,7 +67,6 @@ public class SpnSocios extends JSplitPane{
 			public void valueChanged(ListSelectionEvent e) {
 				if(e.getValueIsAdjusting()){
 					
-					System.out.println(Integer.toString(e.getLastIndex()));
 					setRightComponent(panlsStaff[jtblLateral.getSelectedRow()]);
 				}
 			}});
