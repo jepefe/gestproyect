@@ -31,9 +31,9 @@ public class PnlAltatarea extends JScrollPane{
 		  
 		String[] fieldNames = {
 		   rec.idioma[rec.eleidioma][2],rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][6],
-		   rec.idioma[rec.eleidioma][7],rec.idioma[rec.eleidioma][4]
+		   rec.idioma[rec.eleidioma][7],rec.idioma[rec.eleidioma][4],"Prueba"
 		};
-		int[] fieldWidths = {20,10,30,6,8};
+		int[] fieldWidths = {20,10,30,6,8,9};
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
 		
