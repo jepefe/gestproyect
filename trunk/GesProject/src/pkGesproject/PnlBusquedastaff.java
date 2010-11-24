@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -97,7 +98,7 @@ public class PnlBusquedastaff extends JScrollPane{
             
             
 GridBagConstraints gbc = new GridBagConstraints();
-    		
+			gbc.insets = new Insets(5,10,5,5);
     	 	gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   panel.add(jlbl=new JLabel("Buscar"),gbc);
 		   gbc.gridwidth = GridBagConstraints.RELATIVE;
@@ -106,10 +107,10 @@ GridBagConstraints gbc = new GridBagConstraints();
 		   gbc.anchor = GridBagConstraints.WEST;
 		   panel.add(jbtn=new JButton("Buscar"),gbc);
 		  
-            gbc.gridy = 3;
+            //gbc.gridy = 3;
             panel.add(pane,gbc);
             
-           gbc.gridwidth = GridBagConstraints.REMAINDER; 
+           gbc.gridwidth = GridBagConstraints.RELATIVE; 
  		   panel.add(jbtnmodificar=new JButton("Modificar"),gbc);
             
  		  gbc.gridwidth = GridBagConstraints.RELATIVE; 
