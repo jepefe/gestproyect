@@ -7,8 +7,11 @@ import javax.swing.*;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
 
 /**
  * Panel Nuevo Proyecto En este panel es donde podremos dar de alta un nuevo proyecto
@@ -18,13 +21,13 @@ public class PnlNuevoProyecto extends JScrollPane{
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	JPanel jpnl = new JPanel();
-	
+	ScrollPane Sp = new ScrollPane();
 	JTextField[] jtxt;
 	
 	
 	// Calendario
 
-	public PnlNuevoProyecto(){
+	public PnlNuevoProyecto()  {
 		  jpnl.setLayout(new GridBagLayout());
 		 
 	      String[] fieldNames = {
@@ -58,16 +61,21 @@ public class PnlNuevoProyecto extends JScrollPane{
 	         	}
 		}
 	      
-	  //    jtxt[i] = (new JTextFieldLimit(10));
-	      
-	      
-	      new JTextFieldLimit(10);
-	      
+	 
 	      gbc.gridwidth = GridBagConstraints.RELATIVE;
 	      jpnl.add(new JLabel(rec.idioma[rec.eleidioma][16]),gbc); 
 	      gbc.gridwidth = GridBagConstraints.REMAINDER;   
-	      jpnl.add(new JTextArea(3,15),gbc);
+	     
+	      // JTextArea con Scrolls 
 	      
+	      LimitedStyledDocument lpd = new LimitedStyledDocument(55);
+	      JTextArea textarea = (new JTextArea(3,15));
+	      textarea.setDocument(lpd);
+	      JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+	      JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	      jpnl.add(sp);
+	     
+	     
 	      gbc.anchor = GridBagConstraints.EAST;
 			gbc.insets = new Insets(30,10,5,5);
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
