@@ -47,6 +47,7 @@ public class FrmPrincipal extends JFrame {
 	SpnSocios spnsocios = new SpnSocios();
 	SpnProyectos spnproyectos = new SpnProyectos();
 	SpnWorkpack spnworkpack = new SpnWorkpack();
+	SpnTareas spntareas = new SpnTareas();
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	
 	
@@ -91,15 +92,16 @@ public class FrmPrincipal extends JFrame {
 	        	
 	        	remove(pnlbienvenida);
 	        	remove(spnsocios);
-	        	remove(pnlbienvenida);
 	        	remove(spnproyectos);
 	        	remove(spnstaff);
 	        	remove(spnworkpack);
+	        	remove(spntareas);
 	        	jbtnUsuarios.setSelected(false);
 	        	jbtnSocios.setSelected(false);
 	        	jbtnInicio.setSelected(false);
 	        	jbtnProyectos.setSelected(false);
 	        	jbtnWorkpack.setSelected(false);
+	        	jbtnTareas.setSelected(false);
 	        	repaint();
 	        	validate();
 	         if (e.getActionCommand().equals("socios")){
@@ -140,6 +142,14 @@ public class FrmPrincipal extends JFrame {
 	        	 validate();
 	        	 
 	         	}
+	         
+	         if (e.getActionCommand().equals("tareas")){
+	        	 jbtnTareas.setSelected(true);
+	        	 add(spntareas, BorderLayout.CENTER);
+	        	 repaint();
+	        	 validate();
+	        	 
+	         	}
 	         } 
 		};
 		jtlbFrmppal.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
@@ -148,11 +158,13 @@ public class FrmPrincipal extends JFrame {
 		jbtnInicio.addActionListener(jtlbAcListener);
 		jbtnProyectos.addActionListener(jtlbAcListener);
 		jbtnWorkpack.addActionListener(jtlbAcListener);
+		jbtnTareas.addActionListener(jtlbAcListener);
 		jbtnUsuarios.setActionCommand("usuarios");
 		jbtnSocios.setActionCommand("socios");
 		jbtnInicio.setActionCommand("inicio");
 		jbtnProyectos.setActionCommand("proyectos");
 		jbtnWorkpack.setActionCommand("workpack");
+		jbtnTareas.setActionCommand("tareas");
 		jtlbFrmppal.setFloatable(false); //Impedimos que el toolbar se pueda separar de la ventana
 		jtlbFrmppal.setPreferredSize(new Dimension(this.getWidth(),50));
 		jtlbFrmppal.setVisible(true);
