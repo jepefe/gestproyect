@@ -1,11 +1,15 @@
 package pkGesproject;
 import java.lang.*;
+import java.sql.ResultSet;
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -24,6 +28,8 @@ public class PnlNuevoProyecto extends JScrollPane{
 	ScrollPane Sp = new ScrollPane();
 	JTextField[] jtxt;
 	// Falta Calendario
+	JFrame aviso = new JFrame();
+	JButton jbtnaceptar, jbtncancelar;
 	
 	public PnlNuevoProyecto()  {
 		  jpnl.setLayout(new GridBagLayout());
@@ -66,7 +72,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 	    
 	      // JTextArea con Scrolls 
 	      LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
-	      JTextArea textarea = (new JTextArea(3,13));
+	      final JTextArea textarea = (new JTextArea(3,13));
 	      textarea.setDocument(lpd);
 	      JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 	      JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -76,12 +82,38 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      gbc.anchor = GridBagConstraints.EAST;
 			gbc.insets = new Insets(30,10,5,5);
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
-			jpnl.add(new JButton(rec.idioma[rec.eleidioma][0]),gbc);
+			jpnl.add(jbtnaceptar = new JButton(rec.idioma[rec.eleidioma][0]),gbc);
 			gbc.anchor = GridBagConstraints.WEST;
 			gbc.gridwidth = GridBagConstraints.REMAINDER;
-			jpnl.add(new JButton(rec.idioma[rec.eleidioma][1]),gbc);
-	      jpnl.setVisible(true);
-			this.setViewportView(jpnl);
+			jpnl.add(jbtncancelar = new JButton(rec.idioma[rec.eleidioma][1]),gbc);
+	     
+			
+		// Conectar Base de datos y pasar datos...
+			
+			ActionListener accion = new ActionListener(){
+
+				@Override
+			public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					if(e.getActionCommand().equals("aceptar")){
+						ConexionDb conexdb = new ConexionDb();
+						ResultSet rs;
+						conexdb.Conectardb();
+						conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion, precupuesto, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"')");
+						JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][36]);
+						conexdb.cerrarConexion();
+					}
+				}
+				
+			};
+			jbtnaceptar.setActionCommand("aceptar");
+			jbtnaceptar.addActionListener(accion);
+			jbtncancelar.setActionCommand("cancelar");
+			jtxt[1].setText("Construcción");
+			
+		
+		jpnl.setVisible(true);
+		this.setViewportView(jpnl);
 	}		
 }
 
