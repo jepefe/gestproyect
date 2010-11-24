@@ -23,17 +23,15 @@ public class PnlNuevoProyecto extends JScrollPane{
 	JPanel jpnl = new JPanel();
 	ScrollPane Sp = new ScrollPane();
 	JTextField[] jtxt;
+	// Falta Calendario
 	
-	
-	// Calendario
-
 	public PnlNuevoProyecto()  {
 		  jpnl.setLayout(new GridBagLayout());
-		 
+		// Array  de palabras, Fecha inico, Fecha fin, etc.
 	      String[] fieldNames = {
 	    		  rec.idioma[rec.eleidioma][11],rec.idioma[rec.eleidioma][12],
 	    		  rec.idioma[rec.eleidioma][24],rec.idioma[rec.eleidioma][25]};
-	      int[] fieldWidths = {10,5,7,7};
+	      int[] fieldWidths = {13,5,7,7};
 	      
 	      jtxt = new JTextField[fieldNames.length];
 	      // limite de caracteres 
@@ -65,17 +63,16 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      gbc.gridwidth = GridBagConstraints.RELATIVE;
 	      jpnl.add(new JLabel(rec.idioma[rec.eleidioma][16]),gbc); 
 	      gbc.gridwidth = GridBagConstraints.REMAINDER;   
-	     
+	    
 	      // JTextArea con Scrolls 
-	      
-	      LimitedStyledDocument lpd = new LimitedStyledDocument(55);
-	      JTextArea textarea = (new JTextArea(3,15));
+	      LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
+	      JTextArea textarea = (new JTextArea(3,13));
 	      textarea.setDocument(lpd);
 	      JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 	      JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	      jpnl.add(sp);
-	     
-	     
+	      jpnl.add((sp),gbc);
+	      
+	     // botones Aceptar Cancelar
 	      gbc.anchor = GridBagConstraints.EAST;
 			gbc.insets = new Insets(30,10,5,5);
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
@@ -83,7 +80,6 @@ public class PnlNuevoProyecto extends JScrollPane{
 			gbc.anchor = GridBagConstraints.WEST;
 			gbc.gridwidth = GridBagConstraints.REMAINDER;
 			jpnl.add(new JButton(rec.idioma[rec.eleidioma][1]),gbc);
-	   //   gbc.gridwidth = GridBagConstraints.REMAINDER;
 	      jpnl.setVisible(true);
 			this.setViewportView(jpnl);
 	}		
