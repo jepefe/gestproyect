@@ -3,21 +3,26 @@ package pkGesproject;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-public class PnlBusquedastaff extends JPanel{
+public class PnlBusquedastaff extends JScrollPane{
 
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
@@ -25,47 +30,17 @@ public class PnlBusquedastaff extends JPanel{
 	ResultSet rs;
 	JPanel panel = new JPanel();
 	String datos[][] = new String[100][3];
-	String data[][] = {{"001","vinod","Bihar","India","Biology","65","First"},
-            {"002","Raju","ABC","Kanada","Geography","58","second"},
-            {"003","Aman","Delhi","India","computer","98","Dictontion"},
-            {"004","Ranjan","Bangloor","India","chemestry","90","Dictontion"},
-            {"001","vinod","Bihar","India","Biology","65","First"},
-            {"002","Raju","ABC","Kanada","Geography","58","second"},
-            {"003","Aman","Delhi","India","computer","98","Dictontion"},
-            {"004","Ranjan","Bangloor","India","chemestry","90","Dictontion"},
-            {"001","vinod","Bihar","India","Biology","65","First"},
-            {"002","Raju","ABC","Kanada","Geography","58","second"},
-            {"003","Aman","Delhi","India","computer","98","Dictontion"},
-            {"004","Ranjan","Bangloor","India","chemestry","90","Dictontion"},
-            {"001","vinod","Bihar","India","Biology","65","First"},
-            {"002","Raju","ABC","Kanada","Geography","58","second"},
-            {"003","Aman","Delhi","India","computer","98","Dictontion"},
-            {"004","Ranjan","Bangloor","India","chemestry","90","Dictontion"},
-            {"001","vinod","Bihar","India","Biology","65","First"},
-            {"002","Raju","ABC","Kanada","Geography","58","second"},
-            {"003","Aman","Delhi","India","computer","98","Dictontion"},
-            {"004","Ranjan","Bangloor","India","chemestry","90","Dictontion"},
-            {"001","vinod","Bihar","India","Biology","65","First"},
-            {"002","Raju","ABC","Kanada","Geography","58","second"},
-            {"003","Aman","Delhi","India","computer","98","Dictontion"},
-            {"004","Ranjan","Bangloor","India","chemestry","90","Dictontion"},
-            {"001","vinod","Bihar","India","Biology","65","First"},
-            {"002","Raju","ABC","Kanada","Geography","58","second"},
-            {"003","Aman","Delhi","India","computer","98","Dictontion"},
-            {"004","Ranjan","Bangloor","India","chemestry","90","Dictontion"},
-            {"001","vinod","Bihar","India","Biology","65","First"},
-            {"002","Raju","ABC","Kanada","Geography","58","second"},
-            {"003","Aman","Delhi","India","computer","98","Dictontion"},
-            {"004","Ranjan","Bangloor","India","chemestry","90","Dictontion"}};
-	
-	String col[] = {"Roll","Name","State","country","Math","Marks","Grade"};
 	String colu[] = {"id_staff","dni","Nombre"};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
 			{recursos.icono[7],rec.idioma[rec.eleidioma][33]}};
+	JLabel jlbl;
+	JTextField jtxt;
+	JButton jbtn,jbtnmodificar,jbtneliminar;
     //table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     
     public PnlBusquedastaff(){
+    	panel.setLayout(new GridBagLayout());
     	conexion.Conectardb();
     	rs = conexion.ConsultaSQL("SELECT id_staff,dni,nombre FROM STAFF");
     	int i=0;
@@ -81,6 +56,10 @@ public class PnlBusquedastaff extends JPanel{
 			e.printStackTrace();
 		}
     	conexion.cerrarConexion();
+    	
+    		
+		   
+		   
     	JTable jtblLateral  = new JTable(new DefaultTableModel(datos, colu)) {
                 @Override
                 public Class<?> getColumnClass(int column) {
@@ -114,8 +93,29 @@ public class PnlBusquedastaff extends JPanel{
             //panel.add(pane);
             //pane.setSize(800, 600);
             //panel.setSize(800, 500);
-            this.add(pane, BorderLayout.WEST);
-        	
+            //gbc.gridx = 3;
+            
+            
+GridBagConstraints gbc = new GridBagConstraints();
+    		
+    	 	gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   panel.add(jlbl=new JLabel("Buscar"),gbc);
+		   gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   panel.add(jtxt=new JTextField(20),gbc);
+		   gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   gbc.anchor = GridBagConstraints.WEST;
+		   panel.add(jbtn=new JButton("Buscar"),gbc);
+		  
+            gbc.gridy = 3;
+            panel.add(pane,gbc);
+            
+           gbc.gridwidth = GridBagConstraints.REMAINDER; 
+ 		   panel.add(jbtnmodificar=new JButton("Modificar"),gbc);
+            
+ 		  gbc.gridwidth = GridBagConstraints.RELATIVE; 
+		   panel.add(jbtneliminar=new JButton("eliminar"),gbc);
+            
+        	this.setViewportView(panel);
     
     }
 }
