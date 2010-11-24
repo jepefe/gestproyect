@@ -30,7 +30,7 @@ public class SpnStaff extends JSplitPane{
 	JPanel panel = new JPanel();
 	Component[] panlsStaff = {
 	 new pnlAlta_staff(),
-	 new PnlAltasocio(),
+	 new PnlBusquedastaff(),
 	 new PnlNuevoProyecto()};
 	
 	public SpnStaff(){
