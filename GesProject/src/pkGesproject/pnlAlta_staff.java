@@ -1,5 +1,6 @@
 package pkGesproject;
 
+import java.io.File;
 import java.lang.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -12,15 +13,12 @@ public class pnlAlta_staff extends JScrollPane {
 	JButton jbtnCrear = new JButton("Crear");
 	JButton jbtnSalir = new JButton("Salir");
 	JButton jbtnExaminar = new JButton("Examinar");
-	int seleccion;
-	String numCadena= seleccion+"";
 	
 	JTextField jtxt1 = new JTextField(20);
 	JTextField jtxt2 = new JTextField(20);
 	JTextField jtxt3 = new JTextField(20);
 	JTextField jtxt4 = new JTextField(20);
 	JTextField jtxt5 = new JTextField(20);
-	//JTextField jtxt6 = new JTextField(20);
 	JComboBox jcmbPais = new JComboBox();
 	JTextField jtxt7 = new JTextField(20);
 	JTextField jtxt8 = new JTextField(20);
@@ -33,10 +31,7 @@ public class pnlAlta_staff extends JScrollPane {
 	JTextField jtxt15 = new JTextField(20);
 	JTextField jtxt16 = new JTextField(20);
 	JCheckBox jcb1 = new JCheckBox();
-	JLabel jlblstaff = new JLabel(
-			"<html><b><font color=#81BEF7 size=5>Dar de alta STAFF</font></b></html>");
-	JLabel jlblempty = new JLabel("    "); // creamos labels vacios para hacer
-											// espacios entre los controles
+	JLabel jlblempty = new JLabel("    "); 
 	JLabel jlblempty2 = new JLabel("    ");
 	JLabel jlblIDstaff = new JLabel("ID STAFF:");
 	JLabel jlblDNI = new JLabel("DNI:");
@@ -355,8 +350,6 @@ public class pnlAlta_staff extends JScrollPane {
 		jp.add(jtxt4, postxt4);
 		jp.add(jlblFec_nac, poslblFec_nac);
 		jp.add(jtxt5, postxt5);
-
-		//jp.add(jtxt6, postxt6);
 		jp.add(jcmbPais,posjcmbPais);
 		jcmbPais.setPreferredSize(new Dimension(233,30));
 		jcmbPais.addItem(rec.idioma[rec.eleidioma][17]);
@@ -430,12 +423,15 @@ public class pnlAlta_staff extends JScrollPane {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				JFileChooser filechooser = new JFileChooser();
-				Component areaTexto = null;
-				seleccion = filechooser.showOpenDialog(areaTexto);
-				System.out.println(seleccion);
-				
+				int returnVal = filechooser.showSaveDialog(null);
 			
-			}		
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = filechooser.getSelectedFile();
+				jtxt12.setText(file.getPath());
+			    } 
+					
+			}
+			
 		});
 		this.setViewportView(jp);
 	}
