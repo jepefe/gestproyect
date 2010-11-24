@@ -38,15 +38,15 @@ public class pnlAlta_staff extends JScrollPane {
 	JLabel jlblNombre = new JLabel(rec.idioma[rec.eleidioma][2]);
 	JLabel jlblCategoria = new JLabel("Categoria:");
 	JLabel jlblFec_nac = new JLabel("Fecha de nacimiento: ");
-	JLabel jlblPais = new JLabel("País:");
-	JLabel jlblRegion = new JLabel("Región:");
+	JLabel jlblPais = new JLabel("Paï¿½s:");
+	JLabel jlblRegion = new JLabel("Regiï¿½n:");
 	JLabel jlblCiudad = new JLabel("Ciudad:");
-	JLabel jlblDireccion = new JLabel("Dirección:");
-	JLabel jlblCod_post = new JLabel("Código postal: ");
+	JLabel jlblDireccion = new JLabel("Direcciï¿½n:");
+	JLabel jlblCod_post = new JLabel("Cï¿½digo postal: ");
 	JLabel jlblTelefono = new JLabel("Telefono:");
 	JLabel jlblFoto = new JLabel("Foto:");
 	JLabel jlblNick = new JLabel("Nick:");
-	JLabel jlblContrasenia = new JLabel("Contraseña:");
+	JLabel jlblContrasenia = new JLabel("Contraseï¿½a:");
 	JLabel jlblPermisos = new JLabel("Permisos: ");
 	JLabel jlblCod_partner = new JLabel("Codigo partner:");
 	JLabel jlblRepresentante = new JLabel("Representante:");
@@ -335,13 +335,13 @@ public class pnlAlta_staff extends JScrollPane {
 		posBtncancelar.anchor = GridBagConstraints.WEST;
 		
 		
-		jp.add(jlblstaff, poslblstaff);
+		jp.add(jlblIDstaff, poslblstaff);
 		jp.add(jlblempty, poslblempty);
 		jp.add(jlblempty2, poslblempty2);
 		jp.add(jlblIDstaff, poslblidstaff);
 		poslblidstaff.weighty = 0.0;
 		jp.add(jtxt1, postxt1);
-		jtxt1.setEditable(false); //impide la modificación del campo ID STAFF
+		jtxt1.setEditable(false); //impide la modificaciï¿½n del campo ID STAFF
 		jp.add(jlblDNI, poslbldni);
 		jp.add(jtxt2, postxt2);
 		jp.add(jlblNombre, poslblnombre);
