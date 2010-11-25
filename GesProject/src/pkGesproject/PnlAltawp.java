@@ -69,7 +69,9 @@ public class PnlAltawp extends JScrollPane{
 				cbtipo.addItem("tipo3");
 				cbtipo.addItem("tipo4");
 				cbtipo.addItem("tipo5");
-				
+				gbc.gridwidth = GridBagConstraints.RELATIVE;
+				panel.add(jlbl[i]=new JLabel("Tipo:"),gbc);
+				panel.add(cbtipo);
 				
 				/*
 				 * Accion a realizar cuando el JComboBox cambia de item seleccionado.
