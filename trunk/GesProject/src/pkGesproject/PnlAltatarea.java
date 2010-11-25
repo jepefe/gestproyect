@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class PnlAltatarea extends JScrollPane{
@@ -30,8 +31,8 @@ public class PnlAltatarea extends JScrollPane{
 		panel.setLayout(new GridBagLayout());
 		  
 		String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][2],rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][6],
-		   rec.idioma[rec.eleidioma][7],rec.idioma[rec.eleidioma][4],"Prueba"
+		   rec.idioma[rec.eleidioma][39],rec.idioma[rec.eleidioma][2],rec.idioma[rec.eleidioma][40],
+		   rec.idioma[rec.eleidioma][41],rec.idioma[rec.eleidioma][24],rec.idioma[rec.eleidioma][25]
 		};
 		int[] fieldWidths = {20,10,30,6,8,9};
 		jtxt = new JTextField[fieldNames.length];
@@ -58,7 +59,14 @@ public class PnlAltatarea extends JScrollPane{
 		   gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 		}
-		
+		 /* Acondicionar para la descripcion de la tarea 
+	      LimiteDocumento lpd = new LimiteDocumento(200); 
+	      final JTextArea textarea = (new JTextArea(3,13));
+	      textarea.setDocument(lpd);
+	      JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+	      JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	      jtxt[2].add((sp),gbc);*/
+	      
 		/**
 		 * Creamos los dos botones para este panel 
 		 */
@@ -80,7 +88,7 @@ public class PnlAltatarea extends JScrollPane{
 					ConexionDb conexdb = new ConexionDb();
 					ResultSet rs;
 					conexdb.Conectardb();
-					conexdb.executeUpdate("INSERT INTO PARTNER (nombre, sector, direccion, codpostal, telefono) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"')");
+					conexdb.executeUpdate("INSERT INTO TAREAS (nombre, descripcion, presupuesto, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"')");
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][23]);
 					conexdb.cerrarConexion();
 				}
@@ -90,7 +98,7 @@ public class PnlAltatarea extends JScrollPane{
 		jbtnaceptar.setActionCommand("aceptar");
 		jbtnaceptar.addActionListener(accion);
 		jbtncancelar.setActionCommand("cancelar");
-		jtxt[1].setText("Construcción");
+
 		
 		panel.setOpaque(true);
 		this.setViewportView(panel);
