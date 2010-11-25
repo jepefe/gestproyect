@@ -76,15 +76,18 @@ public class PnlBusquedastaff extends JPanel{
 		   
     	final JTable jtblLateral  = new JTable(new DefaultTableModel(datos, colu)) {};
        
-        
-    	
+    		jtxt=new JTextField(20);
+    		jtxt.setText("Buscar...");
+    		jtxt.putClientProperty("JTextField.variant", "search");
+    		jtxt.putClientProperty("JTextField.Search.PlaceholderText", Boolean.TRUE);
+    		
             GridBagConstraints constraints = new GridBagConstraints();
             constraints.gridx = 0; // El área de texto empieza en la columna
             constraints.gridy = 0; // El área de texto empieza en la fila
             constraints.gridwidth = 2; // El área de texto ocupa x columnas.
             constraints.gridheight = 1; // El área de texto ocupa x filas.
             constraints.insets = new Insets(20,30,0,10);
-            this.add(jtxt=new JTextField(20),constraints);
+            this.add(jtxt,constraints);
             
             
             final JScrollPane jspntabla = new JScrollPane(jtblLateral); //Añadimos la tabla al jscrollpane
