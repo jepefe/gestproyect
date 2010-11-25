@@ -7,7 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,13 +24,12 @@ public class PnlAltawp extends JScrollPane{
 	JButton jbtnaceptar, jbtncancelar;
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
-	
+	private JComboBox cbtipo;
 	
 	public PnlAltawp (){
 		RsGesproject recursos = RsGesproject.Obtener_Instancia();
 		
 		panel.setLayout(new GridBagLayout());
-		  
 		String[] fieldNames = {
 		   rec.idioma[rec.eleidioma][2],rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][6],
 		   rec.idioma[rec.eleidioma][7],rec.idioma[rec.eleidioma][4],rec.idioma[rec.eleidioma][8],
@@ -52,13 +53,44 @@ public class PnlAltawp extends JScrollPane{
 		
 		/*
 		 * Con el bucle for vamos creando tantos labels y textfields como 
-		 * nombres de campos hayamos metido en fieldNames.
+		 * nombres de campos hayamos metido en fieldNames y a su vez un ComboBox.
 		 */
 		for(int i=0;i<fieldNames.length;++i) {
-		   gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   gbc.gridwidth = GridBagConstraints.REMAINDER;
-		   panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
+			/*
+			 * Se inserta el ComboBox en la 4º posicion mediante el if.
+			 */
+			if (i==3){
+				/*
+				 * Creacion del JComboBox y añadir los items.
+				 */
+				cbtipo = new JComboBox();
+				cbtipo.addItem("tipo1");
+				cbtipo.addItem("tipo2");
+				cbtipo.addItem("tipo3");
+				cbtipo.addItem("tipo4");
+				cbtipo.addItem("tipo5");
+				
+				
+				/*
+				 * Accion a realizar cuando el JComboBox cambia de item seleccionado.
+				 */
+				cbtipo.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+				
+					}
+				);
+			}else{
+				gbc.gridwidth = GridBagConstraints.RELATIVE;
+				panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+				gbc.gridwidth = GridBagConstraints.REMAINDER;
+				panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);	
+			}
+			
 		}
 		
 		/*
@@ -96,5 +128,11 @@ public class PnlAltawp extends JScrollPane{
 		panel.setOpaque(true);
 		this.setViewportView(panel);
 		
+	}
+
+
+	private int CInt(int length) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
