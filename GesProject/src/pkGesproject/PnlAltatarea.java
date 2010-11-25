@@ -31,10 +31,10 @@ public class PnlAltatarea extends JScrollPane{
 		panel.setLayout(new GridBagLayout());
 		  
 		String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][39],rec.idioma[rec.eleidioma][2],rec.idioma[rec.eleidioma][40],
+		   rec.idioma[rec.eleidioma][39],rec.idioma[rec.eleidioma][2],rec.idioma[rec.eleidioma][12], rec.idioma[rec.eleidioma][40],
 		   rec.idioma[rec.eleidioma][41],rec.idioma[rec.eleidioma][24],rec.idioma[rec.eleidioma][25]
 		};
-		int[] fieldWidths = {20,10,30,6,8,9};
+		int[] fieldWidths = {20,15,9,30,15,6,6};
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
 		
