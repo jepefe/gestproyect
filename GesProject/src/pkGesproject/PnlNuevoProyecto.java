@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.awt.*;
 import java.awt.event.*;
 
-import javax.swing.*;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,9 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.text.BadLocationException;
-
+import com.toedter.calendar.JDateChooser;
 /**
  * Panel Nuevo Proyecto En este panel es donde podremos dar de alta un nuevo proyecto
  * // http://www.chuidiang.com/java/layout/GridBagLayout/GridBagLayout.php 
@@ -27,11 +23,15 @@ public class PnlNuevoProyecto extends JScrollPane{
 	JPanel jpnl = new JPanel();
 	ScrollPane Sp = new ScrollPane();
 	JTextField[] jtxt;
-	// Falta Calendario
+	JDateChooser jdc1,jdc2;
+	
 	JFrame aviso = new JFrame();
 	JButton jbtnaceptar, jbtncancelar;
 	
 	public PnlNuevoProyecto()  {
+		// formato fecha
+		
+		
 		  jpnl.setLayout(new GridBagLayout());
 		// Array  de palabras, Fecha inico, Fecha fin, etc.
 	      String[] fieldNames = {
@@ -42,8 +42,12 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      jtxt = new JTextField[fieldNames.length];
 	      // limite de caracteres 
 	      int [] limite = {20,7,10,10}; 
+	      // Campos Calendario y formato
+	      jdc1 = new JDateChooser();
+	      jdc2 = new JDateChooser();
+	      jdc2.setDateFormatString("dd/MM/yyyy");
+	      jdc1.setDateFormatString("dd/MM/yyyy");
 	      
-	       
 	      GridBagConstraints gbc = new GridBagConstraints();
 
 	      gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -54,17 +58,16 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      gbc.insets = new Insets(5,10,5,5);
 
 	      for(int i=0;i<fieldNames.length;++i) {
-	    	
 	    	  gbc.gridwidth = GridBagConstraints.RELATIVE;
 	         jpnl.add(new JLabel(fieldNames[i]),gbc);
-	         if (i != 2 ){  gbc.gridwidth = GridBagConstraints.REMAINDER;  } 
-	         // limite de caracteres
-	         jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);	  
-	         if (i == 2 ){ gbc.gridwidth = GridBagConstraints.REMAINDER;
-	         	jpnl.add(new JButton(" "),gbc); 
-	         	}
+	         if (i != 2 || i != 3 ){gbc.gridwidth = GridBagConstraints.REMAINDER;  } 
+	         if(i == 2 ||  i == 3 ){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);	}  
+	         if (i == 2 ){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc1,gbc); }
+	         if (i == 3){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc2,gbc); }
 		}
 	      
+	     
+		 
 	 
 	      gbc.gridwidth = GridBagConstraints.RELATIVE;
 	      jpnl.add(new JLabel(rec.idioma[rec.eleidioma][16]),gbc); 
@@ -79,15 +82,19 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      jpnl.add((sp),gbc);
 	      
 	     // botones Aceptar Cancelar
-	      gbc.anchor = GridBagConstraints.EAST;
+	      	gbc.anchor = GridBagConstraints.EAST;
 			gbc.insets = new Insets(30,10,5,5);
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
 			jpnl.add(jbtnaceptar = new JButton(rec.idioma[rec.eleidioma][0]),gbc);
 			gbc.anchor = GridBagConstraints.WEST;
 			gbc.gridwidth = GridBagConstraints.REMAINDER;
 			jpnl.add(jbtncancelar = new JButton(rec.idioma[rec.eleidioma][1]),gbc);
-	     
 			
+		// Pasar a formato de base de datos.	
+		java.util.Date utilDate = new java.util.Date();
+	  	java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+	  
+	  
 		// Conectar Base de datos y pasar datos...
 			
 			ActionListener accion = new ActionListener(){
@@ -99,7 +106,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 						ConexionDb conexdb = new ConexionDb();
 						ResultSet rs;
 						conexdb.Conectardb();
-						conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion, precupuesto, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"')");
+						conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion, precupuesto, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+jtxt[1].getText()+"','"+jdc1.getDate()+"','"+jdc2.getDate()+"')");
 						JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][36]);
 						conexdb.cerrarConexion();
 					}
@@ -109,7 +116,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 			jbtnaceptar.setActionCommand("aceptar");
 			jbtnaceptar.addActionListener(accion);
 			jbtncancelar.setActionCommand("cancelar");
-			jtxt[1].setText("Construcción");
+			jtxt[1].setText("Construcciï¿½n");
 			
 		
 		jpnl.setVisible(true);
