@@ -52,6 +52,7 @@ public class PnlBusquedastaff extends JPanel{
 	JTable jtblLateral;
 	JScrollPane jspntabla;
     //table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
     public PnlBusquedastaff(){
     	
@@ -78,8 +79,8 @@ public class PnlBusquedastaff extends JPanel{
     	
     	
     	
-		   
-        	jtblLateral  = new JTable(new DefaultTableModel(datos, colu)) {};
+		    
+        	jtblLateral  = new JTable(tablemodel);
        
     		jtxt=new JTextField(20);
     		jtxt.setText("Buscar...");
@@ -188,9 +189,19 @@ public class PnlBusquedastaff extends JPanel{
     				    	//System.out.print("BLANCO");
     					}else{
     						//System.out.print("MOVIDA");
+    						
     						int tam = jtxt.getText().length();
     						int i=0;
     						int j=0;
+    						String[] res = new String[3];//almacenamos los resultados
+    						if(tablemodel.getRowCount() > 0){//si la tabla no esta vacia la vaciamos
+    						for(int a=0;a<tablemodel.getRowCount();a++){
+    							
+    						tablemodel.removeRow(a);
+    							}
+    						}
+    						
+    						
     						try{
     							System.out.print("\n");
 								System.out.print("\n");
@@ -208,6 +219,12 @@ public class PnlBusquedastaff extends JPanel{
 	    										repaint();
 	    										validate();
 	    										System.out.print(datos[i][col]+":");
+	    										res[col] = datos[i][col];
+	    									}
+	    									//Si el resultado no esta vacio que pasa por algun error de codigo añadimos linea al jtable
+	    									if (!res[0].equals("") && !res[1].equals("") && !res[2].equals("")){
+	    									Object[] dat = {res[0],res[1],res[2]};
+	    									tablemodel.addRow(dat);
 	    									}
 	    									System.out.print("\n");
 	    								}
