@@ -139,7 +139,7 @@ public class PnlBusquedastaff extends JPanel{
     			}
 
     			@Override
-    			public void keyReleased(KeyEvent arg0) {
+    			public void keyReleased(KeyEvent act) {
     				// TODO Auto-generated method stub
     				
     				
@@ -191,30 +191,40 @@ public class PnlBusquedastaff extends JPanel{
     						int tam = jtxt.getText().length();
     						int i=0;
     						int j=0;
-    						while(auxdatos[i][j]!=null){
-    							while(auxdatos[i][j]!=null){
-    								//System.out.print(i);
-    								if(auxdatos[i][j].regionMatches( true, 0, jtxt.getText(), 0, tam )){
-    									//System.out.print("ENTRÓO");
-    									for(int col =0;col<3;col++){
-    										datos[i][col]= auxdatos[i][col];
-    										jtblLateral.repaint();
-    										jtblLateral.validate();
-    										jspntabla.repaint();
-    										jspntabla.validate();
-    										repaint();
-    										validate();
-    										System.out.print(datos[i][col]+":");
-    									}
-    									System.out.print("\n");
-    								}
-    								i++;
-    							}
-    							i=0;
-    							j++;
+    						try{
+    							System.out.print("\n");
+								System.out.print("\n");
+	    						while(auxdatos[i][j]!=null){
+	    							while(auxdatos[i][j]!=null){
+	    								//System.out.print(i);
+	    								if(auxdatos[i][j].regionMatches( true, 0, jtxt.getText(), 0, tam )){
+	    									//System.out.print("ENTRÓO");
+	    									for(int col =0;col<3;col++){
+	    										datos[i][col]= auxdatos[i][col];
+	    										jtblLateral.repaint();
+	    										jtblLateral.validate();
+	    										jspntabla.repaint();
+	    										jspntabla.validate();
+	    										repaint();
+	    										validate();
+	    										System.out.print(datos[i][col]+":");
+	    									}
+	    									System.out.print("\n");
+	    								}
+	    								
+	    								i++;
+	    							}
+	    							i=0;
+	    							j++;
+	    						}
+	    						
+    						}catch(ArrayIndexOutOfBoundsException act1) {
+    						         //System.out.println("This program takes 3 parameters: ");
+    						         //System.out.println("  month day year.");
     						}
-    						
     					}
+    						
+    					
     				}
     			}
 
