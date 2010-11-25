@@ -49,6 +49,8 @@ public class PnlBusquedastaff extends JPanel{
 	JButton jbtn,jbtnmodificar,jbtneliminar;
 	Boolean llena = new Boolean(false);
 	String auxdatos[][] = new String[100][3];
+	JTable jtblLateral;
+	JScrollPane jspntabla;
     //table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     
     public PnlBusquedastaff(){
@@ -73,8 +75,11 @@ public class PnlBusquedastaff extends JPanel{
     		
     	this.setLayout(new GridBagLayout()); //Ponemos el Layout al panel
 		   
+    	
+    	
+    	
 		   
-    	final JTable jtblLateral  = new JTable(new DefaultTableModel(datos, colu)) {};
+        	jtblLateral  = new JTable(new DefaultTableModel(datos, colu)) {};
        
     		jtxt=new JTextField(20);
     		jtxt.setText("Buscar...");
@@ -121,96 +126,107 @@ public class PnlBusquedastaff extends JPanel{
             this.add(pnlaltasocio,constraints);
             constraints.weightx = 0.0; // La dejamos igual
             
+            
+            
             KeyListener accion = new KeyListener(){
 
-				@Override
-				public void keyPressed(KeyEvent arg0) {
-					// TODO Auto-generated method stub
-					//System.out.println("Has pulsado una tecla");
-					
-					
-				}
+    			@Override
+    			public void keyPressed(KeyEvent arg0) {
+    				// TODO Auto-generated method stub
+    				//System.out.println("Has pulsado una tecla");
+    				
+    				
+    			}
 
-				@Override
-				public void keyReleased(KeyEvent arg0) {
-					// TODO Auto-generated method stub
-					
-					
-					if(llena==false){
-						for(int i=0;i<100;i++){
-							for(int j = 0;j<3;j++){
-								auxdatos[i][j]= datos[i][j];
-								datos[i][j]=null;
-								//System.out.print(auxdatos[i][j]);
-								
-							}
-							
-							//System.out.print("\n");
-						}
-						llena = true;
-						System.out.print("LLENO");
-					}
-					
-					if(llena==true){
-						for(int i=0;i<100;i++){
-							for(int j = 0;j<3;j++){
-								datos[i][j]=null;
-							}
-						}
-						System.out.print("LIMPIADO");
-						
-						if(jtxt.getText().equals("")){
-							System.out.println("Has pulsado una tecla");
-	
-							
-							conexion.Conectardb();
-					    	rs = conexion.ConsultaSQL("SELECT id_staff,dni,nombre FROM STAFF");
-					    	int i=0;
-					    	try {
-								while(rs.next()){
-									for(int j = 1;j<4;j++){
-										datos[i][j-1] = rs.getString(j);
-									}
-									i++;
-								}
-							} catch (SQLException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-					    	conexion.cerrarConexion();
-					    	System.out.print("BLANCO");
-						}else{
-							System.out.print("MOVIDA");
-							int tam = jtxt.getText().length();
-							for(int j=0;j<3;j++){
-								for(int i=0;i<100;i++){
-									System.out.print(i);
-									if(auxdatos[i][j].regionMatches( true, 0, jtxt.getText(), 0, tam )){
-										System.out.print("ENTRÓO");
-										for(int col =0;col<3;col++){
-											datos[i][j]= auxdatos[i][j];
-											jtblLateral.repaint();
-											jtblLateral.validate();
-											jspntabla.repaint();
-											jspntabla.validate();
-											repaint();
-											validate();
-										}
-									}
-								}
-							}
-							
-						}
-					}
-				}
+    			@Override
+    			public void keyReleased(KeyEvent arg0) {
+    				// TODO Auto-generated method stub
+    				
+    				
+    				if(llena==false){
+    					for(int i=0;i<100;i++){
+    						for(int j = 0;j<3;j++){
+    							auxdatos[i][j]= datos[i][j];
+    							datos[i][j]=null;
+    							//System.out.print(auxdatos[i][j]);
+    							
+    						}
+    						
+    						//System.out.print("\n");
+    					}
+    					llena = true;
+    					//System.out.print("LLENO");
+    				}
+    				
+    				if(llena==true){
+    					for(int i=0;i<100;i++){
+    						for(int j = 0;j<3;j++){
+    							datos[i][j]=null;
+    						}
+    					}
+    					//System.out.print("LIMPIADO");
+    					
+    					if(jtxt.getText().equals("")){
+    						//System.out.println("Has pulsado una tecla");
 
-				@Override
-				public void keyTyped(KeyEvent arg0) {
-					// TODO Auto-generated method stub
-					
-				}
+    						
+    						conexion.Conectardb();
+    				    	rs = conexion.ConsultaSQL("SELECT id_staff,dni,nombre FROM STAFF");
+    				    	int i=0;
+    				    	try {
+    							while(rs.next()){
+    								for(int j = 1;j<4;j++){
+    									datos[i][j-1] = rs.getString(j);
+    								}
+    								i++;
+    							}
+    						} catch (SQLException e) {
+    							// TODO Auto-generated catch block
+    							e.printStackTrace();
+    						}
+    				    	conexion.cerrarConexion();
+    				    	//System.out.print("BLANCO");
+    					}else{
+    						//System.out.print("MOVIDA");
+    						int tam = jtxt.getText().length();
+    						int i=0;
+    						int j=0;
+    						while(auxdatos[i][j]!=null){
+    							while(auxdatos[i][j]!=null){
+    								//System.out.print(i);
+    								if(auxdatos[i][j].regionMatches( true, 0, jtxt.getText(), 0, tam )){
+    									//System.out.print("ENTRÓO");
+    									for(int col =0;col<3;col++){
+    										datos[i][col]= auxdatos[i][col];
+    										jtblLateral.repaint();
+    										jtblLateral.validate();
+    										jspntabla.repaint();
+    										jspntabla.validate();
+    										repaint();
+    										validate();
+    										System.out.print(datos[i][col]+":");
+    									}
+    									System.out.print("\n");
+    								}
+    								i++;
+    							}
+    							i=0;
+    							j++;
+    						}
+    						
+    					}
+    				}
+    			}
+
+    			@Override
+    			public void keyTyped(KeyEvent arg0) {
+    				// TODO Auto-generated method stub
+    				
+    			}
             	
             };
+            
+            
             
             jtxt.addKeyListener(accion);
 		   
