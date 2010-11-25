@@ -30,7 +30,7 @@ public class SpnStaff extends JSplitPane{
 	JPanel panel = new JPanel();
 	Component[] panlsStaff = {
 	 new pnlAlta_staff(),
-	 new PnlBusquedastaff(),
+	 new JScrollPane(new PnlBusquedastaff()),
 	 new PnlNuevoProyecto()};
 	
 	public SpnStaff(){
@@ -43,6 +43,7 @@ public class SpnStaff extends JSplitPane{
 		 * Ponemos propiedades adecuadas al toolbar
 		 */
 
+		
     	jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {
             @Override
             public Class<?> getColumnClass(int column) {
