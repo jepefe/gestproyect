@@ -90,7 +90,7 @@ public class PnlAltasocio extends JScrollPane{
 		jbtnaceptar.setActionCommand("aceptar");
 		jbtnaceptar.addActionListener(accion);
 		jbtncancelar.setActionCommand("cancelar");
-		jtxt[1].setText("Construcción");
+		
 		
 		panel.setOpaque(true);
 		this.setViewportView(panel);
