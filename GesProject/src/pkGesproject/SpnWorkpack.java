@@ -19,8 +19,8 @@ public class SpnWorkpack extends JSplitPane{
 	JTable jtblLateral;
 	Component[] panlsStaff = {
 			new PnlAltawp(),
-			 new PnlAltatarea(),
-			 new PnlNuevoProyecto()};
+			new PnlAltatarea(),
+			new PnlNuevoProyecto()};
 
 	public SpnWorkpack(){
 		this.setOneTouchExpandable(true);
