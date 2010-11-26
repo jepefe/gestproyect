@@ -51,12 +51,12 @@ public class PnlBusquedastaff extends JPanel{
 	String auxdatos[][] = new String[100][3];
 	JTable jtblLateral;
 	JScrollPane jspntabla;
-    //table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
+    
+	DefaultTableModel tablemodel;// = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
     public PnlBusquedastaff(){
     	
- 
+    	String resul[]= new String[3];
     	conexion.Conectardb();
     	rs = conexion.ConsultaSQL("SELECT id_staff,dni,nombre FROM STAFF");
     	int i=0;
@@ -64,6 +64,7 @@ public class PnlBusquedastaff extends JPanel{
 			while(rs.next()){
 				for(int j = 1;j<4;j++){
 					datos[i][j-1] = rs.getString(j);
+					
 				}
 				i++;
 			}
@@ -80,7 +81,7 @@ public class PnlBusquedastaff extends JPanel{
     	
     	
 		    
-        	jtblLateral  = new JTable(tablemodel);
+        	jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));
        
     		jtxt=new JTextField(20);
     		jtxt.setText("Buscar...");
@@ -170,7 +171,7 @@ public class PnlBusquedastaff extends JPanel{
     					if(jtxt.getText().equals("")){
     						//System.out.println("Has pulsado una tecla");
 
-    						
+    						/*
     						conexion.Conectardb();
     				    	rs = conexion.ConsultaSQL("SELECT id_staff,dni,nombre FROM STAFF");
     				    	int i=0;
@@ -185,7 +186,14 @@ public class PnlBusquedastaff extends JPanel{
     							// TODO Auto-generated catch block
     							e.printStackTrace();
     						}
+    						*/
+    						for(int i=0;i<100;i++){
+        						for(int j = 0;j<3;j++){
+        							datos[i][j]=auxdatos[i][j];
+        						}
+        					}
     				    	conexion.cerrarConexion();
+    				    	tablemodel.setDataVector(datos, colu);
     				    	//System.out.print("BLANCO");
     					}else{
     						//System.out.print("MOVIDA");
@@ -202,8 +210,8 @@ public class PnlBusquedastaff extends JPanel{
     						
     						
     						try{
-    							System.out.print("\n");
-								System.out.print("\n");
+    							//System.out.print("\n");
+								//System.out.print("\n");
 	    						while(auxdatos[i][j]!=null){
 	    							while(auxdatos[i][j]!=null){
 	    								//System.out.print(i);
@@ -214,13 +222,12 @@ public class PnlBusquedastaff extends JPanel{
 	    									for(int col =0;col<3;col++){
 	    										
 	    										datos[i][col]= auxdatos[i][col];
-	    										jtblLateral.repaint();
+	    										/*jtblLateral.repaint();
 	    										jtblLateral.validate();
 	    										jspntabla.repaint();
 	    										jspntabla.validate();
 	    										repaint();
-	    										validate();
-	    										System.out.print(datos[i][col]+":");
+	    										validate();*/
 	    										res[col] = datos[i][col];
 	    									}
 	    									//Si el resultado no esta vacio que pasa por algun error de codigo a�adimos linea al jtable
@@ -229,7 +236,7 @@ public class PnlBusquedastaff extends JPanel{
 	    									tablemodel.addRow(dat);
 	    									
 	    									}
-	    									System.out.print("\n");
+	    									
 	    								}
 	    								
 	    								i++;
