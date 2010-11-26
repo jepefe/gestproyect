@@ -19,7 +19,7 @@ public class SpnTareas extends JSplitPane{
 	JTable jtblLateral;
 	Component[] panlsStaff = {
 			new PnlAltatarea(),
-			 new PnlBienvenida(),
+			 new PnlModificarTarea(),
 			 new PnlNuevoProyecto()};
 
 	public SpnTareas(){
