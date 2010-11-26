@@ -194,9 +194,8 @@ public class PnlBusquedastaff extends JPanel{
     						int i=0;
     						int j=0;
     						String[] res = new String[3];//almacenamos los resultados
-    						if(tablemodel.getRowCount() > 0){//si la tabla no esta vacia la vaciamos
-    						for(int a=0;a<tablemodel.getRowCount();a++){
-    							
+    						if(tablemodel.getRowCount() != 0){//si la tabla no esta vacia la vaciamos
+    							for( int a = tablemodel.getRowCount() - 1; a >= 0; a-- ){
     						tablemodel.removeRow(a);
     							}
     						}
@@ -208,9 +207,12 @@ public class PnlBusquedastaff extends JPanel{
 	    						while(auxdatos[i][j]!=null){
 	    							while(auxdatos[i][j]!=null){
 	    								//System.out.print(i);
+	    								
 	    								if(auxdatos[i][j].regionMatches( true, 0, jtxt.getText(), 0, tam )){
 	    									//System.out.print("ENTRÃ“O");
+	    									
 	    									for(int col =0;col<3;col++){
+	    										
 	    										datos[i][col]= auxdatos[i][col];
 	    										jtblLateral.repaint();
 	    										jtblLateral.validate();
@@ -221,10 +223,11 @@ public class PnlBusquedastaff extends JPanel{
 	    										System.out.print(datos[i][col]+":");
 	    										res[col] = datos[i][col];
 	    									}
-	    									//Si el resultado no esta vacio que pasa por algun error de codigo añadimos linea al jtable
+	    									//Si el resultado no esta vacio que pasa por algun error de codigo aï¿½adimos linea al jtable
 	    									if (!res[0].equals("") && !res[1].equals("") && !res[2].equals("")){
 	    									Object[] dat = {res[0],res[1],res[2]};
 	    									tablemodel.addRow(dat);
+	    									
 	    									}
 	    									System.out.print("\n");
 	    								}
