@@ -48,15 +48,15 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      jdc2.setDateFormatString("dd/MM/yyyy");
 	      jdc1.setDateFormatString("dd/MM/yyyy");
 	      
+	      // Situacion en el panel 
 	      GridBagConstraints gbc = new GridBagConstraints();
-
 	      gbc.gridwidth = GridBagConstraints.REMAINDER;
 	      gbc.anchor = GridBagConstraints.CENTER;
 	      gbc.insets = new Insets(20,0,15,0);
 	      
 	      gbc.anchor = GridBagConstraints.WEST;
 	      gbc.insets = new Insets(5,10,5,5);
-
+	      
 	      for(int i=0;i<fieldNames.length;++i) {
 	    	  gbc.gridwidth = GridBagConstraints.RELATIVE;
 	         jpnl.add(new JLabel(fieldNames[i]),gbc);
@@ -66,9 +66,9 @@ public class PnlNuevoProyecto extends JScrollPane{
 	         if (i == 3){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc2,gbc); }
 		}
 	      
-	     
+	    
 		 
-	 
+	      // Label 
 	      gbc.gridwidth = GridBagConstraints.RELATIVE;
 	      jpnl.add(new JLabel(rec.idioma[rec.eleidioma][16]),gbc); 
 	      gbc.gridwidth = GridBagConstraints.REMAINDER;   
@@ -91,8 +91,8 @@ public class PnlNuevoProyecto extends JScrollPane{
 			jpnl.add(jbtncancelar = new JButton(rec.idioma[rec.eleidioma][1]),gbc);
 			
 		// Pasar a formato de base de datos.	
-		java.util.Date utilDate = new java.util.Date();
-	  	java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		
+	  
 	  
 	  
 		// Conectar Base de datos y pasar datos...
@@ -106,7 +106,10 @@ public class PnlNuevoProyecto extends JScrollPane{
 						ConexionDb conexdb = new ConexionDb();
 						ResultSet rs;
 						conexdb.Conectardb();
-						conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion, precupuesto, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+jtxt[1].getText()+"','"+jdc1.getDate()+"','"+jdc2.getDate()+"')");
+						// cambiar fecha a sql
+					  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
+					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
+						conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion, precupuesto, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
 						JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][36]);
 						conexdb.cerrarConexion();
 					}
