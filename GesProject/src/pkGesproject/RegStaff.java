@@ -15,7 +15,7 @@ import javax.swing.JButton;
 public class RegStaff extends pnlAlta_staff implements java.awt.event.ActionListener{
 
 	@Override
-	/*Redefinimos el método action performe para ejecutarlo como
+	/*Redefinimos el mï¿½todo action performe para ejecutarlo como
 	 * respuesta al eventeo evt producido 
 	 */
 	public void actionPerformed(ActionEvent e) {
@@ -24,8 +24,9 @@ public class RegStaff extends pnlAlta_staff implements java.awt.event.ActionList
 		
 		
 		
-		jbtnCrear.addActionListener(crear);
-		System.out.println("Usuario añadido correctamente");
+		//AbstractButton //jbtnCrear;
+		//jbtnCrear.addActionListener(crear);
+		//System.out.println("Usuario aï¿½adido correctamente");
 	}
 
 }
