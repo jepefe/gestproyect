@@ -34,7 +34,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 		
 		  jpnl.setLayout(new GridBagLayout());
 		// Array  de palabras, Fecha inico, Fecha fin, etc.
-	      String[] fieldNames = {
+	      final String[] fieldNames = {
 	    		  rec.idioma[rec.eleidioma][11],rec.idioma[rec.eleidioma][12],
 	    		  rec.idioma[rec.eleidioma][24],rec.idioma[rec.eleidioma][25]};
 	      int[] fieldWidths = {13,5,7,7};
@@ -112,16 +112,35 @@ public class PnlNuevoProyecto extends JScrollPane{
 						conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion, precupuesto, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
 						JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][36]);
 						conexdb.cerrarConexion();
+					// Borrar cuando termine de añadir
+						for(int i=0;i<2;++i) {	
+							jtxt[i].setText("");
+							}	
+						jdc1.setDate(null);
+						jdc2.setDate(null);
+						textarea.setText(null);
+						
+					}// Borrar cuando damos al boton cancelar
+					if( e.getActionCommand().equals("cancelar")){
+						for(int i=0;i<2;++i) {	
+							jtxt[i].setText("");
+							}	
+						jdc1.setDate(null);
+						jdc2.setDate(null);
+						textarea.setText(null);
 					}
+					
 				}
 				
 			};
 			jbtnaceptar.setActionCommand("aceptar");
 			jbtnaceptar.addActionListener(accion);
 			jbtncancelar.setActionCommand("cancelar");
-			jtxt[1].setText("Construcci�n");
+			jbtncancelar.addActionListener(accion);
+	// borrar datos al cancelar y aceptar
+	
+
 			
-		
 		jpnl.setVisible(true);
 		this.setViewportView(jpnl);
 	}		
