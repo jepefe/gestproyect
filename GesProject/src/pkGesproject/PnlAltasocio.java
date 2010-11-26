@@ -31,7 +31,7 @@ public class PnlAltasocio extends JScrollPane{
 		
 		panel.setLayout(new GridBagLayout());
 		  
-		String[] fieldNames = {
+		final String[] fieldNames = {
 		   rec.idioma[rec.eleidioma][2],rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][6],
 		   rec.idioma[rec.eleidioma][7],rec.idioma[rec.eleidioma][4]
 		};
@@ -81,8 +81,18 @@ public class PnlAltasocio extends JScrollPane{
 					ResultSet rs;
 					conexdb.Conectardb();
 					conexdb.executeUpdate("INSERT INTO PARTNER (nombre, sector, direccion, codpostal, telefono) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"')");
+					for(int i=0;i<fieldNames.length;i++){
+						jtxt[i].setText("");
+					}
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][23]);
 					conexdb.cerrarConexion();
+				}
+				
+				if(e.getActionCommand().equals("cancelar")){
+					JOptionPane.showMessageDialog(aviso,"Esta seguro de borrar los datos?");
+					for(int i=0;i<fieldNames.length;i++){
+						jtxt[i].setText("");
+					}
 				}
 			}
 			
@@ -90,7 +100,7 @@ public class PnlAltasocio extends JScrollPane{
 		jbtnaceptar.setActionCommand("aceptar");
 		jbtnaceptar.addActionListener(accion);
 		jbtncancelar.setActionCommand("cancelar");
-		
+		jbtncancelar.addActionListener(accion);
 		
 		panel.setOpaque(true);
 		this.setViewportView(panel);
