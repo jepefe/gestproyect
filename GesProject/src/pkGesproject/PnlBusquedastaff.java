@@ -38,7 +38,7 @@ public class PnlBusquedastaff extends JPanel{
 	ResultSet rs;
 	JPanel panel = new JPanel();
 	
-	String datos[][] = new String[100][3];
+	String datos[][] = new String[50000][3];
 	String colu[] = {"id_staff","dni","Nombre"};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
@@ -48,7 +48,7 @@ public class PnlBusquedastaff extends JPanel{
 	JTextField jtxt;
 	JButton jbtn,jbtnmodificar,jbtneliminar;
 	Boolean llena = new Boolean(false);
-	String auxdatos[][] = new String[100][3];
+	String auxdatos[][] = new String[50000][3];
 	JTable jtblLateral;
 	JScrollPane jspntabla;
     
