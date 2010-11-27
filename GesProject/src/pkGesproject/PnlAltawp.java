@@ -1,11 +1,13 @@
 package pkGesproject;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
@@ -24,7 +26,11 @@ public class PnlAltawp extends JScrollPane{
 	JButton jbtnaceptar, jbtncancelar;
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
+	String[] proyectocb= new String[20]; 
 	private JComboBox cbtipo;
+	ConexionDb conexion = new ConexionDb();
+	ResultSet rs;
+	int tam;
 	
 	public PnlAltawp (){
 		RsGesproject recursos = RsGesproject.Obtener_Instancia();
@@ -63,18 +69,43 @@ public class PnlAltawp extends JScrollPane{
 				/*
 				 * Creacion del JComboBox y añadir los items.
 				 */
+				
+				conexion.Conectardb();
+			/*	rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM PROYECTOS");
+				try {
+					tam=rs.getInt(1);
+					//proyectocb = new String[tam];
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				*/
+				rs = conexion.ConsultaSQL("SELECT * FROM PROYECTOS");
+				for (int f=0; f<3;f++){
+					try {
+						proyectocb[f] = rs.getString(1);
+						System.out.println(proyectocb[f]);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
 				cbtipo = new JComboBox();
-				cbtipo.addItem("tipo1");
-				cbtipo.addItem("tipo2");
-				cbtipo.addItem("tipo3");
-				cbtipo.addItem("tipo4");
-				cbtipo.addItem("tipo5");
-				/*
+				for(int a=0;a<proyectocb.length;a++){
+				cbtipo.addItem(proyectocb[a]);
+				
+				}
+				cbtipo.revalidate();
+								/*
 				 * Cargamos en el panel el ComboBox.
 				 */
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				panel.add(jlbl[i]=new JLabel("Tipo:"),gbc);
-				panel.add(cbtipo);
+				gbc.anchor = GridBagConstraints.WEST;
+				gbc.gridwidth = GridBagConstraints.REMAINDER;
+				cbtipo.setPreferredSize(new Dimension(233,30));
+				panel.add(cbtipo,gbc);
 				/*
 				 * Accion a realizar cuando el JComboBox cambia de item seleccionado.
 				 */
