@@ -37,12 +37,10 @@ public class PnlAltawp extends JScrollPane{
 		
 		panel.setLayout(new GridBagLayout());
 		String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][2],rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][6],
-		   rec.idioma[rec.eleidioma][7],rec.idioma[rec.eleidioma][4],rec.idioma[rec.eleidioma][8],
-		   rec.idioma[rec.eleidioma][9],rec.idioma[rec.eleidioma][13],rec.idioma[rec.eleidioma][10],
-		   rec.idioma[rec.eleidioma][11],rec.idioma[rec.eleidioma][12]
+		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][40],rec.idioma[rec.eleidioma][55],
+		   rec.idioma[rec.eleidioma][54],rec.idioma[rec.eleidioma][24],rec.idioma[rec.eleidioma][25]
 		};
-		int[] fieldWidths = {20,20,30,20,15,10,10,10,10,20,10};
+		int[] fieldWidths = {10,40,7,10,10,10};
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
 		
@@ -69,7 +67,9 @@ public class PnlAltawp extends JScrollPane{
 				/*
 				 * Creacion del JComboBox y añadir los items.
 				 */
-				
+				/*
+				 * Se conecta a la BD para realizar la consulta
+				 */
 				conexion.Conectardb();
 			/*	rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM PROYECTOS");
 				try {
@@ -83,7 +83,7 @@ public class PnlAltawp extends JScrollPane{
 				rs = conexion.ConsultaSQL("SELECT * FROM PROYECTOS");
 				for (int f=0; f<3;f++){
 					try {
-						proyectocb[f] = rs.getString(1);
+						proyectocb[f] = rs.getString(2);
 						System.out.println(proyectocb[f]);
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
@@ -101,7 +101,7 @@ public class PnlAltawp extends JScrollPane{
 				 * Cargamos en el panel el ComboBox.
 				 */
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
-				panel.add(jlbl[i]=new JLabel("Tipo:"),gbc);
+				panel.add(jlbl[i]=new JLabel("Proyecto:"),gbc);
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				cbtipo.setPreferredSize(new Dimension(233,30));
