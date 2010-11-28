@@ -26,11 +26,11 @@ public class PnlAltawp extends JScrollPane{
 	JButton jbtnaceptar, jbtncancelar;
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
-	String[] proyectocb= new String[20]; 
-	private JComboBox cbtipo;
+	String[] proyectocb; 
+	private JComboBox cbtipo = new JComboBox();;
 	ConexionDb conexion = new ConexionDb();
 	ResultSet rs;
-	int tam;
+	
 	
 	public PnlAltawp (){
 		RsGesproject recursos = RsGesproject.Obtener_Instancia();
@@ -71,32 +71,24 @@ public class PnlAltawp extends JScrollPane{
 				 * Se conecta a la BD para realizar la consulta
 				 */
 				conexion.Conectardb();
-			/*	rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM PROYECTOS");
-				try {
-					tam=rs.getInt(1);
-					//proyectocb = new String[tam];
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				*/
 				rs = conexion.ConsultaSQL("SELECT * FROM PROYECTOS");
-				for (int f=0; f<3;f++){
-					try {
-						proyectocb[f] = rs.getString(2);
-						System.out.println(proyectocb[f]);
+				try {
+				while(rs.next()){
+					
+					cbtipo.addItem(rs.getString(2));
+							
+						
+				}
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-					}
-				}
+						
+						}
 				
-				cbtipo = new JComboBox();
-				for(int a=0;a<proyectocb.length;a++){
-				cbtipo.addItem(proyectocb[a]);
 				
-				}
-				cbtipo.revalidate();
+				
+			
+				
 								/*
 				 * Cargamos en el panel el ComboBox.
 				 */
@@ -106,9 +98,6 @@ public class PnlAltawp extends JScrollPane{
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				cbtipo.setPreferredSize(new Dimension(233,30));
 				panel.add(cbtipo,gbc);
-				/*
-				 * Accion a realizar cuando el JComboBox cambia de item seleccionado.
-				 */
 				cbtipo.addActionListener(new ActionListener() {
 
 					@Override
@@ -116,17 +105,26 @@ public class PnlAltawp extends JScrollPane{
 						// TODO Auto-generated method stub
 						
 					}
-					
-					}
-				);
+			
+				});
+				
+				
+				/*
+				 * Accion a realizar cuando el JComboBox cambia de item seleccionado.
+				 */
+				
+				
 			}
+					
+			
+			
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);	
-			
-			
+		
 		}
+		
 		
 		/*
 		 * Creamos los dos botones para este panel 
@@ -141,7 +139,7 @@ public class PnlAltawp extends JScrollPane{
 		
 		ActionListener accion = new ActionListener(){
 
-			@Override
+			
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("aceptar")){
@@ -152,9 +150,9 @@ public class PnlAltawp extends JScrollPane{
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][23]);
 					conexdb.cerrarConexion();
 				}
-			}
+			}};
 			
-		};
+		
 		jbtnaceptar.setActionCommand("aceptar");
 		jbtnaceptar.addActionListener(accion);
 		jbtncancelar.setActionCommand("cancelar");
@@ -166,8 +164,8 @@ public class PnlAltawp extends JScrollPane{
 	}
 
 
-	private int CInt(int length) {
-		// TODO Auto-generated method stub
-		return 0;
+
+
 	}
-}
+
+	
