@@ -33,8 +33,7 @@ public class GesIdioma {
 		
 			conexion.Conectardb();
 			rs = conexion.ConsultaSQL("SELECT castellano,ingles FROM IDIOMA");
-			
-	    	i=0;
+	    	i=1;
 	    	try {
 				while(rs.next()){
 					for(j = 1;j<3;j++){
