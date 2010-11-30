@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import javax.swing.ImageIcon;
@@ -15,8 +17,9 @@ public class GesIdioma {
 
 	static String idioma[][] = new String[2][100];
 	String listaidiomas[]= new String[20];
-	int eleccion;
-	int eleidioma;
+	int eleidioma,i,j;
+	ConexionDb conexion = new ConexionDb();
+	ResultSet rs;
 	
 	private GesIdioma(){
 		
@@ -25,9 +28,28 @@ public class GesIdioma {
 		String linea,prue;
 	
 		int cont=0,i,j;
-		//Contacto[] persona = new Contacto[100];
 		
-		try{
+		
+		
+			conexion.Conectardb();
+			rs = conexion.ConsultaSQL("SELECT castellano,ingles FROM IDIOMA");
+			
+	    	i=0;
+	    	try {
+				while(rs.next()){
+					for(j = 1;j<3;j++){
+						idioma[j-1][i] = rs.getString(j);
+					}
+					i++;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	conexion.cerrarConexion();
+			
+	    	
+	    	/*
 			s = new Scanner(f);
 			
 			//cortamos la cadena por punto y coma
@@ -44,7 +66,6 @@ public class GesIdioma {
 				j++;
 				i=0;
 				
-			
 				//System.out.println("\n");
 				//System.out.println(linea);
 			}
@@ -52,35 +73,24 @@ public class GesIdioma {
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
 		}
+	*/
+		
 		
 		/*
-		idioma[0][0]= "Aceptar";
-		idioma[1][0]= "Accept";
-			
-		idioma[0][1]="Cancelar";
-		idioma[1][1]="Cancel";
+		ConexionDb conexion = new ConexionDb();
+		conexion.Conectardb();
 		
-		idioma[0][2]="Nombre";
-		idioma[1][2]="Name";
-		
-		idioma[0][3]="Sector";
-		idioma[1][3]="Sector";
-		
-		idioma[0][4]="Nœmero de telŽfono";
-		idioma[1][4]="Phone number";
-		
-		idioma[0][5]="BIENVENIDOS!!";
-		idioma[1][5]="WELCOME!!";
-		
-		idioma[0][6]="Direcci—n";
-		idioma[1][6]="Address";
-		
-		idioma[0][7]="Codigo Postal";
-		idioma[1][7]="Postal Code";
-		
-		idioma[0][8]="Correo electr—nico";
-		idioma[1][8]="Email Address";
+		for(int a =0;a<55;a++){
+			conexion.executeUpdate("INSERT INTO IDIOMA(castellano,ingles) VALUES('"+idioma[0][a]+"','"+idioma[1][a]+"')");
+		}
 		*/
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	static GesIdioma instancia = new GesIdioma();
