@@ -39,6 +39,7 @@ public class PnlBusquedastaff extends JPanel{
 	JPanel panel = new JPanel();
 	
 	String datos[][] = new String[50000][3];
+	String auxdatos[][] = new String[50000][3];
 	String colu[] = {"id_staff","dni","Nombre"};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
@@ -48,23 +49,24 @@ public class PnlBusquedastaff extends JPanel{
 	JTextField jtxt;
 	JButton jbtn,jbtnmodificar,jbtneliminar;
 	Boolean llena = new Boolean(false);
-	String auxdatos[][] = new String[50000][3];
+	String[] fila = new String[3];
 	JTable jtblLateral;
 	JScrollPane jspntabla;
     
-	DefaultTableModel tablemodel;// = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
+	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
     public PnlBusquedastaff(){
     	
     	String resul[]= new String[3];
     	conexion.Conectardb();
+    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
     	rs = conexion.ConsultaSQL("SELECT id_staff,dni,nombre FROM STAFF");
     	int i=0;
     	try {
 			while(rs.next()){
 				for(int j = 1;j<4;j++){
 					datos[i][j-1] = rs.getString(j);
-					
+					fila[j-1]=datos[i][j-1];
 				}
 				i++;
 			}
@@ -169,24 +171,7 @@ public class PnlBusquedastaff extends JPanel{
     					//System.out.print("LIMPIADO");
     					
     					if(jtxt.getText().equals("")){
-    						//System.out.println("Has pulsado una tecla");
-
-    						/*
-    						conexion.Conectardb();
-    				    	rs = conexion.ConsultaSQL("SELECT id_staff,dni,nombre FROM STAFF");
-    				    	int i=0;
-    				    	try {
-    							while(rs.next()){
-    								for(int j = 1;j<4;j++){
-    									datos[i][j-1] = rs.getString(j);
-    								}
-    								i++;
-    							}
-    						} catch (SQLException e) {
-    							// TODO Auto-generated catch block
-    							e.printStackTrace();
-    						}
-    						*/
+    						
     						for(int i=0;i<100;i++){
         						for(int j = 0;j<3;j++){
         							datos[i][j]=auxdatos[i][j];
