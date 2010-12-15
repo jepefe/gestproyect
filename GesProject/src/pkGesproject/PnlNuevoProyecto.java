@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,6 +26,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 	JTextField[] jtxt;
 	JDateChooser jdc1,jdc2;
 	
+	
 	JFrame aviso = new JFrame();
 	JButton jbtnaceptar, jbtncancelar;
 	
@@ -35,8 +37,8 @@ public class PnlNuevoProyecto extends JScrollPane{
 		  jpnl.setLayout(new GridBagLayout());
 		// Array  de palabras, Fecha inico, Fecha fin, etc.
 	      final String[] fieldNames = {
-	    		  rec.idioma[rec.eleidioma][11],rec.idioma[rec.eleidioma][12],
-	    		  rec.idioma[rec.eleidioma][24],rec.idioma[rec.eleidioma][25]};
+	    		  rec.idioma[rec.eleidioma][12],rec.idioma[rec.eleidioma][13],
+	    		  rec.idioma[rec.eleidioma][25],rec.idioma[rec.eleidioma][26]};
 	      int[] fieldWidths = {13,5,7,7};
 	      
 	      jtxt = new JTextField[fieldNames.length];
@@ -61,16 +63,26 @@ public class PnlNuevoProyecto extends JScrollPane{
 	    	  gbc.gridwidth = GridBagConstraints.RELATIVE;
 	         jpnl.add(new JLabel(fieldNames[i]),gbc);
 	         if (i != 2 || i != 3 ){gbc.gridwidth = GridBagConstraints.REMAINDER;  } 
-	         if(i == 2 ||  i == 3 ){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);	}  
+	         if(i == 2 ||  i == 3 ){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc); 	}  
+	         
 	         if (i == 2 ){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc1,gbc); }
 	         if (i == 3){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc2,gbc); }
 		}
-	      
-	    
+	
+       jtxt[1].addKeyListener(new KeyAdapter() {
+    	   public void keyTyped(KeyEvent e) {
+    	  	char c = e.getKeyChar();
+        	   if (!(Character.isDigit(c) ||(c == KeyEvent.VK_BACK_SPACE) ||(c == KeyEvent.VK_DELETE))) {
+        		   	getToolkit().beep();
+        		   	e.consume();
+        	   		}
+        	}
+    	});
+
 		 
 	      // Label 
 	      gbc.gridwidth = GridBagConstraints.RELATIVE;
-	      jpnl.add(new JLabel(rec.idioma[rec.eleidioma][16]),gbc); 
+	      jpnl.add(new JLabel(rec.idioma[rec.eleidioma][17]),gbc); 
 	      gbc.gridwidth = GridBagConstraints.REMAINDER;   
 	    
 	      // JTextArea con Scrolls 
@@ -85,10 +97,10 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      	gbc.anchor = GridBagConstraints.EAST;
 			gbc.insets = new Insets(30,10,5,5);
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
-			jpnl.add(jbtnaceptar = new JButton(rec.idioma[rec.eleidioma][0]),gbc);
+			jpnl.add(jbtnaceptar = new JButton(rec.idioma[rec.eleidioma][1]),gbc);
 			gbc.anchor = GridBagConstraints.WEST;
 			gbc.gridwidth = GridBagConstraints.REMAINDER;
-			jpnl.add(jbtncancelar = new JButton(rec.idioma[rec.eleidioma][1]),gbc);
+			jpnl.add(jbtncancelar = new JButton(rec.idioma[rec.eleidioma][2]),gbc);
 			
 		// Pasar a formato de base de datos.	
 		
