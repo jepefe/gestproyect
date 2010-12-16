@@ -50,7 +50,7 @@ public class FrmPrincipal extends JFrame {
 	SpnProyectos spnproyectos = new SpnProyectos();
 	SpnWorkpack spnworkpack = new SpnWorkpack();
 	SpnTareas spntareas = new SpnTareas();
-	JPanel FrmNuevapalabra = new JPanel();
+	FrmNuevapalabra nueva = new FrmNuevapalabra();
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	
 	
@@ -99,7 +99,7 @@ public class FrmPrincipal extends JFrame {
 	        	remove(spnstaff);
 	        	remove(spnworkpack);
 	        	remove(spntareas);
-	        	remove(FrmNuevapalabra);
+	        	remove(nueva);
 	        	jbtnUsuarios.setSelected(false);
 	        	jbtnSocios.setSelected(false);
 	        	jbtnInicio.setSelected(false);
@@ -158,7 +158,7 @@ public class FrmPrincipal extends JFrame {
 	         
 	         if (e.getActionCommand().equals("agregar")){
 	        	 jbtnAgregar.setSelected(true);
-	        	 add(FrmNuevapalabra, BorderLayout.CENTER);
+	        	 add(nueva, BorderLayout.CENTER);
 	        	 repaint();
 	        	 validate();
 	         }
