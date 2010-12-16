@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -42,12 +43,14 @@ public class FrmPrincipal extends JFrame {
 	JToggleButton jbtnProyectos = new JToggleButton(recursos.icono[4]);
 	JToggleButton jbtnWorkpack = new JToggleButton(recursos.icono[8]);
 	JToggleButton jbtnTareas = new JToggleButton(recursos.icono[9]);
+	JToggleButton jbtnAgregar = new JToggleButton(recursos.icono[10]);
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
 	SpnStaff spnstaff = new SpnStaff();
 	SpnSocios spnsocios = new SpnSocios();
 	SpnProyectos spnproyectos = new SpnProyectos();
 	SpnWorkpack spnworkpack = new SpnWorkpack();
 	SpnTareas spntareas = new SpnTareas();
+	JPanel FrmNuevapalabra = new JPanel();
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	
 	
@@ -96,12 +99,14 @@ public class FrmPrincipal extends JFrame {
 	        	remove(spnstaff);
 	        	remove(spnworkpack);
 	        	remove(spntareas);
+	        	remove(FrmNuevapalabra);
 	        	jbtnUsuarios.setSelected(false);
 	        	jbtnSocios.setSelected(false);
 	        	jbtnInicio.setSelected(false);
 	        	jbtnProyectos.setSelected(false);
 	        	jbtnWorkpack.setSelected(false);
 	        	jbtnTareas.setSelected(false);
+	        	jbtnAgregar.setSelected(false);
 	        	repaint();
 	        	validate();
 	         if (e.getActionCommand().equals("socios")){
@@ -150,6 +155,13 @@ public class FrmPrincipal extends JFrame {
 	        	 validate();
 	        	 
 	         	}
+	         
+	         if (e.getActionCommand().equals("agregar")){
+	        	 jbtnAgregar.setSelected(true);
+	        	 add(FrmNuevapalabra, BorderLayout.CENTER);
+	        	 repaint();
+	        	 validate();
+	         }
 	         } 
 		};
 		jtlbFrmppal.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
@@ -159,12 +171,14 @@ public class FrmPrincipal extends JFrame {
 		jbtnProyectos.addActionListener(jtlbAcListener);
 		jbtnWorkpack.addActionListener(jtlbAcListener);
 		jbtnTareas.addActionListener(jtlbAcListener);
+		jbtnAgregar.addActionListener(jtlbAcListener);
 		jbtnUsuarios.setActionCommand("usuarios");
 		jbtnSocios.setActionCommand("socios");
 		jbtnInicio.setActionCommand("inicio");
 		jbtnProyectos.setActionCommand("proyectos");
 		jbtnWorkpack.setActionCommand("workpack");
 		jbtnTareas.setActionCommand("tareas");
+		jbtnAgregar.setActionCommand("agregar");
 		jtlbFrmppal.setFloatable(false); //Impedimos que el toolbar se pueda separar de la ventana
 		jtlbFrmppal.setPreferredSize(new Dimension(this.getWidth(),50));
 		jtlbFrmppal.setVisible(true);
@@ -175,6 +189,7 @@ public class FrmPrincipal extends JFrame {
 		jtlbFrmppal.add(jbtnProyectos);
 		jtlbFrmppal.add(jbtnWorkpack);
 		jtlbFrmppal.add(jbtnTareas);
+		jtlbFrmppal.add(jbtnAgregar);
 		this.add(jtlbFrmppal,BorderLayout.NORTH);
 		
 
