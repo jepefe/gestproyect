@@ -25,8 +25,8 @@ public class SpnWorkpack extends JSplitPane{
 	public SpnWorkpack(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
-		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][28]},
-				{recursos.icono[6],rec.idioma[rec.eleidioma][29]},
+		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][29]},
+				{recursos.icono[6],rec.idioma[rec.eleidioma][30]},
 				{recursos.icono[7],rec.idioma[rec.eleidioma][30]}};
 		
 		

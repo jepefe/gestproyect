@@ -36,9 +36,9 @@ public class SpnStaff extends JSplitPane{
 	public SpnStaff(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
-		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][13]},
-				{recursos.icono[6],rec.idioma[rec.eleidioma][14]},
-				{recursos.icono[7],rec.idioma[rec.eleidioma][15]}};
+		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][14]},
+				{recursos.icono[6],rec.idioma[rec.eleidioma][15]},
+				{recursos.icono[7],rec.idioma[rec.eleidioma][16]}};
 		/*
 		 * Ponemos propiedades adecuadas al toolbar
 		 */
