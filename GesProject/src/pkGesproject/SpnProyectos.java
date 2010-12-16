@@ -33,7 +33,7 @@ public class SpnProyectos extends JSplitPane{
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
 		
-		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][19]},
+		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][12]},
 				{recursos.icono[6],rec.idioma[rec.eleidioma][22]},
 				{recursos.icono[7],rec.idioma[rec.eleidioma][23]}};
 		
