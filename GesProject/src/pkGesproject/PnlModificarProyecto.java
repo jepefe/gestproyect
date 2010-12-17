@@ -1,34 +1,21 @@
 package pkGesproject;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
+
 
 public class PnlModificarProyecto extends JPanel{
 
@@ -40,7 +27,7 @@ public class PnlModificarProyecto extends JPanel{
 	
 	String datos[][] = new String[50000][5];
 	String auxdatos[][] = new String[50000][5];
-	String colu[] = {"Nombre","Presupuesto","Direccion","Fecha Inicio","Fecha Fin"};
+	String colu[] = {"Nombre","Presupuesto","Descripcion","Fecha Inicio","Fecha Fin"};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
 			{recursos.icono[7],rec.idioma[rec.eleidioma][33]}};
@@ -52,12 +39,12 @@ public class PnlModificarProyecto extends JPanel{
 	String[] fila = new String[5];
 	JTable jtblLateral;
 	JScrollPane jspntabla;
-    
+	int cont = 0;
+	
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
     public PnlModificarProyecto(){
     	
-    	String resul[]= new String[5];
     	conexion.Conectardb();
     	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
     	rs = conexion.ConsultaSQL("SELECT nombre,presupuesto,descripcion,f_ini,f_fin FROM PROYECTOS");
@@ -67,6 +54,7 @@ public class PnlModificarProyecto extends JPanel{
 				for(int j = 1;j<6;j++){
 					datos[i][j-1] = rs.getString(j);
 					fila[j-1]=datos[i][j-1];
+					cont = cont + 1 ;
 				}
 				i++;
 			}
@@ -75,14 +63,9 @@ public class PnlModificarProyecto extends JPanel{
 			e.printStackTrace();
 		}
     	conexion.cerrarConexion();
-    	
-    		
+    	   		
     	this.setLayout(new GridBagLayout()); //Ponemos el Layout al panel
 		   
-    	
-    	
-    	
-		    
         	jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));
        
     		jtxt=new JTextField(20);
@@ -129,42 +112,32 @@ public class PnlModificarProyecto extends JPanel{
             constraints.insets = new Insets(20,30,0,10);
             this.add(pnlaltasocio,constraints);
             constraints.weightx = 0.0; // La dejamos igual
-            
-            
-            
+
             KeyListener accion = new KeyListener(){
 
     			@Override
     			public void keyPressed(KeyEvent arg0) {
     				// TODO Auto-generated method stub
-    				//System.out.println("Has pulsado una tecla");
-    				
-    				
+    				//System.out.println("Has pulsado una tecla");  				
     			}
-
     			@Override
     			public void keyReleased(KeyEvent act) {
     				// TODO Auto-generated method stub
-    				
-    			/// ESTO QUE ES¿?	
     				if(llena==false){
-    					for(int i=0;i<100;i++){
-    						for(int j = 0;j<3;j++){
+    					for(int i=0;i<cont;i++){
+    						for(int j = 0;j<5;j++){
     							auxdatos[i][j]= datos[i][j];
     							datos[i][j]=null;
-    							//System.out.print(auxdatos[i][j]);
-    							
+    							//System.out.print(auxdatos[i][j]);							
     						}
-    						
     						//System.out.print("\n");
     					}
     					llena = true;
     					//System.out.print("LLENO");
-    				}
-    				
+    				}		
     				if(llena==true){
-    					for(int i=0;i<100;i++){
-    						for(int j = 0;j<3;j++){
+    					for(int i=0;i<cont;i++){
+    						for(int j = 0;j<5;j++){
     							datos[i][j]=null;
     						}
     					}
@@ -172,8 +145,8 @@ public class PnlModificarProyecto extends JPanel{
     					
     					if(jtxt.getText().equals("")){
     						
-    						for(int i=0;i<100;i++){
-        						for(int j = 0;j<3;j++){
+    						for(int i=0;i<cont;i++){
+        						for(int j = 0;j<5;j++){
         							datos[i][j]=auxdatos[i][j];
         						}
         					}
@@ -186,7 +159,7 @@ public class PnlModificarProyecto extends JPanel{
     						int tam = jtxt.getText().length();
     						int i=0;
     						int j=0;
-    						String[] res = new String[3];//almacenamos los resultados
+    						String[] res = new String[5];//almacenamos los resultados
     						if(tablemodel.getRowCount() != 0){//si la tabla no esta vacia la vaciamos
     							for( int a = tablemodel.getRowCount() - 1; a >= 0; a-- ){
     						tablemodel.removeRow(a);
@@ -202,7 +175,7 @@ public class PnlModificarProyecto extends JPanel{
 	    								if(auxdatos[i][j].regionMatches( true, 0, jtxt.getText(), 0, tam )){
 	    									//System.out.print("ENTRÓO");
 	    									
-	    									for(int col =0;col<3;col++){
+	    									for(int col =0;col<5;col++){
 	    										
 	    										datos[i][col]= auxdatos[i][col];
 	    										/*jtblLateral.repaint();
@@ -214,20 +187,16 @@ public class PnlModificarProyecto extends JPanel{
 	    										res[col] = datos[i][col];
 	    									}
 	    									//Si el resultado no esta vacio que pasa por algun error de codigo a�adimos linea al jtable
-	    									if (!res[0].equals("") && !res[1].equals("") && !res[2].equals("")){
-	    									Object[] dat = {res[0],res[1],res[2]};
-	    									tablemodel.addRow(dat);
-	    									
-	    									}
-	    									
-	    								}
-	    								
+	    									if (!res[0].equals("") && !res[1].equals("") && !res[2].equals("")&& !res[3].equals("") && !res[4].equals("")){
+	    									Object[] dat = {res[0],res[1],res[2],res[3],res[4]};
+	    									tablemodel.addRow(dat);	    									
+	    									}	
+	    								}	    								
 	    								i++;
 	    							}
 	    							i=0;
 	    							j++;
-	    						}
-	    						
+	    						}    						
     						}catch(ArrayIndexOutOfBoundsException act1) {
     						         //System.out.println("This program takes 3 parameters: ");
     						         //System.out.println("  month day year.");
