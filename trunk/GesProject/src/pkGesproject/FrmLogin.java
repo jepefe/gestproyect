@@ -119,7 +119,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 					this.dispose();
 				}
 				else{
-					System.out.println("Contraseña incorrecta");
+					System.out.println("Contraseï¿½a incorrecta");
 		
 			}
 			}

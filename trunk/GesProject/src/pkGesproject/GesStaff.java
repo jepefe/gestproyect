@@ -55,7 +55,7 @@ public class GesStaff {
 		ResultSet rs;
 		conex.Conectardb();
 		conex.executeUpdate("INSERT INTO STAFF (dni,nombre,categoria,representante,f_nac,pais" +
-				",region,ciudad,direccion,codpostal,telefono,foto,nick_usuario,contraseña,permisos,cod_part) " +
+				",region,ciudad,direccion,codpostal,telefono,foto,nick_usuario,contraseÃ±a,permisos,cod_part) " +
 				"VALUES ('"+"','" + dni + "','" + categoria + "','"
 				+ Boolean.toString(representante)+ "','" + f_nac + "','" + pais + region + ciudad 
 				+ direccion + codpostal + telefono + foto + nick + "','" + password + "','" 

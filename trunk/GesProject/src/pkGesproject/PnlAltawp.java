@@ -37,8 +37,8 @@ public class PnlAltawp extends JScrollPane{
 		
 		panel.setLayout(new GridBagLayout());
 		String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][40],rec.idioma[rec.eleidioma][55],
-		   rec.idioma[rec.eleidioma][54],rec.idioma[rec.eleidioma][24],rec.idioma[rec.eleidioma][25]
+		   rec.idioma[rec.eleidioma][4],rec.idioma[rec.eleidioma][41],rec.idioma[rec.eleidioma][54],
+		   rec.idioma[rec.eleidioma][13],rec.idioma[rec.eleidioma][25],rec.idioma[rec.eleidioma][26]
 		};
 		int[] fieldWidths = {10,40,7,10,10,10};
 		jtxt = new JTextField[fieldNames.length];
@@ -61,11 +61,11 @@ public class PnlAltawp extends JScrollPane{
 		 */
 		for(int i=0;i<fieldNames.length;++i) {
 			/*
-			 * Se inserta el ComboBox en la 4º posicion mediante el if.
+			 * Se inserta el ComboBox en la 4ï¿½ posicion mediante el if.
 			 */
 			if (i==3){
 				/*
-				 * Creacion del JComboBox y añadir los items.
+				 * Creacion del JComboBox y aï¿½adir los items.
 				 */
 				/*
 				 * Se conecta a la BD para realizar la consulta
@@ -147,7 +147,7 @@ public class PnlAltawp extends JScrollPane{
 					ResultSet rs;
 					conexdb.Conectardb();
 					conexdb.executeUpdate("INSERT INTO PARTNER (nombre, sector, direccion, codpostal, telefono) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"')");
-					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][23]);
+					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
 					conexdb.cerrarConexion();
 				}
 			}};
@@ -156,7 +156,7 @@ public class PnlAltawp extends JScrollPane{
 		jbtnaceptar.setActionCommand("aceptar");
 		jbtnaceptar.addActionListener(accion);
 		jbtncancelar.setActionCommand("cancelar");
-		jtxt[1].setText("Construcción");
+	
 		
 		panel.setOpaque(true);
 		this.setViewportView(panel);
