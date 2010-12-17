@@ -26,7 +26,7 @@ public class SpnProyectos extends JSplitPane{
 	JTable jtblLateral;
 	Component[] panlsStaff = {
 			new PnlNuevoProyecto(),
-			 new PnlAltasocio(),
+			 new PnlModificarProyecto(),
 			 new pnlAlta_staff()};
 	
 	public SpnProyectos(){
