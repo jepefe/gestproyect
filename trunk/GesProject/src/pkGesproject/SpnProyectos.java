@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
@@ -26,7 +27,7 @@ public class SpnProyectos extends JSplitPane{
 	JTable jtblLateral;
 	Component[] panlsStaff = {
 			new PnlNuevoProyecto(),
-			 new PnlModificarProyecto(),
+			 new JScrollPane(new PnlModificarProyecto()),
 			 new pnlAlta_staff()};
 	
 	public SpnProyectos(){
