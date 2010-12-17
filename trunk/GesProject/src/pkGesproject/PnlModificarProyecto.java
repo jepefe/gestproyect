@@ -38,9 +38,9 @@ public class PnlModificarProyecto extends JPanel{
 	ResultSet rs;
 	JPanel panel = new JPanel();
 	
-	String datos[][] = new String[50000][3];
-	String auxdatos[][] = new String[50000][3];
-	String colu[] = {"id_staff","dni","Nombre"};
+	String datos[][] = new String[50000][5];
+	String auxdatos[][] = new String[50000][5];
+	String colu[] = {"Nombre","Presupuesto","Direccion","Fecha Inicio","Fecha Fin"};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
 			{recursos.icono[7],rec.idioma[rec.eleidioma][33]}};
@@ -49,7 +49,7 @@ public class PnlModificarProyecto extends JPanel{
 	JTextField jtxt;
 	JButton jbtn,jbtnmodificar,jbtneliminar;
 	Boolean llena = new Boolean(false);
-	String[] fila = new String[3];
+	String[] fila = new String[5];
 	JTable jtblLateral;
 	JScrollPane jspntabla;
     
@@ -57,14 +57,14 @@ public class PnlModificarProyecto extends JPanel{
     
     public PnlModificarProyecto(){
     	
-    	String resul[]= new String[3];
+    	String resul[]= new String[5];
     	conexion.Conectardb();
     	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
     	rs = conexion.ConsultaSQL("SELECT nombre,presupuesto,descripcion,f_ini,f_fin FROM PROYECTOS");
     	int i=0;
     	try {
 			while(rs.next()){
-				for(int j = 1;j<4;j++){
+				for(int j = 1;j<6;j++){
 					datos[i][j-1] = rs.getString(j);
 					fila[j-1]=datos[i][j-1];
 				}
