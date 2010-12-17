@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,8 +24,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 	ScrollPane Sp = new ScrollPane();
 	JTextField[] jtxt;
 	JDateChooser jdc1,jdc2;
-	
-	
+   	
 	JFrame aviso = new JFrame();
 	JButton jbtnaceptar, jbtncancelar;
 	
@@ -39,7 +37,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      final String[] fieldNames = {
 	    		  rec.idioma[rec.eleidioma][12],rec.idioma[rec.eleidioma][13],
 	    		  rec.idioma[rec.eleidioma][25],rec.idioma[rec.eleidioma][26]};
-	      int[] fieldWidths = {13,5,7,7};
+	      int[] fieldWidths = {13,6,7,7};
 	      
 	      jtxt = new JTextField[fieldNames.length];
 	      // limite de caracteres 
@@ -47,8 +45,8 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      // Campos Calendario y formato
 	      jdc1 = new JDateChooser();
 	      jdc2 = new JDateChooser();
-	      jdc2.setDateFormatString("dd/MM/yyyy");
-	      jdc1.setDateFormatString("dd/MM/yyyy");
+	      jdc2.setDateFormatString("DD/MM/YYYY");
+	      jdc1.setDateFormatString("DD/MM/YYYY");
 	      
 	      // Situacion en el panel 
 	      GridBagConstraints gbc = new GridBagConstraints();
@@ -58,17 +56,18 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      
 	      gbc.anchor = GridBagConstraints.WEST;
 	      gbc.insets = new Insets(5,10,5,5);
-	      
 	      for(int i=0;i<fieldNames.length;++i) {
 	    	  gbc.gridwidth = GridBagConstraints.RELATIVE;
 	         jpnl.add(new JLabel(fieldNames[i]),gbc);
 	         if (i != 2 || i != 3 ){gbc.gridwidth = GridBagConstraints.REMAINDER;  } 
-	         if(i == 2 ||  i == 3 ){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc); 	}  
+	         if(i == 2 ||  i == 3 ){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);	}  
 	         
 	         if (i == 2 ){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc1,gbc); }
 	         if (i == 3){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc2,gbc); }
 		}
 	
+	      
+	      
        jtxt[1].addKeyListener(new KeyAdapter() {
     	   public void keyTyped(KeyEvent e) {
     	  	char c = e.getKeyChar();
