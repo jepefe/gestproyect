@@ -32,14 +32,13 @@ public class PnlModificarProyecto extends JPanel{
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
 			{recursos.icono[7],rec.idioma[rec.eleidioma][33]}};
 	JLabel jlbl;
-	PnlAltasocio pnlaltasocio = new PnlAltasocio();
-	JTextField jtxt;
+	PnlNuevoProyecto pnlnuevoproyecto = new PnlNuevoProyecto();
+	JTextField jtext;
 	JButton jbtn,jbtnmodificar,jbtneliminar;
 	Boolean llena = new Boolean(false);
 	String[] fila = new String[5];
 	JTable jtblLateral;
 	JScrollPane jspntabla;
-	int cont = 0;
 	
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
@@ -54,7 +53,7 @@ public class PnlModificarProyecto extends JPanel{
 				for(int j = 1;j<6;j++){
 					datos[i][j-1] = rs.getString(j);
 					fila[j-1]=datos[i][j-1];
-					cont = cont + 1 ;
+					
 				}
 				i++;
 			}
@@ -68,24 +67,27 @@ public class PnlModificarProyecto extends JPanel{
 		   
         	jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));
        
-    		jtxt=new JTextField(20);
-    		jtxt.setText("Buscar...");
-    		jtxt.putClientProperty("JTextField.variant", "search");
-    		jtxt.putClientProperty("JTextField.Search.PlaceholderText", Boolean.TRUE);
+    		jtext=new JTextField(20);
+    		jtext.setText("Buscar...");
+    		jtext.putClientProperty("JTextField.variant", "search");
+    		jtext.putClientProperty("JTextField.Search.PlaceholderText", Boolean.TRUE);
     		
             GridBagConstraints constraints = new GridBagConstraints();
-            constraints.gridx = 0; // El área de texto empieza en la columna
+            constraints.gridx = 1; // El área de texto empieza en la columna
             constraints.gridy = 0; // El área de texto empieza en la fila
             constraints.gridwidth = 2; // El área de texto ocupa x columnas.
             constraints.gridheight = 1; // El área de texto ocupa x filas.
+            constraints.anchor = GridBagConstraints.WEST;
             constraints.insets = new Insets(20,30,0,10);
-            this.add(jtxt,constraints);
+            this.add(jtext,constraints);
             
             
             final JScrollPane jspntabla = new JScrollPane(jtblLateral); //Añadimos la tabla al jscrollpane
             constraints.gridx = 0; // El área de texto empieza en la columna
             constraints.gridy = 1; // El área de texto empieza en la fila
             constraints.weighty = 1.0; // Con esto la fila 1 se estira al estirar la ventana
+            constraints.gridwidth = 3;    
+            constraints.gridheight = 2;
             constraints.fill = GridBagConstraints.BOTH;
             this.add(jspntabla,constraints);
             constraints.fill = GridBagConstraints.NONE;
@@ -95,7 +97,7 @@ public class PnlModificarProyecto extends JPanel{
             constraints.gridy = 2; // El área de texto empieza en la fila
             constraints.gridwidth = 1; // El área de texto ocupa x columnas.
             constraints.insets = new Insets(20,30,20,10);
-            //constraints.anchor = GridBagConstraints.CENTER;
+         
             this.add(jbtnmodificar,constraints);
             
             jbtneliminar = new JButton(rec.idioma[rec.eleidioma][39]);
@@ -110,7 +112,7 @@ public class PnlModificarProyecto extends JPanel{
             constraints.gridheight = 1; // El área de texto ocupa x filas.
             constraints.weightx = 1.0;	// con esto estiramos segunda columna al maximo que de la ventana
             constraints.insets = new Insets(20,30,0,10);
-            this.add(pnlaltasocio,constraints);
+            this.add(pnlnuevoproyecto,constraints);
             constraints.weightx = 0.0; // La dejamos igual
 
             KeyListener accion = new KeyListener(){
@@ -124,7 +126,7 @@ public class PnlModificarProyecto extends JPanel{
     			public void keyReleased(KeyEvent act) {
     				// TODO Auto-generated method stub
     				if(llena==false){
-    					for(int i=0;i<cont;i++){
+    					for(int i=0;i<100;i++){
     						for(int j = 0;j<5;j++){
     							auxdatos[i][j]= datos[i][j];
     							datos[i][j]=null;
@@ -136,16 +138,16 @@ public class PnlModificarProyecto extends JPanel{
     					//System.out.print("LLENO");
     				}		
     				if(llena==true){
-    					for(int i=0;i<cont;i++){
+    					for(int i=0;i<100;i++){
     						for(int j = 0;j<5;j++){
     							datos[i][j]=null;
     						}
     					}
     					//System.out.print("LIMPIADO");
     					
-    					if(jtxt.getText().equals("")){
+    					if(jtext.getText().equals("")){
     						
-    						for(int i=0;i<cont;i++){
+    						for(int i=0;i<100;i++){
         						for(int j = 0;j<5;j++){
         							datos[i][j]=auxdatos[i][j];
         						}
@@ -156,7 +158,7 @@ public class PnlModificarProyecto extends JPanel{
     					}else{
     						//System.out.print("MOVIDA");
     						
-    						int tam = jtxt.getText().length();
+    						int tam = jtext.getText().length();
     						int i=0;
     						int j=0;
     						String[] res = new String[5];//almacenamos los resultados
@@ -172,7 +174,7 @@ public class PnlModificarProyecto extends JPanel{
 	    							while(auxdatos[i][j]!=null){
 	    								//System.out.print(i);
 	    								
-	    								if(auxdatos[i][j].regionMatches( true, 0, jtxt.getText(), 0, tam )){
+	    								if(auxdatos[i][j].regionMatches( true, 0, jtext.getText(), 0, tam )){
 	    									//System.out.print("ENTRÓO");
 	    									
 	    									for(int col =0;col<5;col++){
@@ -210,6 +212,6 @@ public class PnlModificarProyecto extends JPanel{
     			}
             	
             };    
-            jtxt.addKeyListener(accion);  
+            jtext.addKeyListener(accion);  
     }
 }
