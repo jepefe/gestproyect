@@ -4,6 +4,7 @@ import java.awt.Component;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
@@ -19,15 +20,15 @@ public class SpnTareas extends JSplitPane{
 	JTable jtblLateral;
 	Component[] panlsStaff = {
 			new PnlAltatarea(),
-			 new PnlModificarTarea(),
+			 new JScrollPane(new PnlModificarTarea()),
 			 new PnlNuevoProyecto()};
 
 	public SpnTareas(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
-		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
-				{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
-				{recursos.icono[7],rec.idioma[rec.eleidioma][33]}};
+		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][32]},
+				{recursos.icono[6],rec.idioma[rec.eleidioma][33]},
+				{recursos.icono[7],rec.idioma[rec.eleidioma][34]}};
 		
 		
 		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {
