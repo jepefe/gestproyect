@@ -32,8 +32,8 @@ public class PnlAltasocio extends JScrollPane{
 		panel.setLayout(new GridBagLayout());
 		  
 		final String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][2],rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][6],
-		   rec.idioma[rec.eleidioma][7],rec.idioma[rec.eleidioma][4]
+		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][4],rec.idioma[rec.eleidioma][7],
+		   rec.idioma[rec.eleidioma][8],rec.idioma[rec.eleidioma][4]
 		};
 		int[] fieldWidths = {20,10,30,6,8};
 		jtxt = new JTextField[fieldNames.length];
@@ -66,10 +66,10 @@ public class PnlAltasocio extends JScrollPane{
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.insets = new Insets(30,10,5,5);
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		panel.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][0]),gbc);
+		panel.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
+		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][2]),gbc);
 		
 		ActionListener accion = new ActionListener(){
 
