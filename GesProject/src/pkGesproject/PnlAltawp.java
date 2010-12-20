@@ -135,7 +135,7 @@ public class PnlAltawp extends JScrollPane{
 		panel.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][0]),gbc);
+		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][2]),gbc);
 		
 		ActionListener accion = new ActionListener(){
 
