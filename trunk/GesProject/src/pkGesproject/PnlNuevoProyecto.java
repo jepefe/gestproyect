@@ -45,8 +45,8 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      // Campos Calendario y formato
 	      jdc1 = new JDateChooser();
 	      jdc2 = new JDateChooser();
-	      jdc2.setDateFormatString("DD/MM/YYYY");
-	      jdc1.setDateFormatString("DD/MM/YYYY");
+	      jdc2.setDateFormatString("dd/MM/yyyy");
+	      jdc1.setDateFormatString("dd/MM/yyyy");
 	      
 	      // Situacion en el panel 
 	      GridBagConstraints gbc = new GridBagConstraints();
@@ -120,7 +120,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 						// cambiar fecha a sql
 					  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
-						conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion, precupuesto, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
+						conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion, presupuesto, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
 						JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][36]);
 						conexdb.cerrarConexion();
 					// Borrar cuando termine de añadir
