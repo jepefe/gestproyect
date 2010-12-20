@@ -37,10 +37,10 @@ public class PnlAltawp extends JScrollPane{
 		
 		panel.setLayout(new GridBagLayout());
 		String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][4],rec.idioma[rec.eleidioma][41],rec.idioma[rec.eleidioma][54],
+		   rec.idioma[rec.eleidioma][4],rec.idioma[rec.eleidioma][41],
 		   rec.idioma[rec.eleidioma][13],rec.idioma[rec.eleidioma][25],rec.idioma[rec.eleidioma][26]
 		};
-		int[] fieldWidths = {10,40,7,10,10,10};
+		int[] fieldWidths = {10,40,10,10,10};
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
 		
@@ -132,10 +132,10 @@ public class PnlAltawp extends JScrollPane{
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.insets = new Insets(30,10,5,5);
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		panel.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][0]),gbc);
+		panel.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
+		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][0]),gbc);
 		
 		ActionListener accion = new ActionListener(){
 
@@ -146,7 +146,7 @@ public class PnlAltawp extends JScrollPane{
 					ConexionDb conexdb = new ConexionDb();
 					ResultSet rs;
 					conexdb.Conectardb();
-					conexdb.executeUpdate("INSERT INTO PARTNER (nombre, sector, direccion, codpostal, telefono) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"')");
+					conexdb.executeUpdate("INSERT INTO WORKPACKAGES (sector, descripcion, presupuesto, id_proyecto, fecha_inicio, fecha_fin) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"')");
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
 					conexdb.cerrarConexion();
 				}
