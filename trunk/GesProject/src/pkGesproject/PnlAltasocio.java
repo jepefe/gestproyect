@@ -33,7 +33,7 @@ public class PnlAltasocio extends JScrollPane{
 		  
 		final String[] fieldNames = {
 		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][4],rec.idioma[rec.eleidioma][7],
-		   rec.idioma[rec.eleidioma][8],rec.idioma[rec.eleidioma][4]
+		   rec.idioma[rec.eleidioma][8],rec.idioma[rec.eleidioma][5]
 		};
 		int[] fieldWidths = {20,10,30,6,8};
 		jtxt = new JTextField[fieldNames.length];
