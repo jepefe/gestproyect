@@ -108,7 +108,7 @@ public class PnlBusquedastaff extends JPanel{
             constraints.fill = GridBagConstraints.NONE;
             constraints.weighty = 0.0; // Volvemos a dejarla como antes para el resto
             
-            jbtnmodificar = new JButton(rec.idioma[rec.eleidioma][37]);
+            jbtnmodificar = new JButton(rec.idioma[rec.eleidioma][16]);
             constraints.gridy = 2; // El área de texto empieza en la fila
             constraints.gridwidth = 1; // El área de texto ocupa x columnas.
             constraints.insets = new Insets(20,30,20,10);
@@ -121,6 +121,7 @@ public class PnlBusquedastaff extends JPanel{
             this.add(jbtneliminar,constraints);
             //constraints.anchor = GridBagConstraints.CENTER;
             
+            /*
             constraints.gridx = 2; // El área de texto empieza en la columna
             constraints.gridy = 1; // El área de texto empieza en la fila
             constraints.gridwidth = 1; // El área de texto ocupa x columnas.
@@ -129,7 +130,7 @@ public class PnlBusquedastaff extends JPanel{
             constraints.insets = new Insets(20,30,0,10);
             this.add(pnlaltasocio,constraints);
             constraints.weightx = 0.0; // La dejamos igual
-            
+            */
             
             
             KeyListener accion = new KeyListener(){
