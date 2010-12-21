@@ -3,13 +3,17 @@ package pkGesproject.Tareas;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,6 +24,7 @@ import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
 import pkGesproject.RsGesproject;
 import pkGesproject.Proyectos.PnlNuevoProyecto;
+import pkGesproject.Staff.pnlAlta_staff;
 
 
 public class PnlModificarTarea extends JPanel{
@@ -206,6 +211,53 @@ public class PnlModificarTarea extends JPanel{
     			}
             	
             };    
-            jtext.addKeyListener(accion);  
+            jtext.addKeyListener(accion); 
+            
+            ActionListener event = new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					if(e.getActionCommand().equals("modificar")){
+						/*
+						for(int i=0;i<3;i++){
+							System.out.print(datos[jtblLateral.getSelectedRow()][i]+";");
+						}
+						*/
+						
+						JFrame modificar = new JFrame();
+						pnlAlta_staff mod;
+						modificar.add(mod = new pnlAlta_staff());
+						modificar.setVisible(true);
+					}
+					
+					if(e.getActionCommand().equals("eliminar")){
+						ConexionDb conexdb = new ConexionDb();
+						ResultSet rs;
+						conexdb.Conectardb();
+						// cambiar fecha a sql
+						
+						//jtblLateral.getSelectedRow();
+						conexdb.executeUpdate("DELETE FROM TAREAS WHERE id_task=8");
+
+						//JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
+						conexdb.cerrarConexion();
+					}
+						JFrame modificar = new JFrame();
+						pnlAlta_staff mod;
+						modificar.add(mod = new pnlAlta_staff());
+						modificar.setVisible(true);
+					}
+					
+				
+            	
+            };
+            jbtnmodificar.setActionCommand("modificar");
+            jbtnmodificar.addActionListener(event);
+            
+            jbtneliminar.setActionCommand("eliminar");
+            jbtneliminar.addActionListener(event);
+            
+            
     }
 }
