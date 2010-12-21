@@ -39,6 +39,12 @@ public class PnlAltawp extends JScrollPane{
 	ConexionDb conexion = new ConexionDb();
 	ResultSet rs;
 	JDateChooser jdc1,jdc2;
+	ResultSet idpart;
+	ResultSet idpro;
+	ResultSet idwp;
+	String nompro;
+	String nompart;
+	
 	
 	public PnlAltawp (){
 		RsGesproject recursos = RsGesproject.Obtener_Instancia();
@@ -57,7 +63,7 @@ public class PnlAltawp extends JScrollPane{
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = new Insets(20,0,15,0);
-		//panel.add(new JLabel("Alta Partner"),gbc);
+		//panel.add(new JLabel("Alta workpaquets"),gbc);
 		
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(5,10,5,5);
@@ -104,7 +110,7 @@ public class PnlAltawp extends JScrollPane{
 			
 				
 								/*
-				 * Cargamos en el panel el ComboBox.
+				 * Cargamos en el panel el ComboBox para proyectos.
 				 */
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				panel.add(jlbl[i]=new JLabel(rec.idioma[rec.eleidioma][55]),gbc);
@@ -112,8 +118,8 @@ public class PnlAltawp extends JScrollPane{
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				cbtipo.setPreferredSize(new Dimension(233,30));
 				panel.add(cbtipo,gbc);
-				cbtipo.addActionListener(new ActionListener() {
 
+				cbtipo.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						// TODO Auto-generated method stub
@@ -122,7 +128,7 @@ public class PnlAltawp extends JScrollPane{
 			
 				});
 				
-				
+				 
 				/*
 				 * Accion a realizar cuando el JComboBox cambia de item seleccionado.
 				 */
@@ -154,7 +160,7 @@ public class PnlAltawp extends JScrollPane{
 			
 				
 								/*
-				 * Cargamos en el panel el ComboBox.
+				 * Cargamos en el panel el ComboBox para partners.
 				 */
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				panel.add(jlbl[i]=new JLabel(rec.idioma[rec.eleidioma][57]),gbc);
@@ -221,12 +227,19 @@ public class PnlAltawp extends JScrollPane{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("aceptar")){
+					nompro = cbtipo.getSelectedItem().toString();
+					nompart = cbpart.getSelectedItem().toString();
+					idpro = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre='" + nompro + "'");
+					idpart = conexion.ConsultaSQL("SELECT id_pro FROM PARTNER WHERE nombre='" + nompart + "'");
+					
 					ConexionDb conexdb = new ConexionDb();
 					ResultSet rs;
 					conexdb.Conectardb();
 					java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 					java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
-					conexdb.executeUpdate("INSERT INTO WORKPAQUETS (nombre, descripcion, presupuesto, id_proyecto, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
+					conexdb.executeUpdate("INSERT INTO WORKPAQUETS (nombre, descripcion, presupuesto, id_pro, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
+					idwp = conexion.ConsultaSQL ("SELECT id_wp FROM WORKPAQUETS WHERE nombre = '"+ jtxt[0].getText()+"' ");
+					conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS (cod_part,id_wp) VALUES ('" +idpart+ "','" +idwp+ "')");
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
 					conexdb.cerrarConexion();
 				}
