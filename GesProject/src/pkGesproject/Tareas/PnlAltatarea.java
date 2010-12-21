@@ -1,5 +1,6 @@
 package pkGesproject.Tareas;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -78,6 +79,7 @@ public class PnlAltatarea extends JScrollPane{
 		 */
 		
 		for(int i=0;i<fieldNames.length;++i) {
+		
 		   gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -90,30 +92,31 @@ public class PnlAltatarea extends JScrollPane{
 		   if(i==fieldNames.length-3){
 			   gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc2,gbc);
 			}
-		   if(i!=5 && i!=fieldNames.length-2 && i!=fieldNames.length-3){ 
+		   if(i!=2 && i!=5 && i!=fieldNames.length-2 && i!=fieldNames.length-3){ 
 			   panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 			}
 		   
-		   /*if (i==2){
+		   if (i==2){
+			   panel.add(CmbWp,gbc);
+			   CmbWp.setPreferredSize(new Dimension(140,30));
+			   
 				/**
-				 * Creacion del JComboBox y aï¿½adir los items.
+				 * Creacion del JComboBox y añadir los items.
 				 *Se conecta a la BD para realizar la consulta
-				 *
+				 **/
 				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT * FROM PROYECTOS");
+				rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS");
 				try {
 				while(rs.next()){
 					
-					CmbWp.addItem(rs.getString(1));
-							
-						
+					CmbWp.addItem(rs.getString(2));		
 				}
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						
 						}
-		   }*/
+		   }
 		 
 		}
 		  //cuadro con scroll para las descripciones
