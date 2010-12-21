@@ -84,7 +84,7 @@ public class SpnProyectos extends JSplitPane{
         JLabel proyecto;
 		pnllateral.add(proyecto = new JLabel("PROYECTOS"),gbc);
         Font auxFont = titulo.getFont();
-        proyecto.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),30));
+        proyecto.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),20));
         gbc.weighty = 1.0;	//que la fila de la tabla se estire en vertical, de este modo el label se queda en la parte norte
         gbc.fill = GridBagConstraints.BOTH;	//Para estirar la barra lateral
     	pnllateral.add(jtblLateral,gbc);

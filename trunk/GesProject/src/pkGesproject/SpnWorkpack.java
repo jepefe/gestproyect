@@ -78,7 +78,7 @@ public class SpnWorkpack extends JSplitPane{
         JLabel Workpack;
 		pnllateral.add(Workpack = new JLabel("WORKPAKAGES"),gbc);
         Font auxFont = titulo.getFont();
-        Workpack.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),30));
+        Workpack.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),20));
         gbc.weighty = 1.0;	//que la fila de la tabla se estire en vertical, de este modo el label se queda en la parte norte
         gbc.fill = GridBagConstraints.BOTH;	//Para estirar la barra lateral
     	pnllateral.add(jtblLateral,gbc);
