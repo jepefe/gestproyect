@@ -93,7 +93,7 @@ public class PnlBusquedastaff extends JPanel{
         	jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));
        
     		jtxt=new JTextField(20);
-    		jtxt.setText("Buscar...");
+    		//jtxt.setText("Buscar...");
     		jtxt.putClientProperty("JTextField.variant", "search");
     		jtxt.putClientProperty("JTextField.Search.PlaceholderText", Boolean.TRUE);
     		
@@ -273,6 +273,27 @@ public class PnlBusquedastaff extends JPanel{
 						JFrame modificar = new JFrame();
 						pnlAlta_staff mod;
 						modificar.add(mod = new pnlAlta_staff());
+						modificar.setBounds(0, 0, 600, 650);
+						modificar.setLocationRelativeTo(null);
+						
+						conexion.Conectardb();
+				    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
+				    	rs = conexion.ConsultaSQL("SELECT s.nombre,s.apellidos,s.f_nac,s.region,s.ciudad,s.direccion,s.codpostal,s.telefono,s.foto,s.nick_usuario FROM STAFF s");
+				    	int i=1;
+				    	
+							try {
+									for(i=1;i<11;i++){
+										rs.next();
+										mod.jtxt[i-1].setText(rs.getString(i));
+									}
+							
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						
+				    	conexion.cerrarConexion();
+						
 						modificar.setVisible(true);
 					}
 				}
