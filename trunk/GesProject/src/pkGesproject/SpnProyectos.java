@@ -31,7 +31,7 @@ public class SpnProyectos extends JSplitPane{
 	Component[] panlsStaff = {
 			new PnlNuevoProyecto(),
 			 new JScrollPane(new PnlModificarProyecto()),
-			 new pnlAlta_staff()};
+			 new JPanel()};
 	
 	public SpnProyectos(){
 		this.setOneTouchExpandable(true);

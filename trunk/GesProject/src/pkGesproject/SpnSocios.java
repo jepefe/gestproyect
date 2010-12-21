@@ -30,8 +30,8 @@ public class SpnSocios extends JSplitPane{
 	JTable jtblLateral;
 	Component[] panlsStaff = {
 			new PnlAltasocio(),
-			 new pnlAlta_staff(),
-			 new PnlNuevoProyecto()};
+			new JPanel(),
+			new JPanel()};
 
 	public SpnSocios(){
 		this.setOneTouchExpandable(true);
