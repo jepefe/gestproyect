@@ -16,6 +16,7 @@ import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
@@ -41,7 +42,7 @@ public class PnlBusquedastaff extends JPanel{
 	
 	String datos[][] = new String[50000][3];
 	String auxdatos[][] = new String[50000][3];
-	String colu[] = {"id_staff","dni","Nombre"};
+	String colu[] = {"Nombre","Apellidos","Partner"};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
 			{recursos.icono[7],rec.idioma[rec.eleidioma][33]}};
@@ -61,7 +62,7 @@ public class PnlBusquedastaff extends JPanel{
     	String resul[]= new String[3];
     	conexion.Conectardb();
     	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
-    	rs = conexion.ConsultaSQL("SELECT id_staff,dni,nombre FROM STAFF");
+    	rs = conexion.ConsultaSQL("SELECT s.nombre,s.apellidos,p.nombre FROM STAFF s INNER JOIN PARTNER p ON s.cod_part = p.cod_part");
     	int i=0;
     	try {
 			while(rs.next()){
