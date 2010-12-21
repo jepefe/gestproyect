@@ -13,7 +13,7 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
  */
 public class ConexionDb {
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
-	Connection conexion;
+	public Connection conexion;
 	Statement st;
 	public void Conectardb(){
 		

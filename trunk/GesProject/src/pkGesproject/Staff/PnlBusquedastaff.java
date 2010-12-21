@@ -1,4 +1,4 @@
-package pkGesproject;
+package pkGesproject.Staff;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -31,6 +31,11 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
+
+import pkGesproject.ConexionDb;
+import pkGesproject.GesIdioma;
+import pkGesproject.RsGesproject;
+import pkGesproject.Socios.PnlAltasocio;
 
 public class PnlBusquedastaff extends JPanel{
 

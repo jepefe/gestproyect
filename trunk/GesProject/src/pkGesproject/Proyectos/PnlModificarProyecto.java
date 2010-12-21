@@ -1,4 +1,4 @@
-package pkGesproject;
+package pkGesproject.Proyectos;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,6 +15,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import pkGesproject.ConexionDb;
+import pkGesproject.GesIdioma;
+import pkGesproject.RsGesproject;
 
 
 public class PnlModificarProyecto extends JPanel{

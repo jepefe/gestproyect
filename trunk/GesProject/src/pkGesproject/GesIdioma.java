@@ -15,9 +15,10 @@ import javax.swing.JOptionPane;
 
 public class GesIdioma {
 
-	static String idioma[][] = new String[2][100];
+	public static String idioma[][] = new String[2][100];
 	String listaidiomas[]= new String[20];
-	int eleidioma,i,j;
+	public int eleidioma;
+	int i, j;
 	ConexionDb conexion = new ConexionDb();
 	ResultSet rs;
 	

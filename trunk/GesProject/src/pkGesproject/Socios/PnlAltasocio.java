@@ -1,4 +1,4 @@
-package pkGesproject;
+package pkGesproject.Socios;
 
 import java.awt.Container;
 import java.awt.GridBagConstraints;
@@ -15,6 +15,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
+import pkGesproject.ConexionDb;
+import pkGesproject.GesIdioma;
+import pkGesproject.RsGesproject;
 
 public class PnlAltasocio extends JScrollPane{
 

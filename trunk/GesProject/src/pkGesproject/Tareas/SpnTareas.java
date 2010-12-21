@@ -1,12 +1,9 @@
-package pkGesproject;
+package pkGesproject.Tareas;
 
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -14,32 +11,32 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
-import javax.swing.JToggleButton;
-import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-public class SpnProyectos extends JSplitPane{
+import pkGesproject.GesIdioma;
+import pkGesproject.RsGesproject;
+import pkGesproject.Proyectos.PnlModificarProyecto;
+
+public class SpnTareas extends JSplitPane{
 
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
-	JToolBar jtlbLateral = new JToolBar();
 	JSplitPane jsplpane;
 	JPanel panel = new JPanel();
 	JTable jtblLateral;
 	Component[] panlsStaff = {
-			new PnlNuevoProyecto(),
+			new PnlAltatarea(),
 			 new JScrollPane(new PnlModificarProyecto()),
 			 new JPanel()};
-	
-	public SpnProyectos(){
+
+	public SpnTareas(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
-		
-		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][12]},
-				{recursos.icono[6],rec.idioma[rec.eleidioma][22]},
-				{recursos.icono[7],rec.idioma[rec.eleidioma][23]}};
+		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][32]},
+				{recursos.icono[6],rec.idioma[rec.eleidioma][33]},
+				{recursos.icono[7],rec.idioma[rec.eleidioma][34]}};
 		
 		
 		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {
@@ -71,6 +68,7 @@ public class SpnProyectos extends JSplitPane{
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if(e.getValueIsAdjusting()){
+					
 					setRightComponent(panlsStaff[jtblLateral.getSelectedRow()]);
 				}
 			}});
@@ -81,14 +79,14 @@ public class SpnProyectos extends JSplitPane{
         gbc.gridwidth = GridBagConstraints.REMAINDER; //para que despues del label pase a la linea de abajo
         JLabel titulo = new JLabel("Titulo");
         
-        JLabel proyecto;
-		pnllateral.add(proyecto = new JLabel("PROYECTOS"),gbc);
+        JLabel tareas;
+		pnllateral.add(tareas = new JLabel("TAREAS"),gbc);
         Font auxFont = titulo.getFont();
-        proyecto.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),20));
+        tareas.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),20));
         gbc.weighty = 1.0;	//que la fila de la tabla se estire en vertical, de este modo el label se queda en la parte norte
         gbc.fill = GridBagConstraints.BOTH;	//Para estirar la barra lateral
     	pnllateral.add(jtblLateral,gbc);
-        
+		
     	this.setLeftComponent(pnllateral);
     	this.setRightComponent(panel);
 	}

@@ -1,4 +1,4 @@
-package pkGesproject;
+package pkGesproject.Proyectos;
 import java.lang.*;
 import java.sql.ResultSet;
 import java.awt.*;
@@ -12,6 +12,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import pkGesproject.ConexionDb;
+import pkGesproject.GesIdioma;
+import pkGesproject.JTextFieldLimit;
+import pkGesproject.LimiteDocumento;
+import pkGesproject.RsGesproject;
+
 import com.toedter.calendar.JDateChooser;
 /**
  * Panel Nuevo Proyecto En este panel es donde podremos dar de alta un nuevo proyecto

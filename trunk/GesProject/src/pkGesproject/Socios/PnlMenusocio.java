@@ -1,10 +1,12 @@
-package pkGesproject;
+package pkGesproject.Socios;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+
+import pkGesproject.GesIdioma;
 
 public class PnlMenusocio extends JPanel{
 	GesIdioma rec = GesIdioma.obtener_instancia();

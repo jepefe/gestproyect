@@ -8,7 +8,7 @@ public class PnlBienvenida extends JPanel{
 	JLabel jlblbienvenida, titulo;
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
-	PnlBienvenida(){
+	public PnlBienvenida(){
 		
 		this.setLayout(new GridBagLayout());
 		this.setBackground(new Color(0xED,0xED,0xED,0xED));
