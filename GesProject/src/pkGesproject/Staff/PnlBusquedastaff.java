@@ -264,10 +264,16 @@ public class PnlBusquedastaff extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					if(e.getActionCommand().equals("modificar")){
-						
+						/*
 						for(int i=0;i<3;i++){
 							System.out.print(datos[jtblLateral.getSelectedRow()][i]+";");
 						}
+						*/
+						
+						JFrame modificar = new JFrame();
+						pnlAlta_staff mod;
+						modificar.add(mod = new pnlAlta_staff());
+						modificar.setVisible(true);
 					}
 				}
             	
