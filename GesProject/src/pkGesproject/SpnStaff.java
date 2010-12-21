@@ -34,7 +34,7 @@ public class SpnStaff extends JSplitPane{
 	Component[] panlsStaff = {
 	 new pnlAlta_staff(),
 	 new JScrollPane(new PnlBusquedastaff()),
-	 new PnlNuevoProyecto()};
+	 new JPanel()};
 	
 	public SpnStaff(){
 		this.setOneTouchExpandable(true);

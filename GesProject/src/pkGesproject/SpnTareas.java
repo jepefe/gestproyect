@@ -25,7 +25,7 @@ public class SpnTareas extends JSplitPane{
 	Component[] panlsStaff = {
 			new PnlAltatarea(),
 			 new JScrollPane(new PnlModificarTarea()),
-			 new PnlNuevoProyecto()};
+			 new JPanel()};
 
 	public SpnTareas(){
 		this.setOneTouchExpandable(true);
