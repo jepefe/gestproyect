@@ -63,7 +63,7 @@ public class FrmPrincipal extends JFrame {
 	private Rectangle maxBounds;
 	
 	public FrmPrincipal(){
-		jbtnAgregar.setVisible(true);
+		jbtnAgregar.setVisible(false);
 		super.setBounds(0, 0, recursos.getFrmppalWidth(), recursos.getFrmppalHeight());
 		this.setTitle(recursos.APNAME);
 		this.setLocationRelativeTo(null);
