@@ -1,4 +1,4 @@
-package pkGesproject;
+package pkGesproject.Staff;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -22,6 +22,9 @@ import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+
+import pkGesproject.GesIdioma;
+import pkGesproject.RsGesproject;
 
 public class SpnStaff extends JSplitPane{
 	

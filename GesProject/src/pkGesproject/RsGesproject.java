@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 
 
 
+
 /**
  * 
  * @author Jesus Perez
@@ -32,7 +33,7 @@ public class RsGesproject {
 	final String DBPASS	  = "proyecto2010";
 	final String DBNAME	  = "gesproyect";
 	/**String constante que contiene el titulo de la aplicaion*/
-	final String APNAME = "GesProyect - Florida"; //Constante que contiene el nombre de la aplicacion
+	public final String APNAME = "GesProyect - Florida"; //Constante que contiene el nombre de la aplicacion
 	public ImageIcon[] icono = { 
 			new ImageIcon(getClass().getResource("imagenes/staff.png")),
 			new ImageIcon(getClass().getResource("imagenes/gestionsocios.png")),
@@ -49,7 +50,7 @@ public class RsGesproject {
 	static String SistemaOp = System.getProperty("os.name"); //Nombre del S.O por si necesitamos condicionar codigo 
 	
 	private int idusuario;
-	Font f = new Font( "arial",0,14 );
+	public Font f = new Font( "arial",0,14 );
 	/**
 	 * @return Referencia a la instancia de la clase
 	 */

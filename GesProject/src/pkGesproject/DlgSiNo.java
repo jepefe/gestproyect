@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 
+
 public class DlgSiNo extends Thread  {
 	JPanel dlg = new JPanel();
 	JLabel msg = new JLabel();

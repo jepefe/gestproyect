@@ -26,6 +26,12 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 import javax.swing.BorderFactory;
 
+import pkGesproject.Proyectos.SpnProyectos;
+import pkGesproject.Socios.SpnSocios;
+import pkGesproject.Staff.SpnStaff;
+import pkGesproject.Tareas.SpnTareas;
+import pkGesproject.Workpakages.SpnWorkpack;
+
 import com.seaglasslookandfeel.SeaGlassLookAndFeel;
 import com.seaglasslookandfeel.ui.SeaGlassRootPaneUI;
 /**
@@ -35,7 +41,7 @@ import com.seaglasslookandfeel.ui.SeaGlassRootPaneUI;
  */
 public class FrmPrincipal extends JFrame {
 	
-	JToolBar jtlbFrmppal = new JToolBar();
+	public JToolBar jtlbFrmppal = new JToolBar();
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	JToggleButton jbtnInicio = new JToggleButton(recursos.icono[2]);
 	JToggleButton jbtnUsuarios = new JToggleButton(recursos.icono[0]);

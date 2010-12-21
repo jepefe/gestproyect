@@ -1,4 +1,4 @@
-package pkGesproject;
+package pkGesproject.Workpakages;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -19,6 +19,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import pkGesproject.ConexionDb;
+import pkGesproject.GesIdioma;
+import pkGesproject.RsGesproject;
 
 import com.toedter.calendar.JDateChooser;
 

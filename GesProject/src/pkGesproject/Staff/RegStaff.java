@@ -1,9 +1,10 @@
-package pkGesproject;
+package pkGesproject.Staff;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
+
 
 /**
  * Esta clase se encarga del evento genrado al dar de alta un nuevo Staff

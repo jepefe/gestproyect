@@ -1,4 +1,4 @@
-package pkGesproject;
+package pkGesproject.Socios;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -19,6 +19,9 @@ import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+
+import pkGesproject.GesIdioma;
+import pkGesproject.RsGesproject;
 
 public class SpnSocios extends JSplitPane{
 	
