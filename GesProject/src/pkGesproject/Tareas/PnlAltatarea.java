@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,6 +19,7 @@ import javax.swing.JTextField;
 
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
+import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
 
 import com.toedter.calendar.JDateChooser;
@@ -75,11 +77,7 @@ public class PnlAltatarea extends JScrollPane{
 		   gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   //desahabilitar campos de texto
 		   
-		   if(i==1){
-			   
-			   
-		   }
-		  
+		 		  
 		   if(i==fieldNames.length-2){
 			   gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);
 			}
@@ -89,18 +87,16 @@ public class PnlAltatarea extends JScrollPane{
 		   if(i!=5 && i!=fieldNames.length-2 && i!=fieldNames.length-3){ 
 			   panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 			}
-		   //cuadro con scroll para las descripciones
-		   if(i==5){
-			  // LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
+		 
+		}
+		  //cuadro con scroll para las descripciones
+	     
+		   LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
 		      final JTextArea textarea = (new JTextArea(3,13));
-		      //textarea.setDocument(lpd);
+		      textarea.setDocument(lpd);
 		      JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 		      JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		     panel.add((sp),gbc);
-		      
-		   }    
-		}
-			      
 		/**
 		 * Creamos los dos botones para este panel 
 		 */
@@ -115,8 +111,7 @@ public class PnlAltatarea extends JScrollPane{
 		
 		ActionListener accion = new ActionListener(){
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("aceptar")){
 					ConexionDb conexdb = new ConexionDb();
@@ -125,11 +120,29 @@ public class PnlAltatarea extends JScrollPane{
 					// cambiar fecha a sql
 					  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
-					conexdb.executeUpdate("INSERT INTO TAREAS (nombre, presupuesto, workpackage,f_ini, f_fin,descripcion) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
+					
+					conexdb.executeUpdate("INSERT INTO TAREAS (nombre, descripcion, presupuesto,f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");//('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][23]);
 					conexdb.cerrarConexion();
 				}
+				// Borrar cuando termine de añadir
+				for(int i=0;i<2;++i) {	
+					jtxt[i].setText("");
+					}	
+				jdc1.setDate(null);
+				jdc2.setDate(null);
+				textarea.setText(null);
+				
+			// Borrar cuando damos al boton cancelar
+			if( e.getActionCommand().equals("cancelar")){
+				for(int i=0;i<2;++i) {	
+					jtxt[i].setText("");
+					}	
+				jdc1.setDate(null);
+				jdc2.setDate(null);
+				textarea.setText(null);
 			}
+		}
 			
 		};
 		jbtnaceptar.setActionCommand("aceptar");
