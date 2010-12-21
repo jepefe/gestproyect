@@ -6,9 +6,11 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -31,6 +33,9 @@ public class PnlAltatarea extends JScrollPane{
 	JLabel[] jlbl;
 	JButton jbtnaceptar, jbtncancelar;
 	JDateChooser jdc1,jdc2;
+	private JComboBox CmbWp = new JComboBox();;
+	ConexionDb conexion = new ConexionDb();
+	ResultSet rs;
 	
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
@@ -65,6 +70,7 @@ public class PnlAltatarea extends JScrollPane{
 	      jdc2 = new JDateChooser();
 	      jdc2.setDateFormatString("DD/MM/YYYY");
 	      jdc1.setDateFormatString("DD/MM/YYYY");
+	    
 	      
 		/**
 		 * Con el bucle for vamos creando tantos labels y textfields como 
@@ -87,6 +93,27 @@ public class PnlAltatarea extends JScrollPane{
 		   if(i!=5 && i!=fieldNames.length-2 && i!=fieldNames.length-3){ 
 			   panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 			}
+		   
+		   /*if (i==2){
+				/**
+				 * Creacion del JComboBox y a�adir los items.
+				 *Se conecta a la BD para realizar la consulta
+				 *
+				conexion.Conectardb();
+				rs = conexion.ConsultaSQL("SELECT * FROM PROYECTOS");
+				try {
+				while(rs.next()){
+					
+					CmbWp.addItem(rs.getString(1));
+							
+						
+				}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						
+						}
+		   }*/
 		 
 		}
 		  //cuadro con scroll para las descripciones
