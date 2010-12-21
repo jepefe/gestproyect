@@ -1,6 +1,7 @@
 package pkGesproject.Proyectos;
 import java.lang.*;
 import java.sql.ResultSet;
+import java.util.Date;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -31,6 +32,8 @@ public class PnlNuevoProyecto extends JScrollPane{
 	ScrollPane Sp = new ScrollPane();
 	JTextField[] jtxt;
 	JDateChooser jdc1,jdc2;
+	Date dateini, datefin ;
+	
    	
 	JFrame aviso = new JFrame();
 	JButton jbtnaceptar, jbtncancelar;
@@ -42,9 +45,9 @@ public class PnlNuevoProyecto extends JScrollPane{
 		  jpnl.setLayout(new GridBagLayout());
 		// Array  de palabras, Fecha inico, Fecha fin, etc.
 	      final String[] fieldNames = {
-	    		  rec.idioma[rec.eleidioma][12],rec.idioma[rec.eleidioma][13],
+	    		  rec.idioma[rec.eleidioma][12],
 	    		  rec.idioma[rec.eleidioma][25],rec.idioma[rec.eleidioma][26]};
-	      int[] fieldWidths = {13,6,7,7};
+	      int[] fieldWidths = {13,7,7};
 	      
 	      jtxt = new JTextField[fieldNames.length];
 	      // limite de caracteres 
@@ -66,24 +69,14 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      for(int i=0;i<fieldNames.length;++i) {
 	    	  gbc.gridwidth = GridBagConstraints.RELATIVE;
 	         jpnl.add(new JLabel(fieldNames[i]),gbc);
-	         if (i != 2 || i != 3 ){gbc.gridwidth = GridBagConstraints.REMAINDER;  } 
-	         if(i == 2 ||  i == 3 ){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);	}  
+	         if (i != 1 || i != 2 ){gbc.gridwidth = GridBagConstraints.REMAINDER;  } 
+	         if(i == 1 ||  i == 2 ){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);	}  
 	         
-	         if (i == 2 ){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc1,gbc); }
-	         if (i == 3){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc2,gbc); }
+	         if (i == 1 ){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc1,gbc); }
+	         if (i == 2){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc2,gbc); }
 		}
-	
-	      
-	      
-       jtxt[1].addKeyListener(new KeyAdapter() {
-    	   public void keyTyped(KeyEvent e) {
-    	  	char c = e.getKeyChar();
-        	   if (!(Character.isDigit(c) ||(c == KeyEvent.VK_BACK_SPACE) ||(c == KeyEvent.VK_DELETE))) {
-        		   	getToolkit().beep();
-        		   	e.consume();
-        	   		}
-        	}
-    	});
+	  
+    
 
 		 
 	      // Label 
@@ -110,9 +103,9 @@ public class PnlNuevoProyecto extends JScrollPane{
 			
 		// Pasar a formato de base de datos.	
 		
-	  
-	  
-	  
+	
+			
+	
 		// Conectar Base de datos y pasar datos...
 			
 			ActionListener accion = new ActionListener(){
@@ -121,22 +114,36 @@ public class PnlNuevoProyecto extends JScrollPane{
 			public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					if(e.getActionCommand().equals("aceptar")){
-						ConexionDb conexdb = new ConexionDb();
-						ResultSet rs;
-						conexdb.Conectardb();
-						// cambiar fecha a sql
-					  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
-					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
-						conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion, presupuesto, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
-						JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][36]);
-						conexdb.cerrarConexion();
-					// Borrar cuando termine de añadir
-						for(int i=0;i<2;++i) {	
-							jtxt[i].setText("");
-							}	
-						jdc1.setDate(null);
-						jdc2.setDate(null);
-						textarea.setText(null);
+						// Poner el color de  JDC2 (Fecha2) correcto
+							jdc2.setBackground(null);
+							
+							ConexionDb conexdb = new ConexionDb();
+							ResultSet rs;
+							conexdb.Conectardb();
+							// cambiar fecha a sql
+						    java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
+						    java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
+						    if (sqlDate1.getTime()< sqlDate2.getTime()){
+							conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
+							JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][36]);
+							conexdb.cerrarConexion();
+							
+							// Borrar cuando termine de añadir		
+							jtxt[0].setText("");
+							jdc1.setDate(null);
+							jdc2.setDate(null);
+							textarea.setText(null);
+							
+						}else{					
+							JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
+							// Marcar campo FECHA con error en ROJO 
+							jdc2.setBackground(Color.red);
+							
+							
+							}
+						
+						
+						
 						
 					}// Borrar cuando damos al boton cancelar
 					if( e.getActionCommand().equals("cancelar")){
