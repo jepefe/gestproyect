@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
@@ -27,7 +28,7 @@ public class SpnWorkpack extends JSplitPane{
 	JTable jtblLateral;
 	Component[] panlsStaff = {
 			new PnlAltawp(),
-			new JPanel(),
+			new JScrollPane(new PnlModwp()),
 			new JPanel()};
 
 	public SpnWorkpack(){
