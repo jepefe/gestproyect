@@ -45,7 +45,7 @@ public class PnlAltawp extends JScrollPane{
 		
 		panel.setLayout(new GridBagLayout());
 		String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][4],rec.idioma[rec.eleidioma][41],
+		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][41],
 		   rec.idioma[rec.eleidioma][13],rec.idioma[rec.eleidioma][25],rec.idioma[rec.eleidioma][26]
 		};
 		int[] fieldWidths = {10,35,10,10,10};
@@ -226,7 +226,7 @@ public class PnlAltawp extends JScrollPane{
 					conexdb.Conectardb();
 					java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 					java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
-					conexdb.executeUpdate("INSERT INTO WORKPACKAGES (sector, descripcion, presupuesto, id_proyecto, id_partner, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
+					conexdb.executeUpdate("INSERT INTO WORKPAQUETS (nombre, descripcion, presupuesto, id_proyecto, id_partner, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
 					conexdb.cerrarConexion();
 				}
