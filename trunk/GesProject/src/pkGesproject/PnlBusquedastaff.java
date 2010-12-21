@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.ResultSet;
@@ -108,14 +109,14 @@ public class PnlBusquedastaff extends JPanel{
             constraints.fill = GridBagConstraints.NONE;
             constraints.weighty = 0.0; // Volvemos a dejarla como antes para el resto
             
-            jbtnmodificar = new JButton(rec.idioma[rec.eleidioma][16]);
+            jbtnmodificar = new JButton(rec.idioma[rec.eleidioma][38]);
             constraints.gridy = 2; // El área de texto empieza en la fila
             constraints.gridwidth = 1; // El área de texto ocupa x columnas.
             constraints.insets = new Insets(20,30,20,10);
             //constraints.anchor = GridBagConstraints.CENTER;
             this.add(jbtnmodificar,constraints);
             
-            jbtneliminar = new JButton(rec.idioma[rec.eleidioma][38]);
+            jbtneliminar = new JButton(rec.idioma[rec.eleidioma][16]);
             constraints.gridx = 1; // El área de texto empieza en la columna
             //constraints.anchor = GridBagConstraints.EAST;
             this.add(jbtneliminar,constraints);
@@ -187,6 +188,7 @@ public class PnlBusquedastaff extends JPanel{
     						int tam = jtxt.getText().length();
     						int i=0;
     						int j=0;
+    						int fila=0;
     						String[] res = new String[3];//almacenamos los resultados
     						if(tablemodel.getRowCount() != 0){//si la tabla no esta vacia la vaciamos
     							for( int a = tablemodel.getRowCount() - 1; a >= 0; a-- ){
@@ -207,15 +209,16 @@ public class PnlBusquedastaff extends JPanel{
 	    									
 	    									for(int col =0;col<3;col++){
 	    										
-	    										datos[i][col]= auxdatos[i][col];
+	    										datos[fila][col]= auxdatos[i][col];
 	    										/*jtblLateral.repaint();
 	    										jtblLateral.validate();
 	    										jspntabla.repaint();
 	    										jspntabla.validate();
 	    										repaint();
 	    										validate();*/
-	    										res[col] = datos[i][col];
+	    										res[col] = datos[fila][col];
 	    									}
+	    									fila++;
 	    									//Si el resultado no esta vacio que pasa por algun error de codigo a�adimos linea al jtable
 	    									if (!res[0].equals("") && !res[1].equals("") && !res[2].equals("")){
 	    									Object[] dat = {res[0],res[1],res[2]};
@@ -249,8 +252,35 @@ public class PnlBusquedastaff extends JPanel{
             	
             };
             
+            ActionListener event = new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					if(e.getActionCommand().equals("modificar")){
+						
+						for(int i=0;i<3;i++){
+							System.out.print(datos[jtblLateral.getSelectedRow()][i]+";");
+						}
+					}
+				}
+            	
+            };
             
+            jbtnmodificar.setActionCommand("modificar");
+            jbtnmodificar.addActionListener(event);
             
+            /*
+            jtblLateral.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+
+    			@Override
+    			public void valueChanged(ListSelectionEvent e) {
+    				if(e.getValueIsAdjusting()){
+    					//setRightComponent(panlsStaff[jtblLateral.getSelectedRow()]);
+    					System.out.println(jtblLateral.getSelectedRow());
+    				}
+    			}});
+            */
             jtxt.addKeyListener(accion);
 		   
     
