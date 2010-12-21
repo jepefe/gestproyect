@@ -1,6 +1,8 @@
 package pkGesproject;
 
 import java.awt.Component;
+import java.awt.Container;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -8,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
@@ -23,6 +26,7 @@ public class SpnSocios extends JSplitPane{
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	JSplitPane jsplpane;
 	JPanel panel = new JPanel();
+	JPanel pnllateral = new JPanel();
 	JTable jtblLateral;
 	Component[] panlsStaff = {
 			new PnlAltasocio(),
@@ -71,9 +75,21 @@ public class SpnSocios extends JSplitPane{
 				}
 			}});
         
+
+		pnllateral.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER; //para que despues del label pase a la linea de abajo
+        JLabel titulo = new JLabel("Titulo");
         
+        JLabel socio;
+		pnllateral.add(socio = new JLabel("PARTNER"),gbc);
+        Font auxFont = titulo.getFont();
+        socio.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),30));
+        gbc.weighty = 1.0;	//que la fila de la tabla se estire en vertical, de este modo el label se queda en la parte norte
+        gbc.fill = GridBagConstraints.BOTH;	//Para estirar la barra lateral
+    	pnllateral.add(jtblLateral,gbc);
 		
-    	this.setLeftComponent(jtblLateral);
+    	this.setLeftComponent(pnllateral);
     	this.setRightComponent(panel);
 	}
 }

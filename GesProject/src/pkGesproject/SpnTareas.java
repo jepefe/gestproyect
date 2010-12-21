@@ -1,8 +1,12 @@
 package pkGesproject;
 
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -65,9 +69,21 @@ public class SpnTareas extends JSplitPane{
 				}
 			}});
         
+        JPanel pnllateral = new JPanel();
+		pnllateral .setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER; //para que despues del label pase a la linea de abajo
+        JLabel titulo = new JLabel("Titulo");
         
+        JLabel tareas;
+		pnllateral.add(tareas = new JLabel("TAREAS"),gbc);
+        Font auxFont = titulo.getFont();
+        tareas.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),30));
+        gbc.weighty = 1.0;	//que la fila de la tabla se estire en vertical, de este modo el label se queda en la parte norte
+        gbc.fill = GridBagConstraints.BOTH;	//Para estirar la barra lateral
+    	pnllateral.add(jtblLateral,gbc);
 		
-    	this.setLeftComponent(jtblLateral);
+    	this.setLeftComponent(pnllateral);
     	this.setRightComponent(panel);
 	}
 }
