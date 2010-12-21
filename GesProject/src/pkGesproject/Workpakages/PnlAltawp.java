@@ -224,7 +224,9 @@ public class PnlAltawp extends JScrollPane{
 					ConexionDb conexdb = new ConexionDb();
 					ResultSet rs;
 					conexdb.Conectardb();
-					//conexdb.executeUpdate("INSERT INTO WORKPACKAGES (sector, descripcion, presupuesto, id_proyecto, id_partner, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
+					java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
+					java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
+					conexdb.executeUpdate("INSERT INTO WORKPACKAGES (sector, descripcion, presupuesto, id_proyecto, id_partner, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
 					conexdb.cerrarConexion();
 				}
