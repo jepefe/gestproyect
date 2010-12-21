@@ -77,12 +77,11 @@ public class PnlModificarTarea extends JPanel{
     		jtext.putClientProperty("JTextField.variant", "search");
     		jtext.putClientProperty("JTextField.Search.PlaceholderText", Boolean.TRUE);
     		
-            GridBagConstraints constraints = new GridBagConstraints();
-            constraints.gridx = 1; // El área de texto empieza en la columna
+    		GridBagConstraints constraints = new GridBagConstraints();
+            constraints.gridx = 0; // El área de texto empieza en la columna
             constraints.gridy = 0; // El área de texto empieza en la fila
             constraints.gridwidth = 2; // El área de texto ocupa x columnas.
             constraints.gridheight = 1; // El área de texto ocupa x filas.
-            constraints.anchor = GridBagConstraints.WEST;
             constraints.insets = new Insets(20,30,0,10);
             this.add(jtext,constraints);
             
@@ -91,8 +90,6 @@ public class PnlModificarTarea extends JPanel{
             constraints.gridx = 0; // El área de texto empieza en la columna
             constraints.gridy = 1; // El área de texto empieza en la fila
             constraints.weighty = 1.0; // Con esto la fila 1 se estira al estirar la ventana
-            constraints.gridwidth = 3;    
-            constraints.gridheight = 2;
             constraints.fill = GridBagConstraints.BOTH;
             this.add(jspntabla,constraints);
             constraints.fill = GridBagConstraints.NONE;
@@ -110,15 +107,7 @@ public class PnlModificarTarea extends JPanel{
             //constraints.anchor = GridBagConstraints.EAST;
             this.add(jbtneliminar,constraints);
             //constraints.anchor = GridBagConstraints.CENTER;
-            
-            constraints.gridx = 2; // El área de texto empieza en la columna
-            constraints.gridy = 1; // El área de texto empieza en la fila
-            constraints.gridwidth = 1; // El área de texto ocupa x columnas.
-            constraints.gridheight = 1; // El área de texto ocupa x filas.
-            constraints.weightx = 1.0;	// con esto estiramos segunda columna al maximo que de la ventana
-            constraints.insets = new Insets(20,30,0,10);
-            this.add(pnlnuevoproyecto,constraints);
-            constraints.weightx = 0.0; // La dejamos igual
+     
 
             KeyListener accion = new KeyListener(){
 
