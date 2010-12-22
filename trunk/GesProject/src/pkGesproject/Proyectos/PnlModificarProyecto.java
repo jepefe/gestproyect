@@ -3,12 +3,15 @@ package pkGesproject.Proyectos;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
 import pkGesproject.RsGesproject;
+import pkGesproject.Staff.pnlAlta_staff;
 
 
 public class PnlModificarProyecto extends JPanel{
@@ -29,8 +33,8 @@ public class PnlModificarProyecto extends JPanel{
 	ResultSet rs;
 	JPanel panel = new JPanel();
 	
-	String datos[][] = new String[50000][5];
-	String auxdatos[][] = new String[50000][5];
+	String datos [][] = new String[5000][5];		
+	String auxdatos[][] = new String[5000][5];
 	String colu[] = {"Nombre","Presupuesto","Descripcion","Fecha Inicio","Fecha Fin"};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
@@ -55,6 +59,7 @@ public class PnlModificarProyecto extends JPanel{
     	try {
 			while(rs.next()){
 				for(int j = 1;j<6;j++){
+					
 					datos[i][j-1] = rs.getString(j);
 					fila[j-1]=datos[i][j-1];
 					
@@ -75,9 +80,9 @@ public class PnlModificarProyecto extends JPanel{
     		jtext.setText("Buscar...");
     		jtext.putClientProperty("JTextField.variant", "search");
     		jtext.putClientProperty("JTextField.Search.PlaceholderText", Boolean.TRUE);
-    		
+    		// BARRA BUSCAR
             GridBagConstraints constraints = new GridBagConstraints();
-            constraints.gridx = 1; // El área de texto empieza en la columna
+            constraints.gridx = 0; // El área de texto empieza en la columna
             constraints.gridy = 0; // El área de texto empieza en la fila
             constraints.gridwidth = 2; // El área de texto ocupa x columnas.
             constraints.gridheight = 1; // El área de texto ocupa x filas.
@@ -85,20 +90,18 @@ public class PnlModificarProyecto extends JPanel{
             constraints.insets = new Insets(20,30,0,10);
             this.add(jtext,constraints);
             
-            
+            // TABLA BUSCADOR
             final JScrollPane jspntabla = new JScrollPane(jtblLateral); //Añadimos la tabla al jscrollpane
             constraints.gridx = 0; // El área de texto empieza en la columna
             constraints.gridy = 1; // El área de texto empieza en la fila
             constraints.weighty = 1.0; // Con esto la fila 1 se estira al estirar la ventana
-            constraints.gridwidth = 3;    
-            constraints.gridheight = 2;
             constraints.fill = GridBagConstraints.BOTH;
             this.add(jspntabla,constraints);
             constraints.fill = GridBagConstraints.NONE;
             constraints.weighty = 0.0; // Volvemos a dejarla como antes para el resto
             
             jbtnmodificar = new JButton(rec.idioma[rec.eleidioma][38]);
-            constraints.gridy = 2; // El área de texto empieza en la fila
+            constraints.gridy = 3; // El área de texto empieza en la fila
             constraints.gridwidth = 1; // El área de texto ocupa x columnas.
             constraints.insets = new Insets(20,30,20,10);
          
@@ -110,15 +113,15 @@ public class PnlModificarProyecto extends JPanel{
             this.add(jbtneliminar,constraints);
             //constraints.anchor = GridBagConstraints.CENTER;
             
-            constraints.gridx = 2; // El área de texto empieza en la columna
+           constraints.gridx = 2; // El área de texto empieza en la columna
             constraints.gridy = 1; // El área de texto empieza en la fila
             constraints.gridwidth = 1; // El área de texto ocupa x columnas.
             constraints.gridheight = 1; // El área de texto ocupa x filas.
             constraints.weightx = 1.0;	// con esto estiramos segunda columna al maximo que de la ventana
             constraints.insets = new Insets(20,30,0,10);
-            this.add(pnlnuevoproyecto,constraints);
-            constraints.weightx = 0.0; // La dejamos igual
+         
 
+          	
             KeyListener accion = new KeyListener(){
 
     			@Override
@@ -134,9 +137,9 @@ public class PnlModificarProyecto extends JPanel{
     						for(int j = 0;j<5;j++){
     							auxdatos[i][j]= datos[i][j];
     							datos[i][j]=null;
-    							//System.out.print(auxdatos[i][j]);							
+    												
     						}
-    						//System.out.print("\n");
+    					
     					}
     					llena = true;
     					//System.out.print("LLENO");
@@ -158,10 +161,8 @@ public class PnlModificarProyecto extends JPanel{
         					}
     				    	conexion.cerrarConexion();
     				    	tablemodel.setDataVector(datos, colu);
-    				    	//System.out.print("BLANCO");
     					}else{
-    						//System.out.print("MOVIDA");
-    						
+
     						int tam = jtext.getText().length();
     						int i=0;
     						int j=0;
@@ -172,24 +173,11 @@ public class PnlModificarProyecto extends JPanel{
     							}
     						}
     						try{
-    							//System.out.print("\n");
-								//System.out.print("\n");
 	    						while(auxdatos[i][j]!=null){
 	    							while(auxdatos[i][j]!=null){
-	    								//System.out.print(i);
-	    								
-	    								if(auxdatos[i][j].regionMatches( true, 0, jtext.getText(), 0, tam )){
-	    									//System.out.print("ENTRÓO");
-	    									
+	    								if(auxdatos[i][j].regionMatches( true, 0, jtext.getText(), 0, tam )){								
 	    									for(int col =0;col<5;col++){
-	    										
 	    										datos[i][col]= auxdatos[i][col];
-	    										/*jtblLateral.repaint();
-	    										jtblLateral.validate();
-	    										jspntabla.repaint();
-	    										jspntabla.validate();
-	    										repaint();
-	    										validate();*/
 	    										res[col] = datos[i][col];
 	    									}
 	    									//Si el resultado no esta vacio que pasa por algun error de codigo a�adimos linea al jtable
@@ -215,7 +203,54 @@ public class PnlModificarProyecto extends JPanel{
     				// TODO Auto-generated method stub	
     			}
             	
-            };    
+            };  
+            
+            ActionListener event = new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					if(e.getActionCommand().equals("modificar")){
+						/*
+						for(int i=0;i<3;i++){
+							System.out.print(datos[jtblLateral.getSelectedRow()][i]+";");
+						}
+						*/
+						
+						JFrame modificar = new JFrame();
+						PnlNuevoProyecto mod;
+						modificar.add(mod = new PnlNuevoProyecto());
+						modificar.setBounds(0, 0, 600, 650);
+						modificar.setLocationRelativeTo(null);
+						
+						conexion.Conectardb();
+				    
+				    	rs = conexion.ConsultaSQL("SELECT nombre, f_ini, f_fin,descripcion FROM PROYECTOS ");
+				    	int i;
+				    	
+							try {
+								for(i=0;i<4;i++){
+										rs.next();
+										mod.jtxt[i].setText(rs.getString(i));
+										
+									}
+							
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						
+				    	conexion.cerrarConexion();
+						
+						modificar.setVisible(true);
+					}
+				}
+            	
+            };
+            
+            jbtnmodificar.setActionCommand("modificar");
+            jbtnmodificar.addActionListener(event);
+            
             jtext.addKeyListener(accion);  
     }
 }
