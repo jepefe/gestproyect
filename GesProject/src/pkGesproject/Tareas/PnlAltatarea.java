@@ -151,7 +151,7 @@ public class PnlAltatarea extends JScrollPane{
 					  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 					
-					conexdb.executeUpdate("INSERT INTO TAREAS (nombre, descripcion, presupuesto,f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");//('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
+					conexdb.executeUpdate("INSERT INTO TAREAS (nombre, descripcion, presupuesto,f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
 					conexdb.cerrarConexion();
 				}

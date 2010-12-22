@@ -55,7 +55,7 @@ public class PnlModificarTarea extends JPanel{
     public PnlModificarTarea(){
     	
     	conexion.Conectardb();
-    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
+    	
     	rs = conexion.ConsultaSQL("SELECT nombre,presupuesto,descripcion,f_ini,f_fin FROM TAREAS");
     	int i=0;
     	try {
@@ -238,7 +238,7 @@ public class PnlModificarTarea extends JPanel{
 						// cambiar fecha a sql
 						
 						//jtblLateral.getSelectedRow();
-						conexdb.executeUpdate("DELETE FROM TAREAS WHERE id_task=8");
+						conexdb.executeUpdate("DELETE FROM TAREAS WHERE id_task=11");
 
 						//JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
 						conexdb.cerrarConexion();
