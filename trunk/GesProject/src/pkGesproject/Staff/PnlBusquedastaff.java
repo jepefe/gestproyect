@@ -67,7 +67,7 @@ public class PnlBusquedastaff extends JPanel{
     	String resul[]= new String[3];
     	conexion.Conectardb();
     	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
-    	rs = conexion.ConsultaSQL("SELECT s.nombre,s.apellidos,p.nombre FROM STAFF s INNER JOIN PARTNER p ON s.cod_part = p.cod_part");
+    	rs = conexion.ConsultaSQL("SELECT s.nombre,s.apellidos,p.nombre FROM STAFF s LEFT JOIN PARTNER p ON s.cod_part = p.cod_part");
     	int i=0;
     	try {
 			while(rs.next()){
@@ -208,30 +208,25 @@ public class PnlBusquedastaff extends JPanel{
 								//System.out.print("\n");
 	    						while(auxdatos[i][j]!=null){
 	    							while(auxdatos[i][j]!=null){
-	    								//System.out.print(i);
+	    								//System.out.print("llega");
 	    								
-	    								if(auxdatos[i][j].regionMatches( true, 0, jtxt.getText(), 0, tam )){
-	    									//System.out.print("ENTRÓO");
-	    									
-	    									for(int col =0;col<3;col++){
-	    										
-	    										datos[fila][col]= auxdatos[i][col];
-	    										/*jtblLateral.repaint();
-	    										jtblLateral.validate();
-	    										jspntabla.repaint();
-	    										jspntabla.validate();
-	    										repaint();
-	    										validate();*/
-	    										res[col] = datos[fila][col];
-	    									}
-	    									fila++;
-	    									//Si el resultado no esta vacio que pasa por algun error de codigo a�adimos linea al jtable
-	    									if (!res[0].equals("") && !res[1].equals("") && !res[2].equals("")){
-	    									Object[] dat = {res[0],res[1],res[2]};
-	    									tablemodel.addRow(dat);
-	    									
-	    									}
-	    									
+	    								if(auxdatos[i][j]!= null){
+		    								if(auxdatos[i][j].regionMatches( true, 0, jtxt.getText(), 0, tam )){
+		    									//System.out.print("ENTRÓO");
+		    									
+		    									for(int col =0;col<3;col++){
+		    										
+		    										datos[fila][col]= auxdatos[i][col];
+		    										
+		    										res[col] = datos[fila][col];
+		    									}
+		    									fila++;
+		    									
+		    									Object[] dat = {res[0],res[1],res[2]};
+		    									tablemodel.addRow(dat);
+		    									
+		    									
+		    								}
 	    								}
 	    								
 	    								i++;
@@ -275,17 +270,28 @@ public class PnlBusquedastaff extends JPanel{
 						modificar.add(mod = new pnlAlta_staff());
 						modificar.setBounds(0, 0, 600, 650);
 						modificar.setLocationRelativeTo(null);
-						
+						mod.jbtnaceptar.addActionListener(new ActionListener(){
+
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								// TODO Auto-generated method stub
+								System.out.print("te tengo");
+							}
+							
+						});
+							
 						conexion.Conectardb();
 				    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
-				    	rs = conexion.ConsultaSQL("SELECT s.nombre,s.apellidos,s.f_nac,s.region,s.ciudad,s.direccion,s.codpostal,s.telefono,s.foto,s.nick_usuario FROM STAFF s");
+				    	rs = conexion.ConsultaSQL("SELECT s.nombre,s.apellidos,s.region,s.ciudad,s.direccion,s.codpostal,s.telefono,s.nick_usuario,s.foto FROM STAFF s WHERE s.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"' AND s.apellidos LIKE '"+ datos[jtblLateral.getSelectedRow()][1]+"'");
 				    	int i=1;
 				    	
 							try {
-									for(i=1;i<11;i++){
+									
 										rs.next();
-										mod.jtxt[i-1].setText(rs.getString(i));
-									}
+										for(i=1;i<10;i++){										
+											mod.jtxt[i-1].setText(rs.getString(i));
+										}
+									
 							
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
