@@ -289,7 +289,7 @@ public class PnlBusquedastaff extends JPanel{
 							try {
 									
 										rs.next();
-										for(i=1;i<10;i++){										
+										for(i=1;i<9;i++){										
 											mod.jtxt[i-1].setText(rs.getString(i));
 										}
 									
