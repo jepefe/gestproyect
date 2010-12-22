@@ -38,6 +38,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 	JFrame aviso = new JFrame();
 	JButton jbtnaceptar, jbtncancelar;
 	
+	
 	public PnlNuevoProyecto()  {
 		// formato fecha
 		
@@ -147,9 +148,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 						
 					}// Borrar cuando damos al boton cancelar
 					if( e.getActionCommand().equals("cancelar")){
-						for(int i=0;i<2;++i) {	
-							jtxt[i].setText("");
-							}	
+						jtxt[1].setText("");	
 						jdc1.setDate(null);
 						jdc2.setDate(null);
 						textarea.setText(null);
