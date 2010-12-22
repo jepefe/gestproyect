@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
@@ -122,7 +123,7 @@ public class PnlBusquedastaff extends JPanel{
             //constraints.anchor = GridBagConstraints.CENTER;
             this.add(jbtnmodificar,constraints);
             
-            jbtneliminar = new JButton(rec.idioma[rec.eleidioma][16]);
+            jbtneliminar = new JButton(rec.idioma[rec.eleidioma][39]);
             constraints.gridx = 1; // El área de texto empieza en la columna
             //constraints.anchor = GridBagConstraints.EAST;
             this.add(jbtneliminar,constraints);
@@ -302,12 +303,22 @@ public class PnlBusquedastaff extends JPanel{
 						
 						modificar.setVisible(true);
 					}
+					
+					if(e.getActionCommand().equals("eliminar")){
+						conexion.Conectardb();
+						conexion.executeUpdate("DELETE FROM STAFF WHERE nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"' AND apellidos LIKE '"+ datos[jtblLateral.getSelectedRow()][1]+"'");
+						Component aviso = null;
+						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
+						conexion.cerrarConexion();
+					}
 				}
             	
             };
             
             jbtnmodificar.setActionCommand("modificar");
             jbtnmodificar.addActionListener(event);
+            jbtneliminar.setActionCommand("eliminar");
+            jbtneliminar.addActionListener(event);
             
             /*
             jtblLateral.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
