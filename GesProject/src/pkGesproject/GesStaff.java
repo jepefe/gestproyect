@@ -44,16 +44,37 @@ public class GesStaff {
 	 * @param password
 	 * @param permisos
 	 * @param cod_part
+	 * @return 0: Usuario creado, 1:Error el nick ta existe.
 	 */
 	
 	
 	
-	public void CrearStaff(int id_staff, String dni, String categoria, boolean representante, String f_nac,
+	public int CrearStaff(String dni, String categoria, boolean representante, String f_nac,
 			String pais, String region, String ciudad, String direccion, String codpostal, String telefono, 
 			String foto, String nick, String password, String permisos, int cod_part){
+		
+		int creado = 0;
 		ConexionDb conex = new ConexionDb();
 		ResultSet rs;
 		conex.Conectardb();
+		
+		//Comprobamos que no exista ya el nick para evitar problemas con la FTP
+		//La variable "creado" tendra los siguientes valores:
+		//0: Usuario creado, 1:Error, el nick ta existe
+		rs = conex.ConsultaSQL("SELECT nick_usuario FROM STAFF WHERE nick_usuario='"+ nick +"'");
+		try {
+			rs.next();
+		if(rs.getString(1) == nick){
+			creado = 1;
+		}else{
+			creado = 0;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		conex.executeUpdate("INSERT INTO STAFF (dni,nombre,categoria,representante,f_nac,pais" +
 				",region,ciudad,direccion,codpostal,telefono,foto,nick_usuario,contraseña,permisos,cod_part) " +
 				"VALUES ('"+"','" + dni + "','" + categoria + "','"
@@ -63,8 +84,12 @@ public class GesStaff {
 		
 		conex.cerrarConexion();
 		conex = null;
+		return creado;
+		
 		
 	}
+	
+	
 	/**
 	 * Metodo para eliminar el registro de determinado staff
 	 * @param id_staff ID de staff a eliminar
