@@ -40,11 +40,9 @@ public class PnlAltaBecas extends JScrollPane{
 	ConexionDb conexion = new ConexionDb();
 	ResultSet rs;
 	JDateChooser jdc1,jdc2;
-	ResultSet idpart;
-	ResultSet idpro;
+	ResultSet idid;
 	ResultSet idwp;
-	String nompro;
-	String nompart;
+	String nomid;
 	
 	
 	public PnlAltaBecas (){
@@ -82,7 +80,7 @@ public class PnlAltaBecas extends JScrollPane{
 		for(int i=0;i<fieldNames.length;++i) {
 
 			/*
-			 * Se inserta el ComboBox en la 4� posicion mediante el if para los proyectos.
+			 * Se inserta el ComboBox en la 4� posicion mediante el if para los IDIOMASs.
 			 */
 			if (i==3){
 				/*
@@ -92,7 +90,7 @@ public class PnlAltaBecas extends JScrollPane{
 				 * Se conecta a la BD para realizar la consulta
 				 */
 				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT * FROM PROYECTOS");
+				rs = conexion.ConsultaSQL("SELECT * FROM IDIOMAS");
 				try {
 				while(rs.next()){
 					
@@ -111,7 +109,7 @@ public class PnlAltaBecas extends JScrollPane{
 			
 				
 								/*
-				 * Cargamos en el panel el ComboBox para proyectos.
+				 * Cargamos en el panel el ComboBox para IDIOMAS.
 				 */
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				panel.add(jlbl[i]=new JLabel(rec.idioma[rec.eleidioma][55]),gbc);
@@ -142,7 +140,7 @@ public class PnlAltaBecas extends JScrollPane{
 				 * Se conecta a la BD para realizar la consulta
 				 */
 				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT * FROM PARTNER");
+				rs = conexion.ConsultaSQL("SELECT * FROM IDIOMAS");
 				try {
 				while(rs.next()){
 					
@@ -157,35 +155,10 @@ public class PnlAltaBecas extends JScrollPane{
 						}
 				
 				
-				
-			
-				
-								/*
-				 * Cargamos en el panel el ComboBox para partners.
-				 */
-				gbc.gridwidth = GridBagConstraints.RELATIVE;
-				panel.add(jlbl[i]=new JLabel(rec.idioma[rec.eleidioma][57]),gbc);
-				gbc.anchor = GridBagConstraints.WEST;
-				gbc.gridwidth = GridBagConstraints.REMAINDER;
-				cbpart.setPreferredSize(new Dimension(233,30));
-				panel.add(cbpart,gbc);
-				cbpart.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						// TODO Auto-generated method stub
-						
-					}
-			
-				});
-				
-				
-				/*
-				 * Accion a realizar cuando el JComboBox cambia de item seleccionado.
-				 */
-				
-				
 			}	
+			/*
+			 * Se colocan los calendarios para la selecion de fecha
+			 */
 			
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
@@ -224,14 +197,18 @@ public class PnlAltaBecas extends JScrollPane{
 		
 		ActionListener accion = new ActionListener(){
 
-			
+			/*
+			 * se genera en el action listener la introduccion de datos en tablas al aceptar(non-Javadoc)
+			 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+			 */
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("aceptar")){
-					nompro = cbtipo.getSelectedItem().toString();
-					nompart = cbpart.getSelectedItem().toString();
-					idpro = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre='" + nompro + "'");
-					idpart = conexion.ConsultaSQL("SELECT id_pro FROM PARTNER WHERE nombre='" + nompart + "'");
+					/*
+					 * Se recogen los datos para comparar.
+					 */
+					nomid = cbtipo.getSelectedItem().toString();
+					idid = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre='" + nomid + "'");
 					
 					ConexionDb conexdb = new ConexionDb();
 					ResultSet rs;
@@ -240,7 +217,6 @@ public class PnlAltaBecas extends JScrollPane{
 					java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 					conexdb.executeUpdate("INSERT INTO WORKPAQUETS (nombre, descripcion, presupuesto, id_pro, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
 					idwp = conexion.ConsultaSQL ("SELECT id_wp FROM WORKPAQUETS WHERE nombre = '"+ jtxt[0].getText()+"' ");
-					conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS (cod_part,id_wp) VALUES ('" +idpart+ "','" +idwp+ "')");
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
 					conexdb.cerrarConexion();
 				}
