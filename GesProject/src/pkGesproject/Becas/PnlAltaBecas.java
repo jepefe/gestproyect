@@ -50,10 +50,10 @@ public class PnlAltaBecas extends JScrollPane{
 		
 		panel.setLayout(new GridBagLayout());
 		String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][41],
-		   rec.idioma[rec.eleidioma][13],rec.idioma[rec.eleidioma][25],rec.idioma[rec.eleidioma][26],rec.idioma[rec.eleidioma][26],rec.idioma[rec.eleidioma][26],rec.idioma[rec.eleidioma][26],rec.idioma[rec.eleidioma][26]
+		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][28],
+		   rec.idioma[rec.eleidioma][66],rec.idioma[rec.eleidioma][66],rec.idioma[rec.eleidioma][9],rec.idioma[rec.eleidioma][61],rec.idioma[rec.eleidioma][62],rec.idioma[rec.eleidioma][7]
 		};
-		int[] fieldWidths = {10,35,10,10,10,10,10,10,10};
+		int[] fieldWidths = {10,25,12,12,15,25,25,25};
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
 		
@@ -112,7 +112,7 @@ public class PnlAltaBecas extends JScrollPane{
 				 * Cargamos en el panel el ComboBox para IDIOMAS.
 				 */
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
-				panel.add(jlbl[i]=new JLabel(rec.idioma[rec.eleidioma][55]),gbc);
+				panel.add(jlbl[i]=new JLabel(rec.idioma[rec.eleidioma][65]),gbc);
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				cbtipo.setPreferredSize(new Dimension(233,30));
@@ -144,7 +144,7 @@ public class PnlAltaBecas extends JScrollPane{
 				try {
 				while(rs.next()){
 					
-					cbpart.addItem(rs.getString(2));
+					cbpart.addItem(rs.getString(1));
 							
 						
 				}
@@ -157,7 +157,7 @@ public class PnlAltaBecas extends JScrollPane{
 				
 			}	
 			/*
-			 * Se colocan los calendarios para la selecion de fecha
+			 * Se colocan el calendario para la selecion de fecha de solicitud
 			 */
 			
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
@@ -168,9 +168,6 @@ public class PnlAltaBecas extends JScrollPane{
 				}
 				if (i==(fieldNames.length - 2)){
 			         gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);  
-				}
-				if (i==(fieldNames.length - 1)){ 
-			         gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc2,gbc); 
 				}
 				//LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
 			      if(i==1){
@@ -215,7 +212,7 @@ public class PnlAltaBecas extends JScrollPane{
 					conexdb.Conectardb();
 					java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 					java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
-					conexdb.executeUpdate("INSERT INTO WORKPAQUETS (nombre, descripcion, presupuesto, id_pro, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
+					conexdb.executeUpdate("INSERT INTO BECAS (nombre, descripcion, presupuesto, id_pro, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
 					idwp = conexion.ConsultaSQL ("SELECT id_wp FROM WORKPAQUETS WHERE nombre = '"+ jtxt[0].getText()+"' ");
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
 					conexdb.cerrarConexion();
