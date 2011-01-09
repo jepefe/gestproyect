@@ -12,6 +12,7 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
@@ -33,7 +34,7 @@ public class SpnSocios extends JSplitPane{
 	JTable jtblLateral;
 	Component[] panlsStaff = {
 			new PnlAltasocio(),
-			new JPanel(),
+			new JScrollPane(new PnlModificarsocio()),
 			new JPanel()};
 
 	public SpnSocios(){
