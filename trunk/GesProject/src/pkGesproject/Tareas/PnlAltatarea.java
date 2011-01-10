@@ -1,5 +1,6 @@
 package pkGesproject.Tareas;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -151,18 +152,21 @@ public class PnlAltatarea extends JScrollPane{
 					  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 					
+			if (sqlDate1.getTime()< sqlDate2.getTime()){
 					conexdb.executeUpdate("INSERT INTO TAREAS (nombre, descripcion, presupuesto,f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
 					conexdb.cerrarConexion();
 				}
-				// Borrar cuando termine de añadir
-				for(int i=0;i<2;++i) {	
-					jtxt[i].setText("");
-					}	
+				
 				jdc1.setDate(null);
 				jdc2.setDate(null);
 				textarea.setText(null);
-				
+			}else{
+				JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
+				// Marcar campo FECHA con error en ROJO 
+				jdc2.setBackground(Color.red);
+		
+		}
 			// Borrar cuando damos al boton cancelar
 			if( e.getActionCommand().equals("cancelar")){
 				for(int i=0;i<2;++i) {	
@@ -171,6 +175,11 @@ public class PnlAltatarea extends JScrollPane{
 				jdc1.setDate(null);
 				jdc2.setDate(null);
 				textarea.setText(null);
+				
+				// Borrar cuando termine de añadir
+				for(int i=0;i<2;++i) {	
+					jtxt[i].setText("");
+					}	
 			}
 		}
 			
