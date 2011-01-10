@@ -107,7 +107,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 			ConexionDb conexdb = new ConexionDb();
 			ResultSet rs;
 			conexdb.Conectardb();
-			rs = conexdb.ConsultaSQL("Select ID,password,username,idioma from USUARIOS where username = '" + jtxfUsuario.getText()+ "'");
+			rs = conexdb.ConsultaSQL("Select id_staff,password,nick_usuario,idioma from STAFF where nick_usuario = '" + jtxfUsuario.getText()+ "'");
 		try {
 			while (rs.next()) 
 			{ 
