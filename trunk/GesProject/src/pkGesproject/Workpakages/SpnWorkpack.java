@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 
 import pkGesproject.GesIdioma;
 import pkGesproject.RsGesproject;
+import pkGesproject.Becas.PnlAltaBecas;
 
 public class SpnWorkpack extends JSplitPane{
 
@@ -29,7 +30,7 @@ public class SpnWorkpack extends JSplitPane{
 	Component[] panlsStaff = {
 			new PnlAltawp(),
 			new JScrollPane(new PnlModwp()),
-			new JPanel()};
+			new JScrollPane(new PnlAltaBecas())};
 
 	public SpnWorkpack(){
 		this.setOneTouchExpandable(true);
