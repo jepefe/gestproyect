@@ -30,7 +30,7 @@ public class SpnWorkpack extends JSplitPane{
 	Component[] panlsStaff = {
 			new PnlAltawp(),
 			new JScrollPane(new PnlModwp()),
-			new JScrollPane(new PnlAltaBecas())};
+			new JScrollPane(new JPanel())};
 
 	public SpnWorkpack(){
 		this.setOneTouchExpandable(true);
