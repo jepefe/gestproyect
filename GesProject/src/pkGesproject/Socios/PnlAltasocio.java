@@ -14,10 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
+import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
 
 public class PnlAltasocio extends JScrollPane{
@@ -36,10 +38,11 @@ public class PnlAltasocio extends JScrollPane{
 		panel.setLayout(new GridBagLayout());
 		  
 		final String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][4],rec.idioma[rec.eleidioma][7],
-		   rec.idioma[rec.eleidioma][8],rec.idioma[rec.eleidioma][5]
+		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][4],rec.idioma[rec.eleidioma][46],rec.idioma[rec.eleidioma][7],
+		   rec.idioma[rec.eleidioma][8],rec.idioma[rec.eleidioma][9],rec.idioma[rec.eleidioma][70],rec.idioma[rec.eleidioma][5],
+		   rec.idioma[rec.eleidioma][5],rec.idioma[rec.eleidioma][71]
 		};
-		int[] fieldWidths = {20,10,30,6,8};
+		int[] fieldWidths = {20,10,15,30,6,20,20,10,10,10};
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
 		
@@ -64,6 +67,17 @@ public class PnlAltasocio extends JScrollPane{
 		   panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 		}
 		
+		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   panel.add(new JLabel(rec.idioma[rec.eleidioma][64]),gbc);
+		   gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
+		      final JTextArea textarea = (new JTextArea(3,13));
+		      textarea.setDocument(lpd);
+		      JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+		      JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		     panel.add((sp),gbc);
+		
+		
 		/*
 		 * Creamos los dos botones para este panel 
 		 */
@@ -75,6 +89,10 @@ public class PnlAltasocio extends JScrollPane{
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][2]),gbc);
 		
+		
+		 
+	     
+	     
 		ActionListener accion = new ActionListener(){
 
 			@Override
@@ -84,7 +102,7 @@ public class PnlAltasocio extends JScrollPane{
 					ConexionDb conexdb = new ConexionDb();
 					ResultSet rs;
 					conexdb.Conectardb();
-					conexdb.executeUpdate("INSERT INTO PARTNER (nombre, sector, direccion, codpostal, telefono) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"',"+jtxt[3].getText()+","+jtxt[4].getText()+")");
+					conexdb.executeUpdate("INSERT INTO PARTNER (nombre, sector, pais, direccion, codpostal, email, email2, telefono, telefono2, fax, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"','"+jtxt[6].getText()+"','"+jtxt[7].getText()+"','"+jtxt[8].getText()+"','"+jtxt[9].getText()+"','"+textarea.getText()+"')");
 					for(int i=0;i<fieldNames.length;i++){
 						jtxt[i].setText("");
 					}
