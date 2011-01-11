@@ -22,8 +22,7 @@ import pkGesproject.RsGesproject;
 
 import com.toedter.calendar.JDateChooser;
 /**
- * Panel Nuevo Proyecto En este panel es donde podremos dar de alta un nuevo proyecto
- * // http://www.chuidiang.com/java/layout/GridBagLayout/GridBagLayout.php 
+ * Panel Nuevo Proyecto : En este panel es donde podremos dar de alta un nuevo proyecto
  */
 public class PnlNuevoProyecto extends JScrollPane{
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
@@ -33,10 +32,8 @@ public class PnlNuevoProyecto extends JScrollPane{
 	JTextField[] jtxt;
 	JDateChooser jdc1,jdc2;
 	Date dateini, datefin ;
-	
-   	
 	JFrame aviso = new JFrame();
-	JButton jbtnaceptar, jbtncancelar;
+	JButton jbtnaceptar, jbtncancelar,Jbtnpresup;
 	
 	
 	public PnlNuevoProyecto()  {
@@ -72,7 +69,6 @@ public class PnlNuevoProyecto extends JScrollPane{
 	         jpnl.add(new JLabel(fieldNames[i]),gbc);
 	         if (i != 1 || i != 2 ){gbc.gridwidth = GridBagConstraints.REMAINDER;  } 
 	         if(i == 1 ||  i == 2 ){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);	}  
-	         
 	         if (i == 1 ){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc1,gbc); }
 	         if (i == 2){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc2,gbc); }
 		}
@@ -93,6 +89,14 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	      jpnl.add((sp),gbc);
 	      
+	   
+			
+	       /**
+	        * Boton Modificar, Está en No visible, solo se pondra visible si lo llamamos desde 
+	        * el panel modificar Proyecto.
+	        */
+	      	jpnl.add(Jbtnpresup = new JButton(rec.idioma[rec.eleidioma][13]),gbc);
+	      	Jbtnpresup.setVisible(false);
 	     // botones Aceptar Cancelar
 	      	gbc.anchor = GridBagConstraints.EAST;
 			gbc.insets = new Insets(30,10,5,5);
@@ -101,12 +105,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 			gbc.anchor = GridBagConstraints.WEST;
 			gbc.gridwidth = GridBagConstraints.REMAINDER;
 			jpnl.add(jbtncancelar = new JButton(rec.idioma[rec.eleidioma][2]),gbc);
-			
-		// Pasar a formato de base de datos.	
 		
-	
-			
-	
 		// Conectar Base de datos y pasar datos...
 			
 			ActionListener accion = new ActionListener(){
@@ -161,7 +160,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 			jbtnaceptar.addActionListener(accion);
 			jbtncancelar.setActionCommand("cancelar");
 			jbtncancelar.addActionListener(accion);
-	// borrar datos al cancelar y aceptar
+	
 	
 
 			
