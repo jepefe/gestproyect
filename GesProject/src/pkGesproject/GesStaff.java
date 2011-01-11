@@ -44,7 +44,7 @@ public class GesStaff {
 	 * @param password
 	 * @param permisos
 	 * @param cod_part
-	 * @return 0: Usuario creado, 1:Error el nick ta existe.
+	 * @return 0: Usuario creado, 1:Error sin determinar 2:el nick ya existe
 	 */
 	
 	
@@ -53,19 +53,19 @@ public class GesStaff {
 			String pais, String region, String ciudad, String direccion, String codpostal, String telefono, 
 			String foto, String nick, String password, String permisos, int cod_part){
 		
-		int creado = 0;
+		int creado = 1;
 		ConexionDb conex = new ConexionDb();
 		ResultSet rs;
 		conex.Conectardb();
 		
 		//Comprobamos que no exista ya el nick para evitar problemas con la FTP
 		//La variable "creado" tendra los siguientes valores:
-		//0: Usuario creado, 1:Error, el nick ta existe
+		//0: Usuario creado, 1:Error sin determinar 2:el nick ya existe
 		rs = conex.ConsultaSQL("SELECT nick_usuario FROM STAFF WHERE nick_usuario='"+ nick +"'");
 		try {
 			rs.next();
 		if(rs.getString(1) == nick){
-			creado = 1;
+			creado = 2;
 		}else{
 			creado = 0;
 			}
@@ -76,11 +76,11 @@ public class GesStaff {
 		
 		
 		conex.executeUpdate("INSERT INTO STAFF (dni,nombre,categoria,representante,f_nac,pais" +
-				",region,ciudad,direccion,codpostal,telefono,foto,nick_usuario,contraseña,permisos,cod_part) " +
+				",region,ciudad,direccion,codpostal,telefono,foto,nick_usuario,password,permisos,cod_part) " +
 				"VALUES ('"+"','" + dni + "','" + categoria + "','"
-				+ Boolean.toString(representante)+ "','" + f_nac + "','" + pais + region + ciudad 
+				+ Boolean.toString(representante)+ "','" + f_nac + "','" + pais + "','" + region + "','" + ciudad 
 				+ direccion + codpostal + telefono + foto + nick + "','" + password + "','" 
-				+ permisos + "','" + Integer.toString(cod_part)+ "')");
+				+ "','" + permisos + "','" + Integer.toString(cod_part)+ "')");
 		
 		conex.cerrarConexion();
 		conex = null;
