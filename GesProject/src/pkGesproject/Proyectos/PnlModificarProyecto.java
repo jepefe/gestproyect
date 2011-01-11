@@ -211,36 +211,33 @@ public class PnlModificarProyecto extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					if(e.getActionCommand().equals("modificar")){
-						/*
-						for(int i=0;i<3;i++){
-							System.out.print(datos[jtblLateral.getSelectedRow()][i]+";");
-						}
-						*/
-						
+						// Frame de modificar con boton presupuesto visible
 						JFrame modificar = new JFrame();
 						PnlNuevoProyecto mod;
 						modificar.add(mod = new PnlNuevoProyecto());
-						modificar.setBounds(0, 0, 600, 650);
+						modificar.setBounds(0, 0, 500, 600);
+						mod.Jbtnpresup.setVisible(true);
 						modificar.setLocationRelativeTo(null);
+						 
 						
-						conexion.Conectardb();
-				    
-				    	rs = conexion.ConsultaSQL("SELECT nombre, f_ini, f_fin,descripcion FROM PROYECTOS ");
-				    	int i;
-				    	
-							try {
-								for(i=0;i<4;i++){
-										rs.next();
-										mod.jtxt[i].setText(rs.getString(i));
-										
+							ActionListener evento = new ActionListener(){	
+								public void actionPerformed(ActionEvent a) {
+									// TODO Auto-generated method stub
+									if(a.getActionCommand().equals("presupuesto")){
+										System.out.println("Dentroooo");
+										JFrame presupuesto = new JFrame();
+										PnlPresupuesto pres;
+										presupuesto.add(pres = new PnlPresupuesto());
+										pres.setVisible(true);
+										presupuesto.setBounds(0, 0, 100, 200);
+										presupuesto.setLocationRelativeTo(null);
+										System.out.println("Finallll");
 									}
-							
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
+								}
+							};
+							mod.Jbtnpresup.setActionCommand("presupuesto");
+					        mod.Jbtnpresup.addActionListener(evento);
 						
-				    	conexion.cerrarConexion();
 						
 						modificar.setVisible(true);
 					}
