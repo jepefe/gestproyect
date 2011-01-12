@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
+import pkGesproject.GpComboBox;
 import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
 
@@ -35,8 +36,8 @@ public class PnlAltasocio extends JScrollPane{
 	JFrame aviso = new JFrame();
 	ConexionDb conexion= new ConexionDb();
 	String paisaux, sectoraux;
-	JComboBox cbpais = new JComboBox();
-	JComboBox cbsector = new JComboBox();
+	GpComboBox cbpais = new GpComboBox();
+	GpComboBox cbsector = new GpComboBox();
 	ResultSet rs;
 	
 	public PnlAltasocio (){
