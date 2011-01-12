@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
+import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
 
 import com.toedter.calendar.JDateChooser;
@@ -39,11 +40,6 @@ public class PnlAltawp extends JScrollPane{
 	ConexionDb conexion = new ConexionDb();
 	ResultSet rs;
 	JDateChooser jdc1,jdc2;
-	ResultSet idpart;
-	ResultSet idpro;
-	ResultSet idwp;
-	String nompro;
-	String nompart;
 	
 	
 	public PnlAltawp (){
@@ -141,11 +137,11 @@ public class PnlAltawp extends JScrollPane{
 				 * Se conecta a la BD para realizar la consulta
 				 */
 				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT * FROM PARTNER");
+				rs = conexion.ConsultaSQL("SELECT nombre FROM PARTNER");
 				try {
 				while(rs.next()){
 					
-					cbpart.addItem(rs.getString(2));
+					cbpart.addItem(rs.getString(1));
 							
 						
 				}
@@ -198,10 +194,11 @@ public class PnlAltawp extends JScrollPane{
 				if (i==(fieldNames.length - 1)){ 
 			         gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc2,gbc); 
 				}
-				//LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
+				
+				LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
 			      if(i==1){
 			    	  final JTextArea textarea = (new JTextArea(3,13));
-			      //textarea.setDocument(lpd);
+			        textarea.setDocument(lpd);
 			    	JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 			    	JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 			    	gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -227,19 +224,23 @@ public class PnlAltawp extends JScrollPane{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("aceptar")){
-					nompro = cbtipo.getSelectedItem().toString();
-					nompart = cbpart.getSelectedItem().toString();
-					idpro = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre='" + nompro + "'");
-					idpart = conexion.ConsultaSQL("SELECT id_pro FROM PARTNER WHERE nombre='" + nompart + "'");
+				
 					
 					ConexionDb conexdb = new ConexionDb();
 					ResultSet rs;
 					conexdb.Conectardb();
+					
+					//rs = conexion.ConsultaSQL("SELECT nombre FROM PROYECTOS WHERE nombre");
+					//rs = conexion.ConsultaSQL("SELECT nombre FROM PARTNER WHERE nombre");
+					
+					
 					java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 					java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
-					conexdb.executeUpdate("INSERT INTO WORKPAQUETS (nombre, descripcion, presupuesto, id_pro, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
-					idwp = conexion.ConsultaSQL ("SELECT id_wp FROM WORKPAQUETS WHERE nombre = '"+ jtxt[0].getText()+"' ");
-					conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS (cod_part,id_wp) VALUES ('" +idpart+ "','" +idwp+ "')");
+					//conexdb.executeUpdate("INSERT INTO WORKPAQUETS (nombre, descripcion, presupuesto, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
+					//conexdb.executeUpdate("INSERT INTO WORKPAQUETS (nombre, descripcion, presupuesto,f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
+
+					//rs = conexion.ConsultaSQL ("SELECT id_wp FROM WORKPAQUETS WHERE nombre = '"+ jtxt[0].getText()+"' ");
+					//conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS (cod_part,id_wp) VALUES ('" +idpart+ "','" +idwp+ "')");
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
 					conexdb.cerrarConexion();
 				}

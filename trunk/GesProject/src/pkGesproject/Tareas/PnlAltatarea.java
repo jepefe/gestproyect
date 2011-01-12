@@ -1,3 +1,8 @@
+/**
+ * Esta clase se encarga de realizar el alta de nuevas tareas 
+ * 
+ * @author Freyder Espinosa V
+ */
 package pkGesproject.Tareas;
 
 import java.awt.Color;
@@ -5,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -38,6 +44,9 @@ public class PnlAltatarea extends JScrollPane{
 	private JComboBox CmbWp = new JComboBox();;
 	ConexionDb conexion = new ConexionDb();
 	ResultSet rs;
+	String nomwp;
+	int indexwp;
+	
 	
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
@@ -49,9 +58,9 @@ public class PnlAltatarea extends JScrollPane{
 		  
 		String[] fieldNames = {
 		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][13], rec.idioma[rec.eleidioma][40],
-		   rec.idioma[rec.eleidioma][25],rec.idioma[rec.eleidioma][26],rec.idioma[rec.eleidioma][41]
-		};
-		int[] fieldWidths = {20,9,15,10,6,6};
+		   rec.idioma[rec.eleidioma][25],rec.idioma[rec.eleidioma][26],rec.idioma[rec.eleidioma][41], rec.idioma[rec.eleidioma][64]
+		   };
+		int[] fieldWidths = {20,9,15,10,6,6,6};
 		
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
@@ -78,6 +87,27 @@ public class PnlAltatarea extends JScrollPane{
 		 * Con el bucle for vamos creando tantos labels y textfields como 
 		 * nombres de campos hayamos metido en fieldNames.
 		 */
+	      
+	      
+	      //cuadro con scroll para las descripciones
+			
+	   		LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
+	   		final JTextArea textarea = (new JTextArea(3,13));
+	   		textarea.setDocument(lpd);
+	   		JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+	   		JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	   		panel.add((sp),gbc);
+	    
+		
+	  //cuadro con scroll para las observaciones
+
+	    	LimiteDocumento lpd2 = new LimiteDocumento(200); // Limite JTextArea
+	    	final JTextArea textarea2 = (new JTextArea(3,13));
+	    	textarea2.setDocument(lpd2);
+	    	JScrollPane sp2 = new JScrollPane(textarea2,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+	    	JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	    	panel.add((sp2),gbc);
+	     
 		
 		for(int i=0;i<fieldNames.length;++i) {
 		
@@ -87,14 +117,18 @@ public class PnlAltatarea extends JScrollPane{
 		   //desahabilitar campos de texto
 		   
 		 		  
-		   if(i==fieldNames.length-2){
-			   gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);
-			}
-		   if(i==fieldNames.length-3){
-			   gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc2,gbc);
-			}
-		   if(i!=2 && i!=5 && i!=fieldNames.length-2 && i!=fieldNames.length-3){ 
+		   if(i==3  ){gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);}
+		   
+		   if(i==4){gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc2,gbc);}
+		   
+		   if(i==5){gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(textarea,gbc);}
+		   
+		   if(i==6){gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(textarea2,gbc);}
+		
+		   
+		   if(i!=2 && i!=5 && i!=3 && i!=4 && i!=6){ 
 			   panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
+			 
 			}
 		   
 		   if (i==2){
@@ -106,28 +140,23 @@ public class PnlAltatarea extends JScrollPane{
 				 *Se conecta a la BD para realizar la consulta
 				 **/
 				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS");
+				rs = conexion.ConsultaSQL("SELECT nombre,id_wp FROM WORKPAQUETS");
 				try {
 				while(rs.next()){
 					
-					CmbWp.addItem(rs.getString(2));		
+					CmbWp.addItem(rs.getString(1));	
+					
 				}
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						
 						}
+					//System.out.println(rs);
 		   }
 		 
-		}
-		  //cuadro con scroll para las descripciones
-	     
-		   LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
-		      final JTextArea textarea = (new JTextArea(3,13));
-		      textarea.setDocument(lpd);
-		      JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-		      JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		     panel.add((sp),gbc);
+		}//fin for
+	    
 		/**
 		 * Creamos los dos botones para este panel 
 		 */
@@ -146,14 +175,20 @@ public class PnlAltatarea extends JScrollPane{
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("aceptar")){
 					ConexionDb conexdb = new ConexionDb();
-					ResultSet rs;
 					conexdb.Conectardb();
+					//nomwp = cbtipo.getSelectedItem().toString();
+					
+					//rs = conexion.ConsultaSQL("SELECT nombre FROM WORKPAQUETS");
+					
+					//for i=0
+									
+					indexwp = 1 + CmbWp.getSelectedIndex();
 					// cambiar fecha a sql
 					  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 					
-			if (sqlDate1.getTime()< sqlDate2.getTime()){
-					conexdb.executeUpdate("INSERT INTO TAREAS (nombre, descripcion, presupuesto,f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
+			//if (sqlDate1.getTime()< sqlDate2.getTime()){
+					conexdb.executeUpdate("INSERT INTO TAREAS (nombre, id_wp, descripcion, presupuesto,f_ini, f_fin, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+indexwp+"','"+textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
 					conexdb.cerrarConexion();
 				}
@@ -161,12 +196,14 @@ public class PnlAltatarea extends JScrollPane{
 				jdc1.setDate(null);
 				jdc2.setDate(null);
 				textarea.setText(null);
-			}else{
-				JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
+				textarea2.setText(null);
+			//}else{
+				//JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
 				// Marcar campo FECHA con error en ROJO 
-				jdc2.setBackground(Color.red);
+				//jdc2.setBackground(Color.red);
 		
-		}
+		//}
+			
 			// Borrar cuando damos al boton cancelar
 			if( e.getActionCommand().equals("cancelar")){
 				for(int i=0;i<2;++i) {	
@@ -175,6 +212,7 @@ public class PnlAltatarea extends JScrollPane{
 				jdc1.setDate(null);
 				jdc2.setDate(null);
 				textarea.setText(null);
+				textarea2.setText(null);
 				
 				// Borrar cuando termine de añadir
 				for(int i=0;i<2;++i) {	
