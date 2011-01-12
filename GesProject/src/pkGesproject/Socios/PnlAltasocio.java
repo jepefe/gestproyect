@@ -7,8 +7,10 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -31,6 +33,11 @@ public class PnlAltasocio extends JScrollPane{
 	JButton jbtnaceptar, jbtncancelar;
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
+	ConexionDb conexion= new ConexionDb();
+	String paisaux, sectoraux;
+	JComboBox cbpais = new JComboBox();
+	JComboBox cbsector = new JComboBox();
+	ResultSet rs;
 	
 	public PnlAltasocio (){
 		RsGesproject recursos = RsGesproject.Obtener_Instancia();
@@ -38,11 +45,11 @@ public class PnlAltasocio extends JScrollPane{
 		panel.setLayout(new GridBagLayout());
 		  
 		final String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][4],rec.idioma[rec.eleidioma][46],rec.idioma[rec.eleidioma][7],
+		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][7],
 		   rec.idioma[rec.eleidioma][8],rec.idioma[rec.eleidioma][9],rec.idioma[rec.eleidioma][70],rec.idioma[rec.eleidioma][5],
 		   rec.idioma[rec.eleidioma][5],rec.idioma[rec.eleidioma][71]
 		};
-		int[] fieldWidths = {20,10,15,30,6,20,20,10,10,10};
+		int[] fieldWidths = {20,30,6,20,20,10,10,10};
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
 		
@@ -61,10 +68,50 @@ public class PnlAltasocio extends JScrollPane{
 		 * nombres de campos hayamos metido en fieldNames.
 		 */
 		for(int i=0;i<fieldNames.length;++i) {
-		   gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   gbc.gridwidth = GridBagConstraints.REMAINDER;
-		   panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
+			gbc.gridwidth = GridBagConstraints.RELATIVE;
+			panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			gbc.gridwidth = GridBagConstraints.REMAINDER;
+			panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
+			
+			if(i==1){
+				gbc.gridwidth = GridBagConstraints.RELATIVE;
+				panel.add(new JLabel(rec.idioma[rec.eleidioma][4]),gbc);
+				gbc.gridwidth = GridBagConstraints.REMAINDER;
+				conexion.Conectardb();
+				rs = conexion.ConsultaSQL("SELECT * FROM SECTORES");
+				
+				panel.add(cbsector,gbc);
+				try {
+				while(rs.next()){
+					cbsector.addItem(rs.getString(2));
+				
+				}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						
+						}
+					
+					
+					gbc.gridwidth = GridBagConstraints.RELATIVE;
+					panel.add(new JLabel(rec.idioma[rec.eleidioma][46]),gbc);
+					gbc.gridwidth = GridBagConstraints.REMAINDER;
+					conexion.Conectardb();
+					rs = conexion.ConsultaSQL("SELECT * FROM PAIS");
+					
+					panel.add(cbpais,gbc);
+					try {
+					while(rs.next()){
+						cbpais.addItem(rs.getString(2));
+					
+					}
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+							
+					}
+			}
+			
 		}
 		
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
@@ -99,13 +146,15 @@ public class PnlAltasocio extends JScrollPane{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("aceptar")){
+					
 					ConexionDb conexdb = new ConexionDb();
 					ResultSet rs;
 					conexdb.Conectardb();
-					conexdb.executeUpdate("INSERT INTO PARTNER (nombre, sector, pais, direccion, codpostal, email, email2, telefono, telefono2, fax, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"','"+jtxt[6].getText()+"','"+jtxt[7].getText()+"','"+jtxt[8].getText()+"','"+jtxt[9].getText()+"','"+textarea.getText()+"')");
+					conexdb.executeUpdate("INSERT INTO PARTNER (nombre, sector, pais, direccion, codpostal, email, email2, telefono, telefono2, fax, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+cbsector.getSelectedItem().toString()+"','"+cbpais.getSelectedItem().toString()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"','"+jtxt[6].getText()+"','"+jtxt[7].getText()+"','"+textarea.getText()+"')");
 					for(int i=0;i<fieldNames.length;i++){
 						jtxt[i].setText("");
 					}
+					textarea.setText("");
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
 					conexdb.cerrarConexion();
 				}
