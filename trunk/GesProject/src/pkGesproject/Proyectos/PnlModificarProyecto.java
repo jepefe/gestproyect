@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,8 +33,8 @@ public class PnlModificarProyecto extends JPanel{
 	ConexionDb conexion = new ConexionDb();
 	ResultSet rs;
 	JPanel panel = new JPanel();
-	
-	String datos [][] = new String[5000][5];		
+	java.util.Date f_ini , f_fin = new java.util.Date();
+	String datos [][];		
 	String auxdatos[][] = new String[5000][5];
 	String colu[] = {"Nombre","Presupuesto","Descripcion","Fecha Inicio","Fecha Fin"};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
@@ -47,23 +48,43 @@ public class PnlModificarProyecto extends JPanel{
 	String[] fila = new String[5];
 	JTable jtblLateral;
 	JScrollPane jspntabla;
+	public 	JFrame modificar = new JFrame();
+
+	int cuenta;
 	
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
     public PnlModificarProyecto(){
-    	
+    	/*
+    	 * Solucion para que la Matriz de Busqueda sea Dinamica.
+    	 */
+    	conexion.Conectardb();
+    	rs = conexion.ConsultaSQL("SELECT nombre,presupuesto,descripcion,f_ini,f_fin FROM PROYECTOS");
+    	cuenta = 0 ; // Cuenta para hacer la matriz dinamica
+    	try {
+			while(rs.next()){
+			cuenta = cuenta + 1;
+				cuenta ++ ;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	conexion.cerrarConexion();
+    	datos = new String[cuenta][5];// Matriz Dinamica
+    /*
+     *  Sacar Datos de la base de datos y ponerlas en la matriz
+     */
     	conexion.Conectardb();
     	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
     	rs = conexion.ConsultaSQL("SELECT nombre,presupuesto,descripcion,f_ini,f_fin FROM PROYECTOS");
-    	int i=0;
+    	int i = 0; 
     	try {
 			while(rs.next()){
-				for(int j = 1;j<6;j++){
-					
+				for(int j = 1;j<6;j++){	
 					datos[i][j-1] = rs.getString(j);
 					fila[j-1]=datos[i][j-1];
-					
-				}
+					}
 				i++;
 			}
 		} catch (SQLException e) {
@@ -126,14 +147,13 @@ public class PnlModificarProyecto extends JPanel{
 
     			@Override
     			public void keyPressed(KeyEvent arg0) {
-    				// TODO Auto-generated method stub
-    				//System.out.println("Has pulsado una tecla");  				
+    				// TODO Auto-generated method stub			
     			}
     			@Override
     			public void keyReleased(KeyEvent act) {
     				// TODO Auto-generated method stub
     				if(llena==false){
-    					for(int i=0;i<100;i++){
+    					for(int i=0;i<cuenta;i++){
     						for(int j = 0;j<5;j++){
     							auxdatos[i][j]= datos[i][j];
     							datos[i][j]=null;
@@ -142,10 +162,9 @@ public class PnlModificarProyecto extends JPanel{
     					
     					}
     					llena = true;
-    					//System.out.print("LLENO");
     				}		
     				if(llena==true){
-    					for(int i=0;i<100;i++){
+    					for(int i=0;i<cuenta;i++){
     						for(int j = 0;j<5;j++){
     							datos[i][j]=null;
     						}
@@ -154,7 +173,7 @@ public class PnlModificarProyecto extends JPanel{
     					
     					if(jtext.getText().equals("")){
     						
-    						for(int i=0;i<100;i++){
+    						for(int i=0;i<cuenta;i++){
         						for(int j = 0;j<5;j++){
         							datos[i][j]=auxdatos[i][j];
         						}
@@ -191,9 +210,7 @@ public class PnlModificarProyecto extends JPanel{
 	    							i=0;
 	    							j++;
 	    						}    						
-    						}catch(ArrayIndexOutOfBoundsException act1) {
-    						         //System.out.println("This program takes 3 parameters: ");
-    						         //System.out.println("  month day year.");
+    						}catch(ArrayIndexOutOfBoundsException act1) {   
     						}
     					}	
     				}
@@ -212,37 +229,58 @@ public class PnlModificarProyecto extends JPanel{
 					// TODO Auto-generated method stub
 					if(e.getActionCommand().equals("modificar")){
 						// Frame de modificar con boton presupuesto visible
-						JFrame modificar = new JFrame();
+					
 						PnlNuevoProyecto mod;
+					
 						modificar.add(mod = new PnlNuevoProyecto());
 						modificar.setBounds(0, 0, 500, 600);
-						mod.Jbtnpresup.setVisible(true);
+					//	mod.Jbtnpresup.setVisible(true);
+						mod.jbtncancelar.setVisible(true);
 						modificar.setLocationRelativeTo(null);
-						 
 						
-							ActionListener evento = new ActionListener(){	
+						
+	/*
+	 *
+	 * Introducir datos al panel para poder modificar
+	 * 
+	 */
+						conexion.Conectardb();
+				    	rs = conexion.ConsultaSQL("SELECT p.nombre, p.descripcion, p.f_ini, p.f_fin FROM PROYECTOS as p WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+							try {									
+										rs.next();
+											mod.jtxt[0].setText(rs.getString(1));
+											mod.textarea.setText(rs.getString(2));
+											mod.jdc1.setDate(rs.getDate(3));
+											mod.jdc2.setDate(rs.getDate(4));
+												
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+				    	conexion.cerrarConexion();
+				   	
+						// Accion PResupuesto.
+
+							/*ActionListener evento = new ActionListener(){	
 								public void actionPerformed(ActionEvent a) {
 									// TODO Auto-generated method stub
 									if(a.getActionCommand().equals("presupuesto")){
-										System.out.println("Dentroooo");
 										JFrame presupuesto = new JFrame();
 										PnlPresupuesto pres;
 										presupuesto.add(pres = new PnlPresupuesto());
-										pres.setVisible(true);
-										presupuesto.setBounds(0, 0, 100, 200);
+										//presupuesto.setVisible(true);
+										presupuesto.setBounds(0, 0, 350, 90);
 										presupuesto.setLocationRelativeTo(null);
-										System.out.println("Finallll");
 									}
 								}
 							};
 							mod.Jbtnpresup.setActionCommand("presupuesto");
-					        mod.Jbtnpresup.addActionListener(evento);
-						
-						
+					        mod.Jbtnpresup.addActionListener(evento);*/
+					
 						modificar.setVisible(true);
 					}
 				}
-            	
+				
             };
             
             jbtnmodificar.setActionCommand("modificar");

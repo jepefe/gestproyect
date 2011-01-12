@@ -25,16 +25,19 @@ import com.toedter.calendar.JDateChooser;
  * Panel Nuevo Proyecto : En este panel es donde podremos dar de alta un nuevo proyecto
  */
 public class PnlNuevoProyecto extends JScrollPane{
+	
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	JPanel jpnl = new JPanel();
 	ScrollPane Sp = new ScrollPane();
+	JTextArea textarea;
 	JTextField[] jtxt;
 	JDateChooser jdc1,jdc2;
 	Date dateini, datefin ;
 	JFrame aviso = new JFrame();
 	JButton jbtnaceptar, jbtncancelar,Jbtnpresup;
-	
+    PnlModificarProyecto mod ;
+
 	
 	public PnlNuevoProyecto()  {
 		// formato fecha
@@ -83,7 +86,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 	    
 	      // JTextArea con Scrolls 
 	      LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
-	      final JTextArea textarea = (new JTextArea(3,13));
+	      textarea = (new JTextArea(3,13));
 	      textarea.setDocument(lpd);
 	      JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 	      JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -105,7 +108,8 @@ public class PnlNuevoProyecto extends JScrollPane{
 			gbc.anchor = GridBagConstraints.WEST;
 			gbc.gridwidth = GridBagConstraints.REMAINDER;
 			jpnl.add(jbtncancelar = new JButton(rec.idioma[rec.eleidioma][2]),gbc);
-		
+			jbtncancelar.setVisible(false);
+			
 		// Conectar Base de datos y pasar datos...
 			
 			ActionListener accion = new ActionListener(){
@@ -125,7 +129,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 						    java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 						    if (sqlDate1.getTime()< sqlDate2.getTime()){
 							conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+sqlDate1+"','"+sqlDate2+"')");
-							JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][36]);
+							JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][60]);
 							conexdb.cerrarConexion();
 							
 							// Borrar cuando termine de añadir		
@@ -135,22 +139,14 @@ public class PnlNuevoProyecto extends JScrollPane{
 							textarea.setText(null);
 							
 						}else{					
-							JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
+							JOptionPane.showMessageDialog( null, rec.idioma[rec.eleidioma][72]); 
 							// Marcar campo FECHA con error en ROJO 
-							jdc2.setBackground(Color.red);
-							
-							
-							}
-						
-						
-						
-						
+							jdc2.setBackground(Color.red);								
+							}						
 					}// Borrar cuando damos al boton cancelar
 					if( e.getActionCommand().equals("cancelar")){
-						jtxt[1].setText("");	
-						jdc1.setDate(null);
-						jdc2.setDate(null);
-						textarea.setText(null);
+					
+						mod.modificar.dispose();
 					}
 					
 				}
