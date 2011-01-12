@@ -49,7 +49,7 @@ public class GesStaff {
 	
 	
 	
-	public int CrearStaff(String dni, String categoria, boolean representante, String f_nac,
+	public int CrearStaff(String nombre, String categoria, boolean representante, String f_nac,
 			String pais, String region, String ciudad, String direccion, String codpostal, String telefono, 
 			String foto, String nick, String password, String permisos, int cod_part){
 		
@@ -75,9 +75,9 @@ public class GesStaff {
 		}
 		
 		
-		conex.executeUpdate("INSERT INTO STAFF (dni,nombre,categoria,representante,f_nac,pais" +
+		conex.executeUpdate("INSERT INTO STAFF (nombre,categoria,representante,f_nac,pais" +
 				",region,ciudad,direccion,codpostal,telefono,foto,nick_usuario,password,permisos,cod_part) " +
-				"VALUES ('"+"','" + dni + "','" + categoria + "','"
+				"VALUES ('" + nombre + "','" + categoria + "','"
 				+ Boolean.toString(representante)+ "','" + f_nac + "','" + pais + "','" + region + "','" + ciudad 
 				+ direccion + codpostal + telefono + foto + nick + "','" + password + "','" 
 				+ "','" + permisos + "','" + Integer.toString(cod_part)+ "')");
