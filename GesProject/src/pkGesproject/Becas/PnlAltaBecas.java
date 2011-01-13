@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
+import pkGesproject.GpComboBox;
 import pkGesproject.RsGesproject;
 
 import com.toedter.calendar.JDateChooser;
@@ -35,8 +36,8 @@ public class PnlAltaBecas extends JScrollPane{
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
 	String[] proyectocb; 
-	private JComboBox cbtipo = new JComboBox();;
-	private JComboBox cbpart = new JComboBox();;
+	private GpComboBox cbtipo = new GpComboBox();;
+	private GpComboBox cbpart = new GpComboBox();;
 	ConexionDb conexion = new ConexionDb();
 	ResultSet rs;
 	JDateChooser jdc1,jdc2;
@@ -90,7 +91,7 @@ public class PnlAltaBecas extends JScrollPane{
 				 * Se conecta a la BD para realizar la consulta
 				 */
 				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT * FROM IDIOMAS");
+				rs = conexion.ConsultaSQL("SELECT * FROM IDIOMA");
 				try {
 				while(rs.next()){
 					
@@ -140,7 +141,7 @@ public class PnlAltaBecas extends JScrollPane{
 				 * Se conecta a la BD para realizar la consulta
 				 */
 				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT * FROM IDIOMAS");
+				rs = conexion.ConsultaSQL("SELECT * FROM IDIOMA");
 				try {
 				while(rs.next()){
 					
