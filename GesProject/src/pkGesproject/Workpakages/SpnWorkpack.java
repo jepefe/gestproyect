@@ -29,7 +29,7 @@ public class SpnWorkpack extends JSplitPane{
 	JTable jtblLateral;
 	Component[] panlsStaff = {
 			new PnlAltawp(),
-			new JScrollPane(new PnlModwp()),
+			new JScrollPane(new PnlBusquedawp()),
 			new JScrollPane(new JPanel())};
 
 	public SpnWorkpack(){
