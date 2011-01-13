@@ -9,6 +9,8 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.ResultSet;
@@ -112,9 +114,27 @@ public class PnlBusquedastaff extends JPanel{
         	jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));
        
     		jtxt=new JTextField(20);
-    		//jtxt.setText("Buscar...");
+    		jtxt.setText("Buscar...");
     		jtxt.putClientProperty("JTextField.variant", "search");
     		jtxt.putClientProperty("JTextField.Search.PlaceholderText", Boolean.TRUE);
+    		jtxt.addFocusListener(new FocusListener(){
+
+				@Override
+				public void focusGained(FocusEvent arg0) {
+					// TODO Auto-generated method stub
+					jtxt.setText("");
+				}
+
+				@Override
+				public void focusLost(FocusEvent arg0) {
+					// TODO Auto-generated method stub
+					if(jtxt.getText().equals("")){
+						jtxt.setText("Buscar...");
+					}
+					
+				}
+    			
+    		});
     		
             GridBagConstraints constraints = new GridBagConstraints();
             constraints.gridx = 0; // El área de texto empieza en la columna
