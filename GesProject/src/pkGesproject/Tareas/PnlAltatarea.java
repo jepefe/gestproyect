@@ -29,10 +29,12 @@ import javax.swing.JTextField;
 
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
+import pkGesproject.GpComboBox;
 import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
 
-import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JDateChooser; 
+
 
 public class PnlAltatarea extends JScrollPane{
 	
@@ -41,8 +43,9 @@ public class PnlAltatarea extends JScrollPane{
 	JLabel[] jlbl;
 	JButton jbtnaceptar, jbtncancelar;
 	JDateChooser jdc1,jdc2;
-	private JComboBox CmbWp = new JComboBox();;
+	private GpComboBox CmbWp = new GpComboBox();;
 	ConexionDb conexion = new ConexionDb();
+	JTextArea textarea = new JTextArea();
 	ResultSet rs;
 	String nomwp;
 	int indexwp;
@@ -76,7 +79,7 @@ public class PnlAltatarea extends JScrollPane{
 		gbc.insets = new Insets(5,10,5,5);
 		
 		
-		//declaramos el campo que vamos a utilizar para añadir las fechas
+		//declaramos el campo que vamos a utilizar para aï¿½adir las fechas
 	      jdc1 = new JDateChooser();
 	      jdc2 = new JDateChooser();
 	      jdc2.setDateFormatString("DD/MM/YYYY");
@@ -89,75 +92,80 @@ public class PnlAltatarea extends JScrollPane{
 		 */
 	      
 	      
-	      //cuadro con scroll para las descripciones
+	   //cuadro con scroll para las descripciones
 			
-	   		LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
-	   		final JTextArea textarea = (new JTextArea(3,13));
+	  		LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
+	   		textarea = (new JTextArea(3,18));
+	   		textarea.setLineWrap(true);
 	   		textarea.setDocument(lpd);
 	   		JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 	   		JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	   		panel.add((sp),gbc);
+	   		
 	    
 		
 	  //cuadro con scroll para las observaciones
 
 	    	LimiteDocumento lpd2 = new LimiteDocumento(200); // Limite JTextArea
-	    	final JTextArea textarea2 = (new JTextArea(3,13));
+	    	final JTextArea textarea2 = (new JTextArea(3,18));
 	    	textarea2.setDocument(lpd2);
 	    	JScrollPane sp2 = new JScrollPane(textarea2,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 	    	JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	    	panel.add((sp2),gbc);
+	    	
 	     
 		
 		for(int i=0;i<fieldNames.length;++i) {
 		
+			//System.out.println("Fieldnames = " + fieldNames.length + " / i = " + i);
+			
 		   gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   //desahabilitar campos de texto
 		   
-		 		  
-		   if(i==3  ){gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);}
+		   switch(i){
 		   
-		   if(i==4){gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc2,gbc);}
-		   
-		   if(i==5){gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(textarea,gbc);}
-		   
-		   if(i==6){gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(textarea2,gbc);}
-		
-		   
-		   if(i!=2 && i!=5 && i!=3 && i!=4 && i!=6){ 
-			   panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
-			 
-			}
-		   
-		   if (i==2){
+		   case (0):
+		   case (1):
+			   	panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
+		   		break;
+		   case (2):
 			   panel.add(CmbWp,gbc);
 			   CmbWp.setPreferredSize(new Dimension(140,30));
 			   
 				/**
-				 * Creacion del JComboBox y añadir los items.
+				 * Creacion del JComboBox y aï¿½adir los items.
 				 *Se conecta a la BD para realizar la consulta
 				 **/
 				conexion.Conectardb();
 				rs = conexion.ConsultaSQL("SELECT nombre,id_wp FROM WORKPAQUETS");
 				try {
 				while(rs.next()){
-					
 					CmbWp.addItem(rs.getString(1));	
 					
 				}
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-						
 						}
-					//System.out.println(rs);
+			   	break;
+		   case (3):
+		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);}
+		   		break;
+		   case (4):
+		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc2,gbc);}
+		   		break;
+		   case (5):
+		   		{gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp),gbc);}
+			   	break;
+		   case (6):
+		   		{gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp2),gbc);}
+		   		break;
+		   		
 		   }
-		 
+		 		     
 		}//fin for
-	    
-		/**
+	  /*  
+		**
 		 * Creamos los dos botones para este panel 
 		 */
 		
@@ -178,9 +186,15 @@ public class PnlAltatarea extends JScrollPane{
 					conexdb.Conectardb();
 					//nomwp = cbtipo.getSelectedItem().toString();
 					
-					//rs = conexion.ConsultaSQL("SELECT nombre FROM WORKPAQUETS");
-					
-					//for i=0
+					rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS W WHERE W.nombre like'"+ CmbWp.getSelectedItem().toString()+"'" );
+					String id_wp = null;
+					try {
+						rs.next();
+						id_wp = rs.getString(1);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 									
 					indexwp = 1 + CmbWp.getSelectedIndex();
 					// cambiar fecha a sql
@@ -188,7 +202,7 @@ public class PnlAltatarea extends JScrollPane{
 					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 					
 			//if (sqlDate1.getTime()< sqlDate2.getTime()){
-					conexdb.executeUpdate("INSERT INTO TAREAS (nombre, id_wp, descripcion, presupuesto,f_ini, f_fin, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+indexwp+"','"+textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
+					conexdb.executeUpdate("INSERT INTO TAREAS (nombre, id_wp, descripcion, presupuesto,f_ini, f_fin, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+id_wp+"','"+textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
 					conexdb.cerrarConexion();
 				}
@@ -224,10 +238,10 @@ public class PnlAltatarea extends JScrollPane{
 		};
 		jbtnaceptar.setActionCommand("aceptar");
 		jbtnaceptar.addActionListener(accion);
-		jbtncancelar.setActionCommand("cancelar");
+		jbtncancelar.setActionCommand("cancelar"); 
 
 		
-		panel.setOpaque(true);
+		panel.setVisible(true);
 		this.setViewportView(panel);
 		
 	}
