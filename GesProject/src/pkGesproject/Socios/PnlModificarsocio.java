@@ -32,9 +32,9 @@ public class PnlModificarsocio extends JPanel{
 	ConexionDb conexion = new ConexionDb();
 	ResultSet rs;
 	JPanel panel = new JPanel();
-	
-	String datos[][] = new String[50000][3];
-	String auxdatos[][] = new String[50000][3];
+	int cuenta = 0;
+	String datos[][];
+	String auxdatos[][];
 	String colu[] = {"Nombre","Telefono","Telefono 2"};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
@@ -55,6 +55,21 @@ public class PnlModificarsocio extends JPanel{
     	String resul[]= new String[3];
     	conexion.Conectardb();
     	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
+    	rs = conexion.ConsultaSQL("SELECT p.nombre,p.telefono,p.telefono2 FROM PARTNER p");
+    	cuenta = 0;
+    	try {
+			while(rs.next()){
+				cuenta++;
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	
+    	
+		datos = new String[cuenta][3];
+		auxdatos = new String[cuenta][3];
+    	
     	rs = conexion.ConsultaSQL("SELECT p.nombre,p.telefono,p.telefono2 FROM PARTNER p");
     	int i=0;
     	try {
@@ -144,7 +159,7 @@ public class PnlModificarsocio extends JPanel{
     				
     				
     				if(llena==false){
-    					for(int i=0;i<100;i++){
+    					for(int i=0;i<cuenta;i++){
     						for(int j = 0;j<3;j++){
     							auxdatos[i][j]= datos[i][j];
     							datos[i][j]=null;
@@ -159,7 +174,7 @@ public class PnlModificarsocio extends JPanel{
     				}
     				
     				if(llena==true){
-    					for(int i=0;i<100;i++){
+    					for(int i=0;i<cuenta;i++){
     						for(int j = 0;j<3;j++){
     							datos[i][j]=null;
     						}
@@ -168,7 +183,7 @@ public class PnlModificarsocio extends JPanel{
     					
     					if(jtxt.getText().equals("")){
     						
-    						for(int i=0;i<100;i++){
+    						for(int i=0;i<cuenta;i++){
         						for(int j = 0;j<3;j++){
         							datos[i][j]=auxdatos[i][j];
         						}
@@ -246,7 +261,7 @@ public class PnlModificarsocio extends JPanel{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					/*if(e.getActionCommand().equals("modificar")){
+					if(e.getActionCommand().equals("modificar")){
 						
 						for(int i=0;i<3;i++){
 							System.out.print(datos[jtblLateral.getSelectedRow()][i]+";");
@@ -254,11 +269,11 @@ public class PnlModificarsocio extends JPanel{
 						
 						
 						JFrame modificar = new JFrame();
-						pnlAlta_staff mod;
-						modificar.add(mod = new pnlAlta_staff());
+						PnlAltasocio mod = new PnlAltasocio();
+						modificar.add(mod);
 						modificar.setBounds(0, 0, 600, 650);
 						modificar.setLocationRelativeTo(null);
-						mod.jbtnaceptar.addActionListener(new ActionListener(){
+						/*mod.jbtnaceptar.addActionListener(new ActionListener(){
 
 							@Override
 							public void actionPerformed(ActionEvent arg0) {
@@ -267,17 +282,20 @@ public class PnlModificarsocio extends JPanel{
 							}
 							
 						});
-							
+							*/
+						
 						conexion.Conectardb();
 				    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
-				    	rs = conexion.ConsultaSQL("SELECT s.nombre,s.apellidos,s.region,s.ciudad,s.direccion,s.codpostal,s.telefono,s.nick_usuario,s.foto FROM STAFF s WHERE s.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"' AND s.apellidos LIKE '"+ datos[jtblLateral.getSelectedRow()][1]+"'");
+				    	rs = conexion.ConsultaSQL("SELECT p.nombre,p.direccion,p.codpostal,p.email,p.email2,p.telefono,p.telefono2,p.fax,p.observaciones FROM PARTNER p WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
 				    	int i=1;
 				    	
 							try {
 									
 										rs.next();
-										for(i=1;i<9;i++){										
+										for(i=1;i<10;i++){	
+											
 											mod.jtxt[i-1].setText(rs.getString(i));
+											rs.next();
 										}
 									
 							
@@ -289,7 +307,7 @@ public class PnlModificarsocio extends JPanel{
 				    	conexion.cerrarConexion();
 						
 						modificar.setVisible(true);
-					}*/
+					}
 					
 					if(e.getActionCommand().equals("eliminar")){
 						conexion.Conectardb();

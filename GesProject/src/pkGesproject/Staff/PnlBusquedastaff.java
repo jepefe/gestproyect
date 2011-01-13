@@ -46,8 +46,8 @@ public class PnlBusquedastaff extends JPanel{
 	ResultSet rs;
 	JPanel panel = new JPanel();
 	
-	String datos[][] = new String[50000][3];
-	String auxdatos[][] = new String[50000][3];
+	String datos[][];
+	String auxdatos[][];
 	String colu[] = {"Nombre","Apellidos","Partner"};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
@@ -60,6 +60,7 @@ public class PnlBusquedastaff extends JPanel{
 	String[] fila = new String[3];
 	JTable jtblLateral;
 	JScrollPane jspntabla;
+	int cuenta = 0;
     
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
@@ -68,6 +69,23 @@ public class PnlBusquedastaff extends JPanel{
     	String resul[]= new String[3];
     	conexion.Conectardb();
     	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
+    	
+    	rs = conexion.ConsultaSQL("SELECT s.nombre,s.apellidos,p.nombre FROM STAFF s LEFT JOIN PARTNER p ON s.cod_part = p.cod_part");
+    	cuenta = 0;
+    	try {
+			while(rs.next()){
+				cuenta++;
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	
+    	
+		datos = new String[cuenta][3];
+		auxdatos = new String[cuenta][3];
+    	
+    	
     	rs = conexion.ConsultaSQL("SELECT s.nombre,s.apellidos,p.nombre FROM STAFF s LEFT JOIN PARTNER p ON s.cod_part = p.cod_part");
     	int i=0;
     	try {
@@ -157,7 +175,7 @@ public class PnlBusquedastaff extends JPanel{
     				
     				
     				if(llena==false){
-    					for(int i=0;i<100;i++){
+    					for(int i=0;i<cuenta;i++){
     						for(int j = 0;j<3;j++){
     							auxdatos[i][j]= datos[i][j];
     							datos[i][j]=null;
@@ -172,7 +190,7 @@ public class PnlBusquedastaff extends JPanel{
     				}
     				
     				if(llena==true){
-    					for(int i=0;i<100;i++){
+    					for(int i=0;i<cuenta;i++){
     						for(int j = 0;j<3;j++){
     							datos[i][j]=null;
     						}
@@ -181,7 +199,7 @@ public class PnlBusquedastaff extends JPanel{
     					
     					if(jtxt.getText().equals("")){
     						
-    						for(int i=0;i<100;i++){
+    						for(int i=0;i<cuenta;i++){
         						for(int j = 0;j<3;j++){
         							datos[i][j]=auxdatos[i][j];
         						}
