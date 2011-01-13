@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
@@ -278,6 +279,15 @@ public class PnlBusquedawp extends JPanel{
 						modificar.add(mod = new PnlAltawp());
 						modificar.setBounds(0, 0, 600, 650);
 						modificar.setLocationRelativeTo(null);
+						mod.jbtnaceptar.addActionListener(new ActionListener(){
+
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								// TODO Auto-generated method stub
+								System.out.print("localizado");
+							}
+							
+						});
 						
 						conexion.Conectardb();
 				    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM WORKPAQUETS");
@@ -299,12 +309,21 @@ public class PnlBusquedawp extends JPanel{
 						
 						modificar.setVisible(true);
 					}
+					if(e.getActionCommand().equals("eliminar")){
+						conexion.Conectardb();
+						conexion.executeUpdate("DELETE FROM WORKPAQUETS WHERE nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+						Component aviso = null;
+						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
+						conexion.cerrarConexion();
+					}
 				}
             	
             };
             
             jbtnmodificar.setActionCommand("modificar");
             jbtnmodificar.addActionListener(event);
+            jbtneliminar.setActionCommand("eliminar");
+            jbtneliminar.addActionListener(event);
             
             /*
             jtblLateral.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
