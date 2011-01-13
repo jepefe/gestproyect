@@ -91,11 +91,11 @@ public class PnlAltaBecas extends JScrollPane{
 				 * Se conecta a la BD para realizar la consulta
 				 */
 				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT * FROM IDIOMA");
+				rs = conexion.ConsultaSQL("SELECT * FROM IDIOMABECA");
 				try {
 				while(rs.next()){
 					
-					cbtipo.addItem(rs.getString(2));
+					cbtipo.addItem(rs.getString(1));
 							
 						
 				}
@@ -130,12 +130,12 @@ public class PnlAltaBecas extends JScrollPane{
 				
 				 
 				/*
-				 * Accion a realizar cuando el JComboBox cambia de item seleccionado.
+				 * Accion a realizar cuando el GpComboBox cambia de item seleccionado.
 				 */
 				
 				
 				/*
-				 * Creacion del JComboBox y a�adir los items.
+				 * Creacion del GpComboBox y a�adir los items.
 				 */
 				/*
 				 * Se conecta a la BD para realizar la consulta
