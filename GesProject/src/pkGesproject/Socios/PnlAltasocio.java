@@ -123,7 +123,9 @@ public class PnlAltasocio extends JScrollPane{
 		      textarea.setDocument(lpd);
 		      JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 		      JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		      textarea.setLineWrap(true);
 		     panel.add((sp),gbc);
+		     
 		
 		
 		/*
@@ -135,7 +137,7 @@ public class PnlAltasocio extends JScrollPane{
 		panel.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][2]),gbc);
+		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
 		
 		
 		 
@@ -151,11 +153,39 @@ public class PnlAltasocio extends JScrollPane{
 					ConexionDb conexdb = new ConexionDb();
 					ResultSet rs;
 					conexdb.Conectardb();
-					conexdb.executeUpdate("INSERT INTO PARTNER (nombre, sector, pais, direccion, codpostal, email, email2, telefono, telefono2, fax, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+cbsector.getSelectedItem().toString()+"','"+cbpais.getSelectedItem().toString()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"','"+jtxt[6].getText()+"','"+jtxt[7].getText()+"','"+textarea.getText()+"')");
+					rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+cbsector.getSelectedItem().toString()+"'");
+					
+					/**
+					 * Creamos una variable string para obtener el id del sector y del pais
+					 **/
+					
+					String sector = null;
+					try {
+						rs.next();
+						sector = rs.getString(1);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpais.getSelectedItem().toString()+"'");
+					
+					String pais = null;
+					try {
+						rs.next();
+						pais = rs.getString(1);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					conexdb.executeUpdate("INSERT INTO PARTNER (nombre, sector, pais, direccion, codpostal, email, email2, telefono, telefono2, fax, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+sector+"','"+pais+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"','"+jtxt[6].getText()+"','"+jtxt[7].getText()+"','"+textarea.getText()+"')");
 					for(int i=0;i<fieldNames.length;i++){
 						jtxt[i].setText("");
 					}
 					textarea.setText("");
+					cbsector.setSelectedIndex(0);
+					cbpais.setSelectedIndex(0);
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
 					conexdb.cerrarConexion();
 				}
@@ -165,6 +195,9 @@ public class PnlAltasocio extends JScrollPane{
 					for(int i=0;i<fieldNames.length;i++){
 						jtxt[i].setText("");
 					}
+					textarea.setText("");
+					cbsector.setSelectedIndex(0);
+					cbpais.setSelectedIndex(0);
 				}
 			}
 			
