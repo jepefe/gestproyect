@@ -107,7 +107,7 @@ public class PnlBusquedawp extends JPanel{
 				@Override
 				public void focusGained(FocusEvent e) {
 					// TODO Auto-generated method stub
-					
+					jtxt.setText("");
 				}
 
 				@Override
