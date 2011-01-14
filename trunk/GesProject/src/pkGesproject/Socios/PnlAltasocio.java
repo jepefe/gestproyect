@@ -41,6 +41,7 @@ public class PnlAltasocio extends JScrollPane{
 	String paisaux, sectoraux;
 	GpComboBox cbpais = new GpComboBox();
 	GpComboBox cbsector = new GpComboBox();
+	JTextArea textarea = (new JTextArea(3,13));
 	ResultSet rs;
 	
 	public PnlAltasocio (){
@@ -118,7 +119,8 @@ public class PnlAltasocio extends JScrollPane{
 			
 		}
 		
-		jtxt[0].addFocusListener(new FocusListener(){
+		
+		FocusListener foco = new FocusListener(){
 
 			@Override
 			public void focusGained(FocusEvent arg0) {
@@ -145,13 +147,15 @@ public class PnlAltasocio extends JScrollPane{
 				}
 			}
 			
-		});
+		};
+		
+		//jtxt[0].addFocusListener(foco);
+		
 		
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   panel.add(new JLabel(rec.idioma[rec.eleidioma][64]),gbc);
 		   gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
-		      final JTextArea textarea = (new JTextArea(3,13));
 		      textarea.setDocument(lpd);
 		      JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 		      JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
