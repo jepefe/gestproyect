@@ -277,6 +277,8 @@ public class PnlModificarsocio extends JPanel{
             	
             };
             
+            conexion.cerrarConexion();
+            
             ActionListener event = new ActionListener(){
 
 				@Override
@@ -284,10 +286,10 @@ public class PnlModificarsocio extends JPanel{
 					// TODO Auto-generated method stub
 					if(e.getActionCommand().equals("modificar")){
 						
-						for(int i=0;i<3;i++){
+						/*for(int i=0;i<3;i++){
 							System.out.print(datos[jtblLateral.getSelectedRow()][i]+";");
 						}
-						
+						*/
 						
 						JFrame modificar = new JFrame();
 						PnlAltasocio mod = new PnlAltasocio();
@@ -312,11 +314,12 @@ public class PnlModificarsocio extends JPanel{
 				    	
 							try {
 									
-										rs.next();
-										for(i=1;i<10;i++){	
+
+										while(rs.next()){	
 											
 											mod.jtxt[i-1].setText(rs.getString(i));
-											rs.next();
+											
+											i++;
 										}
 									
 							
