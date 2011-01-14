@@ -49,11 +49,11 @@ public class GesStaff {
 	
 	
 	
-	public int CrearStaff(String nombre, String categoria, boolean representante, String f_nac,
-			String pais, String region, String ciudad, String direccion, String codpostal, String telefono, 
-			String foto, String nick, String password, String permisos, int cod_part){
+	public int CrearStaff(String nombre, String apellidos, String categoria, String representante, String f_nac,
+			String pais, String provincia, String region, String ciudad, String direccion, String codpostal, String telefono, String telefono2,
+			String fax, String email,String foto, String nick, String password, String permisos, String cod_part, String observaciones){
 		
-		int creado = 1;
+		int creado = 0;
 		ConexionDb conex = new ConexionDb();
 		ResultSet rs;
 		conex.Conectardb();
@@ -61,26 +61,26 @@ public class GesStaff {
 		//Comprobamos que no exista ya el nick para evitar problemas con la FTP
 		//La variable "creado" tendra los siguientes valores:
 		//0: Usuario creado, 1:Error sin determinar 2:el nick ya existe
-		rs = conex.ConsultaSQL("SELECT nick_usuario FROM STAFF WHERE nick_usuario='"+ nick +"'");
-		try {
-			rs.next();
-		if(rs.getString(1) == nick){
-			creado = 2;
-		}else{
-			creado = 0;
+		rs = conex.ConsultaSQL("Select nick_usuario FROM STAFF WHERE nick_usuario='" + nick + "'");
+		if (rs!= null){
+			try {
+				rs.next();
+				if (rs.getString(1).contentEquals(nick)){
+					creado=2;
+				}
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			}
+		if (creado==0){		
+		conex.executeUpdate("INSERT INTO STAFF (nombre,apellidos,categoria,representante,f_nac,pais, provincia" +
+				",region,ciudad,direccion,codpostal,telefono,telefono2,fax,foto,nick_usuario,password,email,permisos,cod_part,observaciones) " +
+				"VALUES ('" + nombre + "','"+ apellidos + "','" + categoria + "','"
+				+ representante+ "','" + f_nac + "','" + pais + "','" + provincia + "','" + region + "','" + ciudad + "','"
+				+ direccion + "','" + codpostal + "','" + telefono + "','" + telefono2 + "','" + fax + "','"+ foto + "','" + nick + 
+				"','" + password  + "','" + email + "','" + permisos + "','" + cod_part + "','" + observaciones +"')");
 		}
-		
-		
-		conex.executeUpdate("INSERT INTO STAFF (nombre,categoria,representante,f_nac,pais" +
-				",region,ciudad,direccion,codpostal,telefono,foto,nick_usuario,password,permisos,cod_part) " +
-				"VALUES ('" + nombre + "','" + categoria + "','"
-				+ Boolean.toString(representante)+ "','" + f_nac + "','" + pais + "','" + region + "','" + ciudad 
-				+ direccion + codpostal + telefono + foto + nick + "','" + password + "','" 
-				+ "','" + permisos + "','" + Integer.toString(cod_part)+ "')");
 		
 		conex.cerrarConexion();
 		conex = null;
