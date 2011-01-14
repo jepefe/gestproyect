@@ -149,7 +149,7 @@ public class PnlAltasocio extends JScrollPane{
 			
 		};
 		
-		//jtxt[0].addFocusListener(foco);
+		jtxt[0].addFocusListener(foco);
 		
 		
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
