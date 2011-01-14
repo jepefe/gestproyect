@@ -139,7 +139,14 @@ public class PnlAltasocio extends JScrollPane{
 						//jtxt[0].setText("");
 						jtxt[0].requestFocus();
 						jtxt[0].selectAll();
-						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][75]);
+						
+						GridBagConstraints gb = new GridBagConstraints();
+						gb.gridx = 3; // El área de texto empieza en la columna
+			            gb.gridy = 0; // El área de texto empieza en la fila
+						JLabel aviso = new JLabel("Ya existe");
+						panel.add(aviso,gb);
+						
+						//JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][75]);
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
