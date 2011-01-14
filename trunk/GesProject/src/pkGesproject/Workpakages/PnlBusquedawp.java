@@ -48,9 +48,9 @@ public class PnlBusquedawp extends JPanel{
 	ConexionDb conexion = new ConexionDb();
 	ResultSet rs;
 	JPanel panel = new JPanel();
-	
-	String datos[][] = new String[50000][3];
-	String auxdatos[][] = new String[50000][3];
+	int cuenta=0;
+	String datos[][];
+	String auxdatos[][];
 	String colu[] = {"Nombre","Partner","Proyecto"};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
@@ -72,6 +72,23 @@ public class PnlBusquedawp extends JPanel{
     	
     	String resul[]= new String[3];
     	conexion.Conectardb();
+    	
+    	rs = conexion.ConsultaSQL("SELECT w.nombre, p.nombre, po.nombre FROM WORKPAQUETS w INNER JOIN PARTNER_WORKPAQUETS pa ON w.id_wp = pa.id_wp INNER JOIN PROYECTOS po ON w.id_pro = po.id_pro INNER JOIN PARTNER p ON pa.cod_part = p.cod_part ORDER BY w.nombre");
+    	cuenta = 0;
+    	try {
+			while(rs.next()){
+				cuenta++;
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	
+    	
+		datos = new String[cuenta][3];
+		auxdatos = new String[cuenta][3];
+    	
+    	
     	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
     	rs = conexion.ConsultaSQL("SELECT w.nombre, p.nombre, po.nombre FROM WORKPAQUETS w INNER JOIN PARTNER_WORKPAQUETS pa ON w.id_wp = pa.id_wp INNER JOIN PROYECTOS po ON w.id_pro = po.id_pro INNER JOIN PARTNER p ON pa.cod_part = p.cod_part ORDER BY w.nombre");
     	int i=0;
@@ -178,8 +195,8 @@ public class PnlBusquedawp extends JPanel{
     				// TODO Auto-generated method stub
     				
     				
-    				if(llena==false){
-    					for(int i=0;i<100;i++){
+					if(llena==false){
+    					for(int i=0;i<cuenta;i++){
     						for(int j = 0;j<3;j++){
     							auxdatos[i][j]= datos[i][j];
     							datos[i][j]=null;
@@ -194,7 +211,7 @@ public class PnlBusquedawp extends JPanel{
     				}
     				
     				if(llena==true){
-    					for(int i=0;i<100;i++){
+    					for(int i=0;i<cuenta;i++){
     						for(int j = 0;j<3;j++){
     							datos[i][j]=null;
     						}
@@ -203,7 +220,7 @@ public class PnlBusquedawp extends JPanel{
     					
     					if(jtxt.getText().equals("")){
     						
-    						for(int i=0;i<100;i++){
+    						for(int i=0;i<cuenta;i++){
         						for(int j = 0;j<3;j++){
         							datos[i][j]=auxdatos[i][j];
         						}
@@ -231,30 +248,25 @@ public class PnlBusquedawp extends JPanel{
 								//System.out.print("\n");
 	    						while(auxdatos[i][j]!=null){
 	    							while(auxdatos[i][j]!=null){
-	    								//System.out.print(i);
+	    								//System.out.print("llega");
 	    								
-	    								if(auxdatos[i][j].regionMatches( true, 0, jtxt.getText(), 0, tam )){
-	    									//System.out.print("ENTRÓO");
-	    									
-	    									for(int col =0;col<3;col++){
-	    										
-	    										datos[fila][col]= auxdatos[i][col];
-	    										/*jtblLateral.repaint();
-	    										jtblLateral.validate();
-	    										jspntabla.repaint();
-	    										jspntabla.validate();
-	    										repaint();
-	    										validate();*/
-	    										res[col] = datos[fila][col];
-	    									}
-	    									fila++;
-	    									//Si el resultado no esta vacio que pasa por algun error de codigo a�adimos linea al jtable
-	    									if (!res[0].equals("") && !res[1].equals("") && !res[2].equals("")){
-	    									Object[] dat = {res[0],res[1],res[2]};
-	    									tablemodel.addRow(dat);
-	    									
-	    									}
-	    									
+	    								if(auxdatos[i][j]!= null){
+		    								if(auxdatos[i][j].regionMatches( true, 0, jtxt.getText(), 0, tam )){
+		    									//System.out.print("ENTRÓO");
+		    									
+		    									for(int col =0;col<3;col++){
+		    										
+		    										datos[fila][col]= auxdatos[i][col];
+		    										
+		    										res[col] = datos[fila][col];
+		    									}
+		    									fila++;
+		    									
+		    									Object[] dat = {res[0],res[1],res[2]};
+		    									tablemodel.addRow(dat);
+		    									
+		    									
+		    								}
 	    								}
 	    								
 	    								i++;
@@ -271,6 +283,8 @@ public class PnlBusquedawp extends JPanel{
     						
     					
     				}
+    				
+    				
     			}
 
     			@Override
@@ -298,6 +312,7 @@ public class PnlBusquedawp extends JPanel{
 						modificar.add(mod = new PnlAltawp());
 						modificar.setBounds(0, 0, 600, 650);
 						modificar.setLocationRelativeTo(null);
+						modificar.setVisible(true);
 						mod.jbtnaceptar.addActionListener(new ActionListener(){
 
 							@Override
@@ -314,8 +329,9 @@ public class PnlBusquedawp extends JPanel{
 				    	int i=1;
 				    	
 							try {
-									for(i=1;i<7;i++){
-										rs.next();
+									rs.next();
+									for(i=1;i<3;i++){
+										
 										mod.jtxt[i-1].setText(rs.getString(i));
 									}
 							
