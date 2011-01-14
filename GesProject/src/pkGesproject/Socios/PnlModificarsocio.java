@@ -32,7 +32,7 @@ public class PnlModificarsocio extends JPanel{
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	ConexionDb conexion = new ConexionDb();
-	ResultSet rs;
+	ResultSet rs,rs2;
 	JPanel panel = new JPanel();
 	int cuenta = 0;
 	String datos[][];
@@ -44,7 +44,7 @@ public class PnlModificarsocio extends JPanel{
 	JLabel jlbl;
 	PnlAltasocio pnlaltasocio = new PnlAltasocio();
 	JTextField jtxt;
-	JButton jbtn,jbtnmodificar,jbtneliminar;
+	JButton jbtn,jbtnmodificar,jbtneliminar,jbtnaceptar,jbtncancelar;
 	Boolean llena = new Boolean(false);
 	String[] fila = new String[3];
 	JTable jtblLateral;
@@ -164,7 +164,7 @@ public class PnlModificarsocio extends JPanel{
             */
             
             
-            KeyListener accion = new KeyListener(){
+            final KeyListener accion = new KeyListener(){
 
     			@Override
     			public void keyPressed(KeyEvent arg0) {
@@ -292,7 +292,7 @@ public class PnlModificarsocio extends JPanel{
 						*/
 						
 						JFrame modificar = new JFrame();
-						PnlAltasocio mod = new PnlAltasocio();
+						final PnlAltasocio mod = new PnlAltasocio();
 						modificar.add(mod);
 						modificar.setBounds(0, 0, 600, 650);
 						modificar.setLocationRelativeTo(null);
@@ -314,15 +314,67 @@ public class PnlModificarsocio extends JPanel{
 				    	
 							try {
 									
-
-										while(rs.next()){	
-											
-											mod.jtxt[i-1].setText(rs.getString(i));
-											
-											i++;
-										}
-									
+								rs.next();
+								for(i=1;i<9;i++){
+									mod.jtxt[i-1].setText(rs.getString(i));
+								}
+								mod.textarea.setText(rs.getString(i));
+								rs=conexion.ConsultaSQL("SELECT p.pais FROM PAIS p INNER JOIN PARTNER pa ON p.id_pais = pa.pais WHERE pa.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+								rs.next();
+								mod.cbpais.setSelectedItem(rs.getString(1));
 							
+								rs=conexion.ConsultaSQL("SELECT s.sector FROM SECTORES s INNER JOIN PARTNER p ON s.id_sector = p.sector WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+								rs.next();
+								mod.cbsector.setSelectedItem(rs.getString(1));
+								mod.jbtnaceptar.setVisible(false);
+								mod.jbtncancelar.setVisible(false);
+								mod.add(jbtnaceptar = new JButton(rec.idioma[rec.eleidioma][1]));
+								jbtnaceptar.addActionListener(new ActionListener(){
+
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										
+										rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+mod.cbsector.getSelectedItem().toString()+"'");
+										
+										/**
+										 * Creamos una variable string para obtener el id del sector y del pais
+										 **/
+										
+										String sector = null;
+										try {
+											rs.next();
+											sector = rs.getString(1);
+										} catch (SQLException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
+										
+										rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+mod.cbpais.getSelectedItem().toString()+"'");
+										
+										String pais = null;
+										try {
+											rs.next();
+											pais = rs.getString(1);
+										} catch (SQLException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
+										conexion.executeUpdate("UPDATE PARTNER SET nombre='"+mod.jtxt[0].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
+										conexion.executeUpdate("UPDATE PARTNER SET direccion='"+mod.jtxt[1].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
+										conexion.executeUpdate("UPDATE PARTNER SET sector='"+sector+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
+										conexion.executeUpdate("UPDATE PARTNER SET pais='"+pais+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
+										conexion.executeUpdate("UPDATE PARTNER SET codpostal='"+mod.jtxt[2].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
+										conexion.executeUpdate("UPDATE PARTNER SET email='"+mod.jtxt[3].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
+										conexion.executeUpdate("UPDATE PARTNER SET email2='"+mod.jtxt[4].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
+										conexion.executeUpdate("UPDATE PARTNER SET telefono='"+mod.jtxt[5].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
+										conexion.executeUpdate("UPDATE PARTNER SET telefono2='"+mod.jtxt[6].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
+										conexion.executeUpdate("UPDATE PARTNER SET fax='"+mod.jtxt[7].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
+										conexion.executeUpdate("UPDATE PARTNER SET observaciones='"+mod.textarea+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
+									}
+									
+								});
+								
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -335,7 +387,7 @@ public class PnlModificarsocio extends JPanel{
 					
 					if(e.getActionCommand().equals("eliminar")){
 						conexion.Conectardb();
-						conexion.executeUpdate("DELETE FROM STAFF WHERE nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"' AND telefono LIKE '"+ datos[jtblLateral.getSelectedRow()][1]+"'");
+						conexion.executeUpdate("DELETE FROM STAFF WHERE nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
 						Component aviso = null;
 						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
 						conexion.cerrarConexion();
