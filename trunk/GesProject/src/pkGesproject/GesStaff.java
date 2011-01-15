@@ -1,5 +1,6 @@
 package pkGesproject;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -75,12 +76,24 @@ public class GesStaff {
 			}
 		if (creado==0){		
 		conex.executeUpdate("INSERT INTO STAFF (nombre,apellidos,categoria,representante,f_nac,pais, provincia" +
-				",region,ciudad,direccion,codpostal,telefono,telefono2,fax,foto,nick_usuario,password,email,permisos,cod_part,observaciones) " +
+				",region,ciudad,direccion,codpostal,telefono,telefono2,fax,nick_usuario,password,email,permisos,cod_part,observaciones) " +
 				"VALUES ('" + nombre + "','"+ apellidos + "','" + categoria + "','"
 				+ representante+ "','" + f_nac + "','" + pais + "','" + provincia + "','" + region + "','" + ciudad + "','"
-				+ direccion + "','" + codpostal + "','" + telefono + "','" + telefono2 + "','" + fax + "','"+ foto + "','" + nick + 
+				+ direccion + "','" + codpostal + "','" + telefono + "','" + telefono2 + "','" + fax + "','" + nick + 
 				"','" + password  + "','" + email + "','" + permisos + "','" + cod_part + "','" + observaciones +"')");
 		}
+		
+		rs = conex.ConsultaSQL("Select nick_usuario,id_staff FROM STAFF WHERE nick_usuario='" + nick + "'");
+		try {
+			rs.next();
+			if (rs.getString(1).contentEquals(nick)){
+				id_staff = rs.getInt(2);
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		SubirFoto(foto,id_staff);
 		
 		conex.cerrarConexion();
 		conex = null;
@@ -89,6 +102,14 @@ public class GesStaff {
 		
 	}
 	
+	public boolean SubirFoto(String foto, int id){
+		File f_foto = new File(foto);
+		ConexionFTP ftp = new ConexionFTP();
+		return representante;
+		
+	
+		
+	}
 	
 	/**
 	 * Metodo para eliminar el registro de determinado staff

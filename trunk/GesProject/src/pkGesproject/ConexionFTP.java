@@ -59,7 +59,10 @@ package pkGesproject;
 	  public synchronized void connect(String host, int port) throws IOException {
 	    connect(host, port, "anonymous", "anonymous");
 	  }
-
+	  
+	  public synchronized void connectar() throws IOException {
+		    connect(RsGesproject.Obtener_Instancia().FTPSERVER, 21, RsGesproject.Obtener_Instancia().FTPUSER, RsGesproject.Obtener_Instancia().FTPPASS);
+		  }
 	  /**
 	   * Connects to an FTP server and logs in with the supplied username and
 	   * password.
@@ -144,12 +147,12 @@ package pkGesproject;
 	   * transfer was successful. The file is sent in passive mode to avoid NAT or
 	   * firewall problems at the client end.
 	   */
-	  public synchronized boolean stor(File file) throws IOException {
+	  public synchronized boolean stor(File file, String filename) throws IOException {
 	    if (file.isDirectory()) {
 	      throw new IOException("SimpleFTP cannot upload a directory.");
 	    }
 
-	    String filename = file.getName();
+	    //String filename = file.getName();
 
 	    return stor(new FileInputStream(file), filename);
 	  }
