@@ -32,6 +32,9 @@ public class RsGesproject {
 	final String DBUSER	  = "gesproyect";
 	final String DBPASS	  = "proyecto2010";
 	final String DBNAME	  = "gesproyect";
+	final String FTPSERVER = "93.189.94.177";
+	final String FTPUSER = "gesproyect";
+	final String FTPPASS = "proyecto2010";
 	/**String constante que contiene el titulo de la aplicaion*/
 	public final String APNAME = "GesProyect - Florida"; //Constante que contiene el nombre de la aplicacion
 	public ImageIcon[] icono = { 
