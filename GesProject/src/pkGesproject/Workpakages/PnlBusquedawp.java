@@ -1,3 +1,9 @@
+	/**
+	 /**
+	 * Esta clase se encarga de realizar el alta de nuevas Becas 
+	 * 
+	 * @author Felix Perona V
+	 */
 package pkGesproject.Workpakages;
 
 
@@ -332,7 +338,7 @@ public class PnlBusquedawp extends JPanel{
 									rs.next();
 									for(i=1;i<3;i++){
 										
-										mod.jtxt[i-1].setText(rs.getString(i));
+										mod.jtxt[1].setText(rs.getString(i));
 									}
 							
 							} catch (SQLException e1) {
