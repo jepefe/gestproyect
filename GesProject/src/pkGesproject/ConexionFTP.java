@@ -197,7 +197,8 @@ package pkGesproject;
 	    Socket dataSocket = new Socket(ip, port);
 
 	    response = readLine();
-	    if (!response.startsWith ("125 ")) {
+	    System.out.println(response);
+	    if ((!response.startsWith ("125 ")) && (!response.startsWith ("150 "))) {
 	    //if (!response.startsWith("150 ")) {
 	      throw new IOException("SimpleFTP was not allowed to send the file: "
 	          + response);
