@@ -1,6 +1,7 @@
 package pkGesproject;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -94,6 +95,7 @@ public class GesStaff {
 			e1.printStackTrace();
 		}
 		SubirFoto(foto,id_staff);
+				
 		
 		conex.cerrarConexion();
 		conex = null;
@@ -102,13 +104,25 @@ public class GesStaff {
 		
 	}
 	
-	public boolean SubirFoto(String foto, int id){
+	
+	public void SubirFoto(String foto,int id){
 		File f_foto = new File(foto);
 		ConexionFTP ftp = new ConexionFTP();
-		return representante;
-		
-	
-		
+		try {
+			ftp.connectar();
+			ftp.bin();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			ftp.stor(f_foto, "fto"+Integer.toString(id));
+			ftp.disconnect();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 	/**
