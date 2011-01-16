@@ -235,9 +235,10 @@ public class PnlAltasocio extends JScrollPane{
 					modso.cuenta=modso.contar_reg();
 					modso.datos = new String[modso.cuenta][modso.columnas];
 					modso.auxdatos = new String[modso.cuenta][modso.columnas];
-					modso.tablemodel =modso.cargar_tabla(modso.datos);
+					modso.tablemodel = modso.cargar_tabla(modso.datos);
 					modso.jtblLateral.setModel(modso.tablemodel);
 					modso.jtblLateral.repaint();
+					
 					modso.llena = false;
 					
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
