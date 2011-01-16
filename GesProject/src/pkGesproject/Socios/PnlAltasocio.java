@@ -42,10 +42,11 @@ public class PnlAltasocio extends JScrollPane{
 	GpComboBox cbpais = new GpComboBox();
 	GpComboBox cbsector = new GpComboBox();
 	JTextArea textarea = (new JTextArea(3,13));
+	PnlModificarsocio modso = PnlModificarsocio.Obtener_Instancia();
 	ResultSet rs;
 	
 	public PnlAltasocio (){
-		RsGesproject recursos = RsGesproject.Obtener_Instancia();
+		final RsGesproject recursos = RsGesproject.Obtener_Instancia();
 		
 		panel.setLayout(new GridBagLayout());
 		  
@@ -229,6 +230,16 @@ public class PnlAltasocio extends JScrollPane{
 					textarea.setText("");
 					cbsector.setSelectedIndex(0);
 					cbpais.setSelectedIndex(0);
+					//recursos.modso.cargar_tabla();
+					
+					modso.cuenta=modso.contar_reg();
+					modso.datos = new String[modso.cuenta][modso.columnas];
+					modso.auxdatos = new String[modso.cuenta][modso.columnas];
+					modso.tablemodel =modso.cargar_tabla(modso.datos);
+					modso.jtblLateral.setModel(modso.tablemodel);
+					modso.jtblLateral.repaint();
+					modso.llena = false;
+					
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
 					conexdb.cerrarConexion();
 				}
