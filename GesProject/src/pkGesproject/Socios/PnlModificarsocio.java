@@ -50,7 +50,7 @@ public class PnlModificarsocio extends JPanel{
 	JLabel jlbl;
 	PnlAltasocio pnlaltasocio = new PnlAltasocio();
 	JTextField jtxt;
-	JButton jbtn,jbtnmodificar,jbtneliminar,jbtnaceptar,jbtncancelar;
+	JButton jbtn,jbtnmodificar,jbtneliminar,jbtnaceptar,jbtncancelar,jbtnactualizar;
 	Boolean llena = new Boolean(false);
 	Boolean existe= new Boolean(false);
 	String[] fila = new String[3];
@@ -163,6 +163,9 @@ public class PnlModificarsocio extends JPanel{
             constraints.gridx = 1; // El área de texto empieza en la columna
             //constraints.anchor = GridBagConstraints.EAST;
             this.add(jbtneliminar,constraints);
+            
+            jbtnactualizar = new JButton("Actualizar");
+            
             //constraints.anchor = GridBagConstraints.CENTER;
             
             /*
@@ -393,6 +396,10 @@ public class PnlModificarsocio extends JPanel{
 						Component aviso = null;
 						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
 						conexion.cerrarConexion();
+					}
+					
+					if(e.getActionCommand().equals("actualizar")){
+						
 					}
 				}
             	
