@@ -103,7 +103,7 @@ public class PnlAltasocio extends JScrollPane{
 					gbc.gridwidth = GridBagConstraints.RELATIVE;
 					panel.add(new JLabel(rec.idioma[rec.eleidioma][46]),gbc);
 					gbc.gridwidth = GridBagConstraints.REMAINDER;
-					conexion.Conectardb();
+					
 					rs = conexion.ConsultaSQL("SELECT * FROM PAIS");
 					
 					panel.add(cbpais,gbc);
