@@ -30,15 +30,15 @@ public class SpnTablas extends JSplitPane{
 	JTable jtblLateral;
 	Component[] panlsStaff = {
 			new TbViajes(),
-			new TbSubcontrating(),
+			new TbSubcontracting(),
 			new JScrollPane(new JPanel())};
 
 	public SpnTablas(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
-		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],"Costes por Partner"},
-				{recursos.icono[6],"Costes Staff"},
-				{recursos.icono[7],rec.idioma[rec.eleidioma][31]}};
+		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][83]},
+				{recursos.icono[6],rec.idioma[rec.eleidioma][84]},
+				{recursos.icono[7],rec.idioma[rec.eleidioma][86]}};
 		
 		
 		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {
@@ -82,7 +82,7 @@ public class SpnTablas extends JSplitPane{
         JLabel titulo = new JLabel("Titulo");
         
         JLabel Workpack;
-		pnllateral.add(Workpack = new JLabel("WORKPAKAGES"),gbc);
+		pnllateral.add(Workpack = new JLabel(""),gbc);
         Font auxFont = titulo.getFont();
         Workpack.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),20));
         gbc.weighty = 1.0;	//que la fila de la tabla se estire en vertical, de este modo el label se queda en la parte norte
