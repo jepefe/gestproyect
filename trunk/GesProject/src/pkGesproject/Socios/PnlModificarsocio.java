@@ -338,36 +338,33 @@ public class PnlModificarsocio extends JPanel{
 										 **/
 										
 										String sector = null;
-										try {
-											rs.next();
-											sector = rs.getString(1);
-										} catch (SQLException e1) {
-											// TODO Auto-generated catch block
-											e1.printStackTrace();
-										}
+											try {
+												rs.next();
+												sector = rs.getString(1);
+											} catch (SQLException e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											}
 										
 										rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+mod.cbpais.getSelectedItem().toString()+"'");
 										
 										String pais = null;
-										try {
-											rs.next();
-											pais = rs.getString(1);
-										} catch (SQLException e1) {
-											// TODO Auto-generated catch block
-											e1.printStackTrace();
-										}
-										conexion.executeUpdate("UPDATE PARTNER SET nombre='"+mod.jtxt[0].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET direccion='"+mod.jtxt[1].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET sector='"+sector+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET pais='"+pais+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET codpostal='"+mod.jtxt[2].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET email='"+mod.jtxt[3].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET email2='"+mod.jtxt[4].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET telefono='"+mod.jtxt[5].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET telefono2='"+mod.jtxt[6].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET fax='"+mod.jtxt[7].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET observaciones='"+mod.textarea+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
+											try {
+												rs.next();
+												pais = rs.getString(1);
+											} catch (SQLException e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											}
+											cuenta=contar_reg();
+											datos = new String[cuenta][columnas];
+											auxdatos = new String[cuenta][columnas];
+											tablemodel =cargar_tabla(datos);
+											jtblLateral.setModel(tablemodel);
+											llena = false;
 									}
+									
+									
 									
 								});
 								
@@ -375,6 +372,13 @@ public class PnlModificarsocio extends JPanel{
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
+							
+							cuenta=contar_reg();
+							datos = new String[cuenta][columnas];
+							auxdatos = new String[cuenta][columnas];
+							tablemodel =cargar_tabla(datos);
+							jtblLateral.setModel(tablemodel);
+							llena = false;
 						
 				    	conexion.cerrarConexion();
 						
@@ -426,7 +430,12 @@ public class PnlModificarsocio extends JPanel{
     
     }
     
-    
+    /**
+     * Este metodo coje la matriz datos, descarga de la BD los datos de los partners y genera un tablemodel, el cual es devuelto por
+     * este método.
+     * @param datos
+     * @return
+     **/
     
     public DefaultTableModel cargar_tabla(String datos[][]){
     	
@@ -460,6 +469,9 @@ public class PnlModificarsocio extends JPanel{
     	return tablemodel;
     }
     
+    /**
+     * Este método lo que hace es devolvernos los registros que existen actualmente en la tabla partner
+     **/
     public int contar_reg(){
 		
     	conexion.Conectardb();
@@ -480,6 +492,16 @@ public class PnlModificarsocio extends JPanel{
     	
     }
     
+    /**
+     * Este metodo devuelve true o false dependiendo si el registro actual de auxdatos indicado por la variable i existe o no 
+     * en la tabla datos.
+     * @param datos
+     * @param auxdatos
+     * @param i
+     * @param cuenta
+     * @param columnas
+     * @return
+     **/
     public Boolean buscar_reg(String datos[][],String auxdatos[][],int i,int cuenta,int columnas){
 		
     	Boolean existe = false;
@@ -499,6 +521,10 @@ public class PnlModificarsocio extends JPanel{
     	return existe;
     }
     
+    /**
+     *Este metodo sirve para instanciar esta clase y poder llamar a sus objetos desde otra clase. 
+     * @return
+     */
     public static PnlModificarsocio Obtener_Instancia(){
 		return instancia;
 	}
