@@ -35,7 +35,7 @@ public class SpnSocios extends JSplitPane{
 	Component[] panlsStaff = {
 			new PnlAltasocio(),
 			new JScrollPane(new PnlModificarsocio()),
-			new JPanel()};
+			new JScrollPane(new PnlTablapartner())};
 
 	public SpnSocios(){
 		this.setOneTouchExpandable(true);

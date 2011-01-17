@@ -25,9 +25,9 @@ public class RsGesproject {
 	/**Variable que referencia al objeto de la ventana principal*/
 	private FrmPrincipal Rfrmppal;  //Referencia a la ventana principal
 	/**Alto de la ventana principal*/
-	private int frmppalWidth = 800; //Alto por defecto de la ventana principal
+	private int frmppalWidth = 1000; //Alto por defecto de la ventana principal
 	/**Ancho de la ventana principal*/
-	private int frmppalHeight = 600; //Ancho por defecto de la ventana principal
+	private int frmppalHeight = 750; //Ancho por defecto de la ventana principal
 	final String DBSERVER = "93.189.94.177";
 	final String DBUSER	  = "gesproyect";
 	final String DBPASS	  = "proyecto2010";
@@ -49,6 +49,7 @@ public class RsGesproject {
 			new ImageIcon(getClass().getResource("imagenes/workpack.png")),
 			new ImageIcon(getClass().getResource("imagenes/tareas.png")),
 			new ImageIcon(getClass().getResource("imagenes/agregar.png")),
+			new ImageIcon(getClass().getResource("imagenes/tablas.png")),
 			};
 	static String SistemaOp = System.getProperty("os.name"); //Nombre del S.O por si necesitamos condicionar codigo 
 	
