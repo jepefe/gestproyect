@@ -29,8 +29,8 @@ public class SpnTablas extends JSplitPane{
 	JPanel panel = new JPanel();
 	JTable jtblLateral;
 	Component[] panlsStaff = {
-			new JPanel(),
-			new JScrollPane(new JPanel()),
+			new TbViajes(),
+			new TbSubcontrating(),
 			new JScrollPane(new JPanel())};
 
 	public SpnTablas(){
