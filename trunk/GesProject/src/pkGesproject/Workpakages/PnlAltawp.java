@@ -2,7 +2,7 @@
  /**
  * Esta clase se encarga de realizar el alta de nuevas tareas 
  * 
- * @author Freyder Espinosa V
+ * @author Freyder Espinosa y Félix Perona
  */
 package pkGesproject.Workpakages;
 
@@ -44,7 +44,8 @@ public class PnlAltawp extends JScrollPane{
 	JLabel[] jlbl;
 	JButton jbtnaceptar, jbtncancelar;
 	JDateChooser jdc1,jdc2;
-	private GpComboBox CmbPro = new GpComboBox();;
+	private GpComboBox CmbPro = new GpComboBox();
+	private GpComboBox CmbPar = new GpComboBox();
 	ConexionDb conexion = new ConexionDb();
 	JTextArea textarea = new JTextArea();
 	JTextArea textarea2 = new JTextArea();
@@ -62,10 +63,10 @@ public class PnlAltawp extends JScrollPane{
 		panel.setLayout(new GridBagLayout());
 		  
 		String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][13], rec.idioma[rec.eleidioma][55],
+		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][13], rec.idioma[rec.eleidioma][55], rec.idioma[rec.eleidioma][82],
 		   rec.idioma[rec.eleidioma][25],rec.idioma[rec.eleidioma][26],rec.idioma[rec.eleidioma][41], rec.idioma[rec.eleidioma][64]
 		   };
-		int[] fieldWidths = {20,9,15,10,6,6,6};
+		int[] fieldWidths = {20,9,15,10,10,6,6,6};
 		
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
@@ -147,15 +148,31 @@ public class PnlAltawp extends JScrollPane{
 						}
 			   	break;
 		   case (3):
+			   panel.add(CmbPar,gbc);
+			   CmbPar.setPreferredSize(new Dimension(140,30));
+			   
+				conexion.Conectardb();
+				rs = conexion.ConsultaSQL("SELECT nombre,cod_part FROM PARTNER");
+				try {
+				while(rs.next()){
+					CmbPar.addItem(rs.getString(1));	
+					
+				}
+					} catch (SQLException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+						}
+			   	break;
+		   case (4):
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);}
 		   		break;
-		   case (4):
+		   case (5):
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc2,gbc);}
 		   		break;
-		   case (5):
+		   case (6):
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp),gbc);}
 			   	break;
-		   case (6):
+		   case (7):
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp2),gbc);}
 		   		break;
 		   		
@@ -183,7 +200,7 @@ public class PnlAltawp extends JScrollPane{
 					ConexionDb conexdb = new ConexionDb();
 					conexdb.Conectardb();
 					//nomwp = cbtipo.getSelectedItem().toString();
-					
+					//para id de proyecto
 					rs = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre like'"+ CmbPro.getSelectedItem().toString()+"'" );
 					String id_pro = null;
 					try {
@@ -193,27 +210,51 @@ public class PnlAltawp extends JScrollPane{
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-									
+					//para la id del partner
+					rs = conexion.ConsultaSQL("SELECT id_par FROM PARTNER WHERE nombre like'"+ CmbPar.getSelectedItem().toString()+"'" );
+					String id_par = null;
+					try {
+						rs.next();
+						id_par = rs.getString(1);
+					} catch (SQLException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+					String id_wp = null;	
+					
 				// cambiar fecha a sql
 					  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 					
-			//if (sqlDate1.getTime()< sqlDate2.getTime()){
+			if (sqlDate1.getTime()< sqlDate2.getTime()){
 					conexdb.executeUpdate("INSERT INTO WORKPAQUETS (nombre, id_pro, descripcion, presupuesto,f_ini, f_fin, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+id_pro+"','"+textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
+					//para ver la id del workpaquets recien creado
+					try {
+						rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS WHERE nombre like'"+ jtxt[0].getText()+"'" );
+						rs.next();
+						id_wp = rs.getString(1);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						
+					}
+					conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS (cod_part, id_wp) VALUES ('"+id_par+"','"+id_wp+"')");
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
 					conexdb.cerrarConexion();
+					
+					
 				}
 				
 				jdc1.setDate(null);
 				jdc2.setDate(null);
 				textarea.setText(null);
 				textarea2.setText(null);
-			//}else{
-				//JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
+			}else{
+				JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
 				// Marcar campo FECHA con error en ROJO 
-				//jdc2.setBackground(Color.red);
+				jdc2.setBackground(Color.red);
 		
-		//}
+		}
 			
 			// Borrar cuando damos al boton cancelar
 			if( e.getActionCommand().equals("cancelar")){

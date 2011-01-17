@@ -62,10 +62,11 @@
 			panel.setLayout(new GridBagLayout());
 			  
 			String[] fieldNames = {
-			   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][13], rec.idioma[rec.eleidioma][55],
-			   rec.idioma[rec.eleidioma][25],rec.idioma[rec.eleidioma][26],rec.idioma[rec.eleidioma][41], rec.idioma[rec.eleidioma][64]
+			   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][28], rec.idioma[rec.eleidioma][56],
+			   rec.idioma[rec.eleidioma][69],rec.idioma[rec.eleidioma][76],rec.idioma[rec.eleidioma][9],rec.idioma[rec.eleidioma][66],
+			   rec.idioma[rec.eleidioma][67],rec.idioma[rec.eleidioma][67],rec.idioma[rec.eleidioma][68],rec.idioma[rec.eleidioma][68]
 			   };
-			int[] fieldWidths = {20,9,15,10,6,6,6};
+			int[] fieldWidths = {20,30,10,14,14,30,15,1010,10,10};
 			
 			jtxt = new JTextField[fieldNames.length];
 			jlbl = new JLabel[fieldNames.length];
@@ -126,16 +127,20 @@
 			   
 			   switch(i){
 			   
-			   case (0):
-			   case (1):
+			   case (0)://nombre
+			   case (1)://apellidos
+			   case (2)://dni
+			   case (3)://telf1
+			   case (4)://telf2
+			   case (5)://email
 				   	panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 			   		break;
-			   case (2):
+			   case (6):
 				   panel.add(CmbId,gbc);
 				   CmbId.setPreferredSize(new Dimension(140,30));
 				   
 					conexion.Conectardb();
-					rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM PROYECTOS");
+					rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM TITULO");
 					try {
 					while(rs.next()){
 						CmbId.addItem(rs.getString(1));	
@@ -146,17 +151,24 @@
 							e1.printStackTrace();
 							}
 				   	break;
-			   case (3):
-			   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);}
-			   		break;
-			   case (4):
-			   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc2,gbc);}
-			   		break;
-			   case (5):
-			   		{gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp),gbc);}
+			   case (7):
+				   panel.add(CmbId,gbc);
+				   CmbId.setPreferredSize(new Dimension(140,30));
+				   
+					conexion.Conectardb();
+					rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM IDIOMAS");
+					try {
+					while(rs.next()){
+						CmbId.addItem(rs.getString(1));	
+						
+					}
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+							}
 				   	break;
-			   case (6):
-			   		{gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp2),gbc);}
+			   case (8):
+			   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);}
 			   		break;
 			   		
 			   }
@@ -198,8 +210,8 @@
 						  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 						  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 						
-				//if (sqlDate1.getTime()< sqlDate2.getTime()){
-						conexdb.executeUpdate("INSERT INTO BECA (nombre, id_pro, descripcion, presupuesto,f_ini, f_fin, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+id_pro+"','"+textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
+				if (sqlDate1.getTime()< sqlDate2.getTime()){
+						conexdb.executeUpdate("INSERT INTO BECAS (nombre, apellidos, telf1, telf2, dni, email, titulo, curso_lectivo, idioma, fec_sol, fec_fin, erasmus, estado) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
 						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
 						conexdb.cerrarConexion();
 					}
@@ -208,12 +220,12 @@
 					jdc2.setDate(null);
 					textarea.setText(null);
 					textarea2.setText(null);
-				//}else{
-					//JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
-					// Marcar campo FECHA con error en ROJO 
-					//jdc2.setBackground(Color.red);
+				}else{
+					JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
+					//Marcar campo FECHA con error en ROJO 
+					jdc2.setBackground(Color.red);
 			
-			//}
+			}
 				
 				// Borrar cuando damos al boton cancelar
 				if( e.getActionCommand().equals("cancelar")){

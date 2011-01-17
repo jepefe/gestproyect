@@ -79,7 +79,7 @@ public class PnlBusquedawp extends JPanel{
     	String resul[]= new String[3];
     	conexion.Conectardb();
     	
-    	rs = conexion.ConsultaSQL("SELECT w.nombre, p.nombre, po.nombre FROM WORKPAQUETS w INNER JOIN PARTNER_WORKPAQUETS pa ON w.id_wp = pa.id_wp INNER JOIN PROYECTOS po ON w.id_pro = po.id_pro INNER JOIN PARTNER p ON pa.cod_part = p.cod_part ORDER BY w.nombre");
+    	rs = conexion.ConsultaSQL("SELECT w.nombre, p.nombre, po.nombre FROM WORKPAQUETS w LEFT JOIN PARTNER_WORKPAQUETS pa ON w.id_wp = pa.id_wp LEFT JOIN PROYECTOS po ON w.id_pro = po.id_pro LEFT JOIN PARTNER p ON pa.cod_part = p.cod_part ORDER BY w.nombre");
     	cuenta = 0;
     	try {
 			while(rs.next()){
@@ -96,7 +96,7 @@ public class PnlBusquedawp extends JPanel{
     	
     	
     	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
-    	rs = conexion.ConsultaSQL("SELECT w.nombre, p.nombre, po.nombre FROM WORKPAQUETS w INNER JOIN PARTNER_WORKPAQUETS pa ON w.id_wp = pa.id_wp INNER JOIN PROYECTOS po ON w.id_pro = po.id_pro INNER JOIN PARTNER p ON pa.cod_part = p.cod_part ORDER BY w.nombre");
+    	rs = conexion.ConsultaSQL("SELECT w.nombre, p.nombre, po.nombre FROM WORKPAQUETS w LEFT JOIN PARTNER_WORKPAQUETS pa ON w.id_wp = pa.id_wp LEFT JOIN PROYECTOS po ON w.id_pro = po.id_pro LEFT JOIN PARTNER p ON pa.cod_part = p.cod_part ORDER BY w.nombre");
     	int i=0;
     	try {
 			while(rs.next()){
@@ -168,22 +168,11 @@ public class PnlBusquedawp extends JPanel{
             //constraints.anchor = GridBagConstraints.CENTER;
             this.add(jbtnmodificar,constraints);
             
-            jbtneliminar = new JButton(rec.idioma[rec.eleidioma][16]);
+            jbtneliminar = new JButton(rec.idioma[rec.eleidioma][39]);
             constraints.gridx = 1; // El área de texto empieza en la columna
             //constraints.anchor = GridBagConstraints.EAST;
             this.add(jbtneliminar,constraints);
             //constraints.anchor = GridBagConstraints.CENTER;
-            
-            /*
-            constraints.gridx = 2; // El área de texto empieza en la columna
-            constraints.gridy = 1; // El área de texto empieza en la fila
-            constraints.gridwidth = 1; // El área de texto ocupa x columnas.
-            constraints.gridheight = 1; // El área de texto ocupa x filas.
-            constraints.weightx = 1.0;	// con esto estiramos segunda columna al maximo que de la ventana
-            constraints.insets = new Insets(20,30,0,10);
-            this.add(pnlaltasocio,constraints);
-            constraints.weightx = 0.0; // La dejamos igual
-            */
             
             
             KeyListener accion = new KeyListener(){
@@ -331,14 +320,14 @@ public class PnlBusquedawp extends JPanel{
 						
 						conexion.Conectardb();
 				    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM WORKPAQUETS");
-				    	rs = conexion.ConsultaSQL("SELECT * FROM WORKPAQUETS s");
+				    	rs = conexion.ConsultaSQL("SELECT w.nombre, w.presupuesto FROM WORKPAQUETS w");
 				    	int i=1;
 				    	
 							try {
 									rs.next();
 									for(i=1;i<3;i++){
 										
-										mod.jtxt[1].setText(rs.getString(i));
+										mod.jtxt[i-1].setText(rs.getString(i));
 									}
 							
 							} catch (SQLException e1) {
