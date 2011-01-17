@@ -198,8 +198,8 @@ package pkGesproject;
 
 	    response = readLine();
 	    System.out.println(response);
-	    if ((!response.startsWith ("125 ")) && (!response.startsWith ("150 "))) {
-	    //if (!response.startsWith("150 ")) {
+	    //if ((!response.startsWith ("125 ")) && (!response.startsWith ("150 "))) {//modificado nuestro server recive 150
+	    if (!response.startsWith("150 ")) {
 	      throw new IOException("SimpleFTP was not allowed to send the file: "
 	          + response);
 	    }
