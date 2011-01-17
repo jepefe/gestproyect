@@ -244,7 +244,6 @@ public class PnlNuevoProyecto extends JScrollPane{
 								// TODO Auto-generated catch block
 								d.printStackTrace();}
 							
-							conexion.Conectardb();
 							/*
 							 * Conseguir id_ partners.
 							 */
@@ -264,8 +263,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 								conexdb.executeUpdate("INSERT INTO PARTNER_PROYECTOS(cod_part, id_pro,coordinador) VALUES ('"+resultado+"','"+idPro+"','"+cord+"')" );	
 
 							}
-					 
-							
+
 							conexion.cerrarConexion();
 							/*
 							 * Insertar en las tablas correspondientes.
