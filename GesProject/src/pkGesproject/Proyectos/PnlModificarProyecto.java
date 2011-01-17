@@ -1,4 +1,4 @@
-package pkGesproject.Proyectos;
+ package pkGesproject.Proyectos;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -35,7 +35,7 @@ public class PnlModificarProyecto extends JPanel{
 	JPanel panel = new JPanel();
 	java.util.Date f_ini , f_fin = new java.util.Date();
 	String datos [][];		
-	String auxdatos[][] = new String[5000][5];
+	String auxdatos[][] ;
 	String colu[] = {"Nombre","Presupuesto","Descripcion","Fecha Inicio","Fecha Fin"};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
@@ -64,7 +64,7 @@ public class PnlModificarProyecto extends JPanel{
     	try {
 			while(rs.next()){
 			cuenta = cuenta + 1;
-				cuenta ++ ;
+			
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -72,6 +72,7 @@ public class PnlModificarProyecto extends JPanel{
 		}
     	conexion.cerrarConexion();
     	datos = new String[cuenta][5];// Matriz Dinamica
+    	auxdatos = new String[cuenta][5];
     /*
      *  Sacar Datos de la base de datos y ponerlas en la matriz
      */
