@@ -56,6 +56,7 @@ public class GesStaff {
 			String fax, String email,String foto, String nick, String password, String permisos, String cod_part, String observaciones){
 		
 		int creado = 0;
+		boolean subido=false;
 		ConexionDb conex = new ConexionDb();
 		ResultSet rs;
 		conex.Conectardb();
@@ -94,8 +95,13 @@ public class GesStaff {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		SubirFoto(foto,id_staff);
-				
+		if (creado == 0){ //Solo subimos la imagen si el staff es creado
+		subido = SubirFoto(foto,id_staff);
+		if (subido){
+			conex.executeUpdate("INSERT INTO FICHEROS (id_propietario,nombre,ambito,descripcion) VALUES('"
+					+ Integer.toString(id_staff) + "','" + "fto"+Integer.toString(id_staff)+ ".jpg" + "','0','Foto Usuario')");
+		}
+		}
 		
 		conex.cerrarConexion();
 		conex = null;
@@ -105,9 +111,10 @@ public class GesStaff {
 	}
 	
 	
-	public void SubirFoto(String foto,int id){
+	public boolean SubirFoto(String foto,int id){
 		File f_foto = new File(foto);
 		ConexionFTP ftp = new ConexionFTP();
+		boolean subido=false;
 		try {
 			ftp.connectar();
 			ftp.bin();
@@ -116,12 +123,13 @@ public class GesStaff {
 			e1.printStackTrace();
 		}
 		try {
-			ftp.stor(f_foto, "fto"+Integer.toString(id));
+			subido = ftp.stor(f_foto, "fto"+Integer.toString(id));
 			ftp.disconnect();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return subido;
 
 	}
 	
