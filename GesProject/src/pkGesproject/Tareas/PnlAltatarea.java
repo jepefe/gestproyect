@@ -43,9 +43,10 @@ public class PnlAltatarea extends JScrollPane{
 	JLabel[] jlbl;
 	JButton jbtnaceptar, jbtncancelar;
 	JDateChooser jdc1,jdc2;
-	private GpComboBox CmbWp = new GpComboBox();;
+	GpComboBox CmbWp = new GpComboBox();;
 	ConexionDb conexion = new ConexionDb();
 	JTextArea textarea = new JTextArea();
+	JTextArea textarea2 = new JTextArea();
 	ResultSet rs;
 	String nomwp;
 	int indexwp;
@@ -53,6 +54,7 @@ public class PnlAltatarea extends JScrollPane{
 	
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
+	protected Object cbpais;
 	
 	public PnlAltatarea (){
 		RsGesproject recursos = RsGesproject.Obtener_Instancia();
@@ -106,8 +108,9 @@ public class PnlAltatarea extends JScrollPane{
 	  //cuadro con scroll para las observaciones
 
 	    	LimiteDocumento lpd2 = new LimiteDocumento(200); // Limite JTextArea
-	    	final JTextArea textarea2 = (new JTextArea(3,18));
+	    	textarea2 = (new JTextArea(3,18));
 	    	textarea2.setDocument(lpd2);
+	    	textarea2.setLineWrap(true);
 	    	JScrollPane sp2 = new JScrollPane(textarea2,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 	    	JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    	
@@ -196,7 +199,6 @@ public class PnlAltatarea extends JScrollPane{
 						e1.printStackTrace();
 					}
 									
-					indexwp = 1 + CmbWp.getSelectedIndex();
 					// cambiar fecha a sql
 					  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
