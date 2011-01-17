@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
@@ -33,6 +35,13 @@ import pkGesproject.GpComboBox;
 import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+
+
+
+//---------------
 import com.toedter.calendar.JDateChooser; 
 
 
@@ -50,7 +59,7 @@ public class PnlAltatarea extends JScrollPane{
 	ResultSet rs;
 	String nomwp;
 	int indexwp;
-	
+	char caracter;
 	
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
@@ -165,7 +174,44 @@ public class PnlAltatarea extends JScrollPane{
 		   		break;
 		   		
 		   }
-		 		     
+		   //Jformat
+		   if(i==1 ){
+				jtxt[i].addKeyListener(new KeyAdapter(){
+				   public void keyTyped(KeyEvent e){
+				      caracter = e.getKeyChar();
+				      if(((caracter < '0') ||(caracter > '9')) &&
+				         (caracter != KeyEvent.VK_BACK_SPACE) &&
+				         (caracter != '+') && (caracter != '(') && (caracter != ')')) {
+				         e.consume();  
+				      }
+				   }
+				});
+				}
+		   
+		   if(i==0 ){
+			   
+			   try
+			   {
+			       MaskFormatter mascara = new MaskFormatter("##.##");
+			       JFormattedTextField textField = new JFormattedTextField(mascara);
+			       textField.setValue(new Float("12.34"));
+			   }
+			   catch (Exception e)
+			   {
+			       e.printStackTrace();
+			   }
+				jtxt[i].addKeyListener(new KeyAdapter(){
+				   public void keyTyped(KeyEvent e){
+				      caracter = e.getKeyChar();
+				      if(((caracter < 'a') ||(caracter > 'z')) &&
+				    		  ((caracter < 'A') ||(caracter > 'Z')) &&
+				         (caracter != KeyEvent.VK_BACK_SPACE) &&
+				         (caracter != '+') && (caracter != '(') && (caracter != ')')) {
+				         e.consume();  
+				      }
+				   }
+				});
+				}
 		}//fin for
 	  /*  
 		**
