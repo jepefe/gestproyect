@@ -80,7 +80,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 				rs = conexion.ConsultaSQL("SELECT nombre FROM STAFF");
 			    	try {
 						while(rs.next()){	
-								cbNombre.addItem(rs.getString(3));
+								cbNombre.addItem(rs.getString(1));
 						}
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
@@ -89,6 +89,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 		    	conexion.cerrarConexion();
 				
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
+				gbc.anchor = GridBagConstraints.EAST;
 				this.add(jlbl[i]=new JLabel(rec.idioma[rec.eleidioma][3]),gbc);
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
