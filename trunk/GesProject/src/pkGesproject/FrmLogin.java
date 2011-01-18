@@ -24,8 +24,8 @@ public class FrmLogin extends JFrame implements ActionListener{
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	JButton jbtnaceptar = new JButton(rec.idioma[rec.eleidioma][1]);
 	JButton jbtncancelar = new JButton(rec.idioma[rec.eleidioma][2]);
-	JTextField jtxfUsuario = new JTextField("berna");
-	JPasswordField jpwfPassword = new JPasswordField("123");
+	JTextField jtxfUsuario = new JTextField();
+	JPasswordField jpwfPassword = new JPasswordField();
 	GridBagConstraints cons = new GridBagConstraints();
 	JLabel jlblUsuario = new JLabel(rec.idioma[rec.eleidioma][10]);
 	JLabel jlblPassword = new JLabel(rec.idioma[rec.eleidioma][11]);
