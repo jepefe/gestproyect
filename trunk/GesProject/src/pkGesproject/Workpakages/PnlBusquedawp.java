@@ -73,12 +73,12 @@ public class PnlBusquedawp extends JPanel{
     String nomproyecto[];
 	public static JFrame modificar ;
 	public static int id_wp;
-	
+	int columnas = 3;
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
     public PnlBusquedawp(){
-    	
-    	String resul[]= new String[3];
+    	conexion.Conectardb();
+    	/*String resul[]= new String[3];
     	conexion.Conectardb();
     	
     	rs = conexion.ConsultaSQL("SELECT w.nombre, p.nombre, po.nombre FROM WORKPAQUETS w LEFT JOIN PARTNER_WORKPAQUETS pa ON w.id_wp = pa.id_wp LEFT JOIN PROYECTOS po ON w.id_pro = po.id_pro LEFT JOIN PARTNER p ON pa.cod_part = p.cod_part ORDER BY w.nombre");
@@ -113,15 +113,23 @@ public class PnlBusquedawp extends JPanel{
 			e.printStackTrace();
 		}
     	conexion.cerrarConexion();
-    	
+    	*/
     		
+    	
+    	
     	this.setLayout(new GridBagLayout()); //Ponemos el Layout al panel
 		   
     	
+    	cuenta=contar_reg();
+    	columnas =3;
+    	datos = new String[cuenta][columnas];
+		auxdatos = new String[cuenta][columnas];
+    	tablemodel=cargar_tabla(datos);
+    	jtblLateral  = new JTable(tablemodel);
     	
     	
 		    
-        	jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));
+        	//jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));
        
     		jtxt=new JTextField(20);
     		jtxt.setText("Buscar...");
@@ -367,6 +375,14 @@ public class PnlBusquedawp extends JPanel{
 						conexion.Conectardb();
 						conexion.executeUpdate("DELETE FROM WORKPAQUETS WHERE nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
 						Component aviso = null;
+						
+						cuenta=contar_reg();
+				    	columnas =3;
+				    	datos = new String[cuenta][columnas];
+						auxdatos = new String[cuenta][columnas];
+				    	tablemodel=cargar_tabla(datos);
+				    	jtblLateral  = new JTable(tablemodel);
+						
 						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
 						conexion.cerrarConexion();
 					}
@@ -393,5 +409,89 @@ public class PnlBusquedawp extends JPanel{
             jtxt.addKeyListener(accion);
 		   
     
+    }
+    
+ public DefaultTableModel cargar_tabla(String datos[][]){
+    	
+    	String resul[]= new String[3];
+    	conexion.Conectardb();
+    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
+    	
+		//datos = new String[cuenta][3];
+		//auxdatos = new String[cuenta][3];
+		
+    	
+    	rs = conexion.ConsultaSQL("SELECT w.nombre, p.nombre, po.nombre FROM WORKPAQUETS w LEFT JOIN PARTNER_WORKPAQUETS pa ON w.id_wp = pa.id_wp LEFT JOIN PROYECTOS po ON w.id_pro = po.id_pro LEFT JOIN PARTNER p ON pa.cod_part = p.cod_part ORDER BY w.nombre");
+    	int i=0;
+    	try {
+			while(rs.next()){
+				for(int j = 1;j<4;j++){
+					datos[i][j-1] = rs.getString(j);
+					fila[j-1]=datos[i][j-1];
+					System.out.print(fila[j-1]+";");
+				}
+				System.out.print("\n");
+				i++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	conexion.cerrarConexion();
+    	
+    	DefaultTableModel tablemodel= new DefaultTableModel(datos,colu);
+    	return tablemodel;
+    }
+    
+    /**
+     * Este método lo que hace es devolvernos los registros que existen actualmente en la tabla partner
+     **/
+    public int contar_reg(){
+		
+    	conexion.Conectardb();
+    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
+    	rs = conexion.ConsultaSQL("SELECT w.nombre, p.nombre, po.nombre FROM WORKPAQUETS w LEFT JOIN PARTNER_WORKPAQUETS pa ON w.id_wp = pa.id_wp LEFT JOIN PROYECTOS po ON w.id_pro = po.id_pro LEFT JOIN PARTNER p ON pa.cod_part = p.cod_part ORDER BY w.nombre");
+    	cuenta = 0;
+    	try {
+			while(rs.next()){
+				cuenta++;
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		conexion.cerrarConexion();
+    	return cuenta;
+    	
+    }
+    
+    /**
+     * Este metodo devuelve true o false dependiendo si el registro actual de auxdatos indicado por la variable i existe o no 
+     * en la tabla datos.
+     * @param datos
+     * @param auxdatos
+     * @param i
+     * @param cuenta
+     * @param columnas
+     * @return
+     **/
+    public Boolean buscar_reg(String datos[][],String auxdatos[][],int i,int cuenta,int columnas){
+		
+    	Boolean existe = false;
+    	int cont=0;
+    	for(int f =0;f<cuenta;f++){
+    		for(int c = 0;c<columnas;c++){
+    			if(auxdatos[i][c].equals(datos[f][c])){
+    				cont++;
+    			}
+    		}
+    		if(cont==columnas){
+    			existe=true;
+    		}
+    		cont=0;
+    	}
+    	
+    	return existe;
     }
 }
