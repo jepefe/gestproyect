@@ -258,6 +258,7 @@ public class PnlMoficarsociomod extends JScrollPane{
 			}
 			
 		};
+		jtxt[0].setEnabled(false);
 		jbtnaceptar.setActionCommand("aceptar");
 		jbtnaceptar.addActionListener(accion);
 		jbtncancelar.setActionCommand("cancelar");

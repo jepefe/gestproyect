@@ -1,5 +1,6 @@
 package Tablas;
 
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.border.Border;
@@ -16,7 +17,8 @@ public class TbViajes extends JTabbedPane{
 	JScrollPane miscroll;
 	public TbViajes(){
 		this.add(rec.idioma[rec.eleidioma][87],miscroll=new JScrollPane(new PnlAlta_viajes()));
-		this.add("Listar",new PnlAltasocio());
+		this.add(rec.idioma[rec.eleidioma][38],new JPanel());
+		this.add(rec.idioma[rec.eleidioma][88],new JPanel());
 		
 		miscroll.setBorder(empty);
 	}

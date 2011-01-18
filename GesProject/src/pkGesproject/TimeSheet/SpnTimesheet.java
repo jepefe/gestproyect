@@ -34,13 +34,13 @@ public class SpnTimesheet extends JSplitPane{
 	Border empty = new EmptyBorder(0,0,0,0);
 	Component[] panlsStaff = {
 			new JScrollPane(new PnlAlta_TimeSheet()),
-			modificar = new JScrollPane(new PnlModificarsocio()),
+			new JPanel(),
 			new JPanel()};
 
 	public SpnTimesheet(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
-		modificar.setBorder(empty);
+		//modificar.setBorder(empty);
 		
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[28],rec.idioma[rec.eleidioma][98]},
 				{recursos.icono[29],rec.idioma[rec.eleidioma][20]},
@@ -88,7 +88,7 @@ public class SpnTimesheet extends JSplitPane{
         JLabel titulo = new JLabel("Titulo");
         
         JLabel socio;
-		pnllateral.add(socio = new JLabel("PARTNER"),gbc);
+		pnllateral.add(socio = new JLabel("TIMESHEET"),gbc);
         Font auxFont = titulo.getFont();
         socio.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),20));
         gbc.weighty = 1.0;	//que la fila de la tabla se estire en vertical, de este modo el label se queda en la parte norte
