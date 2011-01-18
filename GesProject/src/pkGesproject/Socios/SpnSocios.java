@@ -17,6 +17,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -32,14 +34,18 @@ public class SpnSocios extends JSplitPane{
 	JPanel panel = new JPanel();
 	JPanel pnllateral = new JPanel();
 	JTable jtblLateral;
+	JScrollPane modificar;
+	Border empty = new EmptyBorder(0,0,0,0);
 	Component[] panlsStaff = {
 			new PnlAltasocio(),
-			new JScrollPane(new PnlModificarsocio()),
-			new JScrollPane(new PnlTablapartner())};
+			modificar = new JScrollPane(new PnlModificarsocio()),
+			new JPanel()};
 
 	public SpnSocios(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
+		modificar.setBorder(empty);
+		
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][19]},
 				{recursos.icono[6],rec.idioma[rec.eleidioma][20]},
 				{recursos.icono[7],rec.idioma[rec.eleidioma][21]}};

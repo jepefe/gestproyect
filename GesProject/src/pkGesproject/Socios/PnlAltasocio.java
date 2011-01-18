@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import pkGesproject.ConexionDb;
@@ -45,9 +47,11 @@ public class PnlAltasocio extends JScrollPane{
 	JTextArea textarea = (new JTextArea(3,13));
 	PnlModificarsocio modso = PnlModificarsocio.Obtener_Instancia();
 	ResultSet rs;
+	Border empty = new EmptyBorder(0,0,0,0);
 	
 	public PnlAltasocio (){
 		final RsGesproject recursos = RsGesproject.Obtener_Instancia();
+		this.setBorder(empty);
 		
 		panel.setLayout(new GridBagLayout());
 		  

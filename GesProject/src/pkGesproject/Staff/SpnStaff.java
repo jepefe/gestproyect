@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -19,6 +20,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -34,14 +37,18 @@ public class SpnStaff extends JSplitPane{
 	JSplitPane jsplpane;
 	JPanel panel = new JPanel();
 	JPanel pnllateral = new JPanel();
+	JScrollPane miscroll;
+	Border empty = new EmptyBorder(0,0,0,0);
 	Component[] panlsStaff = {
 	 new pnlAlta_staff(),
-	 new JScrollPane(new PnlBusquedastaff()),
+	 miscroll=new JScrollPane(new PnlBusquedastaff()),
 	 new JPanel()};
 	
 	public SpnStaff(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
+		
+		miscroll.setBorder(empty);
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][14]},
 				{recursos.icono[6],rec.idioma[rec.eleidioma][15]},
 				{recursos.icono[7],rec.idioma[rec.eleidioma][16]}};
