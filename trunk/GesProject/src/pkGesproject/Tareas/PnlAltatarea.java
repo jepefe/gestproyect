@@ -27,6 +27,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import pkGesproject.ConexionDb;
@@ -60,13 +62,15 @@ public class PnlAltatarea extends JScrollPane{
 	String nomwp;
 	int indexwp;
 	char caracter;
+	Border empty = new EmptyBorder(0,0,0,0);
+	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
 	protected Object cbpais;
 	
 	public PnlAltatarea (){
-		RsGesproject recursos = RsGesproject.Obtener_Instancia();
+		this.setBorder(empty);
 		
 		panel.setLayout(new GridBagLayout());
 		  
