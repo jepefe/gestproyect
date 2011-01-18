@@ -135,7 +135,7 @@
 			   case (5)://email
 				   	panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 			   		break;
-			   case (6):
+			   case (6)://combo para los titulos
 				   panel.add(CmbId,gbc);
 				   CmbId.setPreferredSize(new Dimension(140,30));
 				   
@@ -151,7 +151,7 @@
 							e1.printStackTrace();
 							}
 				   	break;
-			   case (7):
+			   case (7)://combo para los idiomas
 				   panel.add(CmbId,gbc);
 				   CmbId.setPreferredSize(new Dimension(140,30));
 				   
@@ -167,7 +167,7 @@
 							e1.printStackTrace();
 							}
 				   	break;
-			   case (8):
+			   case (8)://fecha de peticion
 			   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);}
 			   		break;
 			   		
