@@ -300,8 +300,9 @@ public class PnlAltawp extends JScrollPane{
 						int id_pro  = 0;
 						ConexionDb conexdb = new ConexionDb();
 						conexdb.Conectardb();
-						rs = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre like'"+CmbPro+"'" );
+						rs = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre like'"+CmbPro.getSelectedItem().toString()+"'" );
 						try {
+							rs.next();
 							id_pro=rs.getInt(1);
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
@@ -309,17 +310,19 @@ public class PnlAltawp extends JScrollPane{
 						}
 						  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 						  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
-						conexdb.executeUpdate("UPDATE WORKPAQUETS SET id_pro='"+id_pro+"', nombre='"+jtxt[0]+"', descripcion='"+textarea+"', presupuesto='"+jtxt[1]+"', f_ini='"+jdc1+"', f_fin='"+jdc2+"', observaciones='"+textarea2+"'");
-						rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS WHERE nombre like'"+jtxt[0]+"'" );
+						conexdb.executeUpdate("UPDATE WORKPAQUETS SET id_pro='"+id_pro+"', nombre='"+jtxt[0].getText()+"', descripcion='"+textarea.getText()+"', presupuesto='"+jtxt[1].getText()+"', f_ini='"+sqlDate1+"', f_fin='"+sqlDate2+"', observaciones='"+textarea2.getText()+"' WHERE id_wp = '"+PnlBusquedawp.id_wp+"' ");
+						rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS WHERE nombre like'"+jtxt[0].getText()+"'" );
 						try {
+							rs.next();
 							id_wp = rs.getInt(1);
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						rs = conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like'"+CmbPar+"'" );
+						rs = conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like'"+CmbPar.getSelectedItem().toString()+"'" );
 						int id_par = 0;
 						try {
+							rs.next();
 							id_par = rs.getInt(1);
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
@@ -328,6 +331,14 @@ public class PnlAltawp extends JScrollPane{
 						conexdb.executeUpdate("DELETE FROM PARTNER_WORKPAQUETS WHERE id_wp='"+id_wp+"' AND cod_part='"+id_par+"'");
 						conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS (cod_part, id_wp) VALUES ('"+id_par+"','"+id_wp+"')");
 						conexdb.cerrarConexion();
+						jdc1.setDate(null);
+						jdc2.setDate(null);
+						textarea.setText(null);
+						textarea2.setText(null);
+						jtxt[0].setText("");
+						jtxt[1].setText("");
+						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][104]);
+						PnlBusquedawp.modificar.dispose();
 					}
 					if(e.getActionCommand().equals("cancelar")){
 						PnlBusquedawp.modificar.dispose();

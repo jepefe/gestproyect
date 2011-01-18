@@ -72,6 +72,7 @@ public class PnlBusquedawp extends JPanel{
     String nompartner[];
     String nomproyecto[];
 	public static JFrame modificar ;
+	public static int id_wp;
 	
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
@@ -322,6 +323,7 @@ public class PnlBusquedawp extends JPanel{
 				    	int id_par = 0;
 							try {
 									rs.next();
+									id_wp = rs.getInt(4);
 									for(i=1;i<3;i++){
 										
 										mod.jtxt[i-1].setText(rs.getString(i));
