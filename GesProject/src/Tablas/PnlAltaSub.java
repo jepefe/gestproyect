@@ -178,7 +178,7 @@ public class PnlAltaSub extends JScrollPane{
 		   		
 		   }
 		   //Jformat
-		   if(i==1 ){
+		  /* if(i==1 ){
 				jtxt[i].addKeyListener(new KeyAdapter(){
 				   public void keyTyped(KeyEvent e){
 				      caracter = e.getKeyChar();
@@ -191,7 +191,7 @@ public class PnlAltaSub extends JScrollPane{
 				});
 				}
 		   
-		  
+		  */
 		}//fin for
 	  /*  
 		**
