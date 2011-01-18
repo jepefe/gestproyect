@@ -52,7 +52,7 @@ public class PnlBusquedawp extends JPanel{
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	ConexionDb conexion = new ConexionDb();
-	ResultSet rs;
+	ResultSet rs,rs2;
 	JPanel panel = new JPanel();
 	int cuenta=0;
 	String datos[][];
@@ -319,22 +319,47 @@ public class PnlBusquedawp extends JPanel{
 						});
 						
 						conexion.Conectardb();
-				    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM WORKPAQUETS");
-				    	rs = conexion.ConsultaSQL("SELECT w.nombre, w.presupuesto FROM WORKPAQUETS w");
+				    	//rs = conexion.ConsultaSQL("SELECT w.nombre, w.presupuesto FROM WORKPAQUETS");
+				    	rs = conexion.ConsultaSQL("SELECT w.nombre, w.presupuesto, w.id_pro, w.id_wp, w.f_ini, w.f_fin, w.descripcion, w.observaciones FROM WORKPAQUETS w");
 				    	int i=1;
-				    	
+				    	int id_pro = 0;
+				    	int id_par = 0;
 							try {
 									rs.next();
 									for(i=1;i<3;i++){
 										
 										mod.jtxt[i-1].setText(rs.getString(i));
 									}
-							
+									mod.jdc1.setDate(rs.getDate(5));
+									mod.jdc2.setDate(rs.getDate(6));
+									mod.textarea.setText(rs.getString(7));
+									mod.textarea2.setText(rs.getString(8));
+									id_pro = rs.getInt(3);
+									id_par = rs.getInt(4);
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
-						
+
+							rs2=conexion.ConsultaSQL("SELECT p.nombre FROM PROYECTOS p WHERE p.id_pro LIKE '"+id_pro+"'");
+							try {
+								rs2.next();
+								mod.CmbPro.setSelectedItem(rs2.getString(1));
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+							
+							rs2=conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER p WHERE p.cod_part LIKE '"+id_par+"'");
+							try {
+								rs2.next();
+								mod.CmbPar.setSelectedItem(rs2.getString(1));
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+							
+
 				    	conexion.cerrarConexion();
 						
 						modificar.setVisible(true);
