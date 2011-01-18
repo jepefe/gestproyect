@@ -89,7 +89,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 		    	conexion.cerrarConexion();
 				
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
-				this.add(jlbl[i]=new JLabel(rec.idioma[rec.eleidioma][44]+"*"),gbc);
+				this.add(jlbl[i]=new JLabel(rec.idioma[rec.eleidioma][3]),gbc);
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				cbNombre.setPreferredSize(new Dimension(177,30));
