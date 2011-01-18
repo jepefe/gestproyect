@@ -46,12 +46,12 @@ public class PnlNuevoProyecto extends JScrollPane{
 	ResultSet rs, rs2;
 	DefaultListModel modelo;  // listas Partners (lista2)
 	DefaultListModel modelo2;
-	JList listaP ,listaP2 ;    
+    public JList listaP ,listaP2 ;    
 	int cuenta =0; // cuenta para array dinamica.
 	int idPro; // total partners. para saber ID.
 	int id_partner; // id partner.
 	int id_partner2; // id para poder borrar
-	static public GpComboBox CbCoordinador;
+	public GpComboBox CbCoordinador;
 	 int estado = 1;
 	 MouseListener mouseListener;
 	 
@@ -173,6 +173,8 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      gbc.gridwidth = GridBagConstraints.REMAINDER; 
 	      
 	      CbCoordinador = new GpComboBox() ; //ComboBox (Coordinador)
+	      GpComboBox CbCoordinador2 = new GpComboBox() ; //ComboBox (Coordinador)
+
 	      jpnl.add(CbCoordinador,gbc);
 	     
 	     // Evento doble click primer JLIST
