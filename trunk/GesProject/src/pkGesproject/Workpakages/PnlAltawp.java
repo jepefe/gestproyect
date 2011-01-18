@@ -337,7 +337,7 @@ public class PnlAltawp extends JScrollPane{
 						textarea2.setText(null);
 						jtxt[0].setText("");
 						jtxt[1].setText("");
-						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][104]);
+						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][100]);
 						PnlBusquedawp.modificar.dispose();
 					}
 					if(e.getActionCommand().equals("cancelar")){
