@@ -98,7 +98,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 				
 			}
 			
-			if(i==3){
+			if(i==2){
 			    gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.EAST;
 				this.add(jlblfecha=new JLabel(rec.idioma[rec.eleidioma][95]),gbc);
