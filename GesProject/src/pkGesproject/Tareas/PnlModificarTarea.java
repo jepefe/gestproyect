@@ -21,7 +21,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
@@ -49,6 +52,7 @@ public class PnlModificarTarea extends JPanel{
 	String[] fila = new String[4];
 	JTable jtblLateral;
 	JScrollPane jspntabla;
+	//PnlModificarTarea tableOther = new PnlModificarTarea();
     
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
@@ -118,6 +122,7 @@ public class PnlModificarTarea extends JPanel{
     			
     		});
     		
+    		//RowSorter sorter = new TableRowSorter(colu);
     		
             GridBagConstraints constraints = new GridBagConstraints();
             constraints.gridx = 0; // El área de texto empieza en la columna
@@ -272,12 +277,12 @@ public class PnlModificarTarea extends JPanel{
 						
 						if(jtblLateral.getSelectedRow()==-1){
 							Component aviso = null;
-							JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
+							JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][103]);
 							
 						}else{
 						
 						JFrame modificar = new JFrame();
-						final PnlAltatarea mod = new PnlAltatarea();
+						final PnlAltatareamod mod = new PnlAltatareamod();
 						modificar.add(mod);
 						modificar.setBounds(0, 0, 600, 650);
 						modificar.setLocationRelativeTo(null);
@@ -309,15 +314,15 @@ public class PnlModificarTarea extends JPanel{
 								
 								
 								
-								/*jbtnaceptar.addActionListener(new ActionListener(){
+								jbtnaceptar.addActionListener(new ActionListener(){
 
 									@Override
 									
 																		
 									 public void actionPerformed(ActionEvent e) {
 										// TODO Auto-generated method stub
-										
-										rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+mod.cbsector.getSelectedItem().toString()+"'");
+										/*
+										rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+mod. .getSelectedItem().toString()+"'");
 										
 										
 										
@@ -348,9 +353,10 @@ public class PnlModificarTarea extends JPanel{
 										conexion.executeUpdate("UPDATE PARTNER SET telefono2='"+mod.jtxt[6].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
 										conexion.executeUpdate("UPDATE PARTNER SET fax='"+mod.jtxt[7].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
 										conexion.executeUpdate("UPDATE PARTNER SET observaciones='"+mod.textarea+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
+									*/
 									}
 									
-								});*/
+								});
 								
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
