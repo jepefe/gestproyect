@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -26,14 +28,17 @@ public class SpnTareas extends JSplitPane{
 	JSplitPane jsplpane;
 	JPanel panel = new JPanel();
 	JTable jtblLateral;
+	Border empty = new EmptyBorder(0,0,0,0);
+	JScrollPane miscroll;
 	Component[] panlsStaff = {
 			new PnlAltatarea(),
-			 new JScrollPane(new PnlModificarTarea()),
+			 miscroll=new JScrollPane(new PnlModificarTarea()),
 			 new JPanel()};
 
 	public SpnTareas(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
+		miscroll.setBorder(empty);
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][32]},
 				{recursos.icono[6],rec.idioma[rec.eleidioma][33]},
 				{recursos.icono[7],rec.idioma[rec.eleidioma][34]}};
