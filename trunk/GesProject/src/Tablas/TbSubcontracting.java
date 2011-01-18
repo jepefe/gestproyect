@@ -1,5 +1,6 @@
 package Tablas;
 
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
@@ -16,7 +17,7 @@ public class TbSubcontracting extends JTabbedPane{
 	public TbSubcontracting(){
 		this.add(rec.idioma[rec.eleidioma][87],Subcontra=new JScrollPane(new PnlAltaSub()));
 		
-		this.add(rec.idioma[rec.eleidioma][88],new PnlAltasocio());
-		this.add(rec.idioma[rec.eleidioma][89],new PnlModificarTarea());
+		this.add(rec.idioma[rec.eleidioma][38],new JPanel());
+		this.add(rec.idioma[rec.eleidioma][88],new JPanel());
 	}
 }

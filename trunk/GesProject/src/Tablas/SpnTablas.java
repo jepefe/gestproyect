@@ -37,7 +37,7 @@ public class SpnTablas extends JSplitPane{
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[25],rec.idioma[rec.eleidioma][83]},
-				{recursos.icono[26],rec.idioma[rec.eleidioma][84]},
+				{recursos.icono[26],rec.idioma[rec.eleidioma][85]},
 				{recursos.icono[27],rec.idioma[rec.eleidioma][86]}};
 		
 		
@@ -82,7 +82,7 @@ public class SpnTablas extends JSplitPane{
         JLabel titulo = new JLabel("Titulo");
         
         JLabel Workpack;
-		pnllateral.add(Workpack = new JLabel(""),gbc);
+		pnllateral.add(Workpack = new JLabel(rec.idioma[rec.eleidioma][109]),gbc);
         Font auxFont = titulo.getFont();
         Workpack.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),20));
         gbc.weighty = 1.0;	//que la fila de la tabla se estire en vertical, de este modo el label se queda en la parte norte
