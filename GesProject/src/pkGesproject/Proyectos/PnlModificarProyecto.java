@@ -273,7 +273,7 @@ public class PnlModificarProyecto extends JPanel{
 							try {									
 								while(rs.next()){	
 									mod.modelo.addElement(rs.getString(1));
-									PnlNuevoProyecto.CbCoordinador.addItem(rs.getString(1));
+									mod.CbCoordinador.addItem(rs.getString(1));
 									mod.modelo2.removeElement(rs.getString(1));
 									
 									
