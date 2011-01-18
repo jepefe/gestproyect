@@ -44,9 +44,9 @@ public class SpnProyectos extends JSplitPane{
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
 		modificar.setBorder(empty);
-		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][12]},
-				{recursos.icono[6],rec.idioma[rec.eleidioma][22]},
-				{recursos.icono[7],rec.idioma[rec.eleidioma][23]}};
+		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[16],rec.idioma[rec.eleidioma][12]},
+				{recursos.icono[17],rec.idioma[rec.eleidioma][22]},
+				{recursos.icono[18],rec.idioma[rec.eleidioma][23]}};
 		
 		
 		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {

@@ -46,9 +46,9 @@ public class SpnSocios extends JSplitPane{
 		this.setOpaque(true);
 		modificar.setBorder(empty);
 		
-		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][19]},
-				{recursos.icono[6],rec.idioma[rec.eleidioma][20]},
-				{recursos.icono[7],rec.idioma[rec.eleidioma][21]}};
+		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[13],rec.idioma[rec.eleidioma][19]},
+				{recursos.icono[14],rec.idioma[rec.eleidioma][20]},
+				{recursos.icono[15],rec.idioma[rec.eleidioma][21]}};
 		
 		
 		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {
