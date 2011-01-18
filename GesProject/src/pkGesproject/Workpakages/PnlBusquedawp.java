@@ -71,6 +71,7 @@ public class PnlBusquedawp extends JPanel{
 	JScrollPane jspntabla;
     String nompartner[];
     String nomproyecto[];
+	public static JFrame modificar ;
 	
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
@@ -302,25 +303,20 @@ public class PnlBusquedawp extends JPanel{
 						}
 						*/
 						
-						JFrame modificar = new JFrame();
+						modificar = new JFrame();
 						PnlAltawp mod;
 						modificar.add(mod = new PnlAltawp());
 						modificar.setBounds(0, 0, 600, 650);
 						modificar.setLocationRelativeTo(null);
 						modificar.setVisible(true);
-						mod.jbtnaceptar.addActionListener(new ActionListener(){
-
-							@Override
-							public void actionPerformed(ActionEvent arg0) {
-								// TODO Auto-generated method stub
-								System.out.print("localizado");
-							}
-							
-						});
+						mod.jbtnaceptar.setVisible(false);
+						mod.jbtnaceptar2.setVisible(true);
+						mod.jbtncancelar.setVisible(false);
+						mod.jbtncancelar2.setVisible(true);
 						
 						conexion.Conectardb();
 				    	//rs = conexion.ConsultaSQL("SELECT w.nombre, w.presupuesto FROM WORKPAQUETS");
-				    	rs = conexion.ConsultaSQL("SELECT w.nombre, w.presupuesto, w.id_pro, w.id_wp, w.f_ini, w.f_fin, w.descripcion, w.observaciones FROM WORKPAQUETS w");
+				    	rs = conexion.ConsultaSQL("SELECT w.nombre, w.presupuesto, w.id_pro, w.id_wp, w.f_ini, w.f_fin, w.descripcion, w.observaciones FROM WORKPAQUETS w WHERE nombre='"+datos[jtblLateral.getSelectedRow()][0]+"'");
 				    	int i=1;
 				    	int id_pro = 0;
 				    	int id_par = 0;
@@ -349,7 +345,8 @@ public class PnlBusquedawp extends JPanel{
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-							
+						conexion.cerrarConexion();
+						conexion.Conectardb();
 							rs2=conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER p WHERE p.cod_part LIKE '"+id_par+"'");
 							try {
 								rs2.next();
