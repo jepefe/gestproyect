@@ -1,5 +1,6 @@
  package pkGesproject.Proyectos;
 
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -14,6 +15,7 @@ import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -43,7 +45,7 @@ public class PnlModificarProyecto extends JPanel{
 	JLabel jlbl;
 	PnlNuevoProyecto pnlnuevoproyecto = new PnlNuevoProyecto();
 	JTextField jtext;
-	JButton jbtn,jbtnmodificar,jbtneliminar;
+	JButton jbtn,jbtnmodificar,jbtneliminar, jbtnactualizar;
 	Boolean llena = new Boolean(false);
 	String[] fila = new String[5];
 	JTable jtblLateral;
@@ -140,6 +142,9 @@ public class PnlModificarProyecto extends JPanel{
             this.add(jbtneliminar,constraints);
             //constraints.anchor = GridBagConstraints.CENTER;
             
+            jbtnactualizar = new JButton(rec.idioma[rec.eleidioma][39]);
+            
+            this.add(jbtnactualizar,constraints);
            constraints.gridx = 2; // El área de texto empieza en la columna
             constraints.gridy = 1; // El área de texto empieza en la fila
             constraints.gridwidth = 1; // El área de texto ocupa x columnas.
@@ -228,14 +233,18 @@ public class PnlModificarProyecto extends JPanel{
             	
             };  
             
-            ActionListener event = new ActionListener(){
+       ActionListener event = new ActionListener(){
 
 				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					if(e.getActionCommand().equals("modificar")){
-						// Frame de modificar con boton presupuesto visible
-					
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getActionCommand().equals("modificar")){
+					// Frame de modificar con boton presupuesto visible
+					if(jtblLateral.getSelectedRow()==-1){
+						Component aviso = null;
+						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][103]);
+					}else{
+						
 						PnlNuevoProyecto mod;
 						modificar = new JFrame();
 						modificar.add(mod = new PnlNuevoProyecto());
@@ -244,10 +253,7 @@ public class PnlModificarProyecto extends JPanel{
 						mod.jbtncancelar.setVisible(false);
 						mod.jbtncancelar2.setVisible(true);
 						mod.jbtnaceptar2.setVisible(true);
-						modificar.setLocationRelativeTo(null);
-						
-						
-						
+						modificar.setLocationRelativeTo(null);			
 	/*
 	 *
 	 * Introducir datos al panel para poder modificar
@@ -290,12 +296,22 @@ public class PnlModificarProyecto extends JPanel{
 						
 						modificar.setVisible(true);
 					}
+					if(e.getActionCommand().equals("eliminar")){
+						conexion.Conectardb();
+						conexion.executeUpdate("DELETE FROM PROYECTOS WHERE nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+						Component aviso = null;
+						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][108]);
+						conexion.cerrarConexion();
+					}
 				}
 				
+			}	
             };
             
             jbtnmodificar.setActionCommand("modificar");
             jbtnmodificar.addActionListener(event);
+            jbtneliminar.setActionCommand("eliminar");
+            jbtneliminar.addActionListener(event);
             
             jtext.addKeyListener(accion);  
     }

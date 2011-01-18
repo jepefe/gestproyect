@@ -173,8 +173,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      gbc.gridwidth = GridBagConstraints.REMAINDER; 
 	      
 	      CbCoordinador = new GpComboBox() ; //ComboBox (Coordinador)
-	      GpComboBox CbCoordinador2 = new GpComboBox() ; //ComboBox (Coordinador)
-
+	      
 	      jpnl.add(CbCoordinador,gbc);
 	     
 	     // Evento doble click primer JLIST
