@@ -129,11 +129,11 @@ public class PnlAltawp extends JScrollPane{
 		   
 		   switch(i){
 		   
-		   case (0):
-		   case (1):
+		   case (0)://nombre
+		   case (1)://presupuesto
 			   	panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 		   		break;
-		   case (2):
+		   case (2)://combo de proyectos
 			   panel.add(CmbPro,gbc);
 			   CmbPro.setPreferredSize(new Dimension(140,30));
 			   
@@ -148,8 +148,9 @@ public class PnlAltawp extends JScrollPane{
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						}
+				CmbPro.setSelectedItem(null);
 			   	break;
-		   case (3):
+		   case (3)://combo para partner
 			   panel.add(CmbPar,gbc);
 			   CmbPar.setPreferredSize(new Dimension(140,30));
 			   
@@ -164,17 +165,18 @@ public class PnlAltawp extends JScrollPane{
 						// TODO Auto-generated catch block
 						e2.printStackTrace();
 						}
+				CmbPar.setSelectedItem(null);
 			   	break;
-		   case (4):
+		   case (4)://fecha de inicio
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);}
 		   		break;
-		   case (5):
+		   case (5)://fecha de fin
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc2,gbc);}
 		   		break;
-		   case (6):
+		   case (6)://descripcion
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp),gbc);}
 			   	break;
-		   case (7):
+		   case (7)://observaciones
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp2),gbc);}
 		   		break;
 		   		
@@ -183,7 +185,7 @@ public class PnlAltawp extends JScrollPane{
 		}//fin for
 	  /*  
 		**
-		 * Creamos los dos botones para este panel 
+		 * Creamos los cuatro botones para este panel 
 		 */
 		//primeros dos botones del panel
 		gbc.anchor = GridBagConstraints.EAST;
@@ -238,8 +240,8 @@ public class PnlAltawp extends JScrollPane{
 				// cambiar fecha a sql
 					  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
-					
-			//if (sqlDate1.getTime()< sqlDate2.getTime()){
+				//comprueba que la fecha de fin no es anterior  a la fecha de inicio.
+			if (sqlDate1.getTime()< sqlDate2.getTime()){
 					conexdb.executeUpdate("INSERT INTO WORKPAQUETS (nombre, id_pro, descripcion, presupuesto,f_ini, f_fin, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+id_pro+"','"+textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
 					//para ver la id del workpaquets recien creado
 					rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS WHERE nombre like'"+ jtxt[0].getText()+"'" );
@@ -254,9 +256,6 @@ public class PnlAltawp extends JScrollPane{
 					conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS (cod_part, id_wp) VALUES ('"+id_par+"','"+id_wp+"')");
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
 					conexdb.cerrarConexion();
-					
-					
-				//}
 
 				CmbPro.setSelectedItem(null);
 				CmbPar.setSelectedItem(null);
@@ -266,6 +265,7 @@ public class PnlAltawp extends JScrollPane{
 				jdc2.setDate(null);
 				textarea.setText(null);
 				textarea2.setText(null);
+			}
 			}else{
 				JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
 				// Marcar campo FECHA con error en ROJO 
