@@ -57,6 +57,8 @@ public class FrmNuevapalabra extends JPanel{
 							}else{
 								conexdb.executeUpdate("INSERT INTO IDIOMA (castellano,ingles) VALUES ('"+ txtcastellano.getText()+"','"+txtingles.getText()+"')");
 								//ResultSet rs = conexdb.ConsultaSQL("SELECT i.id_idi FROM IDIOMA i ORDER BY id_idi DESC");
+								txtcastellano.setText("");
+								txtingles.setText("");
 								JOptionPane.showMessageDialog(aviso, "Se ha introducido en la posicion: ");
 								
 							}

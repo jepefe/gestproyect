@@ -78,17 +78,21 @@ public class PnlAltasocio extends JScrollPane{
 		 * Con el bucle for vamos creando tantos labels y textfields como 
 		 * nombres de campos hayamos metido en fieldNames.
 		 */
+		conexion.Conectardb();
 		for(int i=0;i<fieldNames.length;++i) {
+			gbc.anchor = GridBagConstraints.EAST;
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
 			panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			gbc.anchor = GridBagConstraints.WEST;
 			gbc.gridwidth = GridBagConstraints.REMAINDER;
 			panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 			
 			if(i==1){
+				gbc.anchor = GridBagConstraints.EAST;
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				panel.add(new JLabel(rec.idioma[rec.eleidioma][4]),gbc);
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
-				conexion.Conectardb();
+				gbc.anchor = GridBagConstraints.WEST;
 				rs = conexion.ConsultaSQL("SELECT * FROM SECTORES");
 				
 				panel.add(cbsector,gbc);
@@ -103,9 +107,10 @@ public class PnlAltasocio extends JScrollPane{
 						
 						}
 					
-					
+					gbc.anchor = GridBagConstraints.EAST;
 					gbc.gridwidth = GridBagConstraints.RELATIVE;
 					panel.add(new JLabel(rec.idioma[rec.eleidioma][46]),gbc);
+					gbc.anchor = GridBagConstraints.WEST;
 					gbc.gridwidth = GridBagConstraints.REMAINDER;
 					
 					rs = conexion.ConsultaSQL("SELECT * FROM PAIS");
@@ -162,11 +167,12 @@ public class PnlAltasocio extends JScrollPane{
 			
 		};
 		
-		jtxt[0].addFocusListener(foco);
+		//jtxt[0].addFocusListener(foco);
 		
-		
+		gbc.anchor = GridBagConstraints.EAST;
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   panel.add(new JLabel(rec.idioma[rec.eleidioma][64]),gbc);
+		   gbc.anchor = GridBagConstraints.WEST;
 		   gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
 		      textarea.setDocument(lpd);
@@ -199,9 +205,7 @@ public class PnlAltasocio extends JScrollPane{
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("aceptar")){
 					
-					ConexionDb conexdb = new ConexionDb();
 					ResultSet rs;
-					conexdb.Conectardb();
 					rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+cbsector.getSelectedItem().toString()+"'");
 					
 					/**
@@ -228,7 +232,7 @@ public class PnlAltasocio extends JScrollPane{
 						e1.printStackTrace();
 					}
 					
-					conexdb.executeUpdate("INSERT INTO PARTNER (nombre, sector, pais, direccion, codpostal, email, email2, telefono, telefono2, fax, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+sector+"','"+pais+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"','"+jtxt[6].getText()+"','"+jtxt[7].getText()+"','"+textarea.getText()+"')");
+					conexion.executeUpdate("INSERT INTO PARTNER (nombre, sector, pais, direccion, codpostal, email, email2, telefono, telefono2, fax, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+sector+"','"+pais+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"','"+jtxt[6].getText()+"','"+jtxt[7].getText()+"','"+textarea.getText()+"')");
 					for(int i=0;i<fieldNames.length;i++){
 						jtxt[i].setText("");
 					}
@@ -247,7 +251,7 @@ public class PnlAltasocio extends JScrollPane{
 					modso.llena = false;
 					
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
-					conexdb.cerrarConexion();
+					conexion.cerrarConexion();
 				}
 				
 				if(e.getActionCommand().equals("cancelar")){
@@ -267,6 +271,7 @@ public class PnlAltasocio extends JScrollPane{
 		jbtncancelar.setActionCommand("cancelar");
 		jbtncancelar.addActionListener(accion);
 		
+		conexion.cerrarConexion();
 		panel.setOpaque(true);
 		this.setViewportView(panel);
 		
