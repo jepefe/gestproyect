@@ -258,7 +258,8 @@ public class PnlAltawp extends JScrollPane{
 					
 				//}
 
-
+				CmbPro.setSelectedItem(null);
+				CmbPar.setSelectedItem(null);
 				jtxt[0].setText("");
 				jtxt[1].setText("");
 				jdc1.setDate(null);
