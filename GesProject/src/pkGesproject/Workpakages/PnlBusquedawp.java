@@ -428,9 +428,9 @@ public class PnlBusquedawp extends JPanel{
 				for(int j = 1;j<4;j++){
 					datos[i][j-1] = rs.getString(j);
 					fila[j-1]=datos[i][j-1];
-					System.out.print(fila[j-1]+";");
+					//System.out.print(fila[j-1]+";");
 				}
-				System.out.print("\n");
+				//System.out.print("\n");
 				i++;
 			}
 		} catch (SQLException e) {
