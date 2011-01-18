@@ -288,7 +288,7 @@ public class PnlModificarsocio extends JPanel{
 						*/
 						
 						JFrame modificar = new JFrame();
-						final PnlAltasocio mod = new PnlAltasocio();
+						final PnlMoficarsociomod mod = new PnlMoficarsociomod();
 						modificar.add(mod);
 						modificar.setBounds(0, 0, 600, 650);
 						modificar.setLocationRelativeTo(null);
@@ -322,8 +322,8 @@ public class PnlModificarsocio extends JPanel{
 								rs=conexion.ConsultaSQL("SELECT s.sector FROM SECTORES s INNER JOIN PARTNER p ON s.id_sector = p.sector WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
 								rs.next();
 								mod.cbsector.setSelectedItem(rs.getString(1));
-								mod.jbtnaceptar.setVisible(false);
-								mod.jbtncancelar.setVisible(false);
+								mod.jbtnaceptar.setVisible(true);
+								mod.jbtncancelar.setVisible(true);
 								mod.add(jbtnaceptar = new JButton(rec.idioma[rec.eleidioma][1]));
 								jbtnaceptar.addActionListener(new ActionListener(){
 
