@@ -244,10 +244,68 @@ public class PnlAlta_viajes extends JPanel{
 				}
 				
 				if(e.getActionCommand().equals("aceptar")){
+					System.out.print("entra");
 					if(jtxt[0].equals("")||jtxt[1].equals("")||jtxt[2].equals("")||jtxt[3].equals("")){
 						JOptionPane.showMessageDialog(aviso,"Revisa los campos obligatorios");
 					}else{
 						
+						rs= conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like '"+cbpartner.getSelectedItem().toString()+"'");
+						
+						String partner = null;
+						try {
+							rs.next();
+							partner = rs.getString(1);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+								rs= conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpsalida.getSelectedItem().toString()+"'");
+								
+								String paissalida = null;
+							try {
+								rs.next();
+								paissalida = rs.getString(1);
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							
+							rs= conexion.ConsultaSQL("SELECT estado FROM PROVINCIAS WHERE estado like '"+cbcsalida.getSelectedItem().toString()+"'");
+							
+							String ciudadsalida = null;
+						try {
+							rs.next();
+							ciudadsalida = rs.getString(1);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						rs= conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpdestino.getSelectedItem().toString()+"'");
+						
+							String paisdestino = null;
+						try {
+							rs.next();
+							paisdestino = rs.getString(1);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+						rs= conexion.ConsultaSQL("SELECT estado FROM PROVINCIAS WHERE estado like '"+cbcdestino.getSelectedItem().toString()+"'");
+							
+							String ciudaddestino = null;
+						try {
+							rs.next();
+							ciudaddestino = rs.getString(1);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+				
+						conexion.executeUpdate("INSERT INTO TRAVEL_SUBSISTENCE (partner,nombrepersona,motivoviaje,paissalida,ciudad_salida,paisdestino,ciudad_destino,fecha_ini,fecha_fin,coste_viaje,costes_subsistencia,gastos_totales) VALUES" +
+								"("+partner+",'"+jtxt[0].getText()+"','"+jtxt[1].getText()+"',"+paissalida+","+ciudadsalida+","+paisdestino+","+ciudaddestino+",'"+jdc1.getDate()+"','"+jdc2.getDate()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"')");
+						JOptionPane.showMessageDialog(aviso,"Subido");
+				
 					}
 				}
 			}

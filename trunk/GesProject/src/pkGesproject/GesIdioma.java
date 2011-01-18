@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 public class GesIdioma {
 
-	public static String idioma[][] = new String[2][100];
+	public static String idioma[][] = new String[2][200];
 	String listaidiomas[]= new String[20];
 	public int eleidioma;
 	int i, j;
@@ -101,9 +101,9 @@ public class GesIdioma {
 	public static void eleccionidioma(){
 		RsGesproject recursos = RsGesproject.Obtener_Instancia();
 		Object seleccion = JOptionPane.showInputDialog(null, "Choose language",
-				"Language", JOptionPane.QUESTION_MESSAGE, recursos.icono[3], new Object[] {"Espa–ol", "English"}, "Espa–ol");
+				"Language", JOptionPane.QUESTION_MESSAGE, recursos.icono[3], new Object[] {"Espaï¿½ol", "English"}, "Espaï¿½ol");
 		/*
-		if(seleccion.equals("Espa–ol")){
+		if(seleccion.equals("Espaï¿½ol")){
 			recursos.setEleidioma(0);
 		}else
 			recursos.setEleidioma(1);	
