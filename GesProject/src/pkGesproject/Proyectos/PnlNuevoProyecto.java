@@ -41,7 +41,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 	Date dateini, datefin ;
 	JFrame aviso = new JFrame();
 	JButton jbtnaceptar, jbtncancelar;
-    PnlModificarProyecto mod ;
+	JButton jbtnaceptar2, jbtncancelar2;
     ConexionDb conexion = new ConexionDb();
 	ResultSet rs, rs2;
 	DefaultListModel modelo;  // listas Partners (lista2)
@@ -49,13 +49,17 @@ public class PnlNuevoProyecto extends JScrollPane{
 	JList listaP ,listaP2 ;    
 	int cuenta =0; // cuenta para array dinamica.
 	int idPro; // total partners. para saber ID.
-	int resultado; // id partner.
-	GpComboBox CbCoordinador;
+	int id_partner; // id partner.
+	int id_partner2; // id para poder borrar
+	static public GpComboBox CbCoordinador;
 	 int estado = 1;
-
-
-
+	 MouseListener mouseListener;
+	 
+	 /*
+	  * Metodo para añadir un item
+	  */
 	
+	 
 	public PnlNuevoProyecto()  {
 		// formato fecha
 		
@@ -168,17 +172,17 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      jpnl.add(new JLabel(rec.idioma[rec.eleidioma][81]),gbc);
 	      gbc.gridwidth = GridBagConstraints.REMAINDER; 
 	      
-	      final GpComboBox CbCoordinador = new GpComboBox() ; //ComboBox (Coordinador)
+	      CbCoordinador = new GpComboBox() ; //ComboBox (Coordinador)
 	      jpnl.add(CbCoordinador,gbc);
+	     
 	     // Evento doble click primer JLIST
 	      MouseListener mouseListener = new MouseAdapter() {
-	     
+	    	 
 	    	  public void mouseClicked(MouseEvent e) {
 	    		  if (e.getClickCount() == 2) {
 	                modelo.addElement(listaP.getSelectedValue());
-				    CbCoordinador.addItem(listaP.getSelectedValue());		    	
+	            	CbCoordinador.addItem(listaP.getSelectedValue());		    
 	                modelo2.removeElement(listaP.getSelectedValue());
-	              
 	               }
 	          }
 	      };
@@ -200,15 +204,26 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      };
 	      listaP2.addMouseListener(mouseListener2);
        
-	     // botones Aceptar Cancelar
+	     // botones Aceptar Modificar
 	      	gbc.anchor = GridBagConstraints.EAST;
 			gbc.insets = new Insets(30,10,5,5);
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
 			jpnl.add(jbtnaceptar = new JButton(rec.idioma[rec.eleidioma][1]),gbc);
 			gbc.anchor = GridBagConstraints.WEST;
 			gbc.gridwidth = GridBagConstraints.REMAINDER;
-			jpnl.add(jbtncancelar = new JButton(rec.idioma[rec.eleidioma][2]),gbc);
-			jbtncancelar.setVisible(false);
+			jpnl.add(jbtncancelar = new JButton(rec.idioma[rec.eleidioma][74]),gbc);
+			jbtncancelar.setVisible(true);
+		// botonoes Aceptar 2 y Cancelar 2 para panel modificar (no visibles)	
+			
+			gbc.anchor = GridBagConstraints.EAST;
+			gbc.insets = new Insets(30,10,5,5);
+			gbc.gridwidth = GridBagConstraints.RELATIVE;
+			jpnl.add(jbtnaceptar2 = new JButton(rec.idioma[rec.eleidioma][1]),gbc);
+			gbc.anchor = GridBagConstraints.WEST;
+			gbc.gridwidth = GridBagConstraints.REMAINDER;
+			jpnl.add(jbtncancelar2 = new JButton(rec.idioma[rec.eleidioma][2]),gbc);
+			jbtncancelar2.setVisible(false);
+			jbtnaceptar2.setVisible(false);
 			
 			
 		    conexion.cerrarConexion();
@@ -245,13 +260,13 @@ public class PnlNuevoProyecto extends JScrollPane{
 								d.printStackTrace();}
 							
 							/*
-							 * Conseguir id_ partners.
+							 * Conseguir id_partners.
 							 */
 							int cord = 0;
 					    	for (int i = 0 ; i<listaP2.getModel().getSize(); i++){
 							    	rs = conexion.ConsultaSQL("SELECT cod_part From PARTNER WHERE nombre = '"+modelo.getElementAt(i)+"'");
 							    	try {
-										while(rs.next()){resultado = rs.getInt(1); }
+										while(rs.next()){id_partner = rs.getInt(1); }
 									} catch (SQLException d) {
 										// TODO Auto-generated catch block
 										d.printStackTrace();}
@@ -260,7 +275,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 										}else{
 											cord = 0;
 										}
-								conexdb.executeUpdate("INSERT INTO PARTNER_PROYECTOS(cod_part, id_pro,coordinador) VALUES ('"+resultado+"','"+idPro+"','"+cord+"')" );	
+								conexdb.executeUpdate("INSERT INTO PARTNER_PROYECTOS(cod_part, id_pro,coordinador) VALUES ('"+id_partner+"','"+idPro+"','"+cord+"')" );	
 
 							}
 
@@ -278,27 +293,99 @@ public class PnlNuevoProyecto extends JScrollPane{
 							jdc2.setDate(null);
 							textarea.setText(null);
 							
+							
 					}else{					
 							JOptionPane.showMessageDialog( null, rec.idioma[rec.eleidioma][72]); 
 							// Marcar campo FECHA con error en ROJO 
 							jdc2.setBackground(Color.red);								
 							}						
-					}// Borrar cuando damos al boton cancelar
+					}// Borrar cuando damos al boton borrar datos
 					if( e.getActionCommand().equals("cancelar")){
 					
-						mod.modificar.dispose();
-					}
-					
-				}
-				
+						
+						jtxt[0].setText("");
+						jdc1.setDate(null);
+						jdc2.setDate(null);
+						textarea.setText(null);
+		                for (int i = 0 ; i<listaP2.getModel().getSize(); i++){
+		                 modelo2.addElement(listaP2.getModel().getElementAt(i));
+		                }
+		                modelo.removeAllElements();	
+					}	
+				}		
 			};
 			jbtnaceptar.setActionCommand("aceptar");
 			jbtnaceptar.addActionListener(accion);
 			jbtncancelar.setActionCommand("cancelar");
 			jbtncancelar.addActionListener(accion);
-	
-	
+			
+			ActionListener accion2 = new ActionListener(){
 
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					if(e.getActionCommand().equals("aceptar2")){
+					    	conexion.Conectardb();
+							ConexionDb conexdb = new ConexionDb();
+							conexdb.Conectardb();
+							// cambiar fecha a sql
+						    java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
+						    java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
+						    
+						 if (sqlDate1.getTime()< sqlDate2.getTime()){
+						  conexdb.executeUpdate("UPDATE PROYECTOS SET nombre='"+ jtxt[0].getText()+"', descripcion='"+textarea.getText()+"',estado='"+estado+"',f_ini='"+sqlDate1+"',f_fin='"+sqlDate2+"' WHERE id_pro ="+PnlModificarProyecto.id_pro+"");
+						 }
+			            for (int i = 0 ; i<listaP.getModel().getSize(); i++){
+
+					    	rs = conexion.ConsultaSQL("SELECT p.cod_part From PARTNER as p WHERE p.nombre like '"+modelo2.getElementAt(i)+"'");
+					    	try {
+								rs.next();
+								id_partner2 = rs.getInt(1); 
+							
+							} catch (SQLException d) {
+								// TODO Auto-generated catch block
+								d.printStackTrace();}
+							conexdb.executeUpdate("DELETE FROM PARTNER_PROYECTOS WHERE cod_part = "+id_partner2+" AND id_pro="+PnlModificarProyecto.id_pro+"");
+
+			            }
+			            for (int i = 0 ; i<listaP2.getModel().getSize(); i++){
+							System.out.println("Numero dentro for:"+listaP2.getModel().getSize());
+					    	rs = conexion.ConsultaSQL("SELECT p.cod_part From PARTNER as p WHERE p.nombre like '"+modelo.getElementAt(i)+"'");
+					    	try {
+								rs.next();
+								id_partner2 = rs.getInt(1); 
+							
+							} catch (SQLException d) {
+								// TODO Auto-generated catch block
+								d.printStackTrace();}
+							System.out.println("id_partner2:"+id_partner2);
+							int cord;
+							if( CbCoordinador.getSelectedItem()== modelo.getElementAt(i)){
+								cord = 1;
+							}else{
+								cord = 0;
+							}
+							conexdb.executeUpdate("INSERT INTO PARTNER_PROYECTOS (cod_part, id_pro,coordinador) VALUES('"+id_partner2+"','"+PnlModificarProyecto.id_pro+"','"+cord+"')");
+							/*
+							 * Salen errores porque esta duplicado y no puede duplicar la entrada. Funciona Bien.	
+							 */
+							
+			            }
+						conexion.cerrarConexion();
+						conexdb.cerrarConexion();
+						JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][100]);
+						
+					}
+					if(e.getActionCommand().equals("cancelar2")){
+						PnlModificarProyecto.modificar.dispose();
+						}
+					}
+				
+			};
+			jbtnaceptar2.setActionCommand("aceptar2");
+			jbtnaceptar2.addActionListener(accion2);
+			jbtncancelar2.setActionCommand("cancelar2");
+			jbtncancelar2.addActionListener(accion2);
 			
 		jpnl.setVisible(true);
 		this.setViewportView(jpnl);

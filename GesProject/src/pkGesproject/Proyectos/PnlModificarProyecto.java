@@ -48,13 +48,18 @@ public class PnlModificarProyecto extends JPanel{
 	String[] fila = new String[5];
 	JTable jtblLateral;
 	JScrollPane jspntabla;
-	public 	JFrame modificar = new JFrame();
+	public static int id_pro  ;
+	public static JFrame modificar;
 
 	int cuenta;
 	
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
-    public PnlModificarProyecto(){
+	void cerrarpanel(){
+		modificar.dispose();
+	}
+	
+	public PnlModificarProyecto(){
     	/*
     	 * Solucion para que la Matriz de Busqueda sea Dinamica.
     	 */
@@ -232,12 +237,15 @@ public class PnlModificarProyecto extends JPanel{
 						// Frame de modificar con boton presupuesto visible
 					
 						PnlNuevoProyecto mod;
-					
+						modificar = new JFrame();
 						modificar.add(mod = new PnlNuevoProyecto());
 						modificar.setBounds(0, 0, 500, 600);
-					//	mod.Jbtnpresup.setVisible(true);
-						mod.jbtncancelar.setVisible(true);
+						mod.jbtnaceptar.setVisible(false);
+						mod.jbtncancelar.setVisible(false);
+						mod.jbtncancelar2.setVisible(true);
+						mod.jbtnaceptar2.setVisible(true);
 						modificar.setLocationRelativeTo(null);
+						
 						
 						
 	/*
@@ -246,38 +254,40 @@ public class PnlModificarProyecto extends JPanel{
 	 * 
 	 */
 						conexion.Conectardb();
-				    	rs = conexion.ConsultaSQL("SELECT p.nombre, p.descripcion, p.f_ini, p.f_fin FROM PROYECTOS as p WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+				    	rs = conexion.ConsultaSQL("SELECT id_pro, p.nombre, p.descripcion, p.f_ini, p.f_fin FROM PROYECTOS as p WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
 							try {									
 										rs.next();
-											mod.jtxt[0].setText(rs.getString(1));
-											mod.textarea.setText(rs.getString(2));
-											mod.jdc1.setDate(rs.getDate(3));
-											mod.jdc2.setDate(rs.getDate(4));
-												
+											id_pro = rs.getInt(1);
+											mod.jtxt[0].setText(rs.getString(2));
+											mod.textarea.setText(rs.getString(3));
+											mod.jdc1.setDate(rs.getDate(4));
+											mod.jdc2.setDate(rs.getDate(5));				
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
-				    	conexion.cerrarConexion();
-				   	
-						// Accion PResupuesto.
-
-							/*ActionListener evento = new ActionListener(){	
-								public void actionPerformed(ActionEvent a) {
-									// TODO Auto-generated method stub
-									if(a.getActionCommand().equals("presupuesto")){
-										JFrame presupuesto = new JFrame();
-										PnlPresupuesto pres;
-										presupuesto.add(pres = new PnlPresupuesto());
-										//presupuesto.setVisible(true);
-										presupuesto.setBounds(0, 0, 350, 90);
-										presupuesto.setLocationRelativeTo(null);
-									}
-								}
-							};
-							mod.Jbtnpresup.setActionCommand("presupuesto");
-					        mod.Jbtnpresup.addActionListener(evento);*/
-					
+							/*
+							 * Consulta y añadre a los JLIST los datos.
+							 */
+							rs = conexion.ConsultaSQL("SELECT p.nombre,coordinador FROM PARTNER as p inner join PARTNER_PROYECTOS as pp on p.cod_part = pp.cod_part WHERE pp.id_pro = '"+id_pro+"'");
+							try {									
+								while(rs.next()){	
+									mod.modelo.addElement(rs.getString(1));
+									PnlNuevoProyecto.CbCoordinador.addItem(rs.getString(1));
+									mod.modelo2.removeElement(rs.getString(1));
+									
+									
+								}					
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							conexion.cerrarConexion();
+							
+					/*
+					 * llamada del metodo nuevoitem de pnlnuevoproyecto
+					 */
+						
 						modificar.setVisible(true);
 					}
 				}
