@@ -50,6 +50,7 @@ public class RsGesproject {
 			new ImageIcon(getClass().getResource("imagenes/tareas.png")),
 			new ImageIcon(getClass().getResource("imagenes/agregar.png")),
 			new ImageIcon(getClass().getResource("imagenes/tablas.png")),
+			new ImageIcon(getClass().getResource("imagenes/timesheet.png")),
 			};
 	static String SistemaOp = System.getProperty("os.name"); //Nombre del S.O por si necesitamos condicionar codigo 
 	
