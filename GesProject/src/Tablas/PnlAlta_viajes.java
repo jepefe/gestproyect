@@ -177,12 +177,69 @@ public class PnlAlta_viajes extends JPanel{
 		ActionListener accion = new ActionListener(){
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				if(e.getActionCommand().equals("cbsalida")){
+					int pais = 0;
+					rs = conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpsalida.getSelectedItem().toString()+"'");
+					
+					try {
+						rs.next();
+						pais = rs.getInt(1);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					rs = conexion.ConsultaSQL("SELECT estado FROM PROVINCIAS WHERE id_pais = "+pais);
+					int j = 0 ;
+					cbcsalida.removeAllItems(); 
+					try {
+						while(rs.next()){	
+								
+								cbcsalida.addItem(rs.getString(1));
+								j++;
+						}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 				
+				if(e.getActionCommand().equals("cbdestino")){
+					int pais = 0;
+					rs = conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpsalida.getSelectedItem().toString()+"'");
+					
+					try {
+						rs.next();
+						pais = rs.getInt(1);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					rs = conexion.ConsultaSQL("SELECT estado FROM PROVINCIAS WHERE id_pais = "+pais);
+					int j = 0 ;
+					cbcdestino.removeAllItems(); 
+					try {
+						while(rs.next()){	
+								
+								cbcdestino.addItem(rs.getString(1));
+								j++;
+						}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 			}
 			
 		};
+		
+		cbpsalida.addActionListener(accion);
+		cbpdestino.addActionListener(accion);
+		cbpsalida.setActionCommand("cbsalida");
+		cbpdestino.setActionCommand("cbdestino");
 		this.setVisible(true);
 	}
 }
