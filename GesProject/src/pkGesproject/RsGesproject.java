@@ -39,7 +39,7 @@ public class RsGesproject {
 	public final String APNAME = "GesProyect - Florida"; //Constante que contiene el nombre de la aplicacion
 	public ImageIcon[] icono = { 
 			new ImageIcon(getClass().getResource("imagenes/staff.png")),
-			new ImageIcon(getClass().getResource("imagenes/gestionsocios.png")),
+			new ImageIcon(getClass().getResource("imagenes/partner.png")),
 			new ImageIcon(getClass().getResource("imagenes/inicio.png")),
 			new ImageIcon(getClass().getResource("imagenes/idiomas.png")),
 			new ImageIcon(getClass().getResource("imagenes/proyectos.png")),
@@ -51,6 +51,24 @@ public class RsGesproject {
 			new ImageIcon(getClass().getResource("imagenes/agregar.png")),
 			new ImageIcon(getClass().getResource("imagenes/tablas.png")),
 			new ImageIcon(getClass().getResource("imagenes/timesheet.png")),
+			new ImageIcon(getClass().getResource("imagenes/altapartner.png")),
+			new ImageIcon(getClass().getResource("imagenes/editarpartner.png")),
+			new ImageIcon(getClass().getResource("imagenes/mostrarpartner.png")),
+			new ImageIcon(getClass().getResource("imagenes/altaproyecto.png")),
+			new ImageIcon(getClass().getResource("imagenes/editarproyecto.png")),
+			new ImageIcon(getClass().getResource("imagenes/mostrarproyecto.png")),
+			new ImageIcon(getClass().getResource("imagenes/altawp.png")),
+			new ImageIcon(getClass().getResource("imagenes/editarwp.png")),
+			new ImageIcon(getClass().getResource("imagenes/verwp.png")),
+			new ImageIcon(getClass().getResource("imagenes/altatarea.png")),
+			new ImageIcon(getClass().getResource("imagenes/editartarea.png")),
+			new ImageIcon(getClass().getResource("imagenes/mostrartarea.png")),
+			new ImageIcon(getClass().getResource("imagenes/viaje.png")),
+			new ImageIcon(getClass().getResource("imagenes/subcontrata.png")),
+			new ImageIcon(getClass().getResource("imagenes/materiales.png")),
+			new ImageIcon(getClass().getResource("imagenes/nuevots.png")),
+			new ImageIcon(getClass().getResource("imagenes/editarts.png")),
+			new ImageIcon(getClass().getResource("imagenes/mostrarts.png")),
 			};
 	static String SistemaOp = System.getProperty("os.name"); //Nombre del S.O por si necesitamos condicionar codigo 
 	

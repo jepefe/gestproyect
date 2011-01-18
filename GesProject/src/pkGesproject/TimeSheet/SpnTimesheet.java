@@ -42,9 +42,9 @@ public class SpnTimesheet extends JSplitPane{
 		this.setOpaque(true);
 		modificar.setBorder(empty);
 		
-		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][98]},
-				{recursos.icono[6],rec.idioma[rec.eleidioma][20]},
-				{recursos.icono[7],rec.idioma[rec.eleidioma][21]}};
+		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[28],rec.idioma[rec.eleidioma][98]},
+				{recursos.icono[29],rec.idioma[rec.eleidioma][20]},
+				{recursos.icono[30],rec.idioma[rec.eleidioma][21]}};
 		
 		
 		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {
