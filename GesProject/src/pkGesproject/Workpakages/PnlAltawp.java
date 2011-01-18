@@ -43,9 +43,10 @@ public class PnlAltawp extends JScrollPane{
 	JTextField[] jtxt;
 	JLabel[] jlbl;
 	JButton jbtnaceptar, jbtncancelar;
+	JButton jbtnaceptar2, jbtncancelar2;
 	JDateChooser jdc1,jdc2;
-	private GpComboBox CmbPro = new GpComboBox();
-	private GpComboBox CmbPar = new GpComboBox();
+	GpComboBox CmbPro = new GpComboBox();
+	GpComboBox CmbPar = new GpComboBox();
 	ConexionDb conexion = new ConexionDb();
 	JTextArea textarea = new JTextArea();
 	JTextArea textarea2 = new JTextArea();
@@ -183,14 +184,25 @@ public class PnlAltawp extends JScrollPane{
 		**
 		 * Creamos los dos botones para este panel 
 		 */
-		
+		//primeros dos botones del panel
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.insets = new Insets(30,10,5,5);
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		panel.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][2]),gbc);
+		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
+		
+		//botones de aceptar y cancelar para modificacion
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.insets = new Insets(30,10,5,5);
+		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		panel.add(jbtnaceptar2=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		panel.add(jbtncancelar2=new JButton(rec.idioma[rec.eleidioma][2]),gbc);
+		jbtnaceptar2.setVisible(false);
+		jbtncancelar2.setVisible(false);
 		
 		ActionListener accion = new ActionListener(){
 
@@ -226,7 +238,7 @@ public class PnlAltawp extends JScrollPane{
 					  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 					
-			if (sqlDate1.getTime()< sqlDate2.getTime()){
+			//if (sqlDate1.getTime()< sqlDate2.getTime()){
 					conexdb.executeUpdate("INSERT INTO WORKPAQUETS (nombre, id_pro, descripcion, presupuesto,f_ini, f_fin, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+id_pro+"','"+textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
 					//para ver la id del workpaquets recien creado
 					try {
@@ -243,7 +255,7 @@ public class PnlAltawp extends JScrollPane{
 					conexdb.cerrarConexion();
 					
 					
-				}
+				//}
 				
 				jdc1.setDate(null);
 				jdc2.setDate(null);
@@ -276,8 +288,25 @@ public class PnlAltawp extends JScrollPane{
 		};
 		jbtnaceptar.setActionCommand("aceptar");
 		jbtnaceptar.addActionListener(accion);
-		jbtncancelar.setActionCommand("cancelar"); 
+		jbtncancelar.setActionCommand("cancelar");
+		jbtncancelar.addActionListener(accion);
 
+		ActionListener accion2 = new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					if(e.getActionCommand().equals("aceptar")){
+						
+					}
+					if(e.getActionCommand().equals("cancelar")){
+						
+					}
+				}
+			};
+		jbtnaceptar2.setActionCommand("aceptar");
+		jbtnaceptar2.addActionListener(accion2);
+		jbtncancelar2.setActionCommand("cancelar");
+		jbtncancelar2.addActionListener(accion2);
 		
 		panel.setVisible(true);
 		this.setViewportView(panel);
