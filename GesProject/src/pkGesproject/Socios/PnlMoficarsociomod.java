@@ -242,7 +242,7 @@ public class PnlMoficarsociomod extends JScrollPane{
 					cbpais.setSelectedIndex(0);*/
 					//recursos.modso.cargar_tabla();
 					
-					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][104]);
+					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][100]);
 					conexion.cerrarConexion();
 				}
 				
