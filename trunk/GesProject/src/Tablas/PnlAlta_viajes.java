@@ -269,8 +269,8 @@ public class PnlAlta_viajes extends JPanel{
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
-							
-							rs= conexion.ConsultaSQL("SELECT estado FROM PROVINCIAS WHERE estado like '"+cbcsalida.getSelectedItem().toString()+"'");
+							rs = null;
+							rs= conexion.ConsultaSQL("SELECT id_provincias FROM PROVINCIAS WHERE estado like '"+cbcsalida.getSelectedItem().toString()+"'");
 							
 							String ciudadsalida = null;
 						try {
@@ -280,6 +280,7 @@ public class PnlAlta_viajes extends JPanel{
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
+						rs = null;
 						rs= conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpdestino.getSelectedItem().toString()+"'");
 						
 							String paisdestino = null;
@@ -290,8 +291,8 @@ public class PnlAlta_viajes extends JPanel{
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						
-						rs= conexion.ConsultaSQL("SELECT estado FROM PROVINCIAS WHERE estado like '"+cbcdestino.getSelectedItem().toString()+"'");
+						rs = null;
+						rs= conexion.ConsultaSQL("SELECT id_provincias FROM PROVINCIAS WHERE estado like '"+cbcdestino.getSelectedItem().toString()+"'");
 							
 							String ciudaddestino = null;
 						try {
@@ -302,7 +303,7 @@ public class PnlAlta_viajes extends JPanel{
 							e1.printStackTrace();
 						}
 				
-						conexion.executeUpdate("INSERT INTO TRAVEL_SUBSISTENCE (partner,nombrepersona,motivoviaje,paissalida,ciudad_salida,paisdestino,ciudad_destino,fecha_ini,fecha_fin,coste_viaje,costes_subsistencia,gastos_totales) VALUES" +
+						conexion.executeUpdate("INSERT INTO TRAVEL_SUBSISTENCE (partner,nombrepersona,motivoviaje,paissalida,ciudad_salida,paisdestino,ciudad_destino,fecha_ini,fecha_fin,coste_viaje,coste_subsistencia,gastos_totales) VALUES" +
 								"("+partner+",'"+jtxt[0].getText()+"','"+jtxt[1].getText()+"',"+paissalida+","+ciudadsalida+","+paisdestino+","+ciudaddestino+",'"+jdc1.getDate()+"','"+jdc2.getDate()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"')");
 						JOptionPane.showMessageDialog(aviso,"Subido");
 				

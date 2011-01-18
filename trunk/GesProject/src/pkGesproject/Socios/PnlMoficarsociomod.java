@@ -31,7 +31,7 @@ import pkGesproject.GpComboBox;
 import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
 
-public class PnlAltasocio extends JScrollPane{
+public class PnlMoficarsociomod extends JScrollPane{
 
 
 	GesIdioma rec = GesIdioma.obtener_instancia();
@@ -49,7 +49,7 @@ public class PnlAltasocio extends JScrollPane{
 	ResultSet rs;
 	Border empty = new EmptyBorder(0,0,0,0);
 	
-	public PnlAltasocio (){
+	public PnlMoficarsociomod (){
 		final RsGesproject recursos = RsGesproject.Obtener_Instancia();
 		this.setBorder(empty);
 		
@@ -204,6 +204,7 @@ public class PnlAltasocio extends JScrollPane{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("aceptar")){
+					
 					conexion.Conectardb();
 					ResultSet rs;
 					rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+cbsector.getSelectedItem().toString()+"'");
@@ -232,25 +233,16 @@ public class PnlAltasocio extends JScrollPane{
 						e1.printStackTrace();
 					}
 					
-					conexion.executeUpdate("INSERT INTO PARTNER (nombre, sector, pais, direccion, codpostal, email, email2, telefono, telefono2, fax, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+sector+"','"+pais+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"','"+jtxt[6].getText()+"','"+jtxt[7].getText()+"','"+textarea.getText()+"')");
-					for(int i=0;i<fieldNames.length;i++){
+					conexion.executeUpdate("UPDATE PARTNER SET nombre = '"+jtxt[0].getText()+"', sector = "+sector+", pais= "+pais+", direccion = '"+jtxt[1].getText()+"', codpostal = '"+jtxt[2].getText()+"', email = '"+jtxt[3].getText()+"', email2 = '"+jtxt[4].getText()+"', telefono = '"+jtxt[5].getText()+"', telefono2 = '"+jtxt[6].getText()+"', fax = '"+jtxt[7].getText()+"', observaciones = '"+textarea.getText()+"' WHERE nombre like '"+jtxt[0].getText()+"'");
+					/*for(int i=0;i<fieldNames.length;i++){
 						jtxt[i].setText("");
 					}
 					textarea.setText("");
 					cbsector.setSelectedIndex(0);
-					cbpais.setSelectedIndex(0);
+					cbpais.setSelectedIndex(0);*/
 					//recursos.modso.cargar_tabla();
 					
-					modso.cuenta=modso.contar_reg();
-					modso.datos = new String[modso.cuenta][modso.columnas];
-					modso.auxdatos = new String[modso.cuenta][modso.columnas];
-					modso.tablemodel = modso.cargar_tabla(modso.datos);
-					modso.jtblLateral.setModel(modso.tablemodel);
-					modso.jtblLateral.repaint();
-					
-					modso.llena = false;
-					
-					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
+					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][104]);
 					conexion.cerrarConexion();
 				}
 				
