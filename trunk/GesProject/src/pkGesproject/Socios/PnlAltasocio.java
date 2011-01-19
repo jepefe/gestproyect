@@ -9,11 +9,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,13 +27,14 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
 import pkGesproject.GpComboBox;
 import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
-
+import pkGesproject.LimitadorDeDocumento;
 public class PnlAltasocio extends JScrollPane{
 
 
@@ -48,7 +52,7 @@ public class PnlAltasocio extends JScrollPane{
 	PnlModificarsocio modso = PnlModificarsocio.Obtener_Instancia();
 	ResultSet rs;
 	Border empty = new EmptyBorder(0,0,0,0);
-	
+	char caracter;
 	public PnlAltasocio (){
 		final RsGesproject recursos = RsGesproject.Obtener_Instancia();
 		this.setBorder(empty);
@@ -106,7 +110,7 @@ public class PnlAltasocio extends JScrollPane{
 						e1.printStackTrace();
 						
 						}
-					
+					cbsector.setSelectedItem(null);
 					gbc.anchor = GridBagConstraints.EAST;
 					gbc.gridwidth = GridBagConstraints.RELATIVE;
 					panel.add(new JLabel(rec.idioma[rec.eleidioma][46]),gbc);
@@ -126,9 +130,85 @@ public class PnlAltasocio extends JScrollPane{
 							e1.printStackTrace();
 							
 					}
+					cbpais.setSelectedItem(null);
 			}
+			/*
+			 *Se limitan los caracteres de los campos 
+			 */
+			switch (i){
+				case (0):
+					LimitadorDeDocumento ljtxt0 = new LimitadorDeDocumento(40);
+					jtxt[0].setDocument(ljtxt0);
+					break;
+				case (1):
+				   	LimitadorDeDocumento ljtxt1 = new LimitadorDeDocumento(30);
+					jtxt[1].setDocument(ljtxt1);
+					break;
+				case (2):
+				   	LimitadorDeDocumento ljtxt2 = new LimitadorDeDocumento(11);
+					jtxt[2].setDocument(ljtxt2);
+					break;
+				case (3):
+				   	LimitadorDeDocumento ljtxt3 = new LimitadorDeDocumento(30);
+					jtxt[3].setDocument(ljtxt3);
+					break;
+				case (4):
+				   	LimitadorDeDocumento ljtxt4 = new LimitadorDeDocumento(30);
+					jtxt[4].setDocument(ljtxt4);
+					break;
+				case (5):
+				   	LimitadorDeDocumento ljtxt5 = new LimitadorDeDocumento(20);
+					jtxt[5].setDocument(ljtxt5);
+					break;
+				case (6):
+					LimitadorDeDocumento ljtxt6 = new LimitadorDeDocumento(20);
+					jtxt[6].setDocument(ljtxt6);	
+					break;
+				case (7):
+				   	LimitadorDeDocumento ljtxt7 = new LimitadorDeDocumento(15);
+					jtxt[7].setDocument(ljtxt7);
+					break;
 			
-		}
+			}
+
+			   if(i==2 || i==5 || i==6 || i==7){
+					jtxt[i].addKeyListener(new KeyAdapter(){
+					   public void keyTyped(KeyEvent e){
+					      caracter = e.getKeyChar();
+					      if(((caracter < '0') ||(caracter > '9')) &&
+					         (caracter != KeyEvent.VK_BACK_SPACE) &&
+					         (caracter != '+') && (caracter != '(') && (caracter != ')')) {
+					         e.consume();  
+					      }
+					   }
+					});
+					}
+			   if(i==0 ){
+				   
+				   try
+				   {
+				       MaskFormatter mascara = new MaskFormatter("##.##");
+				       JFormattedTextField textField = new JFormattedTextField(mascara);
+				       textField.setValue(new Float("12.34"));
+				   }
+				   catch (Exception e)
+				   {
+				       e.printStackTrace();
+				   }
+					jtxt[i].addKeyListener(new KeyAdapter(){
+					   public void keyTyped(KeyEvent e){
+					      caracter = e.getKeyChar();
+					      if(((caracter < 'a') ||(caracter > 'z')) &&
+					    		  ((caracter < 'A') ||(caracter > 'Z')) &&
+					         (caracter != KeyEvent.VK_BACK_SPACE) &&
+					         (caracter != '+') && (caracter != '(') && (caracter != ')')) {
+					         e.consume();  
+					      }
+					   }
+					});
+					}
+			   
+		}//fin for
 		
 		
 		FocusListener foco = new FocusListener(){
@@ -249,8 +329,10 @@ public class PnlAltasocio extends JScrollPane{
 						jtxt[i].setText("");
 					}
 					textarea.setText("");
-					cbsector.setSelectedIndex(0);
-					cbpais.setSelectedIndex(0);
+					//cbsector.setSelectedIndex(0);
+					//cbpais.setSelectedIndex(0);
+					cbsector.setSelectedItem(null);
+					cbpais.setSelectedItem(null);
 					//recursos.modso.cargar_tabla();
 					
 					modso.cuenta=modso.contar_reg();
@@ -263,6 +345,8 @@ public class PnlAltasocio extends JScrollPane{
 					
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
 					conexion.cerrarConexion();
+					//cbsector.setSelectedItem(null);
+					//cbpais.setSelectedItem(null);
 				}
 				
 				if(e.getActionCommand().equals("cancelar")){
