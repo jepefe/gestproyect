@@ -56,6 +56,7 @@ public class PnlModificarsocio extends JPanel{
 	String[] fila = new String[3];
 	JTable jtblLateral;
 	JScrollPane jspntabla;
+	public static JFrame modificar;
 	static PnlModificarsocio instancia = new PnlModificarsocio(); 
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
@@ -101,7 +102,7 @@ public class PnlModificarsocio extends JPanel{
     	this.setLayout(new GridBagLayout()); //Ponemos el Layout al panel
 		   
     	cuenta=contar_reg();
-    	columnas =3;
+    	columnas =colu.length;
     	datos = new String[cuenta][columnas];
 		auxdatos = new String[cuenta][columnas];
     	tablemodel=cargar_tabla(datos);
@@ -287,8 +288,8 @@ public class PnlModificarsocio extends JPanel{
 						}
 						*/
 						
-						JFrame modificar = new JFrame();
-						final PnlMoficarsociomod mod = new PnlMoficarsociomod();
+						modificar = new JFrame();
+						final PnlAltasocio mod = new PnlAltasocio();
 						modificar.add(mod);
 						modificar.setBounds(0, 0, 600, 650);
 						modificar.setLocationRelativeTo(null);
@@ -322,56 +323,19 @@ public class PnlModificarsocio extends JPanel{
 								rs=conexion.ConsultaSQL("SELECT s.sector FROM SECTORES s INNER JOIN PARTNER p ON s.id_sector = p.sector WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
 								rs.next();
 								mod.cbsector.setSelectedItem(rs.getString(1));
-								mod.jbtnaceptar.setVisible(true);
-								mod.jbtncancelar.setVisible(true);
-								mod.add(jbtnaceptar = new JButton(rec.idioma[rec.eleidioma][1]));
-								jbtnaceptar.addActionListener(new ActionListener(){
-
-									@Override
-									public void actionPerformed(ActionEvent e) {
-										// TODO Auto-generated method stub
-										
-										rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+mod.cbsector.getSelectedItem().toString()+"'");
-										
-										/**
-										 * Creamos una variable string para obtener el id del sector y del pais
-										 **/
-										
-										String sector = null;
-											try {
-												rs.next();
-												sector = rs.getString(1);
-											} catch (SQLException e1) {
-												// TODO Auto-generated catch block
-												e1.printStackTrace();
-											}
-										
-										rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+mod.cbpais.getSelectedItem().toString()+"'");
-										
-										String pais = null;
-											try {
-												rs.next();
-												pais = rs.getString(1);
-											} catch (SQLException e1) {
-												// TODO Auto-generated catch block
-												e1.printStackTrace();
-											}
-											cuenta=contar_reg();
-											datos = new String[cuenta][columnas];
-											auxdatos = new String[cuenta][columnas];
-											tablemodel =cargar_tabla(datos);
-											jtblLateral.setModel(tablemodel);
-											llena = false;
-									}
-									
-									
-									
-								});
+								mod.jbtnaceptar.setVisible(false);
+								mod.jbtncancelar.setVisible(false);
+								mod.jbtnaceptarmod.setVisible(true);
+								mod.jbtncancelarmod.setVisible(true);
+								mod.jtxt[0].setEditable(false);
+								
+								
 								
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
+							
 							
 							cuenta=contar_reg();
 							datos = new String[cuenta][columnas];
@@ -402,9 +366,7 @@ public class PnlModificarsocio extends JPanel{
 						conexion.cerrarConexion();
 					}
 					
-					if(e.getActionCommand().equals("actualizar")){
-						
-					}
+					
 				}
             	
             };

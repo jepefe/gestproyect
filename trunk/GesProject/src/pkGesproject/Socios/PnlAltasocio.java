@@ -37,7 +37,7 @@ public class PnlAltasocio extends JScrollPane{
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	JTextField[] jtxt;
 	JLabel[] jlbl;
-	JButton jbtnaceptar, jbtncancelar;
+	JButton jbtnaceptar, jbtncancelar, jbtnaceptarmod, jbtncancelarmod;
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
 	ConexionDb conexion= new ConexionDb();
@@ -195,7 +195,19 @@ public class PnlAltasocio extends JScrollPane{
 		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
 		
 		
-		 
+		/**
+		 * botones ocultos para utilizar el modificar
+		 */
+		
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.insets = new Insets(30,10,5,5);
+		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		panel.add(jbtnaceptarmod=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		panel.add(jbtncancelarmod=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
+		
+		
 	     
 	     
 		ActionListener accion = new ActionListener(){
@@ -247,7 +259,6 @@ public class PnlAltasocio extends JScrollPane{
 					modso.tablemodel = modso.cargar_tabla(modso.datos);
 					modso.jtblLateral.setModel(modso.tablemodel);
 					modso.jtblLateral.repaint();
-					
 					modso.llena = false;
 					
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
@@ -263,6 +274,51 @@ public class PnlAltasocio extends JScrollPane{
 					cbsector.setSelectedIndex(0);
 					cbpais.setSelectedIndex(0);
 				}
+				
+				if(e.getActionCommand().equals("aceptarmod")){
+					ResultSet rs;
+					conexion.Conectardb();
+					rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+cbsector.getSelectedItem().toString()+"'");
+					
+					/**
+					 * Creamos una variable string para obtener el id del sector y del pais
+					 **/
+					
+					String sector = null;
+					try {
+						rs.next();
+						sector = rs.getString(1);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpais.getSelectedItem().toString()+"'");
+					
+					String pais = null;
+					try {
+						rs.next();
+						pais = rs.getString(1);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					conexion.executeUpdate("UPDATE PARTNER SET nombre = '"+jtxt[0].getText()+"', sector = "+sector+", pais= "+pais+", direccion = '"+jtxt[1].getText()+"', codpostal = '"+jtxt[2].getText()+"', email = '"+jtxt[3].getText()+"', email2 = '"+jtxt[4].getText()+"', telefono = '"+jtxt[5].getText()+"', telefono2 = '"+jtxt[6].getText()+"', fax = '"+jtxt[7].getText()+"', observaciones = '"+textarea.getText()+"' WHERE nombre like '"+jtxt[0].getText()+"'");
+					modso.cuenta=modso.contar_reg();
+					modso.datos = new String[modso.cuenta][modso.columnas];
+					modso.auxdatos = new String[modso.cuenta][modso.columnas];
+					modso.tablemodel = modso.cargar_tabla(modso.datos);
+					modso.jtblLateral.setModel(modso.tablemodel);
+					modso.jtblLateral.repaint();
+					modso.llena = false;
+					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][100]);
+					PnlModificarsocio.modificar.dispose();
+				}
+				
+				if(e.getActionCommand().equals("cancelarmod")){
+					PnlModificarsocio.modificar.dispose();
+				}
 			}
 			
 		};
@@ -270,7 +326,12 @@ public class PnlAltasocio extends JScrollPane{
 		jbtnaceptar.addActionListener(accion);
 		jbtncancelar.setActionCommand("cancelar");
 		jbtncancelar.addActionListener(accion);
-		
+		jbtnaceptarmod.setActionCommand("aceptarmod");
+		jbtnaceptarmod.addActionListener(accion);
+		jbtncancelarmod.setActionCommand("cancelarmod");
+		jbtncancelarmod.addActionListener(accion);
+		jbtnaceptarmod.setVisible(false);
+		jbtncancelarmod.setVisible(false);
 		conexion.cerrarConexion();
 		panel.setOpaque(true);
 		this.setViewportView(panel);
