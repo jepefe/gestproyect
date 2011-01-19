@@ -36,9 +36,10 @@ public class SpnSocios extends JSplitPane{
 	JTable jtblLateral;
 	JScrollPane modificar;
 	Border empty = new EmptyBorder(0,0,0,0);
+	PnlModificarsocio mods = PnlModificarsocio.Obtener_Instancia();
 	Component[] panlsStaff = {
 			new PnlAltasocio(),
-			modificar = new JScrollPane(new PnlModificarsocio()),
+			modificar = new JScrollPane(mods),
 			new JPanel()};
 
 	public SpnSocios(){
