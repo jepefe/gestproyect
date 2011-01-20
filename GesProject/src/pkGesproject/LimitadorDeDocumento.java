@@ -1,3 +1,9 @@
+/**
+ /**
+ * Esta clase se encarga de gestionar la cantidad de carácteres de un jtext
+ * 
+ * @author Félix Perona G
+ */
 package pkGesproject;
 
 import java.awt.*;
