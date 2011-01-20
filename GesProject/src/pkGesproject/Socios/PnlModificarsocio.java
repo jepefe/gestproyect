@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -56,51 +58,16 @@ public class PnlModificarsocio extends JPanel{
 	String[] fila = new String[3];
 	JTable jtblLateral;
 	JScrollPane jspntabla;
-	public static JFrame modificar;
+	public static JDialog modificar;
 	static PnlModificarsocio instancia = new PnlModificarsocio(); 
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
     public PnlModificarsocio(){
-    	/*
-    	String resul[]= new String[3];
-    	conexion.Conectardb();
-    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
-    	rs = conexion.ConsultaSQL("SELECT p.nombre,p.telefono,p.telefono2 FROM PARTNER p");
-    	cuenta = 0;
-    	try {
-			while(rs.next()){
-				cuenta++;
-			}
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-    	
-    	
-		datos = new String[cuenta][3];
-		auxdatos = new String[cuenta][3];
-    	
-    	rs = conexion.ConsultaSQL("SELECT p.nombre,p.telefono,p.telefono2 FROM PARTNER p");
-    	int i=0;
-    	try {
-			while(rs.next()){
-				for(int j = 1;j<4;j++){
-					datos[i][j-1] = rs.getString(j);
-					fila[j-1]=datos[i][j-1];
-				}
-				i++;
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	conexion.cerrarConexion();
-    	*/
-    	
-    	
-    	
     	this.setLayout(new GridBagLayout()); //Ponemos el Layout al panel
 		   
+    	/**
+    	 * Cargamos los array y la tabla con los datos de la bd
+    	 */
     	cuenta=contar_reg();
     	columnas =colu.length;
     	datos = new String[cuenta][columnas];
@@ -167,18 +134,7 @@ public class PnlModificarsocio extends JPanel{
             
             jbtnactualizar = new JButton("Actualizar");
             
-            //constraints.anchor = GridBagConstraints.CENTER;
-            
-            /*
-            constraints.gridx = 2; // El área de texto empieza en la columna
-            constraints.gridy = 1; // El área de texto empieza en la fila
-            constraints.gridwidth = 1; // El área de texto ocupa x columnas.
-            constraints.gridheight = 1; // El área de texto ocupa x filas.
-            constraints.weightx = 1.0;	// con esto estiramos segunda columna al maximo que de la ventana
-            constraints.insets = new Insets(20,30,0,10);
-            this.add(pnlaltasocio,constraints);
-            constraints.weightx = 0.0; // La dejamos igual
-            */
+        
             
             
             final KeyListener accion = new KeyListener(){
@@ -231,9 +187,7 @@ public class PnlModificarsocio extends JPanel{
     							}
     						}
     						try{
-	    						//while(auxdatos[i][j]!=null){
 	    						for(j=0;j<3;j++){
-	    							//while(auxdatos[i][j]!=null){
 	    							for(i=0;i<cuenta;i++){
 	    								if(auxdatos[i][j]!= null){
 		    								if(auxdatos[i][j].regionMatches( true, 0, jtxt.getText(), 0, tam )){
@@ -251,11 +205,7 @@ public class PnlModificarsocio extends JPanel{
 		    									
 		    								}
 	    								}
-	    								
-	    								//i++;
 	    							}
-	    							//i=0;
-	    							//j++;
 	    						}
 	    						
     						}catch(ArrayIndexOutOfBoundsException act1) {
@@ -288,21 +238,12 @@ public class PnlModificarsocio extends JPanel{
 						}
 						*/
 						
-						modificar = new JFrame();
+						modificar = new JDialog();
 						final PnlAltasocio mod = new PnlAltasocio();
 						modificar.add(mod);
 						modificar.setBounds(0, 0, 600, 650);
 						modificar.setLocationRelativeTo(null);
-						/*mod.jbtnaceptar.addActionListener(new ActionListener(){
-
-							@Override
-							public void actionPerformed(ActionEvent arg0) {
-								// TODO Auto-generated method stub
-								System.out.print("te tengo");
-							}
-							
-						});
-							*/
+						modificar.setModal(true);
 						
 						conexion.Conectardb();
 				    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
@@ -350,7 +291,7 @@ public class PnlModificarsocio extends JPanel{
 					}
 					
 					if(e.getActionCommand().equals("eliminar")){
-						conexion.Conectardb();
+						/*conexion.Conectardb();
 						conexion.executeUpdate("DELETE FROM PARTNER WHERE nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
 						
 						cuenta=contar_reg();
@@ -358,11 +299,13 @@ public class PnlModificarsocio extends JPanel{
 						auxdatos = new String[cuenta][columnas];
 						tablemodel =cargar_tabla(datos);
 						jtblLateral.setModel(tablemodel);
-						llena = false;
+						llena = false;*/
 						//jtblLateral.repaint();
 						//jtblLateral.revalidate();
 						Component aviso = null;
-						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
+						//JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
+						int s = JOptionPane.showConfirmDialog(aviso, "Esta seguro??");
+						System.out.println(s);
 						conexion.cerrarConexion();
 					}
 					

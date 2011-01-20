@@ -24,12 +24,13 @@ public class SpnWorkpack extends JSplitPane{
 
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
+	PnlBusquedawp modwp = PnlBusquedawp.Obtener_Instancia();
 	JSplitPane jsplpane;
 	JPanel panel = new JPanel();
 	JTable jtblLateral;
 	Component[] panlsStaff = {
 			new PnlAltawp(),
-			new JScrollPane(new PnlBusquedawp()),
+			new JScrollPane(modwp),
 			new JScrollPane(new JPanel())};
 
 	public SpnWorkpack(){
