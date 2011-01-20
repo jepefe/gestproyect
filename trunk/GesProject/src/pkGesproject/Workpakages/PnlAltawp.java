@@ -147,6 +147,7 @@ public class PnlAltawp extends JScrollPane{
 				rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM PROYECTOS");
 				try {
 				while(rs.next()){
+					CmbPro.removeAllItems();
 					CmbPro.addItem(rs.getString(1));	
 					
 				}
@@ -163,8 +164,10 @@ public class PnlAltawp extends JScrollPane{
 				conexion.Conectardb();
 				rs = conexion.ConsultaSQL("SELECT nombre,cod_part FROM PARTNER");
 				try {
+					System.out.println("work");
+					CmbPar.removeAllItems();
 				while(rs.next()){
-					CmbPar.addItem(rs.getString(1));	
+					CmbPar.addItem(rs.getString(1));
 					
 				}
 					} catch (SQLException e2) {

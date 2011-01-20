@@ -101,6 +101,8 @@ public class PnlAltasocio extends JScrollPane{
 				
 				panel.add(cbsector,gbc);
 				try {
+					System.out.println("se crea");
+					
 				while(rs.next()){
 					cbsector.addItem(rs.getString(2));
 				
