@@ -30,6 +30,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import pkGesproject.ConexionDb;
@@ -49,8 +51,8 @@ public class PnlAltawp extends JScrollPane{
 	JButton jbtnaceptar, jbtncancelar;
 	JButton jbtnaceptar2, jbtncancelar2;
 	JDateChooser jdc1,jdc2;
-	static public GpComboBox CmbPro = new GpComboBox();
-	static public GpComboBox CmbPar = new GpComboBox();
+	GpComboBox CmbPro = new GpComboBox();
+	GpComboBox CmbPar = new GpComboBox();
 	ConexionDb conexion = new ConexionDb();
 	JTextArea textarea = new JTextArea();
 	JTextArea textarea2 = new JTextArea();
@@ -59,15 +61,17 @@ public class PnlAltawp extends JScrollPane{
 	String nomwp;
 	int indexwp;
 	char caracter;
+	Border empty = new EmptyBorder(0,0,0,0);
 	PnlBusquedawp modwp = PnlBusquedawp.Obtener_Instancia();
 	static PnlAltawp instancia = new PnlAltawp();
+	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
 	
 	public PnlAltawp (){
-		RsGesproject recursos = RsGesproject.Obtener_Instancia();
-		
+	
+		this.setBorder(empty);
 		panel.setLayout(new GridBagLayout());
 		  
 		String[] fieldNames = {
@@ -147,7 +151,6 @@ public class PnlAltawp extends JScrollPane{
 				rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM PROYECTOS");
 				try {
 				while(rs.next()){
-					CmbPro.removeAllItems();
 					CmbPro.addItem(rs.getString(1));	
 					
 				}
@@ -165,7 +168,6 @@ public class PnlAltawp extends JScrollPane{
 				rs = conexion.ConsultaSQL("SELECT nombre,cod_part FROM PARTNER");
 				try {
 					System.out.println("work");
-					CmbPar.removeAllItems();
 				while(rs.next()){
 					CmbPar.addItem(rs.getString(1));
 					

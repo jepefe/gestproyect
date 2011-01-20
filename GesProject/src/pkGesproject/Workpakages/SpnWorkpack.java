@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -25,17 +27,21 @@ public class SpnWorkpack extends JSplitPane{
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	PnlBusquedawp modwp = PnlBusquedawp.Obtener_Instancia();
+	PnlAltawp altawp = PnlAltawp.Obtener_Instancia();
 	JSplitPane jsplpane;
 	JPanel panel = new JPanel();
 	JTable jtblLateral;
+	Border empty = new EmptyBorder(0,0,0,0);
+	JScrollPane scroll;
 	Component[] panlsStaff = {
-			new PnlAltawp(),
-			new JScrollPane(modwp),
+			altawp,
+			scroll = new JScrollPane(modwp),
 			new JScrollPane(new JPanel())};
 
 	public SpnWorkpack(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
+		scroll.setBorder(empty);
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[19],rec.idioma[rec.eleidioma][29]},
 				{recursos.icono[20],rec.idioma[rec.eleidioma][30]},
 				{recursos.icono[21],rec.idioma[rec.eleidioma][31]}};
