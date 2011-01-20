@@ -59,6 +59,8 @@ public class PnlAltawp extends JScrollPane{
 	String nomwp;
 	int indexwp;
 	char caracter;
+	PnlBusquedawp modwp = PnlBusquedawp.Obtener_Instancia();
+	static PnlAltawp instancia = new PnlAltawp();
 	
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
@@ -295,6 +297,15 @@ public class PnlAltawp extends JScrollPane{
 						
 					}
 					conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS (cod_part, id_wp) VALUES ('"+id_par+"','"+id_wp+"')");
+					
+					modwp.cuenta=modwp.contar_reg();
+					modwp.datos = new String[modwp.cuenta][modwp.columnas];
+					modwp.auxdatos = new String[modwp.cuenta][modwp.columnas];
+					modwp.tablemodel = modwp.cargar_tabla(modwp.datos);
+					modwp.jtblLateral.setModel(modwp.tablemodel);
+					modwp.jtblLateral.repaint();
+					modwp.llena = false;
+					
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
 					conexdb.cerrarConexion();
 
@@ -382,6 +393,15 @@ public class PnlAltawp extends JScrollPane{
 						textarea2.setText(null);
 						jtxt[0].setText("");
 						jtxt[1].setText("");
+						
+						modwp.cuenta=modwp.contar_reg();
+						modwp.datos = new String[modwp.cuenta][modwp.columnas];
+						modwp.auxdatos = new String[modwp.cuenta][modwp.columnas];
+						modwp.tablemodel = modwp.cargar_tabla(modwp.datos);
+						modwp.jtblLateral.setModel(modwp.tablemodel);
+						modwp.jtblLateral.repaint();
+						modwp.llena = false;
+						
 						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][100]);
 						PnlBusquedawp.modificar.dispose();
 					}
@@ -398,5 +418,9 @@ public class PnlAltawp extends JScrollPane{
 		panel.setVisible(true);
 		this.setViewportView(panel);
 		
+	}
+	
+	public static PnlAltawp Obtener_Instancia(){
+		return instancia;
 	}
 }

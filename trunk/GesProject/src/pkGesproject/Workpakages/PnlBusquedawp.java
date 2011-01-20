@@ -46,6 +46,7 @@ import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
 import pkGesproject.RsGesproject;
 import pkGesproject.Socios.PnlAltasocio;
+import pkGesproject.Socios.PnlModificarsocio;
 
 public class PnlBusquedawp extends JPanel{
 
@@ -66,6 +67,7 @@ public class PnlBusquedawp extends JPanel{
 	JTextField jtxt;
 	JButton jbtn,jbtnmodificar,jbtneliminar;
 	Boolean llena = new Boolean(false);
+	Boolean existe = false;
 	String[] fila = new String[3];
 	JTable jtblLateral;
 	JScrollPane jspntabla;
@@ -75,7 +77,10 @@ public class PnlBusquedawp extends JPanel{
 	public static int id_wp;
 	int columnas = 3;
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
+    static PnlBusquedawp instancia = new PnlBusquedawp();
     
+	
+	
     public PnlBusquedawp(){
     	conexion.Conectardb();
     	/*String resul[]= new String[3];
@@ -118,15 +123,13 @@ public class PnlBusquedawp extends JPanel{
     	
     	
     	this.setLayout(new GridBagLayout()); //Ponemos el Layout al panel
-		   
     	
     	cuenta=contar_reg();
-    	columnas =3;
+    	columnas =colu.length;
     	datos = new String[cuenta][columnas];
 		auxdatos = new String[cuenta][columnas];
     	tablemodel=cargar_tabla(datos);
     	jtblLateral  = new JTable(tablemodel);
-    	
     	
 		    
         	//jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));
@@ -200,97 +203,77 @@ public class PnlBusquedawp extends JPanel{
     				// TODO Auto-generated method stub
     				
     				
-					if(llena==false){
+    				if(llena==false){
     					for(int i=0;i<cuenta;i++){
-    						for(int j = 0;j<3;j++){
+    						for(int j = 0;j<columnas;j++){
     							auxdatos[i][j]= datos[i][j];
-    							datos[i][j]=null;
-    							//System.out.print(auxdatos[i][j]);
-    							
+    							datos[i][j]=null;								
     						}
-    						
-    						//System.out.print("\n");
     					}
     					llena = true;
-    					//System.out.print("LLENO");
     				}
     				
     				if(llena==true){
     					for(int i=0;i<cuenta;i++){
-    						for(int j = 0;j<3;j++){
+    						for(int j = 0;j<columnas;j++){
     							datos[i][j]=null;
     						}
     					}
-    					//System.out.print("LIMPIADO");
-    					
     					if(jtxt.getText().equals("")){
-    						
     						for(int i=0;i<cuenta;i++){
-        						for(int j = 0;j<3;j++){
+        						for(int j = 0;j<columnas;j++){
         							datos[i][j]=auxdatos[i][j];
         						}
         					}
     				    	conexion.cerrarConexion();
     				    	tablemodel.setDataVector(datos, colu);
-    				    	//System.out.print("BLANCO");
     					}else{
-    						//System.out.print("MOVIDA");
-    						
     						int tam = jtxt.getText().length();
     						int i=0;
     						int j=0;
     						int fila=0;
-    						String[] res = new String[3];//almacenamos los resultados
+    						String[] res = new String[columnas];//almacenamos los resultados
     						if(tablemodel.getRowCount() != 0){//si la tabla no esta vacia la vaciamos
     							for( int a = tablemodel.getRowCount() - 1; a >= 0; a-- ){
     						tablemodel.removeRow(a);
     							}
     						}
-    						
-    						
     						try{
-    							//System.out.print("\n");
-								//System.out.print("\n");
-	    						while(auxdatos[i][j]!=null){
-	    							while(auxdatos[i][j]!=null){
-	    								//System.out.print("llega");
-	    								
+	    						//while(auxdatos[i][j]!=null){
+	    						for(j=0;j<3;j++){
+	    							//while(auxdatos[i][j]!=null){
+	    							for(i=0;i<cuenta;i++){
 	    								if(auxdatos[i][j]!= null){
 		    								if(auxdatos[i][j].regionMatches( true, 0, jtxt.getText(), 0, tam )){
-		    									//System.out.print("ENTRÓO");
-		    									
-		    									for(int col =0;col<3;col++){
-		    										
-		    										datos[fila][col]= auxdatos[i][col];
-		    										
-		    										res[col] = datos[fila][col];
+		    									existe=buscar_reg(datos,auxdatos,i,cuenta,columnas);
+		    									if(existe==false){
+			    									for(int col =0;col<columnas;col++){
+			    										datos[fila][col]= auxdatos[i][col];
+			    										res[col] = datos[fila][col];
+			    									}
+			    									fila++;
+			    									
+			    									Object[] dat = {res[0],res[1],res[2]};
+			    									tablemodel.addRow(dat);
 		    									}
-		    									fila++;
-		    									
-		    									Object[] dat = {res[0],res[1],res[2]};
-		    									tablemodel.addRow(dat);
-		    									
 		    									
 		    								}
 	    								}
 	    								
-	    								i++;
+	    								//i++;
 	    							}
-	    							i=0;
-	    							j++;
+	    							//i=0;
+	    							//j++;
 	    						}
 	    						
     						}catch(ArrayIndexOutOfBoundsException act1) {
-    						         //System.out.println("This program takes 3 parameters: ");
-    						         //System.out.println("  month day year.");
     						}
     					}
     						
     					
     				}
-    				
-    				
     			}
+
 
     			@Override
     			public void keyTyped(KeyEvent arg0) {
@@ -311,6 +294,7 @@ public class PnlBusquedawp extends JPanel{
 							System.out.print(datos[jtblLateral.getSelectedRow()][i]+";");
 						}
 						*/
+						conexion.Conectardb();
 						
 						modificar = new JFrame();
 						PnlAltawp mod;
@@ -323,9 +307,11 @@ public class PnlBusquedawp extends JPanel{
 						mod.jbtncancelar.setVisible(false);
 						mod.jbtncancelar2.setVisible(true);
 						
-						conexion.Conectardb();
+						
 				    	//rs = conexion.ConsultaSQL("SELECT w.nombre, w.presupuesto FROM WORKPAQUETS");
-				    	rs = conexion.ConsultaSQL("SELECT w.nombre, w.presupuesto, w.id_pro, w.id_wp, w.f_ini, w.f_fin, w.descripcion, w.observaciones FROM WORKPAQUETS w WHERE nombre='"+datos[jtblLateral.getSelectedRow()][0]+"'");
+						
+				    	rs = conexion.ConsultaSQL("SELECT w.nombre, w.presupuesto, w.id_pro, w.id_wp, w.f_ini, w.f_fin, w.descripcion, w.observaciones, p.cod_part " +
+				    			"FROM WORKPAQUETS w LEFT JOIN PARTNER_WORKPAQUETS p ON w.id_wp = p.id_wp WHERE nombre = '"+datos[jtblLateral.getSelectedRow()][0]+"'");
 				    	int i=1;
 				    	int id_pro = 0;
 				    	int id_par = 0;
@@ -341,13 +327,13 @@ public class PnlBusquedawp extends JPanel{
 									mod.textarea.setText(rs.getString(7));
 									mod.textarea2.setText(rs.getString(8));
 									id_pro = rs.getInt(3);
-									id_par = rs.getInt(4);
+									id_par = rs.getInt(9);
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 
-							rs2=conexion.ConsultaSQL("SELECT p.nombre FROM PROYECTOS p WHERE p.id_pro LIKE '"+id_pro+"'");
+							rs2=conexion.ConsultaSQL("SELECT p.nombre FROM PROYECTOS p WHERE p.id_pro = '"+id_pro+"'");
 							try {
 								rs2.next();
 								mod.CmbPro.setSelectedItem(rs2.getString(1));
@@ -357,7 +343,7 @@ public class PnlBusquedawp extends JPanel{
 						}
 						conexion.cerrarConexion();
 						conexion.Conectardb();
-							rs2=conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER p WHERE p.cod_part LIKE '"+id_par+"'");
+							rs2=conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER p WHERE p.cod_part = '"+id_par+"'");
 							try {
 								rs2.next();
 								mod.CmbPar.setSelectedItem(rs2.getString(1));
@@ -377,11 +363,11 @@ public class PnlBusquedawp extends JPanel{
 						Component aviso = null;
 						
 						cuenta=contar_reg();
-				    	columnas =3;
-				    	datos = new String[cuenta][columnas];
+						datos = new String[cuenta][columnas];
 						auxdatos = new String[cuenta][columnas];
-				    	tablemodel=cargar_tabla(datos);
-				    	jtblLateral  = new JTable(tablemodel);
+						tablemodel =cargar_tabla(datos);
+						jtblLateral.setModel(tablemodel);
+						llena = false;
 						
 						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
 						conexion.cerrarConexion();
@@ -410,8 +396,14 @@ public class PnlBusquedawp extends JPanel{
 		   
     
     }
+    /**
+     * Este metodo coje la matriz datos, descarga de la BD los datos de los partners y genera un tablemodel, el cual es devuelto por
+     * este método.
+     * @param datos
+     * @return
+     **/
     
- public DefaultTableModel cargar_tabla(String datos[][]){
+    public DefaultTableModel cargar_tabla(String datos[][]){
     	
     	String resul[]= new String[3];
     	conexion.Conectardb();
@@ -494,4 +486,13 @@ public class PnlBusquedawp extends JPanel{
     	
     	return existe;
     }
+    
+    /**
+     *Este metodo sirve para instanciar esta clase y poder llamar a sus objetos desde otra clase. 
+     * @return
+     */
+    public static PnlBusquedawp Obtener_Instancia(){
+		return instancia;
+	}
+
 }
