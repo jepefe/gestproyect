@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -53,6 +54,7 @@ public class PnlAltasocio extends JScrollPane{
 	ResultSet rs;
 	Border empty = new EmptyBorder(0,0,0,0);
 	char caracter;
+	FocusListener foco;
 	public PnlAltasocio (){
 		final RsGesproject recursos = RsGesproject.Obtener_Instancia();
 		this.setBorder(empty);
@@ -60,9 +62,9 @@ public class PnlAltasocio extends JScrollPane{
 		panel.setLayout(new GridBagLayout());
 		  
 		final String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][7],
-		   rec.idioma[rec.eleidioma][8],rec.idioma[rec.eleidioma][9],rec.idioma[rec.eleidioma][70],rec.idioma[rec.eleidioma][5],
-		   rec.idioma[rec.eleidioma][5],rec.idioma[rec.eleidioma][71]
+		   rec.idioma[rec.eleidioma][3]+"*",rec.idioma[rec.eleidioma][7]+"*",
+		   rec.idioma[rec.eleidioma][8]+"*",rec.idioma[rec.eleidioma][9]+"*",rec.idioma[rec.eleidioma][70],rec.idioma[rec.eleidioma][5]+"*",
+		   rec.idioma[rec.eleidioma][5],rec.idioma[rec.eleidioma][71]+"*"
 		};
 		int[] fieldWidths = {20,30,6,20,20,10,10,10};
 		jtxt = new JTextField[fieldNames.length];
@@ -94,7 +96,7 @@ public class PnlAltasocio extends JScrollPane{
 			if(i==1){
 				gbc.anchor = GridBagConstraints.EAST;
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
-				panel.add(new JLabel(rec.idioma[rec.eleidioma][4]),gbc);
+				panel.add(new JLabel(rec.idioma[rec.eleidioma][4]+"*"),gbc);
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				gbc.anchor = GridBagConstraints.WEST;
 				rs = conexion.ConsultaSQL("SELECT * FROM SECTORES");
@@ -115,7 +117,7 @@ public class PnlAltasocio extends JScrollPane{
 					cbsector.setSelectedItem(null);
 					gbc.anchor = GridBagConstraints.EAST;
 					gbc.gridwidth = GridBagConstraints.RELATIVE;
-					panel.add(new JLabel(rec.idioma[rec.eleidioma][46]),gbc);
+					panel.add(new JLabel(rec.idioma[rec.eleidioma][46]+"*"),gbc);
 					gbc.anchor = GridBagConstraints.WEST;
 					gbc.gridwidth = GridBagConstraints.REMAINDER;
 					
@@ -213,7 +215,7 @@ public class PnlAltasocio extends JScrollPane{
 		}//fin for
 		
 		
-		FocusListener foco = new FocusListener(){
+		foco = new FocusListener(){
 
 			@Override
 			public void focusGained(FocusEvent arg0) {
@@ -224,32 +226,28 @@ public class PnlAltasocio extends JScrollPane{
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				// TODO Auto-generated method stub
-				
-				rs = conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER p WHERE nombre LIKE '"+jtxt[0].getText()+"'");
+				conexion.Conectardb();
+				rs = conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER p WHERE nombre = '"+jtxt[0].getText()+"'");
 				try {
 					if(rs.next()){
 						
-						//jtxt[0].setText("");
-						jtxt[0].requestFocus();
-						jtxt[0].selectAll();
-						
-						GridBagConstraints gb = new GridBagConstraints();
-						gb.gridx = 3; // El área de texto empieza en la columna
-			            gb.gridy = 0; // El área de texto empieza en la fila
-						JLabel aviso = new JLabel("Ya existe");
-						panel.add(aviso,gb);
-						
+						jtxt[0].setBackground(Color.red);
+						//jtxt[0].requestFocus();
+						//jtxt[0].selectAll();
 						//JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][75]);
+					}else{
+						jtxt[0].setBackground(Color.green);
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				conexion.cerrarConexion();
 			}
 			
 		};
 		
-		//jtxt[0].addFocusListener(foco);
+		jtxt[0].addFocusListener(foco);
 		
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
@@ -298,57 +296,82 @@ public class PnlAltasocio extends JScrollPane{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("aceptar")){
-					conexion.Conectardb();
-					ResultSet rs;
-					rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+cbsector.getSelectedItem().toString()+"'");
 					
-					/**
-					 * Creamos una variable string para obtener el id del sector y del pais
-					 **/
+					if(jtxt[0].getText().equals("")||jtxt[1].getText().equals("")||cbsector.getSelectedItem() == null||cbpais.getSelectedItem() == null ||
+							jtxt[2].getText().equals("")||jtxt[3].getText().equals("")||jtxt[5].getText().equals("")||jtxt[7].getText().equals("")){
+						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][79]);
+					}else{
+						conexion.Conectardb();
+						ResultSet rs;
+						
+						rs = conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER p WHERE nombre = '"+jtxt[0].getText()+"'");
+						
+							try {
+								if(rs.next()){
+									
+									JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][75]);
+								}else{
+									rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+cbsector.getSelectedItem().toString()+"'");
+									
+									/**
+									 * Creamos una variable string para obtener el id del sector y del pais
+									 **/
+									
+									String sector = null;
+									try {
+										rs.next();
+										sector = rs.getString(1);
+									} catch (SQLException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+									
+									rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpais.getSelectedItem().toString()+"'");
+									
+									String pais = null;
+									try {
+										rs.next();
+										pais = rs.getString(1);
+									} catch (SQLException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+									
+									conexion.executeUpdate("INSERT INTO PARTNER (nombre, sector, pais, direccion, codpostal, email, email2, telefono, telefono2, fax, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+sector+"','"+pais+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"','"+jtxt[6].getText()+"','"+jtxt[7].getText()+"','"+textarea.getText()+"')");
+									for(int i=0;i<fieldNames.length;i++){
+										jtxt[i].setText("");
+									}
+									textarea.setText("");
+									//cbsector.setSelectedIndex(0);
+									//cbpais.setSelectedIndex(0);
+									cbsector.setSelectedItem(null);
+									cbpais.setSelectedItem(null);
+									//recursos.modso.cargar_tabla();
+									
+									modso.cuenta=modso.contar_reg();
+									modso.datos = new String[modso.cuenta][modso.columnas];
+									modso.auxdatos = new String[modso.cuenta][modso.columnas];
+									modso.tablemodel = modso.cargar_tabla(modso.datos);
+									modso.jtblLateral.setModel(modso.tablemodel);
+									modso.jtblLateral.repaint();
+									modso.llena = false;
+									
+									JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
+									conexion.cerrarConexion();
+									//cbsector.setSelectedItem(null);
+									//cbpais.setSelectedItem(null);
+								}
+							} catch (HeadlessException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
 					
-					String sector = null;
-					try {
-						rs.next();
-						sector = rs.getString(1);
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
 					
-					rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpais.getSelectedItem().toString()+"'");
 					
-					String pais = null;
-					try {
-						rs.next();
-						pais = rs.getString(1);
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-					conexion.executeUpdate("INSERT INTO PARTNER (nombre, sector, pais, direccion, codpostal, email, email2, telefono, telefono2, fax, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+sector+"','"+pais+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"','"+jtxt[6].getText()+"','"+jtxt[7].getText()+"','"+textarea.getText()+"')");
-					for(int i=0;i<fieldNames.length;i++){
-						jtxt[i].setText("");
-					}
-					textarea.setText("");
-					//cbsector.setSelectedIndex(0);
-					//cbpais.setSelectedIndex(0);
-					cbsector.setSelectedItem(null);
-					cbpais.setSelectedItem(null);
-					//recursos.modso.cargar_tabla();
-					
-					modso.cuenta=modso.contar_reg();
-					modso.datos = new String[modso.cuenta][modso.columnas];
-					modso.auxdatos = new String[modso.cuenta][modso.columnas];
-					modso.tablemodel = modso.cargar_tabla(modso.datos);
-					modso.jtblLateral.setModel(modso.tablemodel);
-					modso.jtblLateral.repaint();
-					modso.llena = false;
-					
-					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
-					conexion.cerrarConexion();
-					//cbsector.setSelectedItem(null);
-					//cbpais.setSelectedItem(null);
 				}
 				
 				if(e.getActionCommand().equals("cancelar")){
@@ -362,44 +385,50 @@ public class PnlAltasocio extends JScrollPane{
 				}
 				
 				if(e.getActionCommand().equals("aceptarmod")){
-					ResultSet rs;
-					conexion.Conectardb();
-					rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+cbsector.getSelectedItem().toString()+"'");
 					
-					/**
-					 * Creamos una variable string para obtener el id del sector y del pais
-					 **/
-					
-					String sector = null;
-					try {
-						rs.next();
-						sector = rs.getString(1);
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					if(jtxt[0].getText().equals("")||jtxt[1].getText().equals("")||cbsector.getSelectedItem() == null||cbpais.getSelectedItem() == null ||
+							jtxt[2].getText().equals("")||jtxt[3].getText().equals("")||jtxt[5].getText().equals("")||jtxt[7].getText().equals("")){
+						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][79]);
+					}else{
+						ResultSet rs;
+						conexion.Conectardb();
+						rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+cbsector.getSelectedItem().toString()+"'");
+						
+						/**
+						 * Creamos una variable string para obtener el id del sector y del pais
+						 **/
+						
+						String sector = null;
+						try {
+							rs.next();
+							sector = rs.getString(1);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+						rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpais.getSelectedItem().toString()+"'");
+						
+						String pais = null;
+						try {
+							rs.next();
+							pais = rs.getString(1);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+						conexion.executeUpdate("UPDATE PARTNER SET nombre = '"+jtxt[0].getText()+"', sector = "+sector+", pais= "+pais+", direccion = '"+jtxt[1].getText()+"', codpostal = '"+jtxt[2].getText()+"', email = '"+jtxt[3].getText()+"', email2 = '"+jtxt[4].getText()+"', telefono = '"+jtxt[5].getText()+"', telefono2 = '"+jtxt[6].getText()+"', fax = '"+jtxt[7].getText()+"', observaciones = '"+textarea.getText()+"' WHERE nombre like '"+jtxt[0].getText()+"'");
+						modso.cuenta=modso.contar_reg();
+						modso.datos = new String[modso.cuenta][modso.columnas];
+						modso.auxdatos = new String[modso.cuenta][modso.columnas];
+						modso.tablemodel = modso.cargar_tabla(modso.datos);
+						modso.jtblLateral.setModel(modso.tablemodel);
+						modso.jtblLateral.repaint();
+						modso.llena = false;
+						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][100]);
+						PnlModificarsocio.modificar.dispose();
 					}
-					
-					rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpais.getSelectedItem().toString()+"'");
-					
-					String pais = null;
-					try {
-						rs.next();
-						pais = rs.getString(1);
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-					conexion.executeUpdate("UPDATE PARTNER SET nombre = '"+jtxt[0].getText()+"', sector = "+sector+", pais= "+pais+", direccion = '"+jtxt[1].getText()+"', codpostal = '"+jtxt[2].getText()+"', email = '"+jtxt[3].getText()+"', email2 = '"+jtxt[4].getText()+"', telefono = '"+jtxt[5].getText()+"', telefono2 = '"+jtxt[6].getText()+"', fax = '"+jtxt[7].getText()+"', observaciones = '"+textarea.getText()+"' WHERE nombre like '"+jtxt[0].getText()+"'");
-					modso.cuenta=modso.contar_reg();
-					modso.datos = new String[modso.cuenta][modso.columnas];
-					modso.auxdatos = new String[modso.cuenta][modso.columnas];
-					modso.tablemodel = modso.cargar_tabla(modso.datos);
-					modso.jtblLateral.setModel(modso.tablemodel);
-					modso.jtblLateral.repaint();
-					modso.llena = false;
-					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][100]);
-					PnlModificarsocio.modificar.dispose();
 				}
 				
 				if(e.getActionCommand().equals("cancelarmod")){

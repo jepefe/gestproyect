@@ -244,7 +244,6 @@ public class PnlModificarsocio extends JPanel{
 						modificar.setBounds(0, 0, 600, 650);
 						modificar.setLocationRelativeTo(null);
 						modificar.setModal(true);
-						
 						conexion.Conectardb();
 				    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
 				    	rs = conexion.ConsultaSQL("SELECT p.nombre,p.direccion,p.codpostal,p.email,p.email2,p.telefono,p.telefono2,p.fax,p.observaciones FROM PARTNER p WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
@@ -291,22 +290,26 @@ public class PnlModificarsocio extends JPanel{
 					}
 					
 					if(e.getActionCommand().equals("eliminar")){
-						/*conexion.Conectardb();
-						conexion.executeUpdate("DELETE FROM PARTNER WHERE nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
-						
-						cuenta=contar_reg();
-						datos = new String[cuenta][columnas];
-						auxdatos = new String[cuenta][columnas];
-						tablemodel =cargar_tabla(datos);
-						jtblLateral.setModel(tablemodel);
-						llena = false;*/
-						//jtblLateral.repaint();
-						//jtblLateral.revalidate();
 						Component aviso = null;
-						//JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
 						int s = JOptionPane.showConfirmDialog(aviso, "Esta seguro??");
-						System.out.println(s);
-						conexion.cerrarConexion();
+						
+						if(s==0){
+							conexion.Conectardb();
+							conexion.executeUpdate("DELETE FROM PARTNER WHERE nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+							
+							cuenta=contar_reg();
+							datos = new String[cuenta][columnas];
+							auxdatos = new String[cuenta][columnas];
+							tablemodel =cargar_tabla(datos);
+							jtblLateral.setModel(tablemodel);
+							llena = false;
+							//jtblLateral.repaint();
+							//jtblLateral.revalidate();
+							
+							JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
+						
+							conexion.cerrarConexion();
+						}
 					}
 					
 					
@@ -352,7 +355,7 @@ public class PnlModificarsocio extends JPanel{
 		//auxdatos = new String[cuenta][3];
 		
     	
-    	rs = conexion.ConsultaSQL("SELECT p.nombre,p.telefono,p.telefono2 FROM PARTNER p");
+    	rs = conexion.ConsultaSQL("SELECT p.nombre,p.telefono,p.telefono2 FROM PARTNER p ORDER BY p.nombre");
     	int i=0;
     	try {
 			while(rs.next()){
