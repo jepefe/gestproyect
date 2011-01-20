@@ -2,12 +2,16 @@ package pkGesproject.Proyectos;
 import java.lang.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Date;
 import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -16,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
@@ -46,7 +51,8 @@ public class PnlNuevoProyecto extends JScrollPane{
 	ResultSet rs, rs2;
 	DefaultListModel modelo;  // listas Partners (lista2)
 	DefaultListModel modelo2;
-    public JList listaP ,listaP2 ;    
+	JFormattedTextField txtformat;
+	public JList listaP ,listaP2 ;    
 	int cuenta =0; // cuenta para array dinamica.
 	int idPro; // total partners. para saber ID.
 	int id_partner; // id partner.
@@ -67,9 +73,9 @@ public class PnlNuevoProyecto extends JScrollPane{
 		  jpnl.setLayout(new GridBagLayout());
 		// Array  de palabras, Fecha inico, Fecha fin, etc.
 	      final String[] fieldNames = {
-	    		  rec.idioma[rec.eleidioma][12],
-	    		  rec.idioma[rec.eleidioma][25],rec.idioma[rec.eleidioma][26]};
-	      int[] fieldWidths = {13,7,7};
+	    		  rec.idioma[rec.eleidioma][111], rec.idioma[rec.eleidioma][25]
+	    		 ,rec.idioma[rec.eleidioma][26],rec.idioma[rec.eleidioma][13]};
+	      int[] fieldWidths = {13,7,7,8};
 	      
 	      jtxt = new JTextField[fieldNames.length];
 	      // limite de caracteres 
@@ -80,6 +86,10 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      jdc2.setDateFormatString("dd/MM/yyyy");
 	      jdc1.setDateFormatString("dd/MM/yyyy");
 	      
+	       
+			
+		
+				
 	      // Situacion en el panel 
 	      final GridBagConstraints gbc = new GridBagConstraints();
 	      gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -90,16 +100,25 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      gbc.insets = new Insets(5,10,5,5);
 	      for(int i=0;i<fieldNames.length;++i) {
 	    	  gbc.gridwidth = GridBagConstraints.RELATIVE;
-	         jpnl.add(new JLabel(fieldNames[i]),gbc);
+	    	 if (i ==3){ 
+	    		 jpnl.add(new JLabel(fieldNames[i]),gbc);}
+	    	 	else{jpnl.add(new JLabel(fieldNames[i]),gbc);}
 	         if (i != 1 || i != 2 ){gbc.gridwidth = GridBagConstraints.REMAINDER;  } 
-	         if(i == 1 ||  i == 2 ){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);	}  
+	         if(i == 1 ||  i == 2 || i==3){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);} 
+	         if(i == 3){
+	      
+	        	JFormattedTextField txtprecio = new JFormattedTextField(NumberFormat.getCurrencyInstance());
+	     		txtprecio.setValue(new Integer(0));
+	     		txtprecio.setPreferredSize(new Dimension(165,30));
+	     		jpnl.add(txtprecio,gbc);
+	     		txtprecio.setVisible(false);
+	        	 
+	         }
 	         if (i == 1 ){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc1,gbc); }
 	         if (i == 2){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc2,gbc); }
-		}
-	  
-    
-
-		 
+	      }
+	      
+	      
 	      // Label 
 	      gbc.gridwidth = GridBagConstraints.RELATIVE;
 	      jpnl.add(new JLabel(rec.idioma[rec.eleidioma][17]),gbc); 
