@@ -253,6 +253,7 @@ public class PnlModificarProyecto extends JPanel{
 						mod.jbtncancelar.setVisible(false);
 						mod.jbtncancelar2.setVisible(true);
 						mod.jbtnaceptar2.setVisible(true);
+						mod.txtformat.setVisible(true);
 						modificar.setLocationRelativeTo(null);			
 	/*
 	 *
@@ -260,7 +261,7 @@ public class PnlModificarProyecto extends JPanel{
 	 * 
 	 */
 						conexion.Conectardb();
-				    	rs = conexion.ConsultaSQL("SELECT id_pro, p.nombre, p.descripcion, p.f_ini, p.f_fin FROM PROYECTOS as p WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+				    	rs = conexion.ConsultaSQL("SELECT id_pro, p.nombre, p.descripcion,prsupuesto, p.f_ini, p.f_fin FROM PROYECTOS as p WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
 							try {									
 										rs.next();
 											id_pro = rs.getInt(1);
