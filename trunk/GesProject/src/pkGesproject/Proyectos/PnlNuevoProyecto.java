@@ -101,6 +101,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      for(int i=0;i<fieldNames.length;++i) {
 	    	  gbc.gridwidth = GridBagConstraints.RELATIVE;
 	    	 if (i ==3){ 
+	    		 
 	    		 jpnl.add(new JLabel(fieldNames[i]),gbc);}
 	    	 	else{jpnl.add(new JLabel(fieldNames[i]),gbc);}
 	         if (i != 1 || i != 2 ){gbc.gridwidth = GridBagConstraints.REMAINDER;  } 
