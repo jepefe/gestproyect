@@ -306,7 +306,7 @@ public class PnlBusquedawp extends JPanel{
 						mod.jbtnaceptar2.setVisible(true);
 						mod.jbtncancelar.setVisible(false);
 						mod.jbtncancelar2.setVisible(true);
-						
+						mod.jtxt[0].setEditable(false);
 						
 				    	//rs = conexion.ConsultaSQL("SELECT w.nombre, w.presupuesto FROM WORKPAQUETS");
 						
@@ -357,20 +357,24 @@ public class PnlBusquedawp extends JPanel{
 						
 						modificar.setVisible(true);
 					}
-					if(e.getActionCommand().equals("eliminar")){
-						conexion.Conectardb();
-						conexion.executeUpdate("DELETE FROM WORKPAQUETS WHERE nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
-						Component aviso = null;
-						
-						cuenta=contar_reg();
-						datos = new String[cuenta][columnas];
-						auxdatos = new String[cuenta][columnas];
-						tablemodel =cargar_tabla(datos);
-						jtblLateral.setModel(tablemodel);
-						llena = false;
-						
-						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
-						conexion.cerrarConexion();
+						if(e.getActionCommand().equals("eliminar")){
+							Component aviso = null;
+							int s = JOptionPane.showConfirmDialog(aviso,rec.idioma[rec.eleidioma][59]);
+							if(s == 0){
+								conexion.Conectardb();
+								conexion.executeUpdate("DELETE FROM WORKPAQUETS WHERE nombre = '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+								
+								
+								cuenta=contar_reg();
+								datos = new String[cuenta][columnas];
+								auxdatos = new String[cuenta][columnas];
+								tablemodel =cargar_tabla(datos);
+								jtblLateral.setModel(tablemodel);
+								llena = false;
+								
+								JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
+								conexion.cerrarConexion();
+							}
 					}
 				}
             	
