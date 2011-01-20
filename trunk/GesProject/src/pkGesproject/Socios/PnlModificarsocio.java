@@ -187,7 +187,7 @@ public class PnlModificarsocio extends JPanel{
     							}
     						}
     						try{
-	    						for(j=0;j<3;j++){
+	    						for(j=0;j<columnas;j++){
 	    							for(i=0;i<cuenta;i++){
 	    								if(auxdatos[i][j]!= null){
 		    								if(auxdatos[i][j].regionMatches( true, 0, jtxt.getText(), 0, tam )){
@@ -276,13 +276,6 @@ public class PnlModificarsocio extends JPanel{
 								e1.printStackTrace();
 							}
 							
-							
-							cuenta=contar_reg();
-							datos = new String[cuenta][columnas];
-							auxdatos = new String[cuenta][columnas];
-							tablemodel =cargar_tabla(datos);
-							jtblLateral.setModel(tablemodel);
-							llena = false;
 						
 				    	conexion.cerrarConexion();
 						
