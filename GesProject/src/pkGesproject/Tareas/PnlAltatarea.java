@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
@@ -36,6 +37,7 @@ import pkGesproject.GesIdioma;
 import pkGesproject.GpComboBox;
 import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
+import pkGesproject.Proyectos.PnlModificarProyecto;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -52,14 +54,16 @@ public class PnlAltatarea extends JScrollPane{
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	JTextField[] jtxt;
 	JLabel[] jlbl;
-	JButton jbtnaceptar, jbtncancelar;
+	JButton jbtnaceptar, jbtncancelar,jbtnaceptarM, jbtncancelarM ;
 	JDateChooser jdc1,jdc2;
-	GpComboBox CmbWp = new GpComboBox();;
+	GpComboBox CmbWp = new GpComboBox();
+	
 	ConexionDb conexion = new ConexionDb();
 	JTextArea textarea = new JTextArea();
 	JTextArea textarea2 = new JTextArea();
 	ResultSet rs;
 	String nomwp;
+	PnlModificarTarea modificar = PnlModificarTarea.Obtener_Instancia();
 	int indexwp;
 	char caracter;
 	Border empty = new EmptyBorder(0,0,0,0);
@@ -142,9 +146,11 @@ public class PnlAltatarea extends JScrollPane{
 		   
 		   case (0):
 		   case (1):
+			  //panel.add(jtxt[i] = new JFormattedTextField(NumberFormat.getCurrencyInstance()));
 			   	panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 		   		break;
 		   case (2):
+			 
 			   panel.add(CmbWp,gbc);
 			   CmbWp.setPreferredSize(new Dimension(140,30));
 			   
@@ -157,6 +163,7 @@ public class PnlAltatarea extends JScrollPane{
 				try {
 				while(rs.next()){
 					CmbWp.addItem(rs.getString(1));	
+					CmbWp.setSelectedItem(null);
 					
 				}
 					} catch (SQLException e1) {
@@ -193,17 +200,7 @@ public class PnlAltatarea extends JScrollPane{
 				}
 		   
 		   if(i==0 ){
-			   
-			   try
-			   {
-			       MaskFormatter mascara = new MaskFormatter("##.##");
-			       JFormattedTextField textField = new JFormattedTextField(mascara);
-			       textField.setValue(new Float("12.34"));
-			   }
-			   catch (Exception e)
-			   {
-			       e.printStackTrace();
-			   }
+			 	 
 				jtxt[i].addKeyListener(new KeyAdapter(){
 				   public void keyTyped(KeyEvent e){
 				      caracter = e.getKeyChar();
@@ -217,9 +214,9 @@ public class PnlAltatarea extends JScrollPane{
 				});
 				}
 		}//fin for
-	  /*  
-		**
-		 * Creamos los dos botones para este panel 
+	  
+		/*
+		 * Creamos los dos botones del panel principal para este panel 
 		 */
 		
 		gbc.anchor = GridBagConstraints.EAST;
@@ -230,68 +227,119 @@ public class PnlAltatarea extends JScrollPane{
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][2]),gbc);
 		
+		/*Creamos los botones del panel modificar para solucionar los problemas
+		 * de duplicación del codigo de altatarea.
+		 */ 
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.insets = new Insets(30,10,5,5);
+		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		panel.add(jbtnaceptarM=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		panel.add(jbtncancelarM=new JButton(rec.idioma[rec.eleidioma][2]),gbc);
+		
 		ActionListener accion = new ActionListener(){
 
-		public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				if(e.getActionCommand().equals("aceptar")){
-					ConexionDb conexdb = new ConexionDb();
-					conexdb.Conectardb();
-					//nomwp = cbtipo.getSelectedItem().toString();
-					
-					rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS W WHERE W.nombre like'"+ CmbWp.getSelectedItem().toString()+"'" );
-					String id_wp = null;
-					try {
-						rs.next();
-						id_wp = rs.getString(1);
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+			public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					if(e.getActionCommand().equals("aceptar")){
+						ConexionDb conexdb = new ConexionDb();
+						conexdb.Conectardb();
+						//nomwp = cbtipo.getSelectedItem().toString();
+						
+						rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS W WHERE W.nombre like'"+ CmbWp.getSelectedItem().toString()+"'" );
+						String id_wp = null;
+						try {
+							rs.next();
+							id_wp = rs.getString(1);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+										
+						// cambiar fecha a sql
+						  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
+						  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
+						
+				//if (sqlDate1.getTime()< sqlDate2.getTime()){
+						
+						
+						conexdb.executeUpdate("INSERT INTO TAREAS (nombre, id_wp, descripcion, presupuesto,f_ini, f_fin, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+id_wp+"','"+textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
+						
+						/*
+						 * limpiamos todos los ocampos des pues de insertar datos
+						 */
+						for(int i=0;i<2;++i) {	
+							jtxt[i].setText("");
+						}	
+						
+						jdc1.setDate(null);
+						jdc2.setDate(null);
+						textarea.setText(null);
+						textarea2.setText(null);
+						  
+						CmbWp.setSelectedItem(null);
+						/**
+						 * Código para actualizar el table model
+						 */
+						
+						modificar.cuenta=modificar.contar_reg();
+						modificar.datos = new String[modificar.cuenta][modificar.columnas];
+						modificar.auxdatos = new String[modificar.cuenta][modificar.columnas];
+						modificar.tablemodel =modificar.cargar_tabla(modificar.datos,modificar.columnas);
+						modificar.jtblLateral.setModel(modificar.tablemodel);
+						modificar.
+						llena = false;
+						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
+						conexdb.cerrarConexion();
 					}
-									
-					// cambiar fecha a sql
-					  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
-					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 					
-			//if (sqlDate1.getTime()< sqlDate2.getTime()){
-					conexdb.executeUpdate("INSERT INTO TAREAS (nombre, id_wp, descripcion, presupuesto,f_ini, f_fin, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+id_wp+"','"+textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
-					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
-					conexdb.cerrarConexion();
+					
+				//}else{
+					//JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
+					// Marcar campo FECHA con error en ROJO 
+					//jdc2.setBackground(Color.red);
+			
+			//}
+				
+				// Borrar cuando damos al boton cancelar
+				if( e.getActionCommand().equals("cancelar")){
+					for(int i=0;i<2;++i) {	
+						jtxt[i].setText(null);
+					}	
+					jdc1.setDate(null);
+					jdc2.setDate(null);
+					textarea.setText(null);
+					textarea2.setText(null);
+					
+					// Borrar cuando termine de añadir
+					/*for(int i=0;i<5;++i) {	
+						System.out.println("aquiii");
+						jtxt[i].setText("");
+					
+					}*/
+					
 				}
-				
-				jdc1.setDate(null);
-				jdc2.setDate(null);
-				textarea.setText(null);
-				textarea2.setText(null);
-			//}else{
-				//JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
-				// Marcar campo FECHA con error en ROJO 
-				//jdc2.setBackground(Color.red);
-		
-		//}
 			
-			// Borrar cuando damos al boton cancelar
-			if( e.getActionCommand().equals("cancelar")){
-				for(int i=0;i<2;++i) {	
-					jtxt[i].setText("");
-					}	
-				jdc1.setDate(null);
-				jdc2.setDate(null);
-				textarea.setText(null);
-				textarea2.setText(null);
-				
-				// Borrar cuando termine de añadir
-				for(int i=0;i<2;++i) {	
-					jtxt[i].setText("");
-					}	
+				if(e.getActionCommand().equals("cancelar2")){
+					System.out.print("cerrar");
+					modificar.modta.dispose();
+				}
 			}
-		}
-			
 		};
+		//panel principal
 		jbtnaceptar.setActionCommand("aceptar");
 		jbtnaceptar.addActionListener(accion);
-		jbtncancelar.setActionCommand("cancelar"); 
+		jbtncancelar.setActionCommand("cancelar");
+		jbtncancelar.addActionListener(accion);
 
+		//panel modificar
+		jbtnaceptarM.setActionCommand("aceptar2");
+		jbtnaceptarM.addActionListener(accion);
+		jbtnaceptarM.setVisible(false);
+		jbtncancelarM.setActionCommand("cancelar2");
+		jbtncancelarM.addActionListener(accion);
+		jbtncancelarM.setVisible(false);
 		
 		panel.setVisible(true);
 		this.setViewportView(panel);

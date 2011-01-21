@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,6 +30,7 @@ import javax.swing.table.TableRowSorter;
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
 import pkGesproject.RsGesproject;
+import pkGesproject.Socios.PnlModificarsocio;
 import pkGesproject.Staff.pnlAlta_staff;
 
 public class PnlModificarTarea extends JPanel{
@@ -37,32 +39,48 @@ public class PnlModificarTarea extends JPanel{
 	ConexionDb conexion = new ConexionDb();
 	ResultSet rs,rs2;
 	JPanel panel = new JPanel();
+	JFrame aviso = new JFrame();
 	int cuenta = 0;
+	int columnas;
 	String datos[][];
+	Boolean existe = new Boolean(false);
 	String auxdatos[][];
+	static PnlModificarTarea instancia = new PnlModificarTarea(); 
 	String colu[] = {"Nombre","Presupuesto","Worpackages","Proyecto"};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
 			{recursos.icono[7],rec.idioma[rec.eleidioma][33]}};
 	JLabel jlbl;
-	PnlAltatarea pnlaltasocio = new PnlAltatarea();
+	PnlAltatarea mod = new PnlAltatarea();
 	JTextField jtxt;
 	JButton jbtn,jbtnmodificar,jbtneliminar,jbtnaceptar,jbtncancelar;
 	Boolean llena = new Boolean(false);
 	String[] fila = new String[4];
 	JTable jtblLateral;
 	JScrollPane jspntabla;
+	public static JDialog modta;
+	
 	//PnlModificarTarea tableOther = new PnlModificarTarea();
     
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
     public PnlModificarTarea(){
     	
+    	/**
+    	 * Metodo para cargar ppor primera vez el tableModel
+    	 */
+    	cuenta=contar_reg();
+    	columnas =colu.length;
+    	datos = new String[cuenta][columnas];
+		auxdatos = new String[cuenta][columnas];
+    	tablemodel=cargar_tabla(datos,columnas);
+    	jtblLateral  = new JTable(tablemodel);
+    	
+    	/*
     	String resul[]= new String[3];
     	conexion.Conectardb();
     
-    	rs = conexion.ConsultaSQL("SELECT  t.nombre, t.presupuesto, w.nombre, p.nombre FROM TAREAS t LEFT JOIN " +
-    	"WORKPAQUETS w ON t.id_wp = w.id_wp LEFT JOIN PROYECTOS p ON w.id_pro = p.id_pro");
+    	rs = conexion.ConsultaSQL("");
     	cuenta = 0;
     	try {
 			while(rs.next()){
@@ -93,11 +111,11 @@ public class PnlModificarTarea extends JPanel{
 			e.printStackTrace();
 		}
     	conexion.cerrarConexion();
-    	
+    	*/
     		
     	this.setLayout(new GridBagLayout()); //Ponemos el Layout al panel
 		
-    	jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));
+    	//jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));
        
     		jtxt=new JTextField(20);
     		jtxt.setText("Buscar...");
@@ -122,8 +140,7 @@ public class PnlModificarTarea extends JPanel{
     			
     		});
     		
-    		//RowSorter sorter = new TableRowSorter(colu);
-    		
+ 
             GridBagConstraints constraints = new GridBagConstraints();
             constraints.gridx = 0; // El área de texto empieza en la columna
             constraints.gridy = 0; // El área de texto empieza en la fila
@@ -172,92 +189,68 @@ public class PnlModificarTarea extends JPanel{
     				
     				if(llena==false){
     					for(int i=0;i<cuenta;i++){
-    						for(int j = 0;j<3;j++){
+    						for(int j = 0;j<columnas;j++){
     							auxdatos[i][j]= datos[i][j];
-    							datos[i][j]=null;
-    							
-    							
+    							datos[i][j]=null;								
     						}
-    						
-    						//System.out.print("\n");
     					}
     					llena = true;
-    					//System.out.print("LLENO");
     				}
     				
     				if(llena==true){
     					for(int i=0;i<cuenta;i++){
-    						for(int j = 0;j<3;j++){
+    						for(int j = 0;j<columnas;j++){
     							datos[i][j]=null;
     						}
     					}
-    					//System.out.print("LIMPIADO");
-    					
     					if(jtxt.getText().equals("")){
-    						
     						for(int i=0;i<cuenta;i++){
-        						for(int j = 0;j<3;j++){
+        						for(int j = 0;j<columnas;j++){
         							datos[i][j]=auxdatos[i][j];
         						}
         					}
     				    	conexion.cerrarConexion();
     				    	tablemodel.setDataVector(datos, colu);
-    				    	//System.out.print("BLANCO");
     					}else{
-    						//System.out.print("MOVIDA");
-    						
     						int tam = jtxt.getText().length();
     						int i=0;
     						int j=0;
     						int fila=0;
-    						String[] res = new String[3];//almacenamos los resultados
+    						String[] res = new String[columnas];//almacenamos los resultados
     						if(tablemodel.getRowCount() != 0){//si la tabla no esta vacia la vaciamos
     							for( int a = tablemodel.getRowCount() - 1; a >= 0; a-- ){
     						tablemodel.removeRow(a);
     							}
     						}
-    						
-    						
     						try{
-    							
-	    						while(auxdatos[i][j]!=null){
-	    							while(auxdatos[i][j]!=null){
-	    								//System.out.print("llega");
-	    								
+	    						for(j=0;j<columnas;j++){
+	    							for(i=0;i<cuenta;i++){
 	    								if(auxdatos[i][j]!= null){
 		    								if(auxdatos[i][j].regionMatches( true, 0, jtxt.getText(), 0, tam )){
-		    									//System.out.print("ENTRÓO");
-		    									
-		    									for(int col =0;col<3;col++){
-		    										
-		    										datos[fila][col]= auxdatos[i][col];
-		    										
-		    										res[col] = datos[fila][col];
+		    									existe=buscar_reg(datos,auxdatos,i,cuenta,columnas);
+		    									if(existe==false){
+			    									for(int col =0;col<columnas;col++){
+			    										datos[fila][col]= auxdatos[i][col];
+			    										res[col] = datos[fila][col];
+			    									}
+			    									fila++;
+			    									
+			    									Object[] dat = {res[0],res[1],res[2]};
+			    									tablemodel.addRow(dat);
 		    									}
-		    									fila++;
-		    									
-		    									Object[] dat = {res[0],res[1],res[2]};
-		    									tablemodel.addRow(dat);
-		    									
 		    									
 		    								}
 	    								}
-	    								
-	    								i++;
 	    							}
-	    							i=0;
-	    							j++;
 	    						}
 	    						
     						}catch(ArrayIndexOutOfBoundsException act1) {
-    						         
     						}
     					}
     						
     					
     				}
     			}
-
     			@Override
     			public void keyTyped(KeyEvent arg0) {
     				// TODO Auto-generated method stub
@@ -281,12 +274,16 @@ public class PnlModificarTarea extends JPanel{
 							
 						}else{
 						
-						JFrame modificar = new JFrame();
-						final PnlAltatareamod mod = new PnlAltatareamod();
-						modificar.add(mod);
-						modificar.setBounds(0, 0, 600, 650);
-						modificar.setLocationRelativeTo(null);
-					
+						modta = new JDialog();
+						
+						modta.add(mod);
+						modta.setBounds(0, 0, 600, 650);
+						modta.setLocationRelativeTo(null);
+						modta.setModal(true);
+						mod.jbtncancelar.setVisible(false);
+						mod.jbtnaceptar.setVisible(false);
+						mod.jbtnaceptarM.setVisible(true);
+						mod.jbtncancelarM.setVisible(true);
 						conexion.Conectardb();
 				    	
 						/**
@@ -312,69 +309,41 @@ public class PnlModificarTarea extends JPanel{
 								rs.next();
 								mod.CmbWp.setSelectedItem(rs.getString(1));
 								
-								
-								
-								jbtnaceptar.addActionListener(new ActionListener(){
-
-									@Override
-									
-																		
-									 public void actionPerformed(ActionEvent e) {
-										// TODO Auto-generated method stub
-										/*
-										rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+mod. .getSelectedItem().toString()+"'");
-										
-										
-										
-										String sector = null;
-										try {
-											rs.next();
-											sector = rs.getString(1);
-										} catch (SQLException e1) {
-											// TODO Auto-generated catch block
-											e1.printStackTrace();
-										}
-										//todo esto no te petaba antes o k¿? no por que no lo tenia
-										// te dije que esto es la parte del final tuya hay que cambiarla pero no se como cargar la info aqui
-										//ya se lo kkieres, vamos a arregalr todo eso entoences
-										//estas cosasa eran para el combobox para cargar la posicion que toca, si eligio españa que se carque esoe
-										//xo sigo sin entender xk esto esta dentro del boton aceptar? asi k voy a
-										//aqui lo que tengo que cargar es el CmbWp que es que tiene los WPs yaya los
-										//estavamos en la otra
-										
-										conexion.executeUpdate("UPDATE PARTNER SET nombre='"+mod.jtxt[0].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET direccion='"+mod.jtxt[1].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET sector='"+sector+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET pais='"+pais+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET codpostal='"+mod.jtxt[2].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET email='"+mod.jtxt[3].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET email2='"+mod.jtxt[4].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET telefono='"+mod.jtxt[5].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET telefono2='"+mod.jtxt[6].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET fax='"+mod.jtxt[7].getText()+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-										conexion.executeUpdate("UPDATE PARTNER SET observaciones='"+mod.textarea+"' WHERE nombre LIKE '"+mod.jtxt[0].getText()+"'");
-									*/
-									}
-									
-								});
-								
-							} catch (SQLException e1) {
+									} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						
 				    	conexion.cerrarConexion();
 						
-						modificar.setVisible(true);
+						modta.setVisible(true);
 						}
 					}
 					
 					if(e.getActionCommand().equals("eliminar")){
+						
+							JOptionPane.showConfirmDialog(aviso,"Va a borrar un registro, ¿Desea continuar?");
+							for(int i=0;i<2;i++){
+								//jtxt[i].setText("");
+							}
+						
 						conexion.Conectardb();
-						conexion.executeUpdate("DELETE FROM STAFF WHERE nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+						conexion.executeUpdate("DELETE FROM TAREAS WHERE nombre = '"+datos[jtblLateral.getSelectedRow()][0]+"'");
 						Component aviso = null;
-						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
+						
+						
+						/**
+						 * Código para actualizar el table model
+						 */
+						cuenta=contar_reg();
+						datos = new String[cuenta][columnas];
+						auxdatos = new String[cuenta][columnas];
+						tablemodel =cargar_tabla(datos,columnas);
+						jtblLateral.setModel(tablemodel);
+						llena = false;
+						
 						conexion.cerrarConexion();
+						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
 					}
 				}
             	
@@ -382,6 +351,8 @@ public class PnlModificarTarea extends JPanel{
             
             jbtnmodificar.setActionCommand("modificar");
             jbtnmodificar.addActionListener(event);
+            
+            
             jbtneliminar.setActionCommand("eliminar");
             jbtneliminar.addActionListener(event);
             
@@ -397,8 +368,109 @@ public class PnlModificarTarea extends JPanel{
     			}});
             */
             jtxt.addKeyListener(accion);
-            System.out.println("entrada 1");
+           
 		   
     
     }
+    /**
+     * Este metodo coje la matriz datos, descarga de la BD los datos de los partners y genera un tablemodel, el cual es devuelto por
+     * este método.
+     * @param datos
+     * @return
+     **/
+    
+    public DefaultTableModel cargar_tabla(String datos[][],int columnas){
+    	
+    	String resul[]= new String[3];
+    	conexion.Conectardb();
+    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
+    	
+		//datos = new String[cuenta][3];
+		//auxdatos = new String[cuenta][3];
+		
+    	
+    	rs = conexion.ConsultaSQL("SELECT  t.nombre, t.presupuesto, w.nombre, p.nombre FROM TAREAS t LEFT JOIN " +
+    	"WORKPAQUETS w ON t.id_wp = w.id_wp LEFT JOIN PROYECTOS p ON w.id_pro = p.id_pro");
+    	int i=0;
+    	try {
+			while(rs.next()){
+				for(int j = 1;j<columnas+1;j++){
+					datos[i][j-1] = rs.getString(j);
+					fila[j-1]=datos[i][j-1];
+					//System.out.print(fila[j-1]+";");
+				}
+				//System.out.print("\n");
+				i++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	conexion.cerrarConexion();
+    	
+    	DefaultTableModel tablemodel= new DefaultTableModel(datos,colu);
+    	return tablemodel;
+    }
+    
+    /**
+     * Este método lo que hace es devolvernos los registros que existen actualmente en la tabla partner
+     **/
+    public int contar_reg(){
+		
+    	conexion.Conectardb();
+    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
+    	rs = conexion.ConsultaSQL("SELECT  t.nombre, t.presupuesto, w.nombre, p.nombre FROM TAREAS t LEFT JOIN " +
+    	"WORKPAQUETS w ON t.id_wp = w.id_wp LEFT JOIN PROYECTOS p ON w.id_pro = p.id_pro");
+    	cuenta = 0;
+    	try {
+			while(rs.next()){
+				cuenta++;
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		conexion.cerrarConexion();
+    	return cuenta;
+    	
+    }
+    
+    /**
+     * Este metodo devuelve true o false dependiendo si el registro actual de auxdatos indicado por la variable i existe o no 
+     * en la tabla datos.
+     * @param datos
+     * @param auxdatos
+     * @param i
+     * @param cuenta
+     * @param columnas
+     * @return
+     **/
+    public Boolean buscar_reg(String datos[][],String auxdatos[][],int i,int cuenta,int columnas){
+		
+    	Boolean existe = false;
+    	int cont=0;
+    	for(int f =0;f<cuenta;f++){
+    		for(int c = 0;c<columnas;c++){
+    			if(auxdatos[i][c]==datos[f][c]){
+    				cont++;
+    			}
+    		}
+    		if(cont==columnas){
+    			existe=true;
+    		}
+    		cont=0;
+    	}
+    	
+    	return existe;
+    }
+    
+    /**
+     *Este metodo sirve para instanciar esta clase y poder llamar a sus objetos desde otra clase. 
+     * @return
+     */
+    
+    public static PnlModificarTarea Obtener_Instancia(){
+		return instancia;
+	}
 }
