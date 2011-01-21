@@ -18,6 +18,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
@@ -60,6 +61,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 	public GpComboBox CbCoordinador;
 	 int estado = 1;
 	 MouseListener mouseListener;
+	 PnlModificarProyecto modpro = PnlModificarProyecto.Obtener_Instancia();
 	 
 	 /*
 	  * Metodo para añadir un item
@@ -299,7 +301,15 @@ public class PnlNuevoProyecto extends JScrollPane{
 								conexdb.executeUpdate("INSERT INTO PARTNER_PROYECTOS(cod_part, id_pro,coordinador) VALUES ('"+id_partner+"','"+idPro+"','"+cord+"')" );	
 
 							}
-
+					    	
+					    	modpro.cuenta=modpro.contar_reg();
+							modpro.datos = new String[modpro.cuenta][modpro.columnas];
+							modpro.auxdatos = new String[modpro.cuenta][modpro.columnas];
+							modpro.tablemodel = modpro.cargar_tabla(modpro.datos,modpro.columnas);
+							modpro.jtblLateral.setModel(modpro.tablemodel);
+							modpro.jtblLateral.repaint();
+							modpro.llena = false;
+							
 							conexion.cerrarConexion();
 							/*
 							 * Insertar en las tablas correspondientes.
@@ -315,7 +325,8 @@ public class PnlNuevoProyecto extends JScrollPane{
 							textarea.setText(null);
 							
 							
-					}else{					
+					}else{		
+						
 							JOptionPane.showMessageDialog( null, rec.idioma[rec.eleidioma][72]); 
 							// Marcar campo FECHA con error en ROJO 
 							jdc2.setBackground(Color.red);								

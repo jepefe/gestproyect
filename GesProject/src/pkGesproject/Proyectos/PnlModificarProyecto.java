@@ -6,6 +6,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.ResultSet;
@@ -25,6 +27,7 @@ import javax.swing.table.DefaultTableModel;
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
 import pkGesproject.RsGesproject;
+import pkGesproject.Socios.PnlModificarsocio;
 import pkGesproject.Staff.pnlAlta_staff;
 
 
@@ -52,8 +55,10 @@ public class PnlModificarProyecto extends JPanel{
 	JScrollPane jspntabla;
 	public static int id_pro  ;
 	public static JFrame modificar;
-
+	static PnlModificarProyecto instancia = new PnlModificarProyecto();
 	int cuenta;
+	int columnas;
+	Boolean existe = new Boolean(false);
 	
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
@@ -62,10 +67,22 @@ public class PnlModificarProyecto extends JPanel{
 	}
 	
 	public PnlModificarProyecto(){
-    	/*
+    	
+		/**
+    	 * Cargamos los array y la tabla con los datos de la bd
+    	 */
+    	cuenta=contar_reg();
+    	columnas =colu.length;
+    	datos = new String[cuenta][columnas];
+		auxdatos = new String[cuenta][columnas];
+    	tablemodel=cargar_tabla(datos,columnas);
+    	jtblLateral  = new JTable(tablemodel);
+    		
+		
+		/*
     	 * Solucion para que la Matriz de Busqueda sea Dinamica.
     	 */
-    	conexion.Conectardb();
+    	/*conexion.Conectardb();
     	rs = conexion.ConsultaSQL("SELECT nombre,presupuesto,descripcion,f_ini,f_fin FROM PROYECTOS");
     	cuenta = 0 ; // Cuenta para hacer la matriz dinamica
     	try {
@@ -79,11 +96,11 @@ public class PnlModificarProyecto extends JPanel{
 		}
     	conexion.cerrarConexion();
     	datos = new String[cuenta][5];// Matriz Dinamica
-    	auxdatos = new String[cuenta][5];
+    	auxdatos = new String[cuenta][5];*/
     /*
      *  Sacar Datos de la base de datos y ponerlas en la matriz
      */
-    	conexion.Conectardb();
+    /*	conexion.Conectardb();
     	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
     	rs = conexion.ConsultaSQL("SELECT nombre,presupuesto,descripcion,f_ini,f_fin FROM PROYECTOS");
     	int i = 0; 
@@ -100,15 +117,35 @@ public class PnlModificarProyecto extends JPanel{
 			e.printStackTrace();
 		}
     	conexion.cerrarConexion();
-    	   		
+    	   		*/
     	this.setLayout(new GridBagLayout()); //Ponemos el Layout al panel
 		   
-        	jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));
+        //	jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));
        
     		jtext=new JTextField(20);
     		jtext.setText("Buscar...");
     		jtext.putClientProperty("JTextField.variant", "search");
     		jtext.putClientProperty("JTextField.Search.PlaceholderText", Boolean.TRUE);
+    		jtext.addFocusListener(new FocusListener(){
+
+				@Override
+				public void focusGained(FocusEvent arg0) {
+					// TODO Auto-generated method stub
+					jtext.setText("");
+				}
+
+				@Override
+				public void focusLost(FocusEvent arg0) {
+					// TODO Auto-generated method stub
+					if(jtext.getText().equals("")){
+						jtext.setText("Buscar...");
+					}
+					
+				}
+    			
+    		});
+    		
+    		
     		// BARRA BUSCAR
             GridBagConstraints constraints = new GridBagConstraints();
             constraints.gridx = 0; // El área de texto empieza en la columna
@@ -163,69 +200,71 @@ public class PnlModificarProyecto extends JPanel{
     			@Override
     			public void keyReleased(KeyEvent act) {
     				// TODO Auto-generated method stub
+    		     Object[] dat = new Object[columnas];	
     				if(llena==false){
     					for(int i=0;i<cuenta;i++){
-    						for(int j = 0;j<5;j++){
+    						for(int j = 0;j<columnas;j++){
     							auxdatos[i][j]= datos[i][j];
-    							datos[i][j]=null;
-    												
+    							datos[i][j]= null ;								
     						}
-    					
     					}
     					llena = true;
-    				}		
+    				}
+    				
     				if(llena==true){
     					for(int i=0;i<cuenta;i++){
-    						for(int j = 0;j<5;j++){
-    							datos[i][j]=null;
+    						for(int j = 0;j<columnas;j++){
+    							datos[i][j]= null;
     						}
     					}
-    					//System.out.print("LIMPIADO");
-    					
     					if(jtext.getText().equals("")){
-    						
     						for(int i=0;i<cuenta;i++){
-        						for(int j = 0;j<5;j++){
+        						for(int j = 0;j<columnas;j++){
         							datos[i][j]=auxdatos[i][j];
         						}
         					}
     				    	conexion.cerrarConexion();
     				    	tablemodel.setDataVector(datos, colu);
     					}else{
-
     						int tam = jtext.getText().length();
     						int i=0;
     						int j=0;
-    						String[] res = new String[5];//almacenamos los resultados
+    						int fila=0;
+    						String[] res = new String[columnas];//almacenamos los resultados
     						if(tablemodel.getRowCount() != 0){//si la tabla no esta vacia la vaciamos
     							for( int a = tablemodel.getRowCount() - 1; a >= 0; a-- ){
     						tablemodel.removeRow(a);
     							}
     						}
     						try{
-	    						while(auxdatos[i][j]!=null){
-	    							while(auxdatos[i][j]!=null){
-	    								if(auxdatos[i][j].regionMatches( true, 0, jtext.getText(), 0, tam )){								
-	    									for(int col =0;col<5;col++){
-	    										datos[i][col]= auxdatos[i][col];
-	    										res[col] = datos[i][col];
-	    									}
-	    									//Si el resultado no esta vacio que pasa por algun error de codigo a�adimos linea al jtable
-	    									if (!res[0].equals("") && !res[1].equals("") && !res[2].equals("")&& !res[3].equals("") && !res[4].equals("")){
-	    									Object[] dat = {res[0],res[1],res[2],res[3],res[4]};
-	    									tablemodel.addRow(dat);	    									
-	    									}	
-	    								}	    								
-	    								i++;
+	    						for(j=0;j<columnas;j++){
+	    							for(i=0;i<cuenta;i++){
+	    								if(auxdatos[i][j]!= null){
+		    								if(auxdatos[i][j].regionMatches( true, 0, jtext.getText(), 0, tam )){
+		    									existe=buscar_reg(datos,auxdatos,i,cuenta,columnas);
+		    									if(existe==false){
+			    									for(int col =0;col<columnas;col++){
+			    										datos[fila][col]= auxdatos[i][col];
+			    										dat[col] = datos[fila][col];
+			  			    						}
+			    									fila++;
+			    									
+			    									tablemodel.addRow(dat);
+		    									}
+		    									
+		    								}
+	    								}
 	    							}
-	    							i=0;
-	    							j++;
-	    						}    						
-    						}catch(ArrayIndexOutOfBoundsException act1) {   
+	    						}
+	    						
+    						}catch(ArrayIndexOutOfBoundsException act1) {
     						}
-    					}	
+    					}
+    						
+    					
     				}
     			}
+
     			@Override
     			public void keyTyped(KeyEvent arg0) {
     				// TODO Auto-generated method stub	
@@ -253,7 +292,7 @@ public class PnlModificarProyecto extends JPanel{
 						mod.jbtncancelar.setVisible(false);
 						mod.jbtncancelar2.setVisible(true);
 						mod.jbtnaceptar2.setVisible(true);
-						mod.txtformat.setVisible(true);
+					//	mod.txtformat.setVisible(true);
 						modificar.setLocationRelativeTo(null);			
 	/*
 	 *
@@ -316,4 +355,104 @@ public class PnlModificarProyecto extends JPanel{
             
             jtext.addKeyListener(accion);  
     }
+    /**
+     * Este metodo coje la matriz datos, descarga de la BD los datos de los partners y genera un tablemodel, el cual es devuelto por
+     * este método.
+     * @param datos
+     * @return
+     **/
+    
+    public DefaultTableModel cargar_tabla(String datos[][], int columna){
+    	
+    	String resul[]= new String[3];
+    	conexion.Conectardb();
+    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
+    	
+		//datos = new String[cuenta][3];
+		//auxdatos = new String[cuenta][3];
+		
+    	
+    	rs = conexion.ConsultaSQL("SELECT nombre,presupuesto,descripcion,f_ini,f_fin FROM PROYECTOS ORDER BY nombre");
+    	int i=0;
+    	try {
+			while(rs.next()){
+				for(int j = 1;j<columna+1;j++){
+					datos[i][j-1] = rs.getString(j);
+					fila[j-1]=datos[i][j-1];
+					//System.out.print(fila[j-1]+";");
+				}
+				//System.out.print("\n");
+				i++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	conexion.cerrarConexion();
+    	
+    	DefaultTableModel tablemodel= new DefaultTableModel(datos,colu);
+    	return tablemodel;
+    }
+    
+    /**
+     * Este método lo que hace es devolvernos los registros que existen actualmente en la tabla partner
+     **/
+    public int contar_reg(){
+		
+    	conexion.Conectardb();
+    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
+    	rs = conexion.ConsultaSQL("SELECT nombre,presupuesto,descripcion,f_ini,f_fin FROM PROYECTOS");
+    	cuenta = 0;
+    	try {
+			while(rs.next()){
+				cuenta++;
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		conexion.cerrarConexion();
+    	return cuenta;
+    	
+    }
+    
+    /**
+     * Este metodo devuelve true o false dependiendo si el registro actual de auxdatos indicado por la variable i existe o no 
+     * en la tabla datos.
+     * @param datos
+     * @param auxdatos
+     * @param i
+     * @param cuenta
+     * @param columnas
+     * @return
+     **/
+    public Boolean buscar_reg(String datos[][],String auxdatos[][],int i,int cuenta,int columnas){
+	
+    	Boolean existe = false;
+    	int cont=0;
+    	for(int f =0;f<cuenta;f++){
+    		for(int c = 0;c<columnas;c++){
+    			System.out.println("Datos Pro:"+ datos[f][c] );
+    			System.out.println("AuxDatos Pro:"+ datos[i][c]);
+    			if(auxdatos[i][c] == datos[f][c]){
+    				cont++;
+    			}
+    		}
+    		if(cont==columnas){
+    			existe=true;
+    		}
+    		cont=0;
+    	}
+    	
+    	return existe;
+    }
+    
+    /**
+     *Este metodo sirve para instanciar esta clase y poder llamar a sus objetos desde otra clase. 
+     * @return
+     */
+    public static PnlModificarProyecto Obtener_Instancia(){
+		return instancia;
+	}
 }
