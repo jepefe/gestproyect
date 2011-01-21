@@ -478,7 +478,7 @@ public class PnlBusquedawp extends JPanel{
     	int cont=0;
     	for(int f =0;f<cuenta;f++){
     		for(int c = 0;c<columnas;c++){
-    			if(auxdatos[i][c].equals(datos[f][c])){
+    			if(auxdatos[i][c]==datos[f][c]){
     				cont++;
     			}
     		}

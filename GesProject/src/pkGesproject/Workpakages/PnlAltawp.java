@@ -289,7 +289,9 @@ public class PnlAltawp extends JScrollPane{
 					  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 				//comprueba que la fecha de fin no es anterior  a la fecha de inicio.
-			if (sqlDate1.getTime()< sqlDate2.getTime()){
+					  System.out.println("antesif");
+				if (sqlDate1.getTime()< sqlDate2.getTime()){
+				System.out.println("entraen if");
 					conexdb.executeUpdate("INSERT INTO WORKPAQUETS (nombre, id_pro, descripcion, presupuesto,f_ini, f_fin, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+id_pro+"','"+textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
 					//para ver la id del workpaquets recien creado
 					rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS WHERE nombre like'"+ jtxt[0].getText()+"'" );
@@ -322,11 +324,12 @@ public class PnlAltawp extends JScrollPane{
 				jdc2.setDate(null);
 				textarea.setText(null);
 				textarea2.setText(null);
-			}
 			}else{
+				System.out.println("eelseee");
 				JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
 				// Marcar campo FECHA con error en ROJO 
 				jdc2.setBackground(Color.red);
+			}
 		
 		}
 			
