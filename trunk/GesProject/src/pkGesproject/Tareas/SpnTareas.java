@@ -29,10 +29,11 @@ public class SpnTareas extends JSplitPane{
 	JPanel panel = new JPanel();
 	JTable jtblLateral;
 	Border empty = new EmptyBorder(0,0,0,0);
+	PnlModificarTarea modificar = PnlModificarTarea.Obtener_Instancia();
 	JScrollPane miscroll;
 	Component[] panlsStaff = {
 			new PnlAltatarea(),
-			 miscroll=new JScrollPane(new PnlModificarTarea()),
+			 miscroll=new JScrollPane(modificar),
 			 new JPanel()};
 
 	public SpnTareas(){
