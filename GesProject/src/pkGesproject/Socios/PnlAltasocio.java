@@ -42,6 +42,7 @@ public class PnlAltasocio extends JScrollPane{
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	JTextField[] jtxt;
 	JLabel[] jlbl;
+	JLabel alerta;
 	JButton jbtnaceptar, jbtncancelar, jbtnaceptarmod, jbtncancelarmod;
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
@@ -80,11 +81,26 @@ public class PnlAltasocio extends JScrollPane{
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(5,10,5,5);
 		
-		/*
+		/**
 		 * Con el bucle for vamos creando tantos labels y textfields como 
 		 * nombres de campos hayamos metido en fieldNames.
 		 */
 		conexion.Conectardb();
+		GridBagConstraints gb = new GridBagConstraints();
+		gb.gridx = 0; // El área de texto empieza en la columna
+		gb.gridy = 0; // El área de texto empieza en la fila
+		gb.gridwidth = 2; // El área de texto ocupa x columnas.
+		gb.gridheight = 1; // El área de texto ocupa x filas.
+		gb.gridwidth = GridBagConstraints.REMAINDER;
+		gb.insets = new Insets(0,0,0,10);
+		gb.weighty = 1.0;
+		gb.anchor = GridBagConstraints.NORTH; 
+		alerta=new JLabel("hola");
+		alerta.setForeground(Color.red);
+		alerta.setBackground(Color.yellow);
+		alerta.setOpaque(true);
+		//alerta.setFont(new Font());
+		panel.add(alerta,gb);
 		for(int i=0;i<fieldNames.length;++i) {
 			gbc.anchor = GridBagConstraints.EAST;
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
@@ -232,11 +248,13 @@ public class PnlAltasocio extends JScrollPane{
 					if(rs.next()){
 						
 						jtxt[0].setBackground(Color.red);
+						alerta.setText("¡El nombre de partner ya existe!");
 						//jtxt[0].requestFocus();
 						//jtxt[0].selectAll();
 						//JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][75]);
 					}else{
 						jtxt[0].setBackground(Color.green);
+						alerta.setText("¡Nombre disponible!");
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -287,8 +305,6 @@ public class PnlAltasocio extends JScrollPane{
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		panel.add(jbtncancelarmod=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
 		
-		
-	     
 	     
 		ActionListener accion = new ActionListener(){
 
@@ -346,12 +362,14 @@ public class PnlAltasocio extends JScrollPane{
 									//cbpais.setSelectedIndex(0);
 									cbsector.setSelectedItem(null);
 									cbpais.setSelectedItem(null);
+									alerta.setText("");
+									jtxt[0].setBackground(Color.white);
 									//recursos.modso.cargar_tabla();
 									
 									modso.cuenta=modso.contar_reg();
 									modso.datos = new String[modso.cuenta][modso.columnas];
 									modso.auxdatos = new String[modso.cuenta][modso.columnas];
-									modso.tablemodel = modso.cargar_tabla(modso.datos);
+									modso.tablemodel = modso.cargar_tabla(modso.datos,modso.columnas);
 									modso.jtblLateral.setModel(modso.tablemodel);
 									modso.jtblLateral.repaint();
 									modso.llena = false;
@@ -382,6 +400,8 @@ public class PnlAltasocio extends JScrollPane{
 					textarea.setText("");
 					cbsector.setSelectedIndex(0);
 					cbpais.setSelectedIndex(0);
+					alerta.setText("");
+					jtxt[0].setBackground(Color.white);
 				}
 				
 				if(e.getActionCommand().equals("aceptarmod")){
@@ -422,7 +442,7 @@ public class PnlAltasocio extends JScrollPane{
 						modso.cuenta=modso.contar_reg();
 						modso.datos = new String[modso.cuenta][modso.columnas];
 						modso.auxdatos = new String[modso.cuenta][modso.columnas];
-						modso.tablemodel = modso.cargar_tabla(modso.datos);
+						modso.tablemodel = modso.cargar_tabla(modso.datos,modso.columnas);
 						modso.jtblLateral.setModel(modso.tablemodel);
 						modso.jtblLateral.repaint();
 						modso.llena = false;
