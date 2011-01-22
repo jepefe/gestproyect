@@ -58,6 +58,7 @@ public class PnlModificarsocio extends JPanel{
 	String[] fila = new String[3];
 	JTable jtblLateral;
 	JScrollPane jspntabla;
+	PnlAltasocio mod;
 	public static JDialog modificar;
 	static PnlModificarsocio instancia = new PnlModificarsocio(); 
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
@@ -72,7 +73,7 @@ public class PnlModificarsocio extends JPanel{
     	columnas =colu.length;
     	datos = new String[cuenta][columnas];
 		auxdatos = new String[cuenta][columnas];
-    	tablemodel=cargar_tabla(datos);
+    	tablemodel=cargar_tabla(datos,columnas);
     	jtblLateral  = new JTable(tablemodel);
         	
         	/**
@@ -239,11 +240,12 @@ public class PnlModificarsocio extends JPanel{
 						*/
 						
 						modificar = new JDialog();
-						final PnlAltasocio mod = new PnlAltasocio();
+						mod = new PnlAltasocio();
 						modificar.add(mod);
 						modificar.setBounds(0, 0, 600, 650);
 						modificar.setLocationRelativeTo(null);
 						modificar.setModal(true);
+						mod.jtxt[0].removeFocusListener(mod.foco);
 						conexion.Conectardb();
 				    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
 				    	rs = conexion.ConsultaSQL("SELECT p.nombre,p.direccion,p.codpostal,p.email,p.email2,p.telefono,p.telefono2,p.fax,p.observaciones FROM PARTNER p WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
@@ -293,7 +295,7 @@ public class PnlModificarsocio extends JPanel{
 							cuenta=contar_reg();
 							datos = new String[cuenta][columnas];
 							auxdatos = new String[cuenta][columnas];
-							tablemodel =cargar_tabla(datos);
+							tablemodel =cargar_tabla(datos,columnas);
 							jtblLateral.setModel(tablemodel);
 							llena = false;
 							//jtblLateral.repaint();
@@ -338,7 +340,7 @@ public class PnlModificarsocio extends JPanel{
      * @return
      **/
     
-    public DefaultTableModel cargar_tabla(String datos[][]){
+    public DefaultTableModel cargar_tabla(String datos[][],int columna){
     	
     	String resul[]= new String[3];
     	conexion.Conectardb();
@@ -352,7 +354,7 @@ public class PnlModificarsocio extends JPanel{
     	int i=0;
     	try {
 			while(rs.next()){
-				for(int j = 1;j<4;j++){
+				for(int j = 1;j<columna+1;j++){
 					datos[i][j-1] = rs.getString(j);
 					fila[j-1]=datos[i][j-1];
 					//System.out.print(fila[j-1]+";");
