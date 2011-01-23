@@ -103,20 +103,23 @@ public class FrmLogin extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		boolean validado = false;
 		if(e.getActionCommand().equals("aceptar")){
 			ConexionDb conexdb = new ConexionDb();
 			ResultSet rs;
 			conexdb.Conectardb();
 			rs = conexdb.ConsultaSQL("Select id_staff,password,nick_usuario,idioma from STAFF where nick_usuario = '" + jtxfUsuario.getText()+ "'");
 		try {
-			while (rs.next()) 
+			while ((validado == false) && rs.next()) 
 			{ 
 				if ((rs.getString(2).compareTo(jpwfPassword.getText())==0) && (rs.getString(3).compareTo(jtxfUsuario.getText())==0)){
+					validado = true;
 					recursos.setIdusuario(rs.getInt(1));
 					rec.eleidioma = rs.getInt(4);
 					System.out.println(recursos.getIdusuario() + "idioma:"+rec.eleidioma);
 					FrmPrincipal vppal = new FrmPrincipal();
 					recursos.getRfrmppal().inicializar();
+					
 					//if (rs.getInt(4) != null)
 					this.dispose();
 				}
@@ -130,12 +133,12 @@ public class FrmLogin extends JFrame implements ActionListener{
 			e1.printStackTrace();
 		}
 			conexdb.cerrarConexion();
-		try {
-			System.out.println(Boolean.toString(conexdb.conexion.isClosed()));
+		/*try {
+			//System.out.println(Boolean.toString(conexdb.conexion.isClosed()));
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}*/
 		}
 	}
 }
