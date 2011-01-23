@@ -264,74 +264,80 @@ public class PnlAltawp extends JScrollPane{
 					conexdb.Conectardb();
 					//nomwp = cbtipo.getSelectedItem().toString();
 					//para id de proyecto
-					rs = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre like'"+ CmbPro.getSelectedItem().toString()+"'" );
-					String id_pro = null;
-					try {
-						rs.next();
-						id_pro = rs.getString(1);
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					//para la id del partner
-					rs = conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like'"+ CmbPar.getSelectedItem().toString()+"'" );
-					String id_par = null;
-					try {
-						rs.next();
-						id_par = rs.getString(1);
-					} catch (SQLException e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
-					}
-					String id_wp = null;	
-					
-				// cambiar fecha a sql
-					  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
-					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
-				//comprueba que la fecha de fin no es anterior  a la fecha de inicio.
-					  System.out.println("antesif");
-				if (sqlDate1.getTime()< sqlDate2.getTime()){
-				System.out.println("entraen if");
-					conexdb.executeUpdate("INSERT INTO WORKPAQUETS (nombre, id_pro, descripcion, presupuesto,f_ini, f_fin, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+id_pro+"','"+textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
-					//para ver la id del workpaquets recien creado
-					rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS WHERE nombre like'"+ jtxt[0].getText()+"'" );
-					try {
-						rs.next();
-						id_wp = rs.getString(1);
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					//se limitan la necesidad de campos obligatorios
+					if(jtxt[0].getText()== ""||jtxt[1].getText()== ""||CmbPro.getSelectedItem()==null||CmbPar.getSelectedItem()==null||(jdc1.getDate()==null)||(jdc2.getDate()==null)){
+						JOptionPane.showMessageDialog( null, "Faltan campos obligatorios por rellenar"); 
+					}else{
+						rs = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre like'"+ CmbPro.getSelectedItem().toString()+"'" );
+						String id_pro = null;
+						try {
+							rs.next();
+							id_pro = rs.getString(1);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						//para la id del partner
+						rs = conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like'"+ CmbPar.getSelectedItem().toString()+"'" );
+						String id_par = null;
+						try {
+							rs.next();
+							id_par = rs.getString(1);
+						} catch (SQLException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+						String id_wp = null;	
 						
-					}
-					conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS (cod_part, id_wp) VALUES ('"+id_par+"','"+id_wp+"')");
-					
-					modwp.cuenta=modwp.contar_reg();
-					modwp.datos = new String[modwp.cuenta][modwp.columnas];
-					modwp.auxdatos = new String[modwp.cuenta][modwp.columnas];
-					modwp.tablemodel = modwp.cargar_tabla(modwp.datos);
-					modwp.jtblLateral.setModel(modwp.tablemodel);
-					modwp.jtblLateral.repaint();
-					modwp.llena = false;
-					
-					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
-					conexdb.cerrarConexion();
+					// cambiar fecha a sql
+						  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
+						  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
+					//comprueba que la fecha de fin no es anterior  a la fecha de inicio.
+						  System.out.println("antesif");
+					if (sqlDate1.getTime()< sqlDate2.getTime()){
+					System.out.println("entraen if");
+						conexdb.executeUpdate("INSERT INTO WORKPAQUETS (nombre, id_pro, descripcion, presupuesto,f_ini, f_fin, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+id_pro+"','"+textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
+						//para ver la id del workpaquets recien creado
+						rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS WHERE nombre like'"+ jtxt[0].getText()+"'" );
+						try {
+							rs.next();
+							id_wp = rs.getString(1);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+							
+						}
+						conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS (cod_part, id_wp) VALUES ('"+id_par+"','"+id_wp+"')");
+						
+						modwp.cuenta=modwp.contar_reg();
+						modwp.datos = new String[modwp.cuenta][modwp.columnas];
+						modwp.auxdatos = new String[modwp.cuenta][modwp.columnas];
+						modwp.tablemodel = modwp.cargar_tabla(modwp.datos);
+						modwp.jtblLateral.setModel(modwp.tablemodel);
+						modwp.jtblLateral.repaint();
+						modwp.llena = false;
+						
+						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
+						conexdb.cerrarConexion();
 
-				CmbPro.setSelectedItem(null);
-				CmbPar.setSelectedItem(null);
-				jtxt[0].setText("");
-				jtxt[1].setText("");
-				jdc1.setDate(null);
-				jdc2.setDate(null);
-				textarea.setText(null);
-				textarea2.setText(null);
-			}else{
-				System.out.println("eelseee");
-				JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
-				// Marcar campo FECHA con error en ROJO 
-				jdc2.setBackground(Color.red);
+					CmbPro.setSelectedItem(null);
+					CmbPar.setSelectedItem(null);
+					jtxt[0].setText("");
+					jtxt[1].setText("");
+					jdc1.setDate(null);
+					jdc2.setDate(null);
+					textarea.setText(null);
+					textarea2.setText(null);
+				}else{
+					System.out.println("eelseee");
+					JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
+					// Marcar campo FECHA con error en ROJO 
+					jdc2.setBackground(Color.red);
+				}
+			
 			}
-		
-		}
+					}
+					
 			
 			// Borrar cuando damos al boton cancelar
 			if( e.getActionCommand().equals("cancelar")){
