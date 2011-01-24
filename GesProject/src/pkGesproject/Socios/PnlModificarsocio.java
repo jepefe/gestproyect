@@ -55,7 +55,7 @@ public class PnlModificarsocio extends JPanel{
 	JButton jbtn,jbtnmodificar,jbtneliminar,jbtnaceptar,jbtncancelar,jbtnactualizar;
 	Boolean llena = new Boolean(false);
 	Boolean existe= new Boolean(false);
-	String[] fila = new String[3];
+	String[] fila;
 	JTable jtblLateral;
 	JScrollPane jspntabla;
 	PnlAltasocio mod;
@@ -70,7 +70,8 @@ public class PnlModificarsocio extends JPanel{
     	 * Cargamos los array y la tabla con los datos de la bd
     	 */
     	cuenta=contar_reg();
-    	columnas =colu.length;
+    	fila = new String[colu.length+1];
+    	columnas =colu.length+1;
     	datos = new String[cuenta][columnas];
 		auxdatos = new String[cuenta][columnas];
     	tablemodel=cargar_tabla(datos,columnas);
@@ -248,7 +249,7 @@ public class PnlModificarsocio extends JPanel{
 						mod.jtxt[0].removeFocusListener(mod.foco);
 						conexion.Conectardb();
 				    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
-				    	rs = conexion.ConsultaSQL("SELECT p.nombre,p.direccion,p.codpostal,p.email,p.email2,p.telefono,p.telefono2,p.fax,p.observaciones FROM PARTNER p WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+				    	rs = conexion.ConsultaSQL("SELECT p.nombre,p.direccion,p.codpostal,p.email,p.email2,p.telefono,p.telefono2,p.fax,p.observaciones FROM PARTNER p WHERE p.cod_part = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				    	int i=1;
 				    	
 							try {
@@ -258,18 +259,17 @@ public class PnlModificarsocio extends JPanel{
 									mod.jtxt[i-1].setText(rs.getString(i));
 								}
 								mod.textarea.setText(rs.getString(i));
-								rs=conexion.ConsultaSQL("SELECT p.pais FROM PAIS p INNER JOIN PARTNER pa ON p.id_pais = pa.pais WHERE pa.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+								rs=conexion.ConsultaSQL("SELECT p.pais FROM PAIS p INNER JOIN PARTNER pa ON p.id_pais = pa.pais WHERE pa.cod_part = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 								rs.next();
 								mod.cbpais.setSelectedItem(rs.getString(1));
 							
-								rs=conexion.ConsultaSQL("SELECT s.sector FROM SECTORES s INNER JOIN PARTNER p ON s.id_sector = p.sector WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+								rs=conexion.ConsultaSQL("SELECT s.sector FROM SECTORES s INNER JOIN PARTNER p ON s.id_sector = p.sector WHERE p.cod_part = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 								rs.next();
 								mod.cbsector.setSelectedItem(rs.getString(1));
 								mod.jbtnaceptar.setVisible(false);
 								mod.jbtncancelar.setVisible(false);
 								mod.jbtnaceptarmod.setVisible(true);
 								mod.jbtncancelarmod.setVisible(true);
-								mod.jtxt[0].setEditable(false);
 								
 								
 								
@@ -290,7 +290,7 @@ public class PnlModificarsocio extends JPanel{
 						
 						if(s==0){
 							conexion.Conectardb();
-							conexion.executeUpdate("DELETE FROM PARTNER WHERE nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+							conexion.executeUpdate("DELETE FROM PARTNER WHERE cod_part = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 							
 							cuenta=contar_reg();
 							datos = new String[cuenta][columnas];
@@ -350,7 +350,7 @@ public class PnlModificarsocio extends JPanel{
 		//auxdatos = new String[cuenta][3];
 		
     	
-    	rs = conexion.ConsultaSQL("SELECT p.nombre,p.telefono,p.telefono2 FROM PARTNER p ORDER BY p.nombre");
+    	rs = conexion.ConsultaSQL("SELECT p.nombre,p.telefono,p.telefono2,p.cod_part FROM PARTNER p ORDER BY p.nombre");
     	int i=0;
     	try {
 			while(rs.next()){
@@ -379,7 +379,7 @@ public class PnlModificarsocio extends JPanel{
 		
     	conexion.Conectardb();
     	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
-    	rs = conexion.ConsultaSQL("SELECT p.nombre,p.telefono,p.telefono2 FROM PARTNER p");
+    	rs = conexion.ConsultaSQL("SELECT p.nombre,p.telefono,p.telefono2,p.cod_part FROM PARTNER p");
     	cuenta = 0;
     	try {
 			while(rs.next()){

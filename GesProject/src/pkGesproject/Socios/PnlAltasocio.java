@@ -1,7 +1,9 @@
 package pkGesproject.Socios;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
@@ -45,6 +47,8 @@ public class PnlAltasocio extends JScrollPane{
 	JLabel alerta;
 	JButton jbtnaceptar, jbtncancelar, jbtnaceptarmod, jbtncancelarmod;
 	JPanel panel = new JPanel();
+	JPanel pnlcontenedor = new JPanel();
+	JPanel mensaje = new JPanel(); 
 	JFrame aviso = new JFrame();
 	ConexionDb conexion= new ConexionDb();
 	String paisaux, sectoraux;
@@ -56,6 +60,7 @@ public class PnlAltasocio extends JScrollPane{
 	Border empty = new EmptyBorder(0,0,0,0);
 	char caracter;
 	FocusListener foco;
+	Runnable servdisp;
 	public PnlAltasocio (){
 		final RsGesproject recursos = RsGesproject.Obtener_Instancia();
 		this.setBorder(empty);
@@ -86,18 +91,15 @@ public class PnlAltasocio extends JScrollPane{
 		 * nombres de campos hayamos metido en fieldNames.
 		 */
 		conexion.Conectardb();
-		GridBagConstraints gb = new GridBagConstraints();
-		gb.gridx = 0; // El área de texto empieza en la columna
-		gb.gridy = 0; // El área de texto empieza en la fila
-		gb.gridwidth = 2; // El área de texto ocupa x columnas.
-		gb.gridheight = 1; // El área de texto ocupa x filas.
-		gb.gridwidth = GridBagConstraints.REMAINDER;
-		gb.insets = new Insets(0,0,0,10);
-		gb.weighty = 1.0;
-		gb.anchor = GridBagConstraints.NORTH; 
+		
+		/**
+		 * Creamos el label para los avisos y ponemos los formatos elegidos
+		 */
 		alerta=new JLabel();
-		//alerta.setFont(new Font());
-		panel.add(alerta,gb);
+		alerta.setFont(new Font(Font.SANS_SERIF,Font.BOLD,11));
+		mensaje.add(alerta);
+		mensaje.setBackground(Color.decode("#D0E495"));
+		mensaje.setVisible(false);
 		for(int i=0;i<fieldNames.length;++i) {
 			gbc.anchor = GridBagConstraints.EAST;
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
@@ -244,14 +246,16 @@ public class PnlAltasocio extends JScrollPane{
 				try {
 					if(rs.next()){
 						
-						jtxt[0].setBackground(Color.red);
 						alerta.setText(rec.idioma[rec.eleidioma][75]);
+						mensaje.setBackground(Color.red);
+						mensaje.setVisible(true);
 						jtxt[0].requestFocus();
 						jtxt[0].selectAll();
 						//JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][75]);
 					}else{
-						jtxt[0].setBackground(Color.green);
 						alerta.setText(rec.idioma[rec.eleidioma][120]);
+						mensaje.setBackground(Color.decode("#D0E495"));
+						mensaje.setVisible(true);
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -371,7 +375,31 @@ public class PnlAltasocio extends JScrollPane{
 									modso.jtblLateral.repaint();
 									modso.llena = false;
 									
-									JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][24]);
+									
+									
+									servdisp = new Runnable(){
+
+										@Override
+										public void run() {
+											// TODO Auto-generated method stub
+											alerta.setText(rec.idioma[rec.eleidioma][24]);
+											mensaje.setBackground(Color.decode("#D0E495"));
+											mensaje.setVisible(true);
+											
+											try {
+												Thread.sleep(50000);
+											} catch (InterruptedException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+											
+											mensaje.setVisible(false);
+											
+										}
+										
+									};
+									Thread hilo = new Thread(servdisp);
+									hilo.start();
 									conexion.cerrarConexion();
 									//cbsector.setSelectedItem(null);
 									//cbpais.setSelectedItem(null);
@@ -390,15 +418,19 @@ public class PnlAltasocio extends JScrollPane{
 				}
 				
 				if(e.getActionCommand().equals("cancelar")){
-					JOptionPane.showMessageDialog(aviso,"Esta seguro de borrar los datos?");
-					for(int i=0;i<fieldNames.length;i++){
-						jtxt[i].setText("");
+					int s=JOptionPane.showConfirmDialog(aviso,"Esta seguro de borrar los datos?");
+					
+					if(s==0){
+						for(int i=0;i<fieldNames.length;i++){
+							jtxt[i].setText("");
+						}
+						textarea.setText("");
+						cbsector.setSelectedIndex(0);
+						cbpais.setSelectedIndex(0);
+						alerta.setText("");
+						mensaje.setVisible(false);
+						jtxt[0].setBackground(Color.white);
 					}
-					textarea.setText("");
-					cbsector.setSelectedIndex(0);
-					cbpais.setSelectedIndex(0);
-					alerta.setText("");
-					jtxt[0].setBackground(Color.white);
 				}
 				
 				if(e.getActionCommand().equals("aceptarmod")){
@@ -435,7 +467,7 @@ public class PnlAltasocio extends JScrollPane{
 							e1.printStackTrace();
 						}
 						
-						conexion.executeUpdate("UPDATE PARTNER SET nombre = '"+jtxt[0].getText()+"', sector = "+sector+", pais= "+pais+", direccion = '"+jtxt[1].getText()+"', codpostal = '"+jtxt[2].getText()+"', email = '"+jtxt[3].getText()+"', email2 = '"+jtxt[4].getText()+"', telefono = '"+jtxt[5].getText()+"', telefono2 = '"+jtxt[6].getText()+"', fax = '"+jtxt[7].getText()+"', observaciones = '"+textarea.getText()+"' WHERE nombre like '"+jtxt[0].getText()+"'");
+						conexion.executeUpdate("UPDATE PARTNER SET nombre = '"+jtxt[0].getText()+"', sector = "+sector+", pais= "+pais+", direccion = '"+jtxt[1].getText()+"', codpostal = '"+jtxt[2].getText()+"', email = '"+jtxt[3].getText()+"', email2 = '"+jtxt[4].getText()+"', telefono = '"+jtxt[5].getText()+"', telefono2 = '"+jtxt[6].getText()+"', fax = '"+jtxt[7].getText()+"', observaciones = '"+textarea.getText()+"' WHERE cod_part = '"+modso.datos[modso.jtblLateral.getSelectedRow()][3]+"'");
 						modso.cuenta=modso.contar_reg();
 						modso.datos = new String[modso.cuenta][modso.columnas];
 						modso.auxdatos = new String[modso.cuenta][modso.columnas];
@@ -445,6 +477,7 @@ public class PnlAltasocio extends JScrollPane{
 						modso.llena = false;
 						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][100]);
 						PnlModificarsocio.modificar.dispose();
+						PnlModificarsocio.modificar = null;
 					}
 				}
 				
@@ -465,8 +498,12 @@ public class PnlAltasocio extends JScrollPane{
 		jbtnaceptarmod.setVisible(false);
 		jbtncancelarmod.setVisible(false);
 		conexion.cerrarConexion();
-		panel.setOpaque(true);
-		this.setViewportView(panel);
+		pnlcontenedor.setLayout(new BorderLayout());
+		pnlcontenedor.setOpaque(true);
+		pnlcontenedor.add(mensaje,BorderLayout.NORTH);
+		pnlcontenedor.add(panel,BorderLayout.CENTER);
+		
+		this.setViewportView(pnlcontenedor);
 		
 	}
 }
