@@ -18,7 +18,7 @@ public class ConexionDbUnica {
 	static ConexionDbUnica instancia = new ConexionDbUnica();
 	
 	private ConexionDbUnica(){
-		this.Conectardb();
+		//this.Conectardb();
 	}
 	
 	public void Conectardb(){
