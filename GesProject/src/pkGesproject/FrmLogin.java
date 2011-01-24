@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 
 import java.awt.GridBagLayout;
@@ -95,31 +97,34 @@ public class FrmLogin extends JFrame implements ActionListener{
 	
 	
 	public void inicializar(){
-		jpwfPassword.addKeyListener(new KeyListener(){
+		
+		
+		
+			KeyListener kl = new KeyListener(){
 
 			@Override
 			public void keyPressed(KeyEvent k) {
-				if(k.getKeyCode() == 13){
-					login();
-				}
 				
+								
 			}
 
 			@Override
-			public void keyReleased(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-				
+			public void keyReleased(KeyEvent k) {
+				if(k.getKeyCode() == KeyEvent.VK_ENTER){
+					login();
+					System.out.println("caca");
+				}
 			}
 
 			@Override
 			public void keyTyped(KeyEvent k) {
-				if(k.getKeyCode() == KeyEvent.VK_ENTER){
-					
-					login();
-				}
+				
 			}
 			
-		});
+		};
+		jpwfPassword.addKeyListener(kl);
+		jtxfUsuario.addKeyListener(kl);
+		
 		jpnl_conexion.setVisible(false);
 		this.add(jpnl_conexion,BorderLayout.NORTH);
 		this.add(jpnl_login,BorderLayout.CENTER);
@@ -206,6 +211,12 @@ public class FrmLogin extends JFrame implements ActionListener{
 		conexdb.Conectardb();
 		rs = conexdb.ConsultaSQL("Select id_staff,password,nick_usuario,idioma from STAFF where nick_usuario = '" + jtxfUsuario.getText()+ "'");
 	try {
+		if(!rs.next()){
+			jlbconexion.setText("Incorrect USER/PASSWORD");
+			jpnl_conexion.setVisible(true);
+			System.out.println("Contraseña incorrecta");
+		}else{
+		rs.beforeFirst();	//Volvemos al la primera fila	
 		while ((validado == false) && rs.next()) 
 		{ 
 			if ((rs.getString(2).compareTo(jpwfPassword.getText())==0) && (rs.getString(3).compareTo(jtxfUsuario.getText())==0)){
@@ -228,6 +239,8 @@ public class FrmLogin extends JFrame implements ActionListener{
 	
 		}
 		}
+		}
+		
 	} catch (SQLException e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
