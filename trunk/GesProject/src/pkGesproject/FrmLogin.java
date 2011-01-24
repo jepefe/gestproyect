@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -45,6 +46,9 @@ public class FrmLogin extends JFrame implements ActionListener{
 	Runnable servdisp;
 	Thread hilo;
 	boolean validado = false;
+	InetAddress addr;
+
+	
 	
 	public FrmLogin(String titulo, int x, int y){
 		super(titulo);
@@ -66,20 +70,29 @@ public class FrmLogin extends JFrame implements ActionListener{
 
 			public void run() {
 				// TODO Auto-generated method stub
+				try {
+					addr = InetAddress.getByName(recursos.DBSERVER);
+				} catch (UnknownHostException e1) {
+					// TODO Auto-generated catch block
+					
+				}
 				while(!validado){
 					
 		
-				try {
-					InetAddress addr = InetAddress.getByName(recursos.SRVNAME);
+				
 					
-					jpnl_conexion.setVisible(false);
-					  jbtnaceptar.setEnabled(true);
-				} catch (UnknownHostException e1) {
-					jlbconexion.setText("Error: Server not available, verify your connection");
-					jpnl_conexion.setVisible(true);
-					  jbtnaceptar.setEnabled(false);
-				}
-				  
+					try {
+						addr.isReachable(2000);
+						jpnl_conexion.setVisible(false);
+						  jbtnaceptar.setEnabled(true);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						jlbconexion.setText("Error: Server not available, verify your connection");
+						jpnl_conexion.setVisible(true);
+						  jbtnaceptar.setEnabled(false);
+					}
+					
+				
 				
 				try {
 					Thread.sleep(5000);
