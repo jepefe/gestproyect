@@ -37,6 +37,7 @@ import javax.swing.text.MaskFormatter;
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
 import pkGesproject.GpComboBox;
+import pkGesproject.LimitadorDeDocumento;
 import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
 
@@ -192,6 +193,16 @@ public class PnlAltawp extends JScrollPane{
 		   		break;
 		   		
 		   }
+			switch (i){
+			case (0):
+				LimitadorDeDocumento ljtxt0 = new LimitadorDeDocumento(20);
+				jtxt[0].setDocument(ljtxt0);
+				break;
+			case (1):
+			   	LimitadorDeDocumento ljtxt1 = new LimitadorDeDocumento(15);
+				jtxt[1].setDocument(ljtxt1);
+				break;
+			}
 		   //Jformat
 		   //formato para el presupuesto
 		   if(i==1 ){
@@ -223,7 +234,7 @@ public class PnlAltawp extends JScrollPane{
 				   public void keyTyped(KeyEvent e){
 				      caracter = e.getKeyChar();
 				      if(((caracter < 'a') ||(caracter > 'z')) &&
-				    		  ((caracter < 'A') ||(caracter > 'Z')) && (caracter < '0') ||(caracter > '9') &&
+				    		  ((caracter < 'A') ||(caracter > 'Z')) && ((caracter < '0') ||(caracter > '9')) &&
 				         (caracter != KeyEvent.VK_BACK_SPACE)&&
 				         (caracter != KeyEvent.VK_SPACE) &&
 				         (caracter != '+') && (caracter != '(') && (caracter != ')')) {
