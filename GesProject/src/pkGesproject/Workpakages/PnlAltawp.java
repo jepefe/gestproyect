@@ -37,6 +37,7 @@ import javax.swing.text.MaskFormatter;
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
 import pkGesproject.GpComboBox;
+import pkGesproject.JTextFieldLimit;
 import pkGesproject.LimitadorDeDocumento;
 import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
@@ -193,13 +194,14 @@ public class PnlAltawp extends JScrollPane{
 		   		break;
 		   		
 		   }
+		   //se limitan los caracteres de los campos
 			switch (i){
 			case (0):
-				LimitadorDeDocumento ljtxt0 = new LimitadorDeDocumento(20);
+				JTextFieldLimit ljtxt0 = new JTextFieldLimit(20);
 				jtxt[0].setDocument(ljtxt0);
 				break;
 			case (1):
-			   	LimitadorDeDocumento ljtxt1 = new LimitadorDeDocumento(15);
+				JTextFieldLimit ljtxt1 = new JTextFieldLimit(15);
 				jtxt[1].setDocument(ljtxt1);
 				break;
 			}
