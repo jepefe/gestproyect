@@ -1,5 +1,6 @@
 package pkGesproject.Socios;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -59,6 +60,7 @@ public class PnlModificarsocio extends JPanel{
 	JTable jtblLateral;
 	JScrollPane jspntabla;
 	PnlAltasocio mod;
+	FocusListener comp;
 	public static JDialog modificar;
 	static PnlModificarsocio instancia = new PnlModificarsocio(); 
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
@@ -247,6 +249,7 @@ public class PnlModificarsocio extends JPanel{
 						modificar.setLocationRelativeTo(null);
 						modificar.setModal(true);
 						mod.jtxt[0].removeFocusListener(mod.foco);
+						
 						conexion.Conectardb();
 				    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
 				    	rs = conexion.ConsultaSQL("SELECT p.nombre,p.direccion,p.codpostal,p.email,p.email2,p.telefono,p.telefono2,p.fax,p.observaciones FROM PARTNER p WHERE p.cod_part = '"+datos[jtblLateral.getSelectedRow()][3]+"'");

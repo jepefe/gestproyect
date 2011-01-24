@@ -70,7 +70,7 @@ public class PnlAltasocio extends JScrollPane{
 		final String[] fieldNames = {
 		   rec.idioma[rec.eleidioma][3]+"*",rec.idioma[rec.eleidioma][7]+"*",
 		   rec.idioma[rec.eleidioma][8]+"*",rec.idioma[rec.eleidioma][9]+"*",rec.idioma[rec.eleidioma][70],rec.idioma[rec.eleidioma][5]+"*",
-		   rec.idioma[rec.eleidioma][5],rec.idioma[rec.eleidioma][71]+"*"
+		   rec.idioma[rec.eleidioma][5],rec.idioma[rec.eleidioma][71]
 		};
 		int[] fieldWidths = {20,30,6,20,20,10,10,10};
 		jtxt = new JTextField[fieldNames.length];
@@ -247,7 +247,7 @@ public class PnlAltasocio extends JScrollPane{
 					if(rs.next()){
 						
 						alerta.setText(rec.idioma[rec.eleidioma][75]);
-						mensaje.setBackground(Color.red);
+						mensaje.setBackground(Color.decode("#ec8989"));
 						mensaje.setVisible(true);
 						jtxt[0].requestFocus();
 						jtxt[0].selectAll();
@@ -315,8 +315,12 @@ public class PnlAltasocio extends JScrollPane{
 				if(e.getActionCommand().equals("aceptar")){
 					
 					if(jtxt[0].getText().equals("")||jtxt[1].getText().equals("")||cbsector.getSelectedItem() == null||cbpais.getSelectedItem() == null ||
-							jtxt[2].getText().equals("")||jtxt[3].getText().equals("")||jtxt[5].getText().equals("")||jtxt[7].getText().equals("")){
-						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][79]);
+							jtxt[2].getText().equals("")||jtxt[3].getText().equals("")||jtxt[5].getText().equals("")){
+						
+						alerta.setText(rec.idioma[rec.eleidioma][79]);
+						mensaje.setBackground(Color.decode("#ec8989"));
+						mensaje.setVisible(true);
+						//JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][79]);
 					}else{
 						conexion.Conectardb();
 						ResultSet rs;
