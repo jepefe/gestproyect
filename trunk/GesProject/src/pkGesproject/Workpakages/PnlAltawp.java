@@ -14,6 +14,8 @@ import java.awt.Insets;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -67,6 +69,7 @@ public class PnlAltawp extends JScrollPane{
 	PnlBusquedawp modwp = PnlBusquedawp.Obtener_Instancia();
 	static PnlAltawp instancia = new PnlAltawp();
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
+	FocusListener foco;
 	
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
@@ -205,6 +208,29 @@ public class PnlAltawp extends JScrollPane{
 				jtxt[1].setDocument(ljtxt1);
 				break;
 			}
+			foco = new FocusListener(){
+
+				@Override
+				public void focusGained(FocusEvent arg0) {
+					// TODO Auto-generated method stub
+					System.out.println("gana el foco");
+				}
+
+				@Override
+				public void focusLost(FocusEvent arg0) {
+					// TODO Auto-generated method stub
+					System.out.println("pierde focus");
+					java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
+					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
+					if (sqlDate1.getTime()> sqlDate2.getTime()){
+						jdc2.setBackground(Color.red);
+					}else{
+						jdc2.setBackground(null);
+					}
+				}
+				
+			};
+			jdc2.addFocusListener(foco);
 		   //Jformat
 		   //formato para el presupuesto
 		   if(i==1 ){
@@ -282,6 +308,7 @@ public class PnlAltawp extends JScrollPane{
 					//se limitan la necesidad de campos obligatorios
 					if(jtxt[0].getText()== ""||jtxt[1].getText()== ""||CmbPro.getSelectedItem()==null||CmbPar.getSelectedItem()==null||(jdc1.getDate()==null)||(jdc2.getDate()==null)){
 						JOptionPane.showMessageDialog( null, "Faltan campos obligatorios por rellenar"); 
+						jtxt[0].requestFocus();
 					}else{
 						rs = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre like'"+ CmbPro.getSelectedItem().toString()+"'" );
 						String id_pro = null;
@@ -372,6 +399,8 @@ public class PnlAltawp extends JScrollPane{
 		}
 			
 		};
+		
+		
 		jbtnaceptar.setActionCommand("aceptar");
 		jbtnaceptar.addActionListener(accion);
 		jbtncancelar.setActionCommand("cancelar");
@@ -422,7 +451,7 @@ public class PnlAltawp extends JScrollPane{
 						textarea2.setText(null);
 						jtxt[0].setText("");
 						jtxt[1].setText("");
-						
+						jdc2.setBackground(null);
 						modwp.cuenta=modwp.contar_reg();
 						modwp.datos = new String[modwp.cuenta][modwp.columnas];
 						modwp.auxdatos = new String[modwp.cuenta][modwp.columnas];
