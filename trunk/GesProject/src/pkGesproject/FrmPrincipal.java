@@ -57,20 +57,43 @@ public class FrmPrincipal extends JFrame {
 	JToggleButton jbtnTimesheet = new JToggleButton(recursos.icono[12]);
 	
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
-	SpnStaff spnstaff = new SpnStaff();
-	SpnSocios spnsocios = new SpnSocios();
-	SpnProyectos spnproyectos = new SpnProyectos();
-	SpnWorkpack spnworkpack = new SpnWorkpack();
-	SpnTareas spntareas = new SpnTareas();
-	SpnTablas spntablas = new SpnTablas();
-	SpnTimesheet spntimesheet = new SpnTimesheet();
-	FrmNuevapalabra nueva = new FrmNuevapalabra();
+	
+	SpnStaff spnstaff;
+	SpnSocios spnsocios;
+	SpnProyectos spnproyectos;
+	SpnWorkpack spnworkpack;
+	SpnTareas spntareas;
+	SpnTablas spntablas;
+	SpnTimesheet spntimesheet;
+	FrmNuevapalabra nueva;
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	
 	
 	private Rectangle maxBounds;
 	
 	public FrmPrincipal(){
+		
+		spnstaff = new SpnStaff();
+		recursos.progresocarga =1;
+		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Staff");
+		spnsocios = new SpnSocios();
+		recursos.progresocarga =2;
+		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Partners");
+		spnproyectos = new SpnProyectos();
+		recursos.progresocarga =4;
+		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Projects");
+		spnworkpack = new SpnWorkpack();
+		recursos.progresocarga =7;
+		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Work Packages");
+		spntareas = new SpnTareas();
+		recursos.progresocarga =9;
+		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Staff");
+		spntablas = new SpnTablas();
+		recursos.progresocarga =10;
+		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Data");
+		spntimesheet = new SpnTimesheet();
+		nueva = new FrmNuevapalabra();
+		
 		jbtnAgregar.setVisible(true);
 		super.setBounds(0, 0, recursos.getFrmppalWidth(), recursos.getFrmppalHeight());
 		this.setTitle(recursos.APNAME);

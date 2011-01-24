@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -13,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -43,10 +45,13 @@ public class FrmLogin extends JFrame implements ActionListener{
 	JPanel jpnl_conexion = new JPanel();
 	JPanel jpnl_login = new JPanel();
 	JLabel jlbconexion = new JLabel();
+	JLabel jlbmsgcargando = new JLabel();
+	JProgressBar jpbcargando = new JProgressBar(0,10);
 	Runnable servdisp;
 	Thread hilo;
 	boolean validado = false;
 	InetAddress addr;
+	Runnable cargando;
 
 	
 	
@@ -56,6 +61,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 		this.getRootPane().putClientProperty(SeaGlassRootPaneUI.UNIFIED_TOOLBAR_LOOK, Boolean.TRUE);//Esta linea es necesaria para que la barra de titulo y el jtoolbar sean homogeneos
 		this.setVisible(true);
 		this.setLayout(new BorderLayout());
+		recursos.instanciafrmlogin = this;
 		jpnl_login.setLayout(new GridBagLayout());
 		this.inicializar();
 		this.ComprobarConexion();
@@ -110,9 +116,11 @@ public class FrmLogin extends JFrame implements ActionListener{
 	
 	
 	
+	
+	
 	public void inicializar(){
 		
-		
+	
 		
 			KeyListener kl = new KeyListener(){
 
@@ -151,7 +159,6 @@ public class FrmLogin extends JFrame implements ActionListener{
 		jpnl_conexion.setBackground(Color.decode("#D0E495"));
 		jlbconexion.setFont(new Font(Font.SANS_SERIF, Font.BOLD,11));
 		jpnl_conexion.add(jlbconexion);
-		
 		
 		cons.gridx = 0;
 		cons.gridy = 0;
@@ -216,12 +223,76 @@ public class FrmLogin extends JFrame implements ActionListener{
 	}
 	
 	
+public void CargandoAp(){
+		
+		int i=0;
+		
+		for(i=0;i<jpnl_login.getComponentCount();i++){
+			jpnl_login.getComponent(i).setVisible(false);
+			
+		}
+		jlbmsgcargando.setFont(new Font(Font.SANS_SERIF, Font.BOLD,13));
+
+		cons.gridx = 0;
+		cons.gridy = 0;
+		cons.gridwidth=1;
+		cons.gridheight=1;
+		cons.weighty = 0;
+		jpnl_login.add(jpbcargando,cons);
+		
+		cons.gridx = 0;
+		cons.gridy = 1;
+		cons.gridwidth=1;
+		cons.gridheight=0;
+		cons.weighty = 0;
+		jpnl_login.add(jlbmsgcargando,cons);
+		
+		//Hilo que maneja el progressbar de carga
+		cargando = new Runnable(){
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				while(recursos.progresocarga <= 10) {
+				jpbcargando.setValue(recursos.progresocarga);
+				
+				
+				try {
+					Thread.sleep(7);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				}
+			}
+			
+		};
+		
+		Thread hilocargando = new Thread(cargando);
+		hilocargando.start();
+		
+	}
+	
+	
+
+
 	public void login(){
 		
+	
+		Runnable rlogin = new Runnable(){
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+			
+			
 		ConexionDbUnica.instancia.Conectardb();
 		rec.inicializar();
 		ConexionDb conexdb = new ConexionDb();
 		ResultSet rs;
+		
 		conexdb.Conectardb();
 		rs = conexdb.ConsultaSQL("Select id_staff,password,nick_usuario,idioma from STAFF where nick_usuario = '" + jtxfUsuario.getText()+ "'");
 	try {
@@ -234,7 +305,8 @@ public class FrmLogin extends JFrame implements ActionListener{
 		while ((validado == false) && rs.next()) 
 		{ 
 			if ((rs.getString(2).compareTo(jpwfPassword.getText())==0) && (rs.getString(3).compareTo(jtxfUsuario.getText())==0)){
-				validado = true;
+				CargandoAp();
+				validado = true;				
 				jpnl_conexion.setVisible(false);
 				recursos.setIdusuario(rs.getInt(1));
 				rec.eleidioma = rs.getInt(4);
@@ -245,7 +317,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 				//if (rs.getInt(4) != null)
 				
 				
-				this.dispose();
+				dispose();
 			}
 			else{
 				jlbconexion.setText("Incorrect USER/PASSWORD");
@@ -261,12 +333,14 @@ public class FrmLogin extends JFrame implements ActionListener{
 		e1.printStackTrace();
 	}
 		conexdb.cerrarConexion();
-	/*try {
-		//System.out.println(Boolean.toString(conexdb.conexion.isClosed()));
-	} catch (SQLException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}*/
-	}
 	
+
+
+	
+		
+}
+};
+	Thread hlogin = new Thread(rlogin);
+	hlogin.start();
+}
 }

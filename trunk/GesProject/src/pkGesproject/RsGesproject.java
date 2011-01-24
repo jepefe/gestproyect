@@ -36,6 +36,8 @@ public class RsGesproject {
 	final String FTPSERVER = "93.189.94.177";
 	final String FTPUSER = "gesproyect";
 	final String FTPPASS = "proyecto2010";
+	public int progresocarga = 0;
+	public FrmLogin instanciafrmlogin;
 	/**String constante que contiene el titulo de la aplicaion*/
 	public final String APNAME = "GesProyect - Florida"; //Constante que contiene el nombre de la aplicacion
 	public ImageIcon[] icono = { 
