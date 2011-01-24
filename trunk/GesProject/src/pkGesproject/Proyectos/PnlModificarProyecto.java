@@ -293,7 +293,7 @@ public class PnlModificarProyecto extends JPanel{
 						mod.txtprecio.setVisible(true);
 						mod.pres.setVisible(true);
 						modificar.setModal(true);
-								
+						modificar.setLocationRelativeTo(null);
 	/*
 	 *
 	 * Introducir datos al panel para poder modificar
@@ -337,15 +337,25 @@ public class PnlModificarProyecto extends JPanel{
 					 */
 						
 						modificar.setVisible(true);
-					}
-					if(e.getActionCommand().equals("eliminar")){
-						conexion.Conectardb();
-						conexion.executeUpdate("DELETE FROM PROYECTOS WHERE nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
-						Component aviso = null;
-						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][108]);
-						conexion.cerrarConexion();
-					}
+					}	
 				}
+				if(e.getActionCommand().equals("eliminar")){
+					conexion.Conectardb();
+					conexion.executeUpdate("DELETE FROM PROYECTOS WHERE nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+					Component aviso = null;
+					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][108]);
+					
+					cuenta=contar_reg();
+					datos = new String[cuenta][columnas];
+					auxdatos = new String[cuenta][columnas];
+					tablemodel = cargar_tabla(datos,columnas);
+					jtblLateral.setModel(tablemodel);
+					jtblLateral.repaint();
+					llena = false;
+					conexion.cerrarConexion();
+				}
+				
+				
 				
 			}	
             };
