@@ -95,10 +95,7 @@ public class PnlAltasocio extends JScrollPane{
 		gb.insets = new Insets(0,0,0,10);
 		gb.weighty = 1.0;
 		gb.anchor = GridBagConstraints.NORTH; 
-		alerta=new JLabel("hola");
-		alerta.setForeground(Color.red);
-		alerta.setBackground(Color.yellow);
-		alerta.setOpaque(true);
+		alerta=new JLabel();
 		//alerta.setFont(new Font());
 		panel.add(alerta,gb);
 		for(int i=0;i<fieldNames.length;++i) {
@@ -248,13 +245,13 @@ public class PnlAltasocio extends JScrollPane{
 					if(rs.next()){
 						
 						jtxt[0].setBackground(Color.red);
-						alerta.setText("¡El nombre de partner ya existe!");
-						//jtxt[0].requestFocus();
-						//jtxt[0].selectAll();
+						alerta.setText(rec.idioma[rec.eleidioma][75]);
+						jtxt[0].requestFocus();
+						jtxt[0].selectAll();
 						//JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][75]);
 					}else{
 						jtxt[0].setBackground(Color.green);
-						alerta.setText("¡Nombre disponible!");
+						alerta.setText(rec.idioma[rec.eleidioma][120]);
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
