@@ -44,6 +44,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 	JLabel jlbconexion = new JLabel();
 	Runnable servdisp;
 	Thread hilo;
+	boolean validado = false;
 	
 	public FrmLogin(String titulo, int x, int y){
 		super(titulo);
@@ -65,7 +66,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 
 			public void run() {
 				// TODO Auto-generated method stub
-				while(true){
+				while(!validado){
 					
 		
 				try {
@@ -112,7 +113,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 			public void keyReleased(KeyEvent k) {
 				if(k.getKeyCode() == KeyEvent.VK_ENTER){
 					login();
-					System.out.println("caca");
+				
 				}
 			}
 
@@ -203,7 +204,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 	
 	
 	public void login(){
-		boolean validado = false;
+		
 		ConexionDbUnica.instancia.Conectardb();
 		rec.inicializar();
 		ConexionDb conexdb = new ConexionDb();
@@ -230,7 +231,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 				
 				//if (rs.getInt(4) != null)
 				
-				hilo.interrupt();
+				
 				this.dispose();
 			}
 			else{
