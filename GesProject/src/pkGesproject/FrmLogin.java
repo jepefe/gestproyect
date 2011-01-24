@@ -39,6 +39,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 	JPanel jpnl_login = new JPanel();
 	JLabel jlbconexion = new JLabel();
 	Runnable servdisp;
+	
 	public FrmLogin(String titulo, int x, int y){
 		super(titulo);
 		this.setSize(x,y);
@@ -93,6 +94,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 	
 	
 	public void inicializar(){
+		jpnl_conexion.setVisible(false);
 		this.add(jpnl_conexion,BorderLayout.NORTH);
 		this.add(jpnl_login,BorderLayout.CENTER);
 		jbtnaceptar.setActionCommand("aceptar");
@@ -164,6 +166,8 @@ public class FrmLogin extends JFrame implements ActionListener{
 		boolean validado = false;
 		
 		if(e.getActionCommand().equals("aceptar")){
+			ConexionDbUnica.instancia.Conectardb();
+			rec.inicializar();
 			ConexionDb conexdb = new ConexionDb();
 			ResultSet rs;
 			conexdb.Conectardb();
