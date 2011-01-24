@@ -40,8 +40,10 @@ public class PnlNuevoProyecto extends JScrollPane{
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	JPanel jpnl = new JPanel();
 	ScrollPane Sp = new ScrollPane();
+	JLabel pres = new JLabel();
 	JTextArea textarea;
 	JTextField[] jtxt;
+	
 	String Npartners[] ;	// array con partners
 	JDateChooser jdc1,jdc2;
 	Date dateini, datefin ;
@@ -52,25 +54,21 @@ public class PnlNuevoProyecto extends JScrollPane{
 	ResultSet rs, rs2;
 	DefaultListModel modelo;  // listas Partners (lista2)
 	DefaultListModel modelo2;
-	JFormattedTextField txtformat;
 	public JList listaP ,listaP2 ;    
 	int cuenta =0; // cuenta para array dinamica.
 	int idPro; // total partners. para saber ID.
-	int id_partner; // id partner.
-	int id_partner2; // id para poder borrar
+	int id_partner,id_partner2; // id partner. // id para poder borrar
 	public GpComboBox CbCoordinador;
 	 int estado = 1;
 	 MouseListener mouseListener;
 	 PnlModificarProyecto modpro = PnlModificarProyecto.Obtener_Instancia();
-	 
+	 JTextFieldLimit limite = new JTextFieldLimit(15);
+	 JTextField txtprecio;
 	 /*
 	  * Metodo para añadir un item
 	  */
-	
-	 
+ 
 	public PnlNuevoProyecto()  {
-		// formato fecha
-		
 		
 		  jpnl.setLayout(new GridBagLayout());
 		// Array  de palabras, Fecha inico, Fecha fin, etc.
@@ -88,38 +86,30 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      jdc2.setDateFormatString("dd/MM/yyyy");
 	      jdc1.setDateFormatString("dd/MM/yyyy");
 	      
-	       
-			
-		
-				
 	      // Situacion en el panel 
 	      final GridBagConstraints gbc = new GridBagConstraints();
 	      gbc.gridwidth = GridBagConstraints.REMAINDER;
 	      gbc.anchor = GridBagConstraints.CENTER;
 	      gbc.insets = new Insets(20,0,15,0);
-	      
 	      gbc.anchor = GridBagConstraints.WEST;
 	      gbc.insets = new Insets(5,10,5,5);
+	     
 	      for(int i=0;i<fieldNames.length;++i) {
 	    	  gbc.gridwidth = GridBagConstraints.RELATIVE;
-	    	 if (i ==3){ 
-	    		 
-	    		 jpnl.add(new JLabel(fieldNames[i]),gbc);}
-	    	 	else{jpnl.add(new JLabel(fieldNames[i]),gbc);}
+	    	 if (i ==3){jpnl.add(pres = new JLabel(fieldNames[i]),gbc);
+	    		 pres.setVisible(false);
+	    	 	}else{jpnl.add(new JLabel(fieldNames[i]),gbc);}
 	         if (i != 1 || i != 2 ){gbc.gridwidth = GridBagConstraints.REMAINDER;  } 
-	         if(i == 1 ||  i == 2 || i==3){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);} 
+	         if(i == 1 ||  i == 2 || i ==3){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);}  
 	         if(i == 3){
-	      
-	        	JFormattedTextField txtprecio = new JFormattedTextField(NumberFormat.getCurrencyInstance());
-	     		txtprecio.setValue(new Integer(0));
-	     		txtprecio.setPreferredSize(new Dimension(165,30));
-	     		jpnl.add(txtprecio,gbc);
-	     		txtprecio.setVisible(false);
-	        	 
+	        	 txtprecio = new JTextField(new JTextFieldLimit(10), null, 7);
+	        	 //txtprecio.setPreferredSize(new Dimension(165,30));
+	        	 jpnl.add(txtprecio,gbc); 
+	        	 txtprecio.setVisible(false);
 	         }
 	         if (i == 1 ){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc1,gbc); }
 	         if (i == 2){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc2,gbc); }
-	      }
+	      }// fin for
 	      
 	      
 	      // Label 
@@ -195,7 +185,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 	      gbc.gridwidth = GridBagConstraints.REMAINDER; 
 	      
 	      CbCoordinador = new GpComboBox() ; //ComboBox (Coordinador)
-	      
+	      CbCoordinador.setPreferredSize(new Dimension(165,30));
 	      jpnl.add(CbCoordinador,gbc);
 	     
 	     // Evento doble click primer JLIST
@@ -258,7 +248,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 				@Override
 			public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-				if(e.getActionCommand().equals("aceptar")){
+					if(e.getActionCommand().equals("aceptar")){
 						// Poner el color de  JDC2 (Fecha2) correcto
 							jdc2.setBackground(null);
 							
@@ -268,7 +258,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 							// cambiar fecha a sql
 						    java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 						    java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
-					  if (sqlDate1.getTime()< sqlDate2.getTime()){
+					 if (sqlDate1.getTime()< sqlDate2.getTime()){
 							conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion,estado, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+estado+"','"+sqlDate1+"','"+sqlDate2+"')");
 
 							/*
@@ -302,13 +292,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 
 							}
 					    	
-					    	modpro.cuenta=modpro.contar_reg();
-							modpro.datos = new String[modpro.cuenta][modpro.columnas];
-							modpro.auxdatos = new String[modpro.cuenta][modpro.columnas];
-							modpro.tablemodel = modpro.cargar_tabla(modpro.datos,modpro.columnas);
-							modpro.jtblLateral.setModel(modpro.tablemodel);
-							modpro.jtblLateral.repaint();
-							modpro.llena = false;
+					    	
 							
 							conexion.cerrarConexion();
 							/*
@@ -322,16 +306,14 @@ public class PnlNuevoProyecto extends JScrollPane{
 							jtxt[0].setText("");
 							jdc1.setDate(null);
 							jdc2.setDate(null);
-							textarea.setText(null);
-							
-							
+							textarea.setText(null);		
 					}else{		
 						
 							JOptionPane.showMessageDialog( null, rec.idioma[rec.eleidioma][72]); 
 							// Marcar campo FECHA con error en ROJO 
 							jdc2.setBackground(Color.red);								
 							}						
-					}// Borrar cuando damos al boton borrar datos
+							}// Borrar cuando damos al boton borrar datos
 					if( e.getActionCommand().equals("cancelar")){
 					
 						
@@ -343,18 +325,8 @@ public class PnlNuevoProyecto extends JScrollPane{
 		                 modelo2.addElement(listaP2.getModel().getElementAt(i));
 		                }
 		                modelo.removeAllElements();	
-					}	
-				}		
-			};
-			jbtnaceptar.setActionCommand("aceptar");
-			jbtnaceptar.addActionListener(accion);
-			jbtncancelar.setActionCommand("cancelar");
-			jbtncancelar.addActionListener(accion);
-			
-			ActionListener accion2 = new ActionListener(){
+					}
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					if(e.getActionCommand().equals("aceptar2")){
 					    	conexion.Conectardb();
@@ -365,7 +337,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 						    java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 						    
 						 if (sqlDate1.getTime()< sqlDate2.getTime()){
-						  conexdb.executeUpdate("UPDATE PROYECTOS SET nombre='"+ jtxt[0].getText()+"', descripcion='"+textarea.getText()+"',estado='"+estado+"',f_ini='"+sqlDate1+"',f_fin='"+sqlDate2+"' WHERE id_pro ="+PnlModificarProyecto.id_pro+"");
+						  conexdb.executeUpdate("UPDATE PROYECTOS SET nombre='"+ jtxt[0].getText()+"', descripcion='"+textarea.getText()+"',estado='"+estado+"',presupuesto='"+txtprecio.getText()+"',f_ini='"+sqlDate1+"',f_fin='"+sqlDate2+"' WHERE id_pro ="+PnlModificarProyecto.id_pro+"");			
 						 }
 			            for (int i = 0 ; i<listaP.getModel().getSize(); i++){
 
@@ -379,7 +351,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 								d.printStackTrace();}
 							conexdb.executeUpdate("DELETE FROM PARTNER_PROYECTOS WHERE cod_part = "+id_partner2+" AND id_pro="+PnlModificarProyecto.id_pro+"");
 
-			            }
+			            }//fin for
 			            for (int i = 0 ; i<listaP2.getModel().getSize(); i++){
 							System.out.println("Numero dentro for:"+listaP2.getModel().getSize());
 					    	rs = conexion.ConsultaSQL("SELECT p.cod_part From PARTNER as p WHERE p.nombre like '"+modelo.getElementAt(i)+"'");
@@ -408,16 +380,28 @@ public class PnlNuevoProyecto extends JScrollPane{
 						JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][100]);
 						
 					}
-					if(e.getActionCommand().equals("cancelar2")){
+			if(e.getActionCommand().equals("cancelar2")){
 						PnlModificarProyecto.modificar.dispose();
 						}
+			
+				modpro.cuenta=modpro.contar_reg();
+				modpro.datos = new String[modpro.cuenta][modpro.columnas];
+				modpro.auxdatos = new String[modpro.cuenta][modpro.columnas];
+				modpro.tablemodel = modpro.cargar_tabla(modpro.datos,modpro.columnas);
+				modpro.jtblLateral.setModel(modpro.tablemodel);
+				modpro.jtblLateral.repaint();
+				modpro.llena = false;
 					}
-				
+						
 			};
+			jbtnaceptar.setActionCommand("aceptar");
+			jbtnaceptar.addActionListener(accion);
+			jbtncancelar.setActionCommand("cancelar");
+			jbtncancelar.addActionListener(accion);
 			jbtnaceptar2.setActionCommand("aceptar2");
-			jbtnaceptar2.addActionListener(accion2);
+			jbtnaceptar2.addActionListener(accion);
 			jbtncancelar2.setActionCommand("cancelar2");
-			jbtncancelar2.addActionListener(accion2);
+			jbtncancelar2.addActionListener(accion);
 			
 		jpnl.setVisible(true);
 		this.setViewportView(jpnl);

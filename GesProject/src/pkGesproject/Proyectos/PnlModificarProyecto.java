@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -54,7 +55,7 @@ public class PnlModificarProyecto extends JPanel{
 	JTable jtblLateral;
 	JScrollPane jspntabla;
 	public static int id_pro  ;
-	public static JFrame modificar;
+	public static JDialog modificar;
 	static PnlModificarProyecto instancia = new PnlModificarProyecto();
 	int cuenta;
 	int columnas;
@@ -283,31 +284,32 @@ public class PnlModificarProyecto extends JPanel{
 						Component aviso = null;
 						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][103]);
 					}else{
-						
 						PnlNuevoProyecto mod;
-						modificar = new JFrame();
+						modificar = new JDialog();
 						modificar.add(mod = new PnlNuevoProyecto());
 						modificar.setBounds(0, 0, 500, 600);
-						mod.jbtnaceptar.setVisible(false);
-						mod.jbtncancelar.setVisible(false);
-						mod.jbtncancelar2.setVisible(true);
-						mod.jbtnaceptar2.setVisible(true);
-					//	mod.txtformat.setVisible(true);
-						modificar.setLocationRelativeTo(null);			
+						mod.jbtnaceptar.setVisible(false); mod.jbtncancelar.setVisible(false);
+						mod.jbtnaceptar2.setVisible(true); mod.jbtncancelar2.setVisible(true);
+						mod.txtprecio.setVisible(true);
+						mod.pres.setVisible(true);
+						modificar.setModal(true);
+								
 	/*
 	 *
 	 * Introducir datos al panel para poder modificar
 	 * 
 	 */
 						conexion.Conectardb();
-				    	rs = conexion.ConsultaSQL("SELECT id_pro, p.nombre, p.descripcion,prsupuesto, p.f_ini, p.f_fin FROM PROYECTOS as p WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+				    	rs = conexion.ConsultaSQL("SELECT id_pro, p.nombre, p.descripcion,p.presupuesto, p.f_ini, p.f_fin FROM PROYECTOS as p WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
 							try {									
 										rs.next();
 											id_pro = rs.getInt(1);
 											mod.jtxt[0].setText(rs.getString(2));
 											mod.textarea.setText(rs.getString(3));
-											mod.jdc1.setDate(rs.getDate(4));
-											mod.jdc2.setDate(rs.getDate(5));				
+											System.out.println("JTXT1 "+ rs.getString(4));
+											mod.txtprecio.setText(String.valueOf(rs.getInt(4))) ;
+											mod.jdc1.setDate(rs.getDate(5));
+											mod.jdc2.setDate(rs.getDate(6));				
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
