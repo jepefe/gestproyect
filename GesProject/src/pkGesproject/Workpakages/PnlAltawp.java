@@ -193,6 +193,7 @@ public class PnlAltawp extends JScrollPane{
 		   		
 		   }
 		   //Jformat
+		   //formato para el presupuesto
 		   if(i==1 ){
 				jtxt[i].addKeyListener(new KeyAdapter(){
 				   public void keyTyped(KeyEvent e){
@@ -205,7 +206,7 @@ public class PnlAltawp extends JScrollPane{
 				   }
 				});
 				}
-		   
+		   //formato para el nombre del wp
 		   if(i==0 ){
 			   
 			   try
