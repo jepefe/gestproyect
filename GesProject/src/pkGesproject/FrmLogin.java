@@ -1,11 +1,16 @@
 package pkGesproject;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -16,45 +21,97 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
 import com.seaglasslookandfeel.ui.SeaGlassRootPaneUI;
 
 public class FrmLogin extends JFrame implements ActionListener{
 	
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
-	JButton jbtnaceptar = new JButton(rec.idioma[rec.eleidioma][1]);
-	JButton jbtncancelar = new JButton(rec.idioma[rec.eleidioma][2]);
+	JButton jbtnaceptar = new JButton("Login"); //new JButton(rec.idioma[rec.eleidioma][1]);
+	JButton jbtncancelar = new JButton("Cancel"); //new JButton(rec.idioma[rec.eleidioma][2]);
 	JTextField jtxfUsuario = new JTextField("floridae");
 	JPasswordField jpwfPassword = new JPasswordField("123");
 	GridBagConstraints cons = new GridBagConstraints();
-	JLabel jlblUsuario = new JLabel(rec.idioma[rec.eleidioma][10]);
-	JLabel jlblPassword = new JLabel(rec.idioma[rec.eleidioma][11]);
-	
+	JLabel jlblUsuario = new JLabel("User: ");//new JLabel(rec.idioma[rec.eleidioma][10]);
+	JLabel jlblPassword = new JLabel("Password: ");//new JLabel(rec.idioma[rec.eleidioma][11]);
+	JPanel jpnl_conexion = new JPanel();
+	JPanel jpnl_login = new JPanel();
+	JLabel jlbconexion = new JLabel();
+	Runnable servdisp;
 	public FrmLogin(String titulo, int x, int y){
 		super(titulo);
 		this.setSize(x,y);
 		this.getRootPane().putClientProperty(SeaGlassRootPaneUI.UNIFIED_TOOLBAR_LOOK, Boolean.TRUE);//Esta linea es necesaria para que la barra de titulo y el jtoolbar sean homogeneos
 		this.setVisible(true);
-		this.setLayout(new GridBagLayout());
+		this.setLayout(new BorderLayout());
+		jpnl_login.setLayout(new GridBagLayout());
 		this.inicializar();
+		this.ComprobarConexion();
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		validate();
 	}
 	
+	
+	public void ComprobarConexion(){
+		servdisp = new Runnable(){
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				while(true){
+					
+							
+				
+				  InetAddress addr;
+				try {
+					addr = InetAddress.getByName(recursos.SRVNAME);
+					
+					jpnl_conexion.setVisible(false);
+					  jbtnaceptar.setEnabled(true);
+				} catch (UnknownHostException e1) {
+					jpnl_conexion.setVisible(true);
+					  jbtnaceptar.setEnabled(false);
+				}
+				  
+				
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			}
+			
+		};
+		Thread hilo = new Thread(servdisp);
+		hilo.start();
+	}
+	
+	
+	
 	public void inicializar(){
+		this.add(jpnl_conexion,BorderLayout.NORTH);
+		this.add(jpnl_login,BorderLayout.CENTER);
 		jbtnaceptar.setActionCommand("aceptar");
 		jbtnaceptar.addActionListener(this);
 		jtxfUsuario.setColumns(10);
 		jpwfPassword.setColumns(10);
 		this.setResizable(false);
+		jlbconexion.setText("Error: Server not available, verify your connection");
+		jpnl_conexion.setBackground(Color.decode("#D0E495"));
+		jlbconexion.setFont(new Font(Font.SANS_SERIF, Font.BOLD,11));
+		jpnl_conexion.add(jlbconexion);
+		
 		
 		cons.gridx = 0;
 		cons.gridy = 0;
 		cons.gridwidth=1;
 		cons.gridheight=1;
 		cons.weighty = 0;
-		this.add(jlblUsuario, cons);
+		jpnl_login.add(jlblUsuario, cons);
 		jlblUsuario.setFont(recursos.f);
 		
 		cons.gridx = 0;
@@ -62,7 +119,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 		cons.gridwidth=1;
 		cons.gridheight=1;
 		cons.weighty = 0;
-		this.add(jlblPassword, cons);
+		jpnl_login.add(jlblPassword, cons);
 		jlblPassword.setFont(recursos.f);
 		
 		cons.gridx = 1;
@@ -70,7 +127,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 		cons.gridwidth=2;
 		cons.gridheight=1;
 		cons.weighty = 0;
-		this.add(jtxfUsuario, cons);
+		jpnl_login.add(jtxfUsuario, cons);
 		jtxfUsuario.setFont(recursos.f);
 		
 		cons.gridx = 1;
@@ -78,7 +135,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 		cons.gridwidth=2;
 		cons.gridheight=1;
 		cons.weighty = 0;
-		this.add(jpwfPassword, cons);
+		jpnl_login.add(jpwfPassword, cons);
 		
 		
 		cons.gridx = 0;
@@ -87,7 +144,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 		cons.gridheight=1;
 		cons.weighty = 0;
 		cons.anchor = GridBagConstraints.WEST;
-		this.add(jbtnaceptar, cons);
+		jpnl_login.add(jbtnaceptar, cons);
 		jbtnaceptar.setFont(recursos.f);
 		
 		cons.gridx = 1;
@@ -96,14 +153,16 @@ public class FrmLogin extends JFrame implements ActionListener{
 		cons.gridheight=1;
 		cons.weighty = 0;
 		cons.anchor = GridBagConstraints.EAST;
-		this.add(jbtncancelar, cons);
+		jpnl_login.add(jbtncancelar, cons);
 		jbtncancelar.setFont(recursos.f);
+		
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		boolean validado = false;
+		
 		if(e.getActionCommand().equals("aceptar")){
 			ConexionDb conexdb = new ConexionDb();
 			ResultSet rs;
