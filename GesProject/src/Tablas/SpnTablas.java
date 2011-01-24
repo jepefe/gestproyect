@@ -31,7 +31,7 @@ public class SpnTablas extends JSplitPane{
 	Component[] panlsStaff = {
 			new TbViajes(),
 			new TbSubcontracting(),
-			new JScrollPane(new JPanel())};
+			new TbEquipamiento()};
 
 	public SpnTablas(){
 		this.setOneTouchExpandable(true);
