@@ -74,11 +74,11 @@ public class PnlAlta_equipamientos extends JPanel{
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		//Espacios entre los textos y labels
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		/*gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.insets = new Insets(20,0,15,0);
+		gbc.insets = new Insets(20,0,15,0);*/
 				
-		gbc.anchor = GridBagConstraints.WEST;
+		//gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(5,10,5,5);
 		
 		
