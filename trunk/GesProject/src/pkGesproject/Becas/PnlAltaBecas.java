@@ -43,7 +43,7 @@
 		JTextField[] jtxt;
 		JLabel[] jlbl;
 		JButton jbtnaceptar, jbtncancelar;
-		JDateChooser jdc1,jdc2;
+		JDateChooser jdc1;
 		private GpComboBox CmbId = new GpComboBox();;
 		ConexionDb conexion = new ConexionDb();
 		JTextArea textarea = new JTextArea();
@@ -84,8 +84,6 @@
 			
 			//declaramos el campo que vamos a utilizar para a�adir las fechas
 		      jdc1 = new JDateChooser();
-		      jdc2 = new JDateChooser();
-		      jdc2.setDateFormatString("DD/MM/YYYY");
 		      jdc1.setDateFormatString("DD/MM/YYYY");
 		    
 		      
@@ -140,7 +138,7 @@
 				   CmbId.setPreferredSize(new Dimension(140,30));
 				   
 					conexion.Conectardb();
-					rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM TITULO");
+					rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM TITULOS");
 					try {
 					while(rs.next()){
 						CmbId.addItem(rs.getString(1));	
@@ -196,7 +194,7 @@
 						conexdb.Conectardb();
 						//nomwp = cbtipo.getSelectedItem().toString();
 						
-						rs = conexion.ConsultaSQL("SELECT id_pro FROM IDIOMA WHERE nombre like'"+ CmbId.getSelectedItem().toString()+"'" );
+						rs = conexion.ConsultaSQL("SELECT id_pro FROM IDIOMABECAS WHERE nombre like'"+ CmbId.getSelectedItem().toString()+"'" );
 						String id_pro = null;
 						try {
 							rs.next();
@@ -208,24 +206,15 @@
 										
 					// cambiar fecha a sql
 						  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
-						  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 						
-				if (sqlDate1.getTime()< sqlDate2.getTime()){
-						conexdb.executeUpdate("INSERT INTO BECAS (nombre, apellidos, telf1, telf2, dni, email, titulo, curso_lectivo, idioma, fec_sol, fec_fin, erasmus, estado) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
+						conexdb.executeUpdate("INSERT INTO BECAS (nombre, apellidos, telf1, telf2, dni, email, titulo, curso_lectivo, idioma, fec_sol, fecha, erasmus, estado) VALUES ('"+ jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"','"+sqlDate1+"','"+textarea2.getText()+"')");
 						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
 						conexdb.cerrarConexion();
-					}
 					
 					jdc1.setDate(null);
-					jdc2.setDate(null);
 					textarea.setText(null);
 					textarea2.setText(null);
-				}else{
-					JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
-					//Marcar campo FECHA con error en ROJO 
-					jdc2.setBackground(Color.red);
-			
-			}
+				}
 				
 				// Borrar cuando damos al boton cancelar
 				if( e.getActionCommand().equals("cancelar")){
@@ -233,7 +222,6 @@
 						jtxt[i].setText("");
 						}	
 					jdc1.setDate(null);
-					jdc2.setDate(null);
 					textarea.setText(null);
 					textarea2.setText(null);
 					
