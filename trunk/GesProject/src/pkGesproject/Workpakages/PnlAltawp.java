@@ -199,7 +199,7 @@ public class PnlAltawp extends JScrollPane{
 				      caracter = e.getKeyChar();
 				      if(((caracter < '0') ||(caracter > '9')) &&
 				         (caracter != KeyEvent.VK_BACK_SPACE) &&
-				         (caracter != '+') && (caracter != '(') && (caracter != ')')) {
+				         (caracter != ',')) {
 				         e.consume();  
 				      }
 				   }
@@ -222,8 +222,9 @@ public class PnlAltawp extends JScrollPane{
 				   public void keyTyped(KeyEvent e){
 				      caracter = e.getKeyChar();
 				      if(((caracter < 'a') ||(caracter > 'z')) &&
-				    		  ((caracter < 'A') ||(caracter > 'Z')) &&
-				         (caracter != KeyEvent.VK_BACK_SPACE) &&
+				    		  ((caracter < 'A') ||(caracter > 'Z')) && (caracter < '0') ||(caracter > '9') &&
+				         (caracter != KeyEvent.VK_BACK_SPACE)&&
+				         (caracter != KeyEvent.VK_SPACE) &&
 				         (caracter != '+') && (caracter != '(') && (caracter != ')')) {
 				         e.consume();  
 				      }
