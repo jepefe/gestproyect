@@ -1,6 +1,7 @@
 package pkGesproject;
 
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
@@ -40,6 +41,9 @@ public class RsGesproject {
 	public FrmLogin instanciafrmlogin;
 	/**String constante que contiene el titulo de la aplicaion*/
 	public final String APNAME = "GesProyect - Florida"; //Constante que contiene el nombre de la aplicacion
+	public  Image[] imagen = {
+			new ImageIcon(getClass().getResource("imagenes/Login.JPG")).getImage()
+	};
 	public ImageIcon[] icono = { 
 			new ImageIcon(getClass().getResource("imagenes/staff.png")),
 			new ImageIcon(getClass().getResource("imagenes/partner.png")),
