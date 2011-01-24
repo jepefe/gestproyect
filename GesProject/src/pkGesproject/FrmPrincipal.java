@@ -72,27 +72,31 @@ public class FrmPrincipal extends JFrame {
 	private Rectangle maxBounds;
 	
 	public FrmPrincipal(){
-		
-		spnstaff = new SpnStaff();
 		recursos.progresocarga =1;
 		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Staff");
-		spnsocios = new SpnSocios();
+		spnstaff = new SpnStaff();
 		recursos.progresocarga =2;
 		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Partners");
-		spnproyectos = new SpnProyectos();
+		spnsocios = new SpnSocios();
 		recursos.progresocarga =4;
 		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Projects");
-		spnworkpack = new SpnWorkpack();
-		recursos.progresocarga =7;
+		spnproyectos = new SpnProyectos();
+		recursos.progresocarga =5;
 		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Work Packages");
+		spnworkpack = new SpnWorkpack();
+		recursos.progresocarga =6;
+		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Tasks");
 		spntareas = new SpnTareas();
-		recursos.progresocarga =9;
-		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Staff");
+		recursos.progresocarga =7;
+		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Tables");
 		spntablas = new SpnTablas();
+		recursos.progresocarga =9;
+		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Time Sheets");
+		spntimesheet = new SpnTimesheet();
 		recursos.progresocarga =10;
 		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Data");
-		spntimesheet = new SpnTimesheet();
 		nueva = new FrmNuevapalabra();
+		
 		
 		jbtnAgregar.setVisible(true);
 		super.setBounds(0, 0, recursos.getFrmppalWidth(), recursos.getFrmppalHeight());
