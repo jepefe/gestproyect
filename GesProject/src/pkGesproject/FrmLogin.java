@@ -43,6 +43,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 	JPanel jpnl_login = new JPanel();
 	JLabel jlbconexion = new JLabel();
 	Runnable servdisp;
+	Thread hilo;
 	
 	public FrmLogin(String titulo, int x, int y){
 		super(titulo);
@@ -62,7 +63,6 @@ public class FrmLogin extends JFrame implements ActionListener{
 	public void ComprobarConexion(){
 		servdisp = new Runnable(){
 
-			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				while(true){
@@ -90,7 +90,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 			}
 			
 		};
-		Thread hilo = new Thread(servdisp);
+		hilo = new Thread(servdisp);
 		hilo.start();
 	}
 	
@@ -230,6 +230,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 				
 				//if (rs.getInt(4) != null)
 				
+				hilo.interrupt();
 				this.dispose();
 			}
 			else{
