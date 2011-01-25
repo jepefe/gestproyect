@@ -115,6 +115,10 @@ public class GesStaff {
 		File f_foto = new File(foto);
 		ConexionFTP ftp = new ConexionFTP();
 		boolean subido=false;
+		if (foto.equals("0")){
+			subido = true;
+			
+		}else{
 		try {
 			ftp.connectar();
 			ftp.bin();
@@ -129,7 +133,9 @@ public class GesStaff {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		}
 		return subido;
+		
 
 	}
 	
