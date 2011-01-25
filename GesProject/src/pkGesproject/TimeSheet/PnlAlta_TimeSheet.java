@@ -74,8 +74,10 @@ public class PnlAlta_TimeSheet extends JPanel{
 				   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][13], rec.idioma[rec.eleidioma][55], rec.idioma[rec.eleidioma][55]
 				   };
 		int[] fieldWidths = {20,9,15};
+		//jtxt de tareas
 		jtxtta = new JTextField[fieldNamestarea.length];
 		jlblta = new JLabel[fieldNamestarea.length];
+		//jtxt de proyecto
 		jtxtpro = new JTextField[fieldNamesproyecto.length];
 		jlblpro = new JLabel[fieldNamesproyecto.length];
 		
@@ -100,7 +102,10 @@ public class PnlAlta_TimeSheet extends JPanel{
 		 */
 	      
 	      //campos para proyecto
-			for(int i=0;i<fieldNamesproyecto.length;++i) {
+		 
+	     //this.add(CmbProyecto,gbc);
+	      
+	      /*for(int i=0;i<fieldNamesproyecto.length;++i) {
 				
 				System.out.println("Fieldnames = " + fieldNamesproyecto.length + " / i = " + i);
 				
@@ -156,12 +161,13 @@ public class PnlAlta_TimeSheet extends JPanel{
 				   Jproyecto.add(jtxtpro[i]=new JTextField(fieldWidths[i]),gbc);
 				   break;
 			   		
-			   }//fin switch
+			   }//fin switch 
+			   
 			}//fin for de proyectos
+			*/
 			
-			
-			this.add(Jproyecto,BorderLayout.NORTH);
-			this.add(Jtarea,BorderLayout.CENTER);
+			//this.add(Jproyecto,BorderLayout.NORTH);
+			//this.add(Jtarea,BorderLayout.CENTER);
 			this.setVisible(true);
 		}//fin constructor
 	}//fin clase
