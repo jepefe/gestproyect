@@ -104,7 +104,6 @@ public class PnlAltawp extends JScrollPane{
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = new Insets(20,0,15,0);
-		//panel.add(new JLabel("Alta Partner"),gbc);
 		
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(5,10,5,5);
