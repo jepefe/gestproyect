@@ -130,14 +130,15 @@ public class PnlAlta_equipamientos extends JPanel{
 		    	
 		    	//Creo el textarea justificacion
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
-		    	this.add(justificacion=new JLabel(rec.idioma[rec.eleidioma][106]+"*"),gbc); 
+		    	this.add(justificacion=new JLabel(rec.idioma[rec.eleidioma][123]+"*"),gbc); 
 		    	gbc.gridwidth = GridBagConstraints.REMAINDER;
 		    	//cuadro con scroll para las justificacion
 		    	LimiteDocumento lpd2 = new LimiteDocumento(200); // Limite JTextArea
-		    	textjustificacion = (new JTextArea(3,18));
 		    	textjustificacion.setDocument(lpd2);
+		    	textjustificacion.setLineWrap(true);
 		    	JScrollPane sp2 = new JScrollPane(textjustificacion,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 		    	JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		    	this.add((sp2),gbc);
 		    	
 		    	//Combo de WP
 		    	conexion.Conectardb();
