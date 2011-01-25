@@ -12,6 +12,6 @@ public class GpComboBox extends JComboBox{
 	
 		  public GpComboBox ()
 		    {
-		    setUI( new EstiloComboBox() );
+		    //setUI( new EstiloComboBox() );
 		    }
 }
