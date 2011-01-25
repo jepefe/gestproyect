@@ -2,7 +2,7 @@
  /**
  * Esta clase se encarga de realizar el alta de nuevas tareas 
  * 
- * @author Freyder Espinosa y Félix Perona
+ * @author Félix Perona
  */
 package pkGesproject.Workpakages;
 
