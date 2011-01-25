@@ -46,12 +46,13 @@ public class PnlAlta_TimeSheet extends JPanel{
 	
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
-	JTextField[] jtxt;
-	JLabel[] jlbl;
+	JTextField[] jtxtpro, jtxtta;
+	JLabel[] jlblpro, jlblta;
 	JDateChooser jdc1;
 	JButton jbtnaceptar, jbtncancelar;
 	GpComboBox CmbTareas = new GpComboBox();
 	GpComboBox CmbProyecto = new GpComboBox();
+	GpComboBox CmbStaff = new GpComboBox();
 	ResultSet rs;
 	ConexionDb conexion = new ConexionDb();
 	JFrame aviso = new JFrame();
@@ -66,13 +67,17 @@ public class PnlAlta_TimeSheet extends JPanel{
 		Jtarea.setLayout(new GridBagLayout());
 		
 		
-		String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][13], rec.idioma[rec.eleidioma][55], rec.idioma[rec.eleidioma][55]
+		String[] fieldNamesproyecto = {
+		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][13], rec.idioma[rec.eleidioma][55], rec.idioma[rec.eleidioma][55], rec.idioma[rec.eleidioma][55]
 		   };
+		String[] fieldNamestarea = {
+				   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][13], rec.idioma[rec.eleidioma][55], rec.idioma[rec.eleidioma][55]
+				   };
 		int[] fieldWidths = {20,9,15};
-		
-		jtxt = new JTextField[fieldNames.length];
-		jlbl = new JLabel[fieldNames.length];
+		jtxtta = new JTextField[fieldNamestarea.length];
+		jlblta = new JLabel[fieldNamestarea.length];
+		jtxtpro = new JTextField[fieldNamesproyecto.length];
+		jlblpro = new JLabel[fieldNamesproyecto.length];
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -88,28 +93,26 @@ public class PnlAlta_TimeSheet extends JPanel{
 	      jdc1 = new JDateChooser();
 	      jdc1.setDateFormatString("DD/MM/YYYY");
 	    
-	      
+
 		/**
 		 * Con el bucle for vamos creando tantos labels y textfields como 
 		 * nombres de campos hayamos metido en fieldNames.
 		 */
 	      
-			for(int i=0;i<fieldNames.length;++i) {
+	      //campos para proyecto
+			for(int i=0;i<fieldNamesproyecto.length;++i) {
 				
-				System.out.println("Fieldnames = " + fieldNames.length + " / i = " + i);
+				System.out.println("Fieldnames = " + fieldNamesproyecto.length + " / i = " + i);
 				
-			   //gbc.gridwidth = GridBagConstraints.RELATIVE;
-			   //Jproyecto.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-			   //gbc.gridwidth = GridBagConstraints.REMAINDER;
+			   gbc.gridwidth = GridBagConstraints.RELATIVE;
+			   Jproyecto.add(jlblpro[i]=new JLabel(fieldNamesproyecto[i]),gbc);
+			   gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   
 			   switch(i){
 			   
-			   case (0)://nombre
-				   gbc.gridwidth = GridBagConstraints.RELATIVE;
-				   Jproyecto.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-				   gbc.gridwidth = GridBagConstraints.REMAINDER;
-				   Jproyecto.add(CmbProyecto,gbc);
-			   CmbProyecto.setPreferredSize(new Dimension(160,30));
+			   case (0)://nombre combo
+			   	Jproyecto.add(CmbProyecto,gbc);
+			   CmbProyecto.setPreferredSize(new Dimension(140,30));
 			   
 				conexion.Conectardb();
 				rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM PROYECTOS");
@@ -125,39 +128,36 @@ public class PnlAlta_TimeSheet extends JPanel{
 				CmbProyecto.setSelectedItem(null);
 				conexion.cerrarConexion();
 				break;
-			   case (1)://presupuesto
-				   gbc.gridwidth = GridBagConstraints.RELATIVE;
-				   Jproyecto.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-			   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-				   Jproyecto.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
+			   case (1)://contract number
+				   Jproyecto.add(jtxtpro[i]=new JTextField(fieldWidths[i]),gbc);
 			   		break;
-			   case (2):
-				   	Jproyecto.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   			Jproyecto.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
+			   case (2)://institución
+		   			Jproyecto.add(jtxtpro[i]=new JTextField(fieldWidths[i]),gbc);
 				   break;
-			   case (3)://combo de tareas
-				   Jtarea.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-				   Jtarea.add(CmbTareas,gbc);
-				   CmbProyecto.setPreferredSize(new Dimension(140,30));
-				   
-					conexion.Conectardb();
-					rs = conexion.ConsultaSQL("SELECT nombre,id_task FROM TAREAS");
-					try {
-					while(rs.next()){
-						CmbTareas.addItem(rs.getString(1));	
-						
+			   case (3)://nombre empleado
+		   			Jproyecto.add(CmbStaff,gbc);
+		   			CmbStaff.setPreferredSize(new Dimension(140,30));
+		   
+			conexion.Conectardb();
+			rs = conexion.ConsultaSQL("SELECT nombre,id_staff FROM PROYECTOS");
+			try {
+			while(rs.next()){
+				CmbStaff.addItem(rs.getString(1));	
+				
+			}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 					}
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-							}
-					conexion.cerrarConexion();
-					CmbTareas.setSelectedItem(null);
-				   	break;
-
+			CmbStaff.setSelectedItem(null);
+			conexion.cerrarConexion();
+				   break;
+			   case (4)://rol en el proyecto
+				   Jproyecto.add(jtxtpro[i]=new JTextField(fieldWidths[i]),gbc);
+				   break;
 			   		
 			   }//fin switch
-			}//fin for
+			}//fin for de proyectos
 			
 			
 			this.add(Jproyecto,BorderLayout.NORTH);
