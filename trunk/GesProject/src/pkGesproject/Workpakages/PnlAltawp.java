@@ -18,15 +18,20 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.AbstractButton;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -70,6 +75,12 @@ public class PnlAltawp extends JScrollPane{
 	static PnlAltawp instancia = new PnlAltawp();
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	FocusListener foco;
+	DefaultListModel modelo;  // listas Partners (lista2)
+	DefaultListModel modelo2;
+	public JList listaP ,listaP2 ;
+	JPanel jpnl = new JPanel();
+	String Npartners[] ;	// array con partners
+	int cuenta =0; // cuenta para array dinamica.
 	
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
@@ -187,6 +198,90 @@ public class PnlAltawp extends JScrollPane{
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);}
 		   		break;
 		   case (5)://fecha de fin
+			    // Conexion 1 BBDD
+			    /*  conexion.Conectardb();
+			    	rs = conexion.ConsultaSQL("SELECT nombre FROM PARTNER");
+			    //	rs2 = conexion.ConsultaSQL("Select count(nombre) From PARTNER");
+			    	 // Cuenta para hacer la matriz dinamica
+			    	try {
+						while(rs.next()){cuenta = cuenta +1;}
+					} catch (SQLException e) {
+						e.printStackTrace();}
+			    	
+			    	Npartners = new String [cuenta] ;
+			    
+			 //Conexion 2 BBDD
+			    	rs = conexion.ConsultaSQL("SELECT  nombre FROM PARTNER");
+			    	
+			    	 // Cuenta para hacer la matriz dinamica
+			    	int k = 0;
+			    	try {
+						while(rs.next()){
+							Npartners[k] = (rs.getString(1));
+						k++;
+						
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			    
+			// JLIST
+		    	modelo = new DefaultListModel(); // modelos JLIST
+		    	modelo2 = new DefaultListModel(); 
+		    	
+		      listaP = new JList(modelo2); 
+			// for para pasar los datos al modelo
+		      for(int j=0; j<cuenta ; j++){
+		    	  modelo2.addElement(Npartners[j]);  
+		      }
+		      
+		       // Primer JLIST
+		      JScrollPane sp1 = new JScrollPane(listaP);
+		      listaP.setFixedCellWidth(142);
+		      listaP.setFixedCellHeight(18);
+		      sp1.setColumnHeaderView(new JLabel(rec.idioma[rec.eleidioma][84])); 
+		      gbc.gridwidth = GridBagConstraints.RELATIVE;
+		      jpnl.add(sp1,gbc);
+		      gbc.gridwidth = GridBagConstraints.REMAINDER;  
+		        // Segundo JLIST
+		      listaP2 = new JList(modelo);
+		      JScrollPane sp5 = new JScrollPane(listaP2);
+		      listaP2.setFixedCellWidth(142);
+		      listaP2.setFixedCellHeight(18);
+		      sp5.setColumnHeaderView(new JLabel(rec.idioma[rec.eleidioma][82])); 
+		      jpnl.add(sp5,gbc);
+		      gbc.gridwidth = GridBagConstraints.RELATIVE;
+		      jpnl.add(new JLabel(rec.idioma[rec.eleidioma][81]),gbc);
+		      gbc.gridwidth = GridBagConstraints.REMAINDER; 
+		      
+		     
+		     // Evento doble click primer JLIST
+		      MouseListener mouseListener = new MouseAdapter() {
+		    	 
+		    	  public void mouseClicked(MouseEvent e) {
+		    		  if (e.getClickCount() == 2) {
+		                modelo.addElement(listaP.getSelectedValue());		    
+		                modelo2.removeElement(listaP.getSelectedValue());
+		               }
+		          }
+		      };
+		      listaP.addMouseListener(mouseListener);
+
+	          modelo.toArray();
+	          
+	          
+		      // Evento doble click segundo  JLIST (lsitaP2)
+		      MouseListener mouseListener2 = new MouseAdapter() {
+		    	 
+		          public void mouseClicked(MouseEvent e) {
+		              if (e.getClickCount() == 2) {
+		                modelo2.addElement(listaP2.getSelectedValue());	
+		                modelo.removeElement(listaP2.getSelectedValue());
+		               }
+		          }
+		      };
+		      listaP2.addMouseListener(mouseListener2);*/
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc2,gbc);}
 		   		break;
 		   case (6)://descripcion

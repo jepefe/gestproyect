@@ -29,150 +29,18 @@ public class PnlAlta_TimeSheet extends JPanel{
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	JTextField[] jtxt;
 	JLabel[] jlbl;
-	JDateChooser jdc1,jdc2,jdc3;
+	JDateChooser jdc1;
 	int i;
 	JLabel jlblfecha;
 	JTextArea textarea = (new JTextArea(3,13));
 	JButton jbtnaceptar, jbtncancelar;
-	GpComboBox cbNombre = new GpComboBox();
-	GpComboBox cbRol = new GpComboBox();
+	GpComboBox cbTareas = new GpComboBox();
 	ResultSet rs;
 	ConexionDb conexion = new ConexionDb();
 	
 	
 	public PnlAlta_TimeSheet(){
-		this.setLayout(new GridBagLayout());
 		
-		String[] fieldNames = {
-				
-				rec.idioma[rec.eleidioma][55]+"*",
-				rec.idioma[rec.eleidioma][101]+"*",
-				rec.idioma[rec.eleidioma][102]+"*",
-				rec.idioma[rec.eleidioma][97]+"*"
-				
-
-		};
-		
-		int[] fieldWidths = {10,10,10,7};
-		jtxt = new JTextField[fieldNames.length];
-		jlbl = new JLabel[fieldNames.length];
-		
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		gbc.insets = new Insets(5,10,5,5);
-		
-		jdc1 = new JDateChooser();
-	    jdc1.setDateFormatString("dd/MM/yyyy");
-	    jdc2 = new JDateChooser();
-	    jdc2.setDateFormatString("dd/MM/yyyy");
-	    jdc3 = new JDateChooser();
-	    jdc3.setDateFormatString("dd/MM/yyyy");
-	    
-	    
-	    for(i = 0;i<fieldNames.length;i++){
-	    	
-	    	gbc.gridwidth = GridBagConstraints.RELATIVE;
-			gbc.anchor = GridBagConstraints.EAST;
-			this.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-			gbc.anchor = GridBagConstraints.WEST;
-			gbc.gridwidth = GridBagConstraints.REMAINDER;
-			this.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
-	    	
-			
-			if(i==2){
-				
-				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT nombre FROM STAFF");
-			    	try {
-						while(rs.next()){	
-								cbNombre.addItem(rs.getString(1));
-						}
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		    	conexion.cerrarConexion();
-				
-				gbc.gridwidth = GridBagConstraints.RELATIVE;
-				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlbl[i]=new JLabel(rec.idioma[rec.eleidioma][3]+"*"),gbc);
-				gbc.anchor = GridBagConstraints.WEST;
-				gbc.gridwidth = GridBagConstraints.REMAINDER;
-				cbNombre.setPreferredSize(new Dimension(177,30));
-				this.add(cbNombre,gbc);
-				
-				
-				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT * FROM RANGOS");
-			    	try {
-						while(rs.next()){	
-								cbRol.addItem(rs.getString(2));
-						}
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		    	conexion.cerrarConexion();
-				
-				gbc.gridwidth = GridBagConstraints.RELATIVE;
-				this.add(jlbl[i]=new JLabel(rec.idioma[rec.eleidioma][105]+"*"),gbc);
-				gbc.anchor = GridBagConstraints.WEST;
-				gbc.gridwidth = GridBagConstraints.REMAINDER;
-				cbRol.setPreferredSize(new Dimension(177,30));
-				this.add(cbRol,gbc);
-				
-			}
-			
-			if(i==2){
-				//Período de horas de trabajo declarados (por hacer)
-				/*gbc.gridwidth = GridBagConstraints.RELATIVE;
-				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlblfecha=new JLabel(rec.idioma[rec.eleidioma][25]+"*"),gbc);
-				gbc.anchor = GridBagConstraints.WEST;
-				gbc.gridwidth = GridBagConstraints.REMAINDER;
-				this.add(jdc2,gbc);
-				
-				gbc.gridwidth = GridBagConstraints.RELATIVE;
-				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlblfecha=new JLabel(rec.idioma[rec.eleidioma][26]+"*"),gbc);
-				gbc.anchor = GridBagConstraints.WEST;
-				gbc.gridwidth = GridBagConstraints.REMAINDER;
-				this.add(jdc3,gbc);*/
-				
-				
-			    gbc.gridwidth = GridBagConstraints.RELATIVE;
-				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlblfecha=new JLabel(rec.idioma[rec.eleidioma][95]+"*"),gbc);
-				gbc.anchor = GridBagConstraints.WEST;
-				gbc.gridwidth = GridBagConstraints.REMAINDER;
-				this.add(jdc1,gbc);
-				
-
-				gbc.gridwidth = GridBagConstraints.RELATIVE;
-		    	this.add(new JLabel(rec.idioma[rec.eleidioma][96]+"*"),gbc); 
-		    	gbc.gridwidth = GridBagConstraints.REMAINDER;
-		    
-		    	LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
-		    	
-		    	textarea.setDocument(lpd);
-		    	textarea.setLineWrap(true);
-		    	JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-		    	JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		    	this.add((sp),gbc);
-				
-			}
-			
-			
-			
-		}
-	    gbc.anchor = GridBagConstraints.EAST;
-		gbc.insets = new Insets(30,10,5,5);
-		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		this.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
-		gbc.anchor = GridBagConstraints.WEST;
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		this.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][2]),gbc);
-	    this.setVisible(true);
 	}
 	
 }
