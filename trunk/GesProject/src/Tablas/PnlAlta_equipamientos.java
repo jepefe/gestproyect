@@ -60,7 +60,7 @@ public class PnlAlta_equipamientos extends JPanel{
 	public PnlAlta_equipamientos (){
 	
 		this.setBorder(empty);
-		panel.setLayout(new GridBagLayout());
+		this.setLayout(new GridBagLayout());
 		  
 		final String[] fieldNames = {
 		   rec.idioma[rec.eleidioma][114],rec.idioma[rec.eleidioma][115], rec.idioma[rec.eleidioma][116], rec.idioma[rec.eleidioma][117],
@@ -190,10 +190,10 @@ public class PnlAlta_equipamientos extends JPanel{
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.insets = new Insets(30,10,5,5);
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		panel.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
+		this.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
+		this.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
 		
 		
 		ActionListener accion = new ActionListener(){
@@ -243,7 +243,7 @@ public class PnlAlta_equipamientos extends JPanel{
 		jbtncancelar.setActionCommand("cancelar");
 		jbtncancelar.addActionListener(accion);
 		
-		panel.setVisible(true);
+		this.setVisible(true);
 	  //this.setViewportView(panel);
 	  //this.setVisible(true);
 		
