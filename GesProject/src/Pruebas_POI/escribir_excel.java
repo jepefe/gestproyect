@@ -41,7 +41,7 @@ public class escribir_excel {
         try {
                        
          // Volcamos la información a un archivo.
-            String strNombreArchivo = "E:/libro.xls";
+            String strNombreArchivo = "H:/libro.xls";
             File objFile = new File(strNombreArchivo);
             FileOutputStream archivoSalida = new FileOutputStream(objFile);
             libro.write(archivoSalida);
