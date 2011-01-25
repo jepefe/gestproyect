@@ -51,6 +51,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 	JDateChooser jdc1;
 	JButton jbtnaceptar, jbtncancelar;
 	GpComboBox CmbTareas = new GpComboBox();
+	GpComboBox CmbProyecto = new GpComboBox();
 	ResultSet rs;
 	ConexionDb conexion = new ConexionDb();
 	JFrame aviso = new JFrame();
@@ -61,9 +62,12 @@ public class PnlAlta_TimeSheet extends JPanel{
 	
 	public PnlAlta_TimeSheet(){
 		this.setLayout(new BorderLayout());
+		Jproyecto.setLayout(new GridBagLayout());
+		Jtarea.setLayout(new GridBagLayout());
+		
 		
 		String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][13], rec.idioma[rec.eleidioma][55]
+		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][13], rec.idioma[rec.eleidioma][55], rec.idioma[rec.eleidioma][55]
 		   };
 		int[] fieldWidths = {20,9,15};
 		
@@ -75,7 +79,6 @@ public class PnlAlta_TimeSheet extends JPanel{
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = new Insets(20,0,15,0);
-		//panel.add(new JLabel("Alta Partner"),gbc);
 		
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(5,10,5,5);
@@ -95,20 +98,47 @@ public class PnlAlta_TimeSheet extends JPanel{
 				
 				System.out.println("Fieldnames = " + fieldNames.length + " / i = " + i);
 				
-			   gbc.gridwidth = GridBagConstraints.RELATIVE;
-			   Jproyecto.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-			   gbc.gridwidth = GridBagConstraints.REMAINDER;
-			   //desahabilitar campos de texto
+			   //gbc.gridwidth = GridBagConstraints.RELATIVE;
+			   //Jproyecto.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   //gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   
 			   switch(i){
 			   
 			   case (0)://nombre
+				   gbc.gridwidth = GridBagConstraints.RELATIVE;
+				   Jproyecto.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+				   gbc.gridwidth = GridBagConstraints.REMAINDER;
+				   Jproyecto.add(CmbProyecto,gbc);
+			   CmbProyecto.setPreferredSize(new Dimension(160,30));
+			   
+				conexion.Conectardb();
+				rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM PROYECTOS");
+				try {
+				while(rs.next()){
+					CmbProyecto.addItem(rs.getString(1));	
+					
+				}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						}
+				CmbProyecto.setSelectedItem(null);
+				conexion.cerrarConexion();
+				break;
 			   case (1)://presupuesto
+				   gbc.gridwidth = GridBagConstraints.RELATIVE;
+				   Jproyecto.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 				   Jproyecto.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 			   		break;
-			   case (2)://combo de proyectos
-				   Jproyecto.add(CmbTareas,gbc);
-				   CmbTareas.setPreferredSize(new Dimension(140,30));
+			   case (2):
+				   	Jproyecto.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   			Jproyecto.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
+				   break;
+			   case (3)://combo de tareas
+				   Jtarea.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+				   Jtarea.add(CmbTareas,gbc);
+				   CmbProyecto.setPreferredSize(new Dimension(140,30));
 				   
 					conexion.Conectardb();
 					rs = conexion.ConsultaSQL("SELECT nombre,id_task FROM TAREAS");
@@ -121,13 +151,17 @@ public class PnlAlta_TimeSheet extends JPanel{
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 							}
+					conexion.cerrarConexion();
 					CmbTareas.setSelectedItem(null);
 				   	break;
 
 			   		
 			   }//fin switch
 			}//fin for
+			
+			
 			this.add(Jproyecto,BorderLayout.NORTH);
+			this.add(Jtarea,BorderLayout.CENTER);
 			this.setVisible(true);
 		}//fin constructor
 	}//fin clase
