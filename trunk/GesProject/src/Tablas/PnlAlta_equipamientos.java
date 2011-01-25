@@ -55,8 +55,7 @@ public class PnlAlta_equipamientos extends JPanel{
 	
 	
 	JPanel panel = new JPanel();
-	//JFrame aviso = new JFrame();
-	
+		
 	public PnlAlta_equipamientos (){
 	
 		this.setBorder(empty);
@@ -73,12 +72,7 @@ public class PnlAlta_equipamientos extends JPanel{
 		jlbl = new JLabel[fieldNames.length];
 		
 		GridBagConstraints gbc = new GridBagConstraints();
-		//Espacios entre los textos y labels
-		/*gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.insets = new Insets(20,0,15,0);*/
-				
-		//gbc.anchor = GridBagConstraints.WEST;
+						
 		gbc.insets = new Insets(5,10,5,5);
 		
 		
@@ -244,8 +238,6 @@ public class PnlAlta_equipamientos extends JPanel{
 		jbtncancelar.addActionListener(accion);
 		
 		this.setVisible(true);
-	  //this.setViewportView(panel);
-	  //this.setVisible(true);
-		
+	  		
 	}
 }
