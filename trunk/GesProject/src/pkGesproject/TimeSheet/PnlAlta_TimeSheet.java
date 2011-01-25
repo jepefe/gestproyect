@@ -1,25 +1,44 @@
+/**
+ /**
+ * Esta clase se encarga de realizar el alta de nuevas tareas 
+ * 
+ * @author Félix Perona G
+ */
+
 package pkGesproject.TimeSheet;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 
 import com.toedter.calendar.JDateChooser;
 
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
 import pkGesproject.GpComboBox;
+import pkGesproject.JTextFieldLimit;
 import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
 
@@ -30,17 +49,88 @@ public class PnlAlta_TimeSheet extends JPanel{
 	JTextField[] jtxt;
 	JLabel[] jlbl;
 	JDateChooser jdc1;
-	int i;
-	JLabel jlblfecha;
-	JTextArea textarea = (new JTextArea(3,13));
 	JButton jbtnaceptar, jbtncancelar;
-	GpComboBox cbTareas = new GpComboBox();
+	GpComboBox CmbTareas = new GpComboBox();
 	ResultSet rs;
 	ConexionDb conexion = new ConexionDb();
+	JFrame aviso = new JFrame();
+	JPanel Jproyecto = new JPanel();
+	JPanel Jtarea = new JPanel();
+	JPanel Jtabla = new JPanel();
 	
 	
 	public PnlAlta_TimeSheet(){
+		this.setLayout(new BorderLayout());
 		
-	}
+		String[] fieldNames = {
+		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][13], rec.idioma[rec.eleidioma][55]
+		   };
+		int[] fieldWidths = {20,9,15};
+		
+		jtxt = new JTextField[fieldNames.length];
+		jlbl = new JLabel[fieldNames.length];
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.insets = new Insets(20,0,15,0);
+		//panel.add(new JLabel("Alta Partner"),gbc);
+		
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.insets = new Insets(5,10,5,5);
+		
+		
+		//declaramos el campo que vamos a utilizar para a�adir las fechas
+	      jdc1 = new JDateChooser();
+	      jdc1.setDateFormatString("DD/MM/YYYY");
+	    
+	      
+		/**
+		 * Con el bucle for vamos creando tantos labels y textfields como 
+		 * nombres de campos hayamos metido en fieldNames.
+		 */
+	      
+			for(int i=0;i<fieldNames.length;++i) {
+				
+				System.out.println("Fieldnames = " + fieldNames.length + " / i = " + i);
+				
+			   gbc.gridwidth = GridBagConstraints.RELATIVE;
+			   Jproyecto.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   gbc.gridwidth = GridBagConstraints.REMAINDER;
+			   //desahabilitar campos de texto
+			   
+			   switch(i){
+			   
+			   case (0)://nombre
+			   case (1)://presupuesto
+				   Jproyecto.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
+			   		break;
+			   case (2)://combo de proyectos
+				   Jproyecto.add(CmbTareas,gbc);
+				   CmbTareas.setPreferredSize(new Dimension(140,30));
+				   
+					conexion.Conectardb();
+					rs = conexion.ConsultaSQL("SELECT nombre,id_task FROM TAREAS");
+					try {
+					while(rs.next()){
+						CmbTareas.addItem(rs.getString(1));	
+						
+					}
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+							}
+					CmbTareas.setSelectedItem(null);
+				   	break;
+
+			   		
+			   }//fin switch
+			}//fin for
+			this.add(Jproyecto,BorderLayout.NORTH);
+			this.setVisible(true);
+		}//fin constructor
+	}//fin clase
+
 	
-}
+
