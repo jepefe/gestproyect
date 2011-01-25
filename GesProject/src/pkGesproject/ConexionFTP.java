@@ -15,18 +15,28 @@ package pkGesproject;
 
 	 */
 
+	import java.awt.Image;
 	import java.io.BufferedInputStream;
 	import java.io.BufferedOutputStream;
 	import java.io.BufferedReader;
 	import java.io.BufferedWriter;
 	import java.io.File;
 	import java.io.FileInputStream;
+	import java.io.FileNotFoundException;
+	import java.io.FileOutputStream;
 	import java.io.IOException;
 	import java.io.InputStream;
 	import java.io.InputStreamReader;
 	import java.io.OutputStreamWriter;
 	import java.net.Socket;
+	import java.net.URL;
+	import java.net.URLConnection;
 	import java.util.StringTokenizer;
+
+	import javax.imageio.ImageIO;
+
+
+	
 
 	/**
 	 * SimpleFTP is a simple package that implements a Java FTP client. With
@@ -37,8 +47,12 @@ package pkGesproject;
 	 *  
 	 */
 	public class ConexionFTP {
-
-	  /**
+	RsGesproject recursos = RsGesproject.Obtener_Instancia();
+	URL url;  
+	InputStream is;
+	Image imagen;
+	FileOutputStream fos;
+	/**
 	   * Create an instance of SimpleFTP.
 	   */
 	  public ConexionFTP() {
@@ -264,6 +278,62 @@ package pkGesproject;
 	      System.out.println("< " + line);
 	    }
 	    return line;
+	  }
+	  
+	  
+	  
+	  
+	  public void DescargarGuardar(String fichero,String guardar){
+		  try {
+			fos = new FileOutputStream(guardar);
+			try {
+				InputStream input = Descargar(fichero);
+				byte[] buffer = new byte[1024];
+				int tam;
+				
+				
+				while((tam=input.read(buffer))>0){
+					fos.write(buffer,0,tam);
+				}
+				fos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	  }
+	  
+	  public Image ObtenerImagen(String id){
+		  
+		  try {
+			imagen = ImageIO.read(Descargar(id));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  return imagen;
+		  
+	  }
+	  
+	  public InputStream Descargar(String filename){
+		  
+		  try {
+			url = new URL("ftp://"+recursos.FTPUSER+":"+recursos.FTPPASS+"@"+recursos.FTPSERVER+":21/"+filename);
+		
+		URLConnection urlc = url.openConnection();
+		is = urlc.getInputStream();
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return is;
+		
+		
+		  
 	  }
 
 	  private Socket socket = null;
