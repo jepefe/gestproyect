@@ -36,8 +36,11 @@ public class escribir_excel {
         // Se crea el contenido de la celda y se mete en ella.
         HSSFRichTextString texto = new HSSFRichTextString("hola mundo");
         celda.setCellValue(texto);
-
-        // Se salva el libro.
+        HSSFCell celda2 = fila.createCell((short) 1);
+        HSSFRichTextString texto2 = new HSSFRichTextString("prueba2");
+        celda2.setCellValue(texto2);
+        
+       // Se salva el libro.
         try {
                        
          // Volcamos la información a un archivo.
