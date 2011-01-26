@@ -119,12 +119,12 @@ public class SeaGlassComboPopup extends BasicComboPopup {
      * the UI class is created.
      */
     protected void configurePopup() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+       //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorderPainted(true);
         setBorder(LIST_BORDER);
         setOpaque(false);
         add(scroller);
-        setDoubleBuffered(true);
+     // setDoubleBuffered(true);
         setFocusable(false);
     }
 
