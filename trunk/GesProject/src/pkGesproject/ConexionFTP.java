@@ -33,7 +33,7 @@ package pkGesproject;
 	import java.net.URLConnection;
 	import java.util.StringTokenizer;
 
-	import javax.imageio.ImageIO;
+import javax.imageio.ImageIO;
 
 
 	
@@ -52,6 +52,7 @@ package pkGesproject;
 	InputStream is;
 	Image imagen;
 	FileOutputStream fos;
+	ConexionDb cdb = new ConexionDb();
 	/**
 	   * Create an instance of SimpleFTP.
 	   */
@@ -331,9 +332,101 @@ package pkGesproject;
 			e.printStackTrace();
 		}
 		return is;
-		
-		
 		  
+	  }
+	  
+	  
+	  public boolean SubirFicheroProyecto(String fichero,String id_usuario,String proyecto,String nombre,String descripcion, int ambito){
+		  String id=null;
+		  boolean subido=false;
+		  if (socket == null) {
+	      try {
+			connectar();
+		} catch (IOException e) {
+			
+		}
+		id = cdb.executeUpdate("INSERT INTO FICHEROS (id_propietario,id_proyecto,id_nombre,descripcion,ambito) values('"+id_usuario+"','"+proyecto+"','"+nombre+"','"+descripcion+"','3')");
+		try {
+			subido = stor(new File(fichero), id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 if(!subido){
+				cdb.executeUpdate("DELETE FROM FICHEROS WHERE id_fichero =" +id);
+			}
+		
+	    }
+		  
+	return subido;
+	  }
+	  
+	  public boolean SubirFicheroWp(String fichero,String id_usuario,String wp,String nombre,String descripcion){
+		  String id=null;
+		  boolean subido=false;
+		  if (socket == null) {
+	      try {
+			connectar();
+		} catch (IOException e) {
+			
+		}
+		id = cdb.executeUpdate("INSERT INTO FICHEROS (id_propietario,id_wp,nombre,descripcion,ambito) values('"+id_usuario+"','"+wp+"','"+nombre+"','"+descripcion+"','2')");
+		try {
+			subido = stor(new File(fichero), id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	    }
+		  if(!subido){
+				cdb.executeUpdate("DELETE FROM FICHEROS WHERE id_fichero =" +id);
+			}
+	return subido;
+	  }
+	  
+	  public boolean SubirFoto(String fichero,String prefijo,String id){
+		  String idfich  = null;
+		  boolean subido = false;
+		  
+		  idfich = cdb.executeUpdate("INSERT INTO FICHEROS (id_propietario,nombre,descripcion,ambito) values('"+id+"','"+prefijo+id+"','Foto','0')");
+		  
+		  try {
+			stor(new File(fichero), prefijo+id);
+			subido = true;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(!subido){
+			cdb.executeUpdate("DELETE FROM FICHEROS WHERE id_fichero =" +idfich);
+		}
+		return subido;
+	  }
+	  
+	  
+	  public boolean SubirFichero(String fichero,String id_usuario,String nombre,String descripcion, int ambito){
+		  String id=null;
+		  boolean subido=false;
+		  if (socket == null) {
+	      try {
+			connectar();
+		} catch (IOException e) {
+			
+		}
+		id = cdb.executeUpdate("INSERT INTO FICHEROS (id_propietario,nombre,descripcion,ambito) values('"+id_usuario+"','"+nombre+"','"+descripcion+"','"+ambito+"')");
+		try {
+			subido = stor(new File(fichero), id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	    }
+		  if(!subido){
+				cdb.executeUpdate("DELETE FROM FICHEROS WHERE id_fichero =" +id);
+			}
+	return subido;
 	  }
 
 	  private Socket socket = null;

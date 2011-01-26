@@ -68,13 +68,25 @@ public class ConexionDbUnica {
 		
 	}
 	
-	public void executeUpdate(String consultaSQL){
+	public String executeUpdate(String consultaSQL){
+		ResultSet rs=null;
+		String autoid = null;
 		try {
-			st.executeUpdate(consultaSQL);
+			st.executeUpdate(consultaSQL, Statement.RETURN_GENERATED_KEYS);
+			rs = st.getGeneratedKeys();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		try {
+			if (rs.next()){
+				autoid = Integer.toString(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return autoid;
 	}
 	
 	
