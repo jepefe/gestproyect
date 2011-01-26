@@ -66,7 +66,7 @@ public class ConexionDb {
 		
 	}
 	
-	public void executeUpdate(String consultaSQL){
+	public String executeUpdate(String consultaSQL){
 		/*try {
 			st.executeUpdate(consultaSQL);
 		} catch (SQLException e) {
@@ -74,7 +74,7 @@ public class ConexionDb {
 			e.printStackTrace();
 		}
 		*/
-		cdb.executeUpdate(consultaSQL);
+		return cdb.executeUpdate(consultaSQL);
 	}
 	
 	
