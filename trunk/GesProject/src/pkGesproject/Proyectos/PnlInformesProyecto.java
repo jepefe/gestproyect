@@ -25,12 +25,11 @@ public class PnlInformesProyecto extends JPanel{
 	ActionListener generar;
 	JasperReport jasperReport;
 	JasperPrint jasperPrint;
-	
+	String fileName;
 	public PnlInformesProyecto(){
 		this.setLayout(new GridBagLayout());
 		this.add(btngenerar);
-		
-		
+		fileName = System.getProperty("user.dir")+"\\src\\pkGesproject\\reports\\mireport.jrxml";
 		generar = new ActionListener(){
 
 			@Override
@@ -39,7 +38,7 @@ public class PnlInformesProyecto extends JPanel{
 				try
 				{
 				//1-Compilamos el archivo XML y lo cargamos en memoria
-				jasperReport = JasperCompileManager.compileReport("H:/JAVA/GesProject/src/pkGesproject/reports/mireport.jrxml");
+				jasperReport = JasperCompileManager.compileReport(fileName);
 				
 				//2. Se llena el reporte con la informacion necesaria
 				Map pars = new HashMap();
@@ -54,7 +53,7 @@ public class PnlInformesProyecto extends JPanel{
 				
 				//3-Exportamos el reporte a pdf y lo guardamos en disco
 				JasperExportManager.exportReportToPdfFile(
-				jasperPrint, "H:/Java/holaMundo.docx");
+				jasperPrint, "C:/Users/ruben/Desktop/reportes/reporte.pdf");
 				}
 				catch (JRException e)
 				{
