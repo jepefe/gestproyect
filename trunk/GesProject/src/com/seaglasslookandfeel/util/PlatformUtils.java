@@ -75,7 +75,7 @@ public class PlatformUtils {
             return System.getProperty(SEA_GLASS_OVERRIDE_OS_NAME).startsWith("Mac OS");
         }
 
-        return false;//System.getProperty("os.name").startsWith("Mac OS");
+        return System.getProperty("os.name").startsWith("Mac OS");
     }
 
     /**
