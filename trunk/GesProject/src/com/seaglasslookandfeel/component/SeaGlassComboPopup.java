@@ -68,7 +68,7 @@ public class SeaGlassComboPopup extends BasicComboPopup {
      *         {@code false} if it should overlay the combo box.
      */
     private boolean isDropDown() {
-        return false; //comboBox.isEditable() || hasScrollBars();
+        return comboBox.isEditable() || hasScrollBars();
     }
 
     /**
