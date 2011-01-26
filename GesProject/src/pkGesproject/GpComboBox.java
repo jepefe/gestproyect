@@ -13,5 +13,6 @@ public class GpComboBox extends JComboBox{
 		  public GpComboBox ()
 		    {
 		  //  setUI( new EstiloComboBox() );
+			  this.installAncestorListener();
 		    }
 }
