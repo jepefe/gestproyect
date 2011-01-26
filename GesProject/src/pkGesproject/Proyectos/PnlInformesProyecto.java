@@ -20,7 +20,7 @@ import net.sf.jasperreports.engine.JasperReport;
 
 public class PnlInformesProyecto extends JPanel{
 
-	
+
 	JButton btngenerar = new JButton("Generar");
 	ActionListener generar;
 	JasperReport jasperReport;
@@ -29,7 +29,7 @@ public class PnlInformesProyecto extends JPanel{
 	public PnlInformesProyecto(){
 		this.setLayout(new GridBagLayout());
 		this.add(btngenerar);
-		fileName = System.getProperty("user.dir")+"\\src\\pkGesproject\\reports\\mireport.jrxml";
+		fileName = System.getProperty("user.dir")+"//src//pkGesproject//reports//prueba.jrxml";
 		generar = new ActionListener(){
 
 			@Override
@@ -37,32 +37,34 @@ public class PnlInformesProyecto extends JPanel{
 				// TODO Auto-generated method stub
 				try
 				{
-				//1-Compilamos el archivo XML y lo cargamos en memoria
-				jasperReport = JasperCompileManager.compileReport(fileName);
-				
-				//2. Se llena el reporte con la informacion necesaria
-				Map pars = new HashMap();
-				pars.put("P_INSTITUCION", "Universidad de Montemorelos");
-				
-				//2-Llenamos el reporte con la información y parámetros necesarios (En este caso nada)
-				jasperPrint = JasperFillManager.fillReport(jasperReport, pars, new JREmptyDataSource());
-			
-					
+					//1-Compilamos el archivo XML y lo cargamos en memoria
+					jasperReport = JasperCompileManager.compileReport(fileName);
 
-				
-				
-				//3-Exportamos el reporte a pdf y lo guardamos en disco
-				JasperExportManager.exportReportToPdfFile(
-				jasperPrint, "C:/Users/ruben/Desktop/reportes/reporte.pdf");
+					//2. Se llena el reporte con la informacion necesaria
+					/*Map pars = new HashMap();
+				pars.put("P_INSTITUCION", "Universidad de Montemorelos");
+				pars.put("P_FACULTAD", "Facultad de Ingeniería Tecnología");
+				pars.put("P_CARRERA", "Ingeniería en Sistemas Computacionales");
+
+				jasperPrint = JasperFillManager.fillReport(jasperReport, pars, new JREmptyDataSource());
+					 */
+					jasperPrint = JasperFillManager.fillReport(
+							jasperReport, new HashMap(), new JREmptyDataSource());
+
+
+
+					//3-Exportamos el reporte a pdf y lo guardamos en disco
+					JasperExportManager.exportReportToPdfFile(
+							jasperPrint, "/Users/ruben_albi/Desktop/pruebas/reporte.pdf");
 				}
 				catch (JRException e)
 				{
-				e.printStackTrace();
+					e.printStackTrace();
 				}
 			}
-			
+
 		};
-		
+
 		btngenerar.addActionListener(generar);
 		this.setVisible(true);
 	}
