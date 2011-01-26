@@ -335,10 +335,20 @@ import javax.imageio.ImageIO;
 		  
 	  }
 	  
-	  
+	  /**
+	   * Metodo para subir un fichero comun a un Proyecto
+	   * @param fichero
+	   * @param id_usuario
+	   * @param proyecto
+	   * @param nombre
+	   * @param descripcion
+	   * @param ambito
+	   * @return
+	   */
 	  public boolean SubirFicheroProyecto(String fichero,String id_usuario,String proyecto,String nombre,String descripcion, int ambito){
 		  String id=null;
 		  boolean subido=false;
+		  if (nombre == null){nombre = new File(fichero).getName();}
 		  if (socket == null) {
 	      try {
 			connectar();
@@ -357,13 +367,27 @@ import javax.imageio.ImageIO;
 			}
 		
 	    }
-		  
+		  try {
+				disconnect();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	return subido;
 	  }
-	  
+	  /**
+	   * Metodo para subir un fichero comun a un WorkPackage
+	   * @param fichero
+	   * @param id_usuario
+	   * @param wp
+	   * @param nombre
+	   * @param descripcion
+	   * @return
+	   */
 	  public boolean SubirFicheroWp(String fichero,String id_usuario,String wp,String nombre,String descripcion){
 		  String id=null;
 		  boolean subido=false;
+		  if (nombre==null){nombre = new File(fichero).getName();}
 		  if (socket == null) {
 	      try {
 			connectar();
@@ -382,13 +406,25 @@ import javax.imageio.ImageIO;
 		  if(!subido){
 				cdb.executeUpdate("DELETE FROM FICHEROS WHERE id_fichero =" +id);
 			}
+		  try {
+				disconnect();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	return subido;
 	  }
-	  
+	  /**
+	   * Metodo para subir una foto
+	   * @param fichero
+	   * @param prefijo
+	   * @param id
+	   * @return
+	   */
 	  public boolean SubirFoto(String fichero,String prefijo,String id){
 		  String idfich  = null;
 		  boolean subido = false;
-		  
+		 
 		  idfich = cdb.executeUpdate("INSERT INTO FICHEROS (id_propietario,nombre,descripcion,ambito) values('"+id+"','"+prefijo+id+"','Foto','0')");
 		  
 		  try {
@@ -401,13 +437,28 @@ import javax.imageio.ImageIO;
 		if(!subido){
 			cdb.executeUpdate("DELETE FROM FICHEROS WHERE id_fichero =" +idfich);
 		}
+		  try {
+				disconnect();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		return subido;
 	  }
 	  
-	  
+	  /**
+	   * Metodo para subir un fichero
+	   * @param fichero
+	   * @param id_usuario
+	   * @param nombre
+	   * @param descripcion
+	   * @param ambito
+	   * @return
+	   */
 	  public boolean SubirFichero(String fichero,String id_usuario,String nombre,String descripcion, int ambito){
 		  String id=null;
 		  boolean subido=false;
+		  if (nombre == null){nombre = new File(fichero).getName();}
 		  if (socket == null) {
 	      try {
 			connectar();
@@ -426,6 +477,12 @@ import javax.imageio.ImageIO;
 		  if(!subido){
 				cdb.executeUpdate("DELETE FROM FICHEROS WHERE id_fichero =" +id);
 			}
+		  try {
+			disconnect();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	return subido;
 	  }
 
