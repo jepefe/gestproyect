@@ -78,7 +78,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 		String[] fieldNamestarea = {
 				   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][13], rec.idioma[rec.eleidioma][55], rec.idioma[rec.eleidioma][55]
 				   };
-		int[] fieldWidths = {20,9,15,15,15};
+		int[] fieldWidths = {20,20,20,20,9};
 		//jtxt de tareas
 		jtxtta = new JTextField[fieldNamestarea.length];
 		jlblta = new JLabel[fieldNamestarea.length];
@@ -205,7 +205,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					jtxtpro[1].setText("'+nombrepro+'");
+					jtxtpro[1].setText(nombrepro);
 					conexion.cerrarConexion();
 				}
 			}
