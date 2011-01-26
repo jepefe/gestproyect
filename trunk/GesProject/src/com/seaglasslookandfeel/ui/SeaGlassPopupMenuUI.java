@@ -85,6 +85,7 @@ public class SeaGlassPopupMenuUI extends BasicPopupMenuUI implements PropertyCha
         Window window = SwingUtilities.getWindowAncestor(popupMenu);
         if (PlatformUtils.isMac() && window != null) {
             WindowUtils.makeWindowNonOpaque(window);
+            
         }
         SeaGlassStyle oldStyle = style;
         style = (SeaGlassStyle) SeaGlassLookAndFeel.updateStyle(context, this);
