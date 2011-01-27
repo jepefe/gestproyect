@@ -92,7 +92,7 @@ public class mostrar_excel {
 
 	public static void main(String[] args)
 	{
-	String fileName = "H:" + File.separator + "poi.xls";
+	String fileName = "src/Pruebas_POI/poi.xls";
 	new mostrar_excel().readExcelFile(fileName);
 	}
 		
