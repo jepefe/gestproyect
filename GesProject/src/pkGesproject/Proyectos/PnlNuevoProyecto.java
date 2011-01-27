@@ -81,13 +81,14 @@ public class PnlNuevoProyecto extends JScrollPane{
 		jpnl.setLayout(new GridBagLayout());
 		// Array  de palabras, Fecha inico, Fecha fin, etc.
 		final String[] fieldNames = {
-				rec.idioma[rec.eleidioma][111]+"*", rec.idioma[rec.eleidioma][25]+"*"
-				,rec.idioma[rec.eleidioma][26]+"*",rec.idioma[rec.eleidioma][13]};
-		int[] fieldWidths = {13,7,7,8};
+				rec.idioma[rec.eleidioma][111]+"*",rec.idioma[rec.eleidioma][101]+"*"
+				,rec.idioma[rec.eleidioma][25]+"*",rec.idioma[rec.eleidioma][26]+"*"
+				,rec.idioma[rec.eleidioma][13]};
+		int[] fieldWidths = {15,15,7,7,8};
 
 		jtxt = new JTextField[fieldNames.length];
 		// limite de caracteres 
-		int [] limite = {20,7,10,10}; 
+		int [] limite = {20,35,7,10,10}; 
 		// Campos Calendario y formato
 		jdc1 = new JDateChooser();
 		jdc2 = new JDateChooser();
@@ -113,16 +114,17 @@ public class PnlNuevoProyecto extends JScrollPane{
 
 		for(int i=0;i<fieldNames.length;++i) {
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
-			if (i ==3){jpnl.add(pres = new JLabel(fieldNames[i]),gbc);
+			if (i ==4){jpnl.add(pres = new JLabel(fieldNames[i]),gbc);
 			pres.setVisible(false);
 			}else{jpnl.add(new JLabel(fieldNames[i]),gbc);}
 			if (i != 1 || i != 2 ){gbc.gridwidth = GridBagConstraints.REMAINDER;  } 
-			if(i == 1 ||  i == 2 || i ==3){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);}  
-			if(i == 3){
+			if( i == 2 || i ==3){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);}  
+			if(i == 4){
 				txtprecio = new JTextField(new JTextFieldLimit(10), null, 7);
 				//txtprecio.setPreferredSize(new Dimension(165,30));
-				jpnl.add(txtprecio,gbc); 
 				txtprecio.setVisible(false);
+				jpnl.add(txtprecio,gbc); 
+				
 			}
 			if (i == 1 ){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc1,gbc); }
 			if (i == 2){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc2,gbc); }
