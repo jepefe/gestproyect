@@ -29,9 +29,7 @@ public class escribir_excel extends PnlAltatarea{
     public static void main(String[] args) {
         // Se crea el libro
         HSSFWorkbook libro = new HSSFWorkbook();
-        
-        //obtener el numero de celda en la que se va a escribir
-        protected void updateCellNum(short)
+
         // Se crea una hoja dentro del libro
         HSSFSheet hoja = libro.createSheet("Staff");
 
@@ -56,7 +54,7 @@ public class escribir_excel extends PnlAltatarea{
                        
          // Volcamos la información a un archivo.
             String strNombreArchivo = "src/Pruebas_POI/prueba.xls";
-            File objFile = strNombreArchivo();
+            File objFile = new File(strNombreArchivo);
             FileOutputStream archivoSalida = new FileOutputStream(objFile);
             libro.write(archivoSalida);
             archivoSalida.close();
