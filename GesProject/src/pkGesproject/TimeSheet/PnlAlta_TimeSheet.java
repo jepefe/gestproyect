@@ -188,6 +188,8 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   }//fin switch 
 			   
 			}//fin for de proyectos
+	      
+	      //action listener para combo proyectos
 	      ActionListener accionpro = new ActionListener(){
 
 			@Override
@@ -196,7 +198,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 				if (CmbProyecto.getSelectedItem() != null){
 					String nombrepro = null;
 					conexion.Conectardb();
-					rs = conexion.ConsultaSQL("SELECT nombre FROM PROYECTOS WHERE nombre LIKE '"+CmbProyecto.getSelectedItem()+"'");
+					rs = conexion.ConsultaSQL("SELECT num_contrato FROM PROYECTOS WHERE nombre LIKE '"+CmbProyecto.getSelectedItem()+"'");
 					
 					try {
 						rs.next();
