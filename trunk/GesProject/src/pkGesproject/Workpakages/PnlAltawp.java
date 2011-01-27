@@ -148,17 +148,20 @@ public class PnlAltawp extends JScrollPane{
 			//System.out.println("Fieldnames = " + fieldNames.length + " / i = " + i);
 			
 		   gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   gbc.gridwidth = GridBagConstraints.REMAINDER;
+
 		   //desahabilitar campos de texto
 		   
 		   switch(i){
 		   
 		   case (0)://nombre
 		   case (1)://presupuesto
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   	panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 		   		break;
 		   case (2)://combo de proyectos
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   panel.add(CmbPro,gbc);
 			   CmbPro.setPreferredSize(new Dimension(140,30));
 			   
@@ -175,29 +178,8 @@ public class PnlAltawp extends JScrollPane{
 						}
 				CmbPro.setSelectedItem(null);
 			   	break;
-		   case (3)://combo para partner
-			   panel.add(CmbPar,gbc);
-			   CmbPar.setPreferredSize(new Dimension(140,30));
-			   
-				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT nombre,cod_part FROM PARTNER");
-				try {
-					System.out.println("work");
-				while(rs.next()){
-					CmbPar.addItem(rs.getString(1));
-					
-				}
-					} catch (SQLException e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
-						}
-				CmbPar.setSelectedItem(null);
-			   	break;
-		   case (4)://fecha de inicio
-		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);}
-		   		break;
-		   case (5)://fecha de fin
-			    // Conexion 1 BBDD
+		   case (3)://listas para partner
+			// Conexion 1 BBDD
 			      conexion.Conectardb();
 			    	rs = conexion.ConsultaSQL("SELECT nombre FROM PARTNER");
 			    //	rs2 = conexion.ConsultaSQL("Select count(nombre) From PARTNER");
@@ -250,43 +232,26 @@ public class PnlAltawp extends JScrollPane{
 		      listaP2.setFixedCellHeight(18);
 		      sp5.setColumnHeaderView(new JLabel(rec.idioma[rec.eleidioma][82])); 
 		      panel.add(sp5,gbc);
-		      gbc.gridwidth = GridBagConstraints.RELATIVE;
-		      panel.add(new JLabel(rec.idioma[rec.eleidioma][81]),gbc);
-		      gbc.gridwidth = GridBagConstraints.REMAINDER; 
-		      
-		     
-		     // Evento doble click primer JLIST
-		      MouseListener mouseListener = new MouseAdapter() {
-		    	 
-		    	  public void mouseClicked(MouseEvent e) {
-		    		  if (e.getClickCount() == 2) {
-		                modelo.addElement(listaP.getSelectedValue());		    
-		                modelo2.removeElement(listaP.getSelectedValue());
-		               }
-		          }
-		      };
-		      listaP.addMouseListener(mouseListener);
-
 	          modelo.toArray();
-	          
-	          
-		      // Evento doble click segundo  JLIST (lsitaP2)
-		      MouseListener mouseListener2 = new MouseAdapter() {
-		    	 
-		          public void mouseClicked(MouseEvent e) {
-		              if (e.getClickCount() == 2) {
-		                modelo2.addElement(listaP2.getSelectedValue());	
-		                modelo.removeElement(listaP2.getSelectedValue());
-		               }
-		          }
-		      };
-		      listaP2.addMouseListener(mouseListener2);
+			   	break;
+		   case (4)://fecha de inicio
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);}
+		   		break;
+		   case (5)://fecha de fin
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc2,gbc);}
 		   		break;
 		   case (6)://descripcion
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp),gbc);}
 			   	break;
 		   case (7)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp2),gbc);}
 		   		break;
 		   		
@@ -366,6 +331,30 @@ public class PnlAltawp extends JScrollPane{
 				});
 				}
 		}//fin for
+		//mouse listener tabla partnets
+	     // Evento doble click primer JLIST
+	      MouseListener mouseListener = new MouseAdapter() {
+	    	 
+	    	  public void mouseClicked(MouseEvent e) {
+	    		  if (e.getClickCount() == 2) {
+	                modelo.addElement(listaP.getSelectedValue());		    
+	                modelo2.removeElement(listaP.getSelectedValue());
+	               }
+	          }
+	      };
+	      listaP.addMouseListener(mouseListener);
+	      
+	   // Evento doble click segundo  JLIST (lsitaP2)
+	      MouseListener mouseListener2 = new MouseAdapter() {
+	    	 
+	          public void mouseClicked(MouseEvent e) {
+	              if (e.getClickCount() == 2) {
+	                modelo2.addElement(listaP2.getSelectedValue());	
+	                modelo.removeElement(listaP2.getSelectedValue());
+	               }
+	          }
+	      };
+	      listaP2.addMouseListener(mouseListener2);
 	  /*  
 		**
 		 * Creamos los cuatro botones para este panel 
@@ -400,7 +389,7 @@ public class PnlAltawp extends JScrollPane{
 					//nomwp = cbtipo.getSelectedItem().toString();
 					//para id de proyecto
 					//se limitan la necesidad de campos obligatorios
-					if(jtxt[0].getText()== ""||jtxt[1].getText()== ""||CmbPro.getSelectedItem()==null||CmbPar.getSelectedItem()==null||(jdc1.getDate()==null)||(jdc2.getDate()==null)){
+					if(jtxt[0].getText()== ""||jtxt[1].getText()== ""||CmbPro.getSelectedItem()==null||(jdc1.getDate()==null)||(jdc2.getDate()==null)){
 						JOptionPane.showMessageDialog( null, "Faltan campos obligatorios por rellenar"); 
 						jtxt[0].requestFocus();
 					}else{
