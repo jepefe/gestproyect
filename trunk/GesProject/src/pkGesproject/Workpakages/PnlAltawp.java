@@ -198,7 +198,7 @@ public class PnlAltawp extends JScrollPane{
 		   		break;
 		   case (5)://fecha de fin
 			    // Conexion 1 BBDD
-			    /*  conexion.Conectardb();
+			      conexion.Conectardb();
 			    	rs = conexion.ConsultaSQL("SELECT nombre FROM PARTNER");
 			    //	rs2 = conexion.ConsultaSQL("Select count(nombre) From PARTNER");
 			    	 // Cuenta para hacer la matriz dinamica
@@ -241,7 +241,7 @@ public class PnlAltawp extends JScrollPane{
 		      listaP.setFixedCellHeight(18);
 		      sp1.setColumnHeaderView(new JLabel(rec.idioma[rec.eleidioma][84])); 
 		      gbc.gridwidth = GridBagConstraints.RELATIVE;
-		      jpnl.add(sp1,gbc);
+		      panel.add(sp1,gbc);
 		      gbc.gridwidth = GridBagConstraints.REMAINDER;  
 		        // Segundo JLIST
 		      listaP2 = new JList(modelo);
@@ -249,9 +249,9 @@ public class PnlAltawp extends JScrollPane{
 		      listaP2.setFixedCellWidth(142);
 		      listaP2.setFixedCellHeight(18);
 		      sp5.setColumnHeaderView(new JLabel(rec.idioma[rec.eleidioma][82])); 
-		      jpnl.add(sp5,gbc);
+		      panel.add(sp5,gbc);
 		      gbc.gridwidth = GridBagConstraints.RELATIVE;
-		      jpnl.add(new JLabel(rec.idioma[rec.eleidioma][81]),gbc);
+		      panel.add(new JLabel(rec.idioma[rec.eleidioma][81]),gbc);
 		      gbc.gridwidth = GridBagConstraints.REMAINDER; 
 		      
 		     
@@ -280,7 +280,7 @@ public class PnlAltawp extends JScrollPane{
 		               }
 		          }
 		      };
-		      listaP2.addMouseListener(mouseListener2);*/
+		      listaP2.addMouseListener(mouseListener2);
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc2,gbc);}
 		   		break;
 		   case (6)://descripcion
