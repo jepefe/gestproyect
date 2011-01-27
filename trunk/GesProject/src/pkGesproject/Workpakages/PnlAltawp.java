@@ -166,7 +166,7 @@ public class PnlAltawp extends JScrollPane{
 			   CmbPro.setPreferredSize(new Dimension(140,30));
 			   
 				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM PROYECTOS");
+				rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM PROYECTOS ORDER BY nombre");
 				try {
 				while(rs.next()){
 					CmbPro.addItem(rs.getString(1));	
@@ -181,7 +181,7 @@ public class PnlAltawp extends JScrollPane{
 		   case (3)://listas para partner
 			// Conexion 1 BBDD
 			      conexion.Conectardb();
-			    	rs = conexion.ConsultaSQL("SELECT nombre FROM PARTNER");
+			    	rs = conexion.ConsultaSQL("SELECT nombre FROM PARTNER ORDER BY nombre");
 			    //	rs2 = conexion.ConsultaSQL("Select count(nombre) From PARTNER");
 			    	 // Cuenta para hacer la matriz dinamica
 			    	try {
@@ -192,7 +192,7 @@ public class PnlAltawp extends JScrollPane{
 			    	Npartners = new String [cuenta] ;
 			    
 			 //Conexion 2 BBDD
-			    	rs = conexion.ConsultaSQL("SELECT  nombre FROM PARTNER");
+			    	rs = conexion.ConsultaSQL("SELECT  nombre FROM PARTNER ORDER BY nombre");
 			    	
 			    	 // Cuenta para hacer la matriz dinamica
 			    	int k = 0;

@@ -73,12 +73,12 @@ public class PnlAlta_TimeSheet extends JPanel{
 		
 		
 		String[] fieldNamesproyecto = {
-		   rec.idioma[rec.eleidioma][111],rec.idioma[rec.eleidioma][101], rec.idioma[rec.eleidioma][102], rec.idioma[rec.eleidioma][125], rec.idioma[rec.eleidioma][105]
+		   rec.idioma[rec.eleidioma][111],rec.idioma[rec.eleidioma][101], rec.idioma[rec.eleidioma][102], rec.idioma[rec.eleidioma][105]
 		   };
 		String[] fieldNamestarea = {
 				   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][13], rec.idioma[rec.eleidioma][55], rec.idioma[rec.eleidioma][55]
 				   };
-		int[] fieldWidths = {20,20,20,20,9};
+		int[] fieldWidths = {20,20,20,9};
 		//jtxt de tareas
 		jtxtta = new JTextField[fieldNamestarea.length];
 		jlblta = new JLabel[fieldNamestarea.length];
@@ -148,7 +148,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   CmbPart.setPreferredSize(new Dimension(140,30));
 	   
 	   				conexion.Conectardb();
-	   					rs = conexion.ConsultaSQL("SELECT nombre,cod_part FROM PARTNER");
+	   					rs = conexion.ConsultaSQL("SELECT nombre,cod_part FROM PARTNER ORDER BY nombre");
 	   						try {
 	   								while(rs.next()){
 	   									CmbPart.addItem(rs.getString(1));	
@@ -161,26 +161,8 @@ public class PnlAlta_TimeSheet extends JPanel{
 	   							CmbPart.setSelectedItem(null);
 	   								conexion.cerrarConexion();
 				   break;
-			   case (3)://nombre empleado
-				   System.out.println("Entra combo empleado");
-		   			Jproyecto.add(CmbStaff,gbc);
-		   			CmbStaff.setPreferredSize(new Dimension(140,30));
-		   
-			conexion.Conectardb();
-			rs = conexion.ConsultaSQL("SELECT nombre,id_staff FROM STAFF");
-			try {
-			while(rs.next()){
-				CmbStaff.addItem(rs.getString(1));	
-				
-			}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					}
-			CmbStaff.setSelectedItem(null);
-			conexion.cerrarConexion();
-				   break;
-			   case (4)://rol en el proyecto
+			  
+			   case (3)://rol en el proyecto
 				   System.out.println("Entra rol proyecto");
 				   Jproyecto.add(jtxtpro[i]=new JTextField(fieldWidths[i]),gbc);
 				   break;
