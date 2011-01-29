@@ -38,7 +38,7 @@ public class Splash extends JWindow{
 		
 		
 		this.setContentPane(panel);
-		this.setSize(400,240);
+		this.setSize(440,270);
 		int x = (Toolkit.getDefaultToolkit().getScreenSize().width - this.getWidth()) / 2;
 		int y = (Toolkit.getDefaultToolkit().getScreenSize().height - this.getHeight()) / 2;
 		this.setLocation(x,y);
@@ -50,11 +50,8 @@ public class Splash extends JWindow{
 
 		jpbcargando.setBounds(200, 170, 180, 130);
 		jlbmsgcargando.setBounds(210, 180, 180, 50);
-		
-		
-		
 		AWTUtilities.setWindowOpaque(this, false);
-		
+		panel.setDoubleBuffered(true);
 		
 
 
@@ -73,8 +70,9 @@ public class Splash extends JWindow{
 				while(recursos.progresocarga <= 10) {
 					jpbcargando.setValue(recursos.progresocarga);
 					jlbmsgcargando.setText(recursos.txtcarga);
-					jpbcargando.repaint();
-					jlbmsgcargando.repaint();
+				//	jpbcargando.repaint();
+					//jlbmsgcargando.repaint();
+					//validate();
 					try {
 						Thread.sleep(5);
 					} catch (InterruptedException e) {
