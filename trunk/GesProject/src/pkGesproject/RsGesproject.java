@@ -38,11 +38,12 @@ public class RsGesproject {
 	final String FTPUSER = "gesproyect";
 	final String FTPPASS = "proyecto2010";
 	public int progresocarga = 0;
+	public String txtcarga;
 	public FrmLogin instanciafrmlogin;
 	/**String constante que contiene el titulo de la aplicaion*/
 	public final String APNAME = "GesProyect - Florida"; //Constante que contiene el nombre de la aplicacion
 	public  Image[] imagen = {
-			new ImageIcon(getClass().getResource("imagenes/Login.JPG")).getImage()
+			new ImageIcon(getClass().getResource("imagenes/Splash.png")).getImage()
 	};
 	public ImageIcon[] icono = { 
 			new ImageIcon(getClass().getResource("imagenes/staff.png")),
