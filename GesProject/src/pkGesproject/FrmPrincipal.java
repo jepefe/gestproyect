@@ -73,28 +73,28 @@ public class FrmPrincipal extends JFrame {
 	
 	public FrmPrincipal(){
 		recursos.progresocarga =1;
-		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Staff");
+		recursos.txtcarga = "Loading  Staff";
 		spnstaff = new SpnStaff();
 		recursos.progresocarga =2;
-		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Partners");
+		recursos.txtcarga = "Loading  Partners";
 		spnsocios = new SpnSocios();
 		recursos.progresocarga =4;
-		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Projects");
+		recursos.txtcarga = "Loading  Projects";
 		spnproyectos = new SpnProyectos();
 		recursos.progresocarga =5;
-		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Work Packages");
+		recursos.txtcarga = "Loading  Work Packages";
 		spnworkpack = new SpnWorkpack();
 		recursos.progresocarga =6;
-		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Tasks");
+		recursos.txtcarga = "Loading  Tasks";
 		spntareas = new SpnTareas();
 		recursos.progresocarga =7;
-		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Tables");
+		recursos.txtcarga = "Loading  Tables";
 		spntablas = new SpnTablas();
 		recursos.progresocarga =9;
-		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Time Sheets");
+		recursos.txtcarga = "Loading  Time Sheets";
 		spntimesheet = new SpnTimesheet();
 		recursos.progresocarga =10;
-		recursos.instanciafrmlogin.jlbmsgcargando.setText("Loading  Data");
+		recursos.txtcarga = "Loading  Data";
 		nueva = new FrmNuevapalabra();
 		
 		

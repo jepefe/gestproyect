@@ -1,15 +1,24 @@
 package pkGesproject;
 
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.SplashScreen;
+import java.awt.Window;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import com.sun.awt.AWTUtilities;
+import com.sun.java.util.*;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -55,8 +64,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 	Thread hilo;
 	boolean validado = false;
 	InetAddress addr;
-	Runnable cargando;
-	JImageContainer jicfoto;
+	
 
 
 
@@ -88,10 +96,6 @@ public class FrmLogin extends JFrame implements ActionListener{
 
 				}
 				while(!validado){
-
-
-
-
 					try {
 						addr.isReachable(2000);
 						jpnl_conexion.setVisible(false);
@@ -223,79 +227,33 @@ public class FrmLogin extends JFrame implements ActionListener{
 
 
 		if(e.getActionCommand().equals("aceptar")){
+		
 			login();
 		}
 	}
 
+	
+	
+
+	
 
 	public void CargandoAp(){
-
-		int i=0;
-		GridBagConstraints cons = new GridBagConstraints();
-		for(i=0;i<jpnl_login.getComponentCount();i++){
-			jpnl_login.getComponent(i).setVisible(false);
-
-		}
-		jlbmsgcargando.setFont(new Font(Font.SANS_SERIF, Font.BOLD,13));
-		JRootPane jrp = new JRootPane();
-		//jicfoto.setLayout(new BorderLayout());
-		jicfoto = new JImageContainer();
-		
-		jicfoto.setImage(recursos.imagen[0]);
-
-		jicfoto.setSize(400,300);
-		jicfoto.setLayout(new BorderLayout());
-		this.setSize(400,300);
-		jpnl_login.setSize(400,300);
-		this.setLocationRelativeTo(null);
-		this.setContentPane(jicfoto);
-		
-		jrp.setContentPane(jicfoto);
-		this.setRootPane(jrp);
-		jicfoto.add(jpnl_login,BorderLayout.NORTH);
-		cons.gridwidth = GridBagConstraints.REMAINDER;
-		//cons.anchor = GridBagConstraints.CENTER;
-	//	cons.insets = new Insets(20,0,15,0);
-		jpnl_login.add(jpbcargando,cons);
-		
-		jpnl_login.add(jlbmsgcargando,cons);
-		
-		this.validate();
-		//jlbmsgcargando.setOpaque(true);
-		//Hilo que maneja el progressbar de carga
-		cargando = new Runnable(){
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				while(recursos.progresocarga <= 10) {
-					jpbcargando.setValue(recursos.progresocarga);
-					jpbcargando.repaint();
-					jlbmsgcargando.revalidate();
-					jicfoto.repaint();
-					try {
-						Thread.sleep(5);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-				}
-			}
-
-		};
-
-		Thread hilocargando = new Thread(cargando);
-		hilocargando.start();
+		Splash sp = new Splash();
+		this.setVisible(false);
+		sp.mostrar();
+	
 
 	}
+
+
+
 
 
 
 
 	public void login(){
 
-
+		
 		Runnable rlogin = new Runnable(){
 
 			@Override
