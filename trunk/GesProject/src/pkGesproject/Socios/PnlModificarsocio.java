@@ -77,8 +77,11 @@ public class PnlModificarsocio extends JPanel{
     	datos = new String[cuenta][columnas];
 		auxdatos = new String[cuenta][columnas];
     	tablemodel=cargar_tabla(datos,columnas);
-    	jtblLateral  = new JTable(tablemodel);
-        	
+    	jtblLateral  = new JTable(tablemodel){
+    		 public boolean isCellEditable(int rowIndex, int mColIndex) {
+                 return false;
+               }
+    	};
         	/**
         	 * Creamos el jtextfield para la busquera y le añadimos un focus listener para que se borre su contenido
         	 **/

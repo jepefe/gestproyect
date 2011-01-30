@@ -129,7 +129,11 @@ public class PnlBusquedawp extends JPanel{
     	datos = new String[cuenta][columnas];
 		auxdatos = new String[cuenta][columnas];
     	tablemodel=cargar_tabla(datos);
-    	jtblLateral  = new JTable(tablemodel);
+    	jtblLateral  = new JTable(tablemodel){
+   		 public boolean isCellEditable(int rowIndex, int mColIndex) {
+             return false;
+           }
+    	};
     	
 		    
         	//jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));

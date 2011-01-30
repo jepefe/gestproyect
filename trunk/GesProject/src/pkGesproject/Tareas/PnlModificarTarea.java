@@ -74,7 +74,11 @@ public class PnlModificarTarea extends JPanel{
     	datos = new String[cuenta][columnas];
 		auxdatos = new String[cuenta][columnas];
     	tablemodel=cargar_tabla(datos,columnas);
-    	jtblLateral  = new JTable(tablemodel);
+    	jtblLateral  = new JTable(tablemodel){
+   		 public boolean isCellEditable(int rowIndex, int mColIndex) {
+             return false;
+           }
+    	};
     	
     	/*
     	String resul[]= new String[3];
