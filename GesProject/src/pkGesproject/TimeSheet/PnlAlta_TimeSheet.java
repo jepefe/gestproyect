@@ -48,7 +48,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 	
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
-	JTextField[] jtxtpro, jtxtwp, jtxths,jtxtta ;
+	JTextField[] jtxtpro,jtxtta ;
 	JLabel[] jlblpro, jlblta;
 	JDateChooser jdc1;
 	JButton jbtnaceptar, jbtncancelar;
@@ -182,7 +182,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   		CmbTareas.setPreferredSize(new Dimension(140,30));
 			   
 			   		conexion.Conectardb();
-			   		rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM TAREAS");
+			   		rs = conexion.ConsultaSQL("SELECT nombre,id_task FROM TAREAS");
 			   		try {
 			   			while(rs.next()){
 			   				CmbTareas.addItem(rs.getString(1));	
@@ -196,10 +196,10 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   		conexion.cerrarConexion();
 					break;
 			   	case (2):
-			   		Jtarea.add(jtxtwp[i]=new JTextField(fieldWidths[i]),gbc);
+			   		Jtarea.add(jtxtta[i]=new JTextField(fieldWidths[i]),gbc);
 			   		break;
 			   	case (3):
-			   		Jtarea.add(jtxths[i]=new JTextField(fieldWidths[i]),gbc);
+			   		Jtarea.add(jtxtta[i]=new JTextField(fieldWidths[i]),gbc);
 			   		break;
 				   
 			   }//fin switch tareas
