@@ -48,7 +48,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 	
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
-	JTextField[] jtxtpro, jtxtta;
+	JTextField[] jtxtpro, jtxtwp, jtxths,jtxtta ;
 	JLabel[] jlblpro, jlblta;
 	JDateChooser jdc1;
 	JButton jbtnaceptar, jbtncancelar;
@@ -115,6 +115,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 				
 			   gbc.gridwidth = GridBagConstraints.RELATIVE;
 			   Jproyecto.add(jlblpro[i]=new JLabel(fieldNamesproyecto[i]),gbc);
+			   Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbc);
 			   gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   
 			   switch(i){
@@ -167,7 +168,41 @@ public class PnlAlta_TimeSheet extends JPanel{
 				   Jproyecto.add(jtxtpro[i]=new JTextField(fieldWidths[i]),gbc);
 				   break;
 			   		
-			   }//fin switch 
+			   }//fin switch proyecto
+			   
+			   //campos del panel de tareas
+		switch (i){
+				case (0):
+		   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   			{gbc.gridwidth = GridBagConstraints.REMAINDER; Jtarea.add(jdc1,gbc);}
+					break;
+				case (1):
+					System.out.println("Entra combo nombre");
+			   		Jtarea.add(CmbTareas,gbc);
+			   		CmbTareas.setPreferredSize(new Dimension(140,30));
+			   
+			   		conexion.Conectardb();
+			   		rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM TAREAS");
+			   		try {
+			   			while(rs.next()){
+			   				CmbTareas.addItem(rs.getString(1));	
+					
+			   			}
+			   			} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+			   				e1.printStackTrace();
+						}
+			   		CmbTareas.setSelectedItem(null);
+			   		conexion.cerrarConexion();
+					break;
+			   	case (2):
+			   		Jtarea.add(jtxtwp[i]=new JTextField(fieldWidths[i]),gbc);
+			   		break;
+			   	case (3):
+			   		Jtarea.add(jtxths[i]=new JTextField(fieldWidths[i]),gbc);
+			   		break;
+				   
+			   }//fin switch tareas
 			   
 			}//fin for de proyectos
 	      
