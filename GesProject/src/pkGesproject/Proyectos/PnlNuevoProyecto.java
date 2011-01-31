@@ -69,7 +69,6 @@ public class PnlNuevoProyecto extends JScrollPane{
 	Runnable servdisp;
 	MouseListener mouseListener;
 	PnlModificarProyecto modpro = PnlModificarProyecto.Obtener_Instancia();
-	JTextFieldLimit limite = new JTextFieldLimit(15);
 	JTextField txtprecio;
 	Border empty = new EmptyBorder(0,0,0,0);
 	/*
@@ -112,22 +111,22 @@ public class PnlNuevoProyecto extends JScrollPane{
 		mensaje.setBackground(Color.decode("#D0E495"));
 		mensaje.setVisible(false);
 
-		for(int i=0;i<fieldNames.length;++i) {
+		for(int  i = 0 ;i<fieldNames.length ;++i) {
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
-			if (i ==4){jpnl.add(pres = new JLabel(fieldNames[i]),gbc);
+			if (i == 4){jpnl.add(pres = new JLabel(fieldNames[i]),gbc);
 			pres.setVisible(false);
 			}else{jpnl.add(new JLabel(fieldNames[i]),gbc);}
-			if (i != 1 || i != 2 ){gbc.gridwidth = GridBagConstraints.REMAINDER;  } 
-			if( i == 2 || i ==3){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);}  
+			if ( i != 2 || i != 3 || i!=4 ){gbc.gridwidth = GridBagConstraints.REMAINDER;  } 
+			if( i == 2 || i ==3 || i == 4){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);}  
 			if(i == 4){
 				txtprecio = new JTextField(new JTextFieldLimit(10), null, 7);
-				//txtprecio.setPreferredSize(new Dimension(165,30));
-				txtprecio.setVisible(false);
 				jpnl.add(txtprecio,gbc); 
+				txtprecio.setVisible(false);
 				
 			}
-			if (i == 1 ){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc1,gbc); }
-			if (i == 2){ gbc.gridwidth = GridBagConstraints.REMAINDER; jpnl.add(jdc2,gbc); }
+			System.out.println("Estoy en el final del for");
+			if (i == 2 ){  jpnl.add(jdc1,gbc); }
+			if (i == 3){  jpnl.add(jdc2,gbc); }
 		}// fin for
 
 		// KeyListener para solo insertar numeros en el campo txtprecio.
