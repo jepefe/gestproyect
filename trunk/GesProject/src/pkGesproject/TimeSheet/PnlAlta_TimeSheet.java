@@ -196,8 +196,8 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   		conexion.cerrarConexion();
 					break;
 			   	case (2):
-					System.out.println("Entra combo nombre workpaquets");
-		   		Jtarea.add(CmbTareas,gbc);
+				System.out.println("Entra combo nombre workpaquets");
+		   		Jtarea.add(CmbWorkpaquets,gbc);
 		   		CmbTareas.setPreferredSize(new Dimension(140,30));
 		   
 		   		conexion.Conectardb();
@@ -240,7 +240,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					rs = conexion.ConsultaSQL("SELECT nombre FROM WORKPAQUETS WHERE id_wp = '"+id_wp+"'");
+					rs = conexion.ConsultaSQL("SELECT nombre FROM WORKPAQUETS WHERE id_wp LIKE '"+id_wp+"'");
 					
 					try {
 						rs.next();
