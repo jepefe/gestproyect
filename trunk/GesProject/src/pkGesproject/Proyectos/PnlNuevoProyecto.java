@@ -315,7 +315,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("aceptar")){
-					if(jtxt[0].getText().equals("")|| jdc1.getDate().equals(null) || jdc2.getDate().equals(null) ){
+					if(jtxt[0].getText().equals("")||jtxt[1].getText().equals("")|| jdc1.getDate().equals(null) || jdc2.getDate().equals(null) ){
 
 						alerta.setText(rec.idioma[rec.eleidioma][79]);
 						mensaje.setBackground(Color.decode("#ec8989"));
@@ -343,7 +343,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 								java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 								java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 								if (sqlDate1.getTime()< sqlDate2.getTime()){
-									conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion,estado, f_ini, f_fin) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+estado+"','"+sqlDate1+"','"+sqlDate2+"')");
+									conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion,estado, f_ini, f_fin, num_contrato) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+estado+"','"+sqlDate1+"','"+sqlDate2+"','"+ jtxt[1].getText()+"')");
 
 									/*
 									 * Consegir id proyecto
@@ -409,6 +409,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 
 									// Borrar cuando termine de añadir		
 									jtxt[0].setText("");
+									jtxt[1].setText("");
 									jdc1.setDate(null);
 									jdc2.setDate(null);
 									textarea.setText(null);		

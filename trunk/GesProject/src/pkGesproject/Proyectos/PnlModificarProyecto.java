@@ -304,16 +304,16 @@ public class PnlModificarProyecto extends JPanel{
 	 * 
 	 */
 						conexion.Conectardb();
-				    	rs = conexion.ConsultaSQL("SELECT id_pro, p.nombre, p.descripcion,p.presupuesto, p.f_ini, p.f_fin FROM PROYECTOS as p WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+				    	rs = conexion.ConsultaSQL("SELECT id_pro, p.nombre,p.num_contrato, p.descripcion,p.presupuesto, p.f_ini, p.f_fin FROM PROYECTOS as p WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
 							try {									
 										rs.next();
 											id_pro = rs.getInt(1);
 											mod.jtxt[0].setText(rs.getString(2));
-											mod.textarea.setText(rs.getString(3));
-											System.out.println("JTXT1 "+ rs.getString(4));
-											mod.txtprecio.setText(String.valueOf(rs.getInt(4))) ;
-											mod.jdc1.setDate(rs.getDate(5));
-											mod.jdc2.setDate(rs.getDate(6));				
+											mod.jtxt[1].setText(rs.getString(3));
+											mod.textarea.setText(rs.getString(4));
+											mod.txtprecio.setText(String.valueOf(rs.getInt(5))) ;
+											mod.jdc1.setDate(rs.getDate(6));
+											mod.jdc2.setDate(rs.getDate(7));				
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
