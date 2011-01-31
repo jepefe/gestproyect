@@ -29,10 +29,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import com.toedter.calendar.JDateChooser;
@@ -51,7 +53,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 	JTextField[] jtxtpro,jtxtta ;
 	JLabel[] jlblpro, jlblta, jlblhe;
 	JDateChooser jdc1;
-	JButton jbtnaceptar, jbtncancelar;
+	JButton jbtnaceptar, jbtnlimpiar;
 	GpComboBox CmbTareas = new GpComboBox();
 	GpComboBox CmbProyecto = new GpComboBox();
 	GpComboBox CmbPart = new GpComboBox();
@@ -64,14 +66,30 @@ public class PnlAlta_TimeSheet extends JPanel{
 	JPanel Jtarea = new JPanel();
 	JPanel Jtabla = new JPanel();
 	
+	JTable jtblTime;
+	String colu[] = {rec.idioma[rec.eleidioma][129],rec.idioma[rec.eleidioma][40],rec.idioma[rec.eleidioma][97]};
+	DefaultTableModel tablemodel = new DefaultTableModel(null,colu);
+	
+	int id_wp = 0;
+	String datos [][];
+	String nombrepro = null;
+	int Tarea, workpaquet;
 	
 	public PnlAlta_TimeSheet(){
 		System.out.println("HOLAAAAAAAAA");
 		this.setLayout(new BorderLayout());
 		Jproyecto.setLayout(new GridBagLayout());
 		Jtarea.setLayout(new GridBagLayout());
+		Jtabla.setLayout(new GridBagLayout());
 		
-		
+		datos = new String[Tarea][workpaquet];
+		//tablemodel=cargar_tabla(datos);
+		jtblTime  = new JTable(tablemodel){
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+	        return false;
+	       }
+	    };
+	    	
 		String[] fieldNamesproyecto = {
 		   rec.idioma[rec.eleidioma][111],rec.idioma[rec.eleidioma][101], rec.idioma[rec.eleidioma][102], rec.idioma[rec.eleidioma][105]
 		   };
@@ -126,7 +144,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   CmbProyecto.setPreferredSize(new Dimension(140,30));
 			   
 				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM PROYECTOS");
+				rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM PROYECTOS ORDER BY nombre");
 				try {
 				while(rs.next()){
 					CmbProyecto.addItem(rs.getString(1));	
@@ -182,7 +200,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   		CmbTareas.setPreferredSize(new Dimension(140,30));
 			   
 			   		conexion.Conectardb();
-			   		rs = conexion.ConsultaSQL("SELECT nombre,id_task FROM TAREAS");
+			   		rs = conexion.ConsultaSQL("SELECT nombre,id_task FROM TAREAS ORDER BY nombre");
 			   		try {
 			   			while(rs.next()){
 			   				CmbTareas.addItem(rs.getString(1));	
@@ -201,7 +219,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 		   		CmbTareas.setPreferredSize(new Dimension(140,30));
 		   
 		   		conexion.Conectardb();
-		   		rs = conexion.ConsultaSQL("SELECT nombre,id_wp FROM WORKPAQUETS");
+		   		rs = conexion.ConsultaSQL("SELECT nombre,id_wp FROM WORKPAQUETS ORDER BY nombre");
 		   		try {
 		   			while(rs.next()){
 		   				CmbWorkpaquets.addItem(rs.getString(1));	
@@ -228,26 +246,28 @@ public class PnlAlta_TimeSheet extends JPanel{
 				// TODO Auto-generated method stub
 				if (CmbTareas.getSelectedItem() != null){
 					String nomwp = null;
-					int id_wp = 0;
+					//para las tareas
 					conexion.Conectardb();
 					rs = conexion.ConsultaSQL("SELECT id_wp FROM TAREAS WHERE nombre LIKE '"+CmbTareas.getSelectedItem()+"'");
 					
 					try {
 						rs.next();
-						id_wp = Integer.parseInt(rs.getString(1));
+						id_wp = rs.getInt(1);
 						
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					rs = conexion.ConsultaSQL("SELECT nombre FROM WORKPAQUETS WHERE id_wp LIKE '"+id_wp+"'");
+					
+					//para workpaquets
+					rs = conexion.ConsultaSQL("SELECT nombre FROM WORKPAQUETS WHERE id_wp = '"+id_wp+"'");
 					
 					try {
 						rs.next();
 						nomwp = rs.getString(1);
-					} catch (SQLException e1) {
+					} catch (SQLException e2) {
 						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						e2.printStackTrace();
 					}
 					CmbWorkpaquets.setSelectedItem(nomwp);
 					conexion.cerrarConexion();
@@ -262,7 +282,6 @@ public class PnlAlta_TimeSheet extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				if (CmbProyecto.getSelectedItem() != null){
-					String nombrepro = null;
 					conexion.Conectardb();
 					rs = conexion.ConsultaSQL("SELECT num_contrato FROM PROYECTOS WHERE nombre LIKE '"+CmbProyecto.getSelectedItem()+"'");
 					
@@ -273,16 +292,23 @@ public class PnlAlta_TimeSheet extends JPanel{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					System.out.println(nombrepro);
 					jtxtpro[1].setText(nombrepro);
 					conexion.cerrarConexion();
 				}
 			}
 	    	  
 	      };
+	      gbc.gridwidth = GridBagConstraints.RELATIVE;
+	      Jtarea.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
+	      gbc.gridwidth = GridBagConstraints.REMAINDER;
+	      Jtarea.add(jbtnlimpiar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
+	      Jtabla.add(jtblTime);
 	      CmbProyecto.addActionListener(accionpro);
 	      CmbTareas.addActionListener(accionta);
 			this.add(Jproyecto,BorderLayout.NORTH);
 			this.add(Jtarea,BorderLayout.CENTER);
+			this.add(Jtabla,BorderLayout.SOUTH);
 			this.setVisible(true);
 		}//fin constructor
 	}//fin clase
