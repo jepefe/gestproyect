@@ -181,7 +181,7 @@ import javax.imageio.ImageIO;
 	      throws IOException {
 
 	    BufferedInputStream input = new BufferedInputStream(inputStream);
-
+	    bin();
 	    sendLine("PASV");
 	    String response = readLine();
 	    if (!response.startsWith("227 ")) {
