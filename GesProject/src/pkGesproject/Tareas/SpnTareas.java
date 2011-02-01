@@ -34,7 +34,7 @@ public class SpnTareas extends JSplitPane{
 	Component[] panlsStaff = {
 			new PnlAltatarea(),
 			 miscroll=new JScrollPane(modificar),
-			 new JPanel()};
+			 new PnlImportarExportar()};
 
 	public SpnTareas(){
 		this.setOneTouchExpandable(true);
