@@ -69,19 +69,29 @@ public class PnlInformesProyecto extends JPanel{
 					
 					conexion.cerrarConexion();
 					//3-Exportamos el reporte a pdf y lo guardamos en disco
-					filechooser = new JFileChooser();
+					
+					JFileChooser filechooser = new JFileChooser();
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("Documento PDF", "pdf");//Añadimos el filtro para que nos muestre sólo las extensiones que queremos
+					filechooser.setFileFilter(filter);
+					
 					int returnVal = filechooser.showSaveDialog(null);
-					//FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG, GIF, PNG", "jpg", "jpeg", "gif", "png");//Añadimos el filtro para que nos muestre sólo las extensiones que queremos
-					//filechooser.setFileFilter(filter);
-					if (returnVal == JFileChooser.APPROVE_OPTION) {
-						File file = filechooser.getSelectedFile();
-						/*
-						 * sacamos la ruta del archivo y su extension
-						 */
-						ruta = file.getPath();
-				    } 	
-					JasperExportManager.exportReportToPdfFile(
-							jasperPrint, ruta+".pdf");
+						if (returnVal == JFileChooser.APPROVE_OPTION) {
+							File file = filechooser.getSelectedFile();
+							/*
+							 * sacamos la ruta del archivo y su extension
+							 */
+							if(filechooser.getFileFilter().getDescription().equals("Documento PDF")){
+								if(filechooser.getSelectedFile().getName().contains(".pdf")){
+									ruta = file.getPath();
+								}else{
+									ruta = file.getPath()+".pdf";
+								}
+							}else{
+								ruta = file.getPath();
+							}
+					    } 		
+					
+					JasperExportManager.exportReportToPdfFile(jasperPrint, ruta);
 					System.out.println("SE A CREADO CORRECTAMENTE EL PDF");
 				}
 				catch (JRException e)
