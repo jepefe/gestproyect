@@ -53,7 +53,9 @@ public class PnlInformesProyecto extends JPanel{
 				{
 					
 					//Hacemos las consulta y la guardamos en el resulset
-					String consulta = "SELECT *,(SELECT COUNT(*) FROM IDIOMA) AS total FROM IDIOMA";
+					//String consulta = "SELECT *,(SELECT COUNT(*) FROM IDIOMA) AS total FROM IDIOMA";
+					String consulta = "SELECT p.nombre AS proyecto,pa.nombre,pa.sector,pa.pais FROM PARTNER pa INNER JOIN "+
+										"PARTNER_PROYECTOS pp ON pa.cod_part= pp.cod_part INNER JOIN PROYECTOS p ON pp.id_pro = p.id_pro ORDER BY p.nombre";
 					conexion.Conectardb();
 					rs = conexion.ConsultaSQL(consulta);
 					JRResultSetDataSource resulset = new JRResultSetDataSource(rs);
