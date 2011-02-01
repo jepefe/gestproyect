@@ -76,9 +76,9 @@ public class Splash extends JWindow{
 				while(recursos.progresocarga <= 10) {
 					jpbcargando.setValue(recursos.progresocarga);
 					jlbmsgcargando.setText(recursos.txtcarga);
-				//	jpbcargando.repaint();
-					//jlbmsgcargando.repaint();
-					//validate();
+					if(recursos.progresocarga == 10){
+						recursos.progresocarga = 11;
+					}
 					try {
 						Thread.sleep(5);
 					} catch (InterruptedException e) {
@@ -88,6 +88,7 @@ public class Splash extends JWindow{
 
 				}
 				dispose();
+				
 			}
 
 		});
