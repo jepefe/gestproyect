@@ -1,4 +1,4 @@
-package pkGesproject.Proyectos;
+package pkGesproject.informes;
 
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;

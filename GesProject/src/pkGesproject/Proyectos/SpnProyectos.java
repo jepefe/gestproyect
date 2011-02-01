@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 
 import pkGesproject.GesIdioma;
 import pkGesproject.RsGesproject;
+import pkGesproject.informes.PnlInformesProyecto;
 
 public class SpnProyectos extends JSplitPane{
 

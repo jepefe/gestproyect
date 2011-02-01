@@ -32,6 +32,7 @@ import pkGesproject.Staff.SpnStaff;
 import pkGesproject.Tareas.SpnTareas;
 import pkGesproject.TimeSheet.SpnTimesheet;
 import pkGesproject.Workpakages.SpnWorkpack;
+import pkGesproject.informes.SpnInformes;
 
 import Tablas.SpnTablas;
 
@@ -55,6 +56,7 @@ public class FrmPrincipal extends JFrame {
 	JToggleButton jbtnAgregar = new JToggleButton(recursos.icono[10]);
 	JToggleButton jbtnTablas = new JToggleButton(recursos.icono[11]);
 	JToggleButton jbtnTimesheet = new JToggleButton(recursos.icono[12]);
+	JToggleButton jbtnInformes = new JToggleButton(recursos.icono[31]);
 	
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
 	
@@ -65,6 +67,7 @@ public class FrmPrincipal extends JFrame {
 	SpnTareas spntareas;
 	SpnTablas spntablas;
 	SpnTimesheet spntimesheet;
+	SpnInformes spninformes;
 	FrmNuevapalabra nueva;
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	
@@ -96,7 +99,11 @@ public class FrmPrincipal extends JFrame {
 		recursos.progresocarga =10;
 		recursos.txtcarga = "Loading  Data";
 		nueva = new FrmNuevapalabra();
+		//a falta de progres bar
+		spninformes = new SpnInformes();
 		
+		//Maximizamos la ventana principal
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		jbtnAgregar.setVisible(true);
 		super.setBounds(0, 0, recursos.getFrmppalWidth(), recursos.getFrmppalHeight());
@@ -144,6 +151,7 @@ public class FrmPrincipal extends JFrame {
 	        	remove(nueva);
 	        	remove(spntablas);
 	        	remove(spntimesheet);
+	        	remove(spninformes);
 	        	jbtnUsuarios.setSelected(false);
 	        	jbtnSocios.setSelected(false);
 	        	jbtnInicio.setSelected(false);
@@ -153,6 +161,7 @@ public class FrmPrincipal extends JFrame {
 	        	jbtnAgregar.setSelected(false);
 	        	jbtnTablas.setSelected(false);
 	        	jbtnTimesheet.setSelected(false);
+	        	jbtnInformes.setSelected(false);
 	        	repaint();
 	        	validate();
 	         if (e.getActionCommand().equals("socios")){
@@ -223,6 +232,13 @@ public class FrmPrincipal extends JFrame {
 	        	 repaint();
 	        	 validate();
 	         }
+	         
+	         if (e.getActionCommand().equals("informes")){
+	        	 jbtnInformes.setSelected(true);
+	        	 add(spninformes, BorderLayout.CENTER);
+	        	 repaint();
+	        	 validate();
+	         }
 	         } 
 		};
 		jtlbFrmppal.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
@@ -235,6 +251,7 @@ public class FrmPrincipal extends JFrame {
 		jbtnAgregar.addActionListener(jtlbAcListener);
 		jbtnTablas.addActionListener(jtlbAcListener);
 		jbtnTimesheet.addActionListener(jtlbAcListener);
+		jbtnInformes.addActionListener(jtlbAcListener);
 		jbtnUsuarios.setActionCommand("usuarios");
 		jbtnSocios.setActionCommand("socios");
 		jbtnInicio.setActionCommand("inicio");
@@ -244,6 +261,7 @@ public class FrmPrincipal extends JFrame {
 		jbtnAgregar.setActionCommand("agregar");
 		jbtnTablas.setActionCommand("tablas");
 		jbtnTimesheet.setActionCommand("timesheet");
+		jbtnInformes.setActionCommand("informes");
 		jtlbFrmppal.setFloatable(false); //Impedimos que el toolbar se pueda separar de la ventana
 		jtlbFrmppal.setPreferredSize(new Dimension(this.getWidth(),50));
 		jtlbFrmppal.setVisible(true);
@@ -256,6 +274,7 @@ public class FrmPrincipal extends JFrame {
 		jtlbFrmppal.add(jbtnTareas);
 		jtlbFrmppal.add(jbtnTablas);
 		jtlbFrmppal.add(jbtnTimesheet);
+		jtlbFrmppal.add(jbtnInformes);
 		jtlbFrmppal.add(jbtnAgregar);
 		this.add(jtlbFrmppal,BorderLayout.NORTH);
 		
