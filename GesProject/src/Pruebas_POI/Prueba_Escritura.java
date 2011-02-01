@@ -47,13 +47,13 @@ public class Prueba_Escritura extends PnlAltatarea{
         	//3º Ahora que tienes la celda ya puedes extraerle el contenido 
 
             // Se crea el contenido de la celda y se mete en ella.
-            HSSFRichTextString texto = new HSSFRichTextString("");
+            HSSFRichTextString texto = new HSSFRichTextString("uno");
             //rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS W WHERE W.nombre like'"+ CmbWp.getSelectedItem().toString()+"'" );
             tuCell.setCellValue(texto);
             
             HSSFCell celda2 = tuRow.createCell((short) 4);
             
-            HSSFRichTextString texto2 = new HSSFRichTextString("");
+            HSSFRichTextString texto2 = new HSSFRichTextString("dos");
             celda2.setCellValue(texto2);
             try
     		{
