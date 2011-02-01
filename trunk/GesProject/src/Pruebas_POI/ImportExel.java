@@ -17,7 +17,7 @@ import pkGesproject.ConexionDb;
 import pkGesproject.Tareas.PnlAltatarea;
 
 
-public class escribir_excel extends PnlAltatarea{
+public class ImportExel extends PnlAltatarea{
 	public static ConexionDb conexion = new ConexionDb();
 	public static ResultSet rs;
 
@@ -33,7 +33,7 @@ public class escribir_excel extends PnlAltatarea{
         // Se crea una hoja dentro del libro
         HSSFSheet hoja = libro.createSheet("Staff");
         
-        //C
+        //C"");"");
 
         // Se crea una fila dentro de la hoja
         HSSFRow fila = hoja.createRow(0);
@@ -55,7 +55,7 @@ public class escribir_excel extends PnlAltatarea{
         try {
                        
          // Volcamos la información a un archivo.
-            String strNombreArchivo = "c:ahora.xls";
+            String strNombreArchivo = "src/Pruebas_POI/prueba.xls";
             File objFile = new File(strNombreArchivo);
             FileOutputStream archivoSalida = new FileOutputStream(objFile);
             libro.write(archivoSalida);
