@@ -58,13 +58,14 @@ public class PnlAlta_TimeSheet extends JPanel{
 	GpComboBox CmbProyecto = new GpComboBox();
 	GpComboBox CmbPart = new GpComboBox();
 	GpComboBox CmbWorkpaquets = new GpComboBox();
-	
+	GpComboBox CmbStaff = new GpComboBox();
 	ResultSet rs;
 	ConexionDb conexion = new ConexionDb();
 	JFrame aviso = new JFrame();
 	JPanel Jproyecto = new JPanel();
 	JPanel Jtarea = new JPanel();
 	JPanel Jtabla = new JPanel();
+	JScrollPane JScroll; 
 	
 	JTable jtblTime;
 	String colu[] = {rec.idioma[rec.eleidioma][129],rec.idioma[rec.eleidioma][40],rec.idioma[rec.eleidioma][97]};
@@ -73,7 +74,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 	int id_wp = 0;
 	String datos [][];
 	String nombrepro = null;
-	int Tarea, workpaquet;
+	int Tarea, workpaquet, vacio = 0;
 	
 	public PnlAlta_TimeSheet(){
 		System.out.println("HOLAAAAAAAAA");
@@ -91,12 +92,12 @@ public class PnlAlta_TimeSheet extends JPanel{
 	    };
 	    	
 		String[] fieldNamesproyecto = {
-		   rec.idioma[rec.eleidioma][111],rec.idioma[rec.eleidioma][101], rec.idioma[rec.eleidioma][102], rec.idioma[rec.eleidioma][105]
+		   rec.idioma[rec.eleidioma][111],rec.idioma[rec.eleidioma][101], rec.idioma[rec.eleidioma][102], rec.idioma[rec.eleidioma][125], rec.idioma[rec.eleidioma][105]
 		   };
 		String[] fieldNamestarea = {
 				   rec.idioma[rec.eleidioma][95],rec.idioma[rec.eleidioma][129], rec.idioma[rec.eleidioma][40], rec.idioma[rec.eleidioma][97]
 				   };
-		int[] fieldWidths = {20,20,20,9};
+		int[] fieldWidths = {20,20,20,9,9};
 		//jtxt de tareas
 		jtxtta = new JTextField[fieldNamestarea.length];
 		jlblta = new JLabel[fieldNamestarea.length];
@@ -133,12 +134,12 @@ public class PnlAlta_TimeSheet extends JPanel{
 				
 			   gbc.gridwidth = GridBagConstraints.RELATIVE;
 			   Jproyecto.add(jlblpro[i]=new JLabel(fieldNamesproyecto[i]),gbc);
-			   Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbc);
-			   gbc.gridwidth = GridBagConstraints.REMAINDER;
+
 			   
 			   switch(i){
 			   
 			   case (0)://nombre combo
+				   gbc.gridwidth = GridBagConstraints.REMAINDER;
 				   System.out.println("Entra combo nombre");
 			   	Jproyecto.add(CmbProyecto,gbc);
 			   CmbProyecto.setPreferredSize(new Dimension(140,30));
@@ -158,10 +159,13 @@ public class PnlAlta_TimeSheet extends JPanel{
 				conexion.cerrarConexion();
 				break;
 			   case (1)://contract number
+				   gbc.gridwidth = GridBagConstraints.REMAINDER;
 				   System.out.println("Entra contract numbre");
 				   Jproyecto.add(jtxtpro[i]=new JTextField(fieldWidths[i]),gbc);
+				   jtxtpro[i].disable();
 			   		break;
 			   case (2)://institución
+				   gbc.gridwidth = GridBagConstraints.REMAINDER;
 				   System.out.println("Entra combo institucion");
 				   Jproyecto.add(CmbPart,gbc);
 			   CmbPart.setPreferredSize(new Dimension(140,30));
@@ -180,22 +184,48 @@ public class PnlAlta_TimeSheet extends JPanel{
 	   							CmbPart.setSelectedItem(null);
 	   								conexion.cerrarConexion();
 				   break;
-			  
-			   case (3)://rol en el proyecto
+			   case (3):
+				   gbc.gridwidth = GridBagConstraints.REMAINDER;
+				   System.out.println("Entra combo staff");
+			   	Jproyecto.add(CmbStaff,gbc);
+			   	CmbStaff.setPreferredSize(new Dimension(140,30));
+			   
+				conexion.Conectardb();
+				rs = conexion.ConsultaSQL("SELECT nombre,id_staff FROM STAFF ORDER BY nombre");
+				try {
+				while(rs.next()){
+					CmbStaff.addItem(rs.getString(1));	
+					
+				}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						}
+					CmbStaff.setSelectedItem(null);
+				conexion.cerrarConexion();
+				break;
+			   case (4)://rol en el proyecto
+				   gbc.gridwidth = GridBagConstraints.REMAINDER;
 				   System.out.println("Entra rol proyecto");
 				   Jproyecto.add(jtxtpro[i]=new JTextField(fieldWidths[i]),gbc);
+				   JTextFieldLimit ljtxt2 = new JTextFieldLimit(20);
+				   jtxtpro[i].setDocument(ljtxt2);
 				   break;
 			   		
 			   }//fin switch proyecto
 			   
 			   //campos del panel de tareas
 		switch (i){
-				case (0):
-		   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+				case (0)://fecha
+					gbc.gridwidth = GridBagConstraints.RELATIVE;
+					Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbc);
 		   			{gbc.gridwidth = GridBagConstraints.REMAINDER; Jtarea.add(jdc1,gbc);}
 					break;
-				case (1):
+				case (1)://tarea
+					gbc.gridwidth = GridBagConstraints.RELATIVE;
+					Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbc);
 					System.out.println("Entra combo nombre tareas");
+					gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   		Jtarea.add(CmbTareas,gbc);
 			   		CmbTareas.setPreferredSize(new Dimension(140,30));
 			   
@@ -213,8 +243,11 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   		CmbTareas.setSelectedItem(null);
 			   		conexion.cerrarConexion();
 					break;
-			   	case (2):
+			   	case (2)://workpaquet
+			   	gbc.gridwidth = GridBagConstraints.RELATIVE;
+			   	Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbc);
 				System.out.println("Entra combo nombre workpaquets");
+				gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		Jtarea.add(CmbWorkpaquets,gbc);
 		   		CmbTareas.setPreferredSize(new Dimension(140,30));
 		   
@@ -232,12 +265,21 @@ public class PnlAlta_TimeSheet extends JPanel{
 		   		CmbWorkpaquets.setSelectedItem(null);
 		   		conexion.cerrarConexion();
 			   		break;
-			   	case (3):
+			   	case (3)://horas
+			   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+			   		Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbc);
+			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   		Jtarea.add(jtxtta[i]=new JTextField(fieldWidths[i]),gbc);
+			   		JTextFieldLimit ljtxt0 = new JTextFieldLimit(4);
+			   		jtxtta[i].setDocument(ljtxt0);
 			   		break;
 			   }//fin switch tareas
 			   
 			}//fin for de proyectos
+	      
+	      //agregamos la tabla
+	      
+	      Jtabla.add(JScroll = new JScrollPane(jtblTime));
 	      //accion tarea
 	      ActionListener accionta = new ActionListener(){
 
@@ -245,6 +287,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if (CmbTareas.getSelectedItem() != null){
+					vacio = 2;
 					String nomwp = null;
 					//para las tareas
 					conexion.Conectardb();
@@ -280,7 +323,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				// TODO acction listener combo proyectos
 				if (CmbProyecto.getSelectedItem() != null){
 					conexion.Conectardb();
 					rs = conexion.ConsultaSQL("SELECT num_contrato FROM PROYECTOS WHERE nombre LIKE '"+CmbProyecto.getSelectedItem()+"'");
@@ -304,8 +347,71 @@ public class PnlAlta_TimeSheet extends JPanel{
 	      gbc.gridwidth = GridBagConstraints.REMAINDER;
 	      Jtarea.add(jbtnlimpiar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
 	      Jtabla.add(jtblTime);
+	      
+	      
+	    //action listener para combo workpaquets
+	      ActionListener accionwp = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO metodo acction para combo wp
+				System.out.println("compruebo campo nulo");
+				if (CmbTareas.getSelectedItem()!= null){
+					System.out.println("el campo no es nulo");
+					if (vacio == 1){
+						System.out.println("pongo tares a null");
+						CmbTareas.setSelectedItem(null);
+					}else{
+						System.out.println("pongo el campo a cero");
+						vacio = 1;
+					}
+				}
+				
+				}
+			};
+			
+		    //action listener para boton aceptar
+		      ActionListener accionba = new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+		    	  
+		      };
+		     
+			//action listener para boton limpiar
+		      ActionListener accionbl = new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					vacio = 2;
+					//vaciamos proyecto
+					CmbProyecto.setSelectedItem(null);
+					jtxtpro[1].setText("");
+					CmbStaff.setSelectedItem(null);
+					jtxtpro[4].setText("");
+					CmbPart.setSelectedItem(null);
+					
+					//vaciamos tarea
+					jdc1.setDate(null);
+					CmbTareas.setSelectedItem(null);
+					CmbWorkpaquets.setSelectedItem(null);
+					jtxtta[3].setText("");
+				}
+		    	  
+		      };
+	      //Se agregan los action listener a los objetos
+	       
+	      
 	      CmbProyecto.addActionListener(accionpro);
 	      CmbTareas.addActionListener(accionta);
+	      CmbWorkpaquets.addActionListener(accionwp);
+	      jbtnaceptar.addActionListener(accionba);
+	      jbtnlimpiar.addActionListener(accionbl);
+	      
 			this.add(Jproyecto,BorderLayout.NORTH);
 			this.add(Jtarea,BorderLayout.CENTER);
 			this.add(Jtabla,BorderLayout.SOUTH);
