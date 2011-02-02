@@ -90,7 +90,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 	        return false;
 	       }
 	    };
-	    	
+	    
+	    
+	    
 		String[] fieldNamesproyecto = {
 		   rec.idioma[rec.eleidioma][111],rec.idioma[rec.eleidioma][101], rec.idioma[rec.eleidioma][102], rec.idioma[rec.eleidioma][125], rec.idioma[rec.eleidioma][105]
 		   };
