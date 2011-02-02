@@ -106,7 +106,7 @@ public class PnlInformesProyecto extends JPanel{
 				//JasperPrint jp = DynamicJasperHelper.generateJasperPrint(dr, new ClassicLayoutManager(), ds);
 				//JasperViewer.viewReport(jp);    //finally display the report report
 		  		
-				try
+				/*try
 				{
 					
 					//Hacemos las consulta y la guardamos en el resulset
@@ -135,9 +135,7 @@ public class PnlInformesProyecto extends JPanel{
 					int returnVal = filechooser.showSaveDialog(null);
 						if (returnVal == JFileChooser.APPROVE_OPTION) {
 							File file = filechooser.getSelectedFile();
-							/*
-							 * sacamos la ruta del archivo y su extension
-							 */
+							
 							if(filechooser.getFileFilter().getDescription().equals("Documento PDF")){
 								if(filechooser.getSelectedFile().getName().contains(".pdf")){
 									ruta = file.getPath();
@@ -148,6 +146,7 @@ public class PnlInformesProyecto extends JPanel{
 								ruta = file.getPath();
 							}
 							JasperExportManager.exportReportToPdfFile(jasperPrint, ruta);
+							JasperViewer.viewReport(jasperPrint);
 							System.out.println("SE A CREADO CORRECTAMENTE EL PDF");
 					    } 		
 					
@@ -157,7 +156,7 @@ public class PnlInformesProyecto extends JPanel{
 				{
 					e.printStackTrace();
 					System.out.println("ERROR EL PDF NO SE A CREADO!!!");
-				}
+				}*/
 			}
 
 		};
