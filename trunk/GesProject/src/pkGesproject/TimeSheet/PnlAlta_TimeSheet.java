@@ -67,9 +67,16 @@ public class PnlAlta_TimeSheet extends JPanel{
 	JPanel Jtabla = new JPanel();
 	JScrollPane JScroll; 
 	
-	JTable jtblTime;
-	String colu[] = {rec.idioma[rec.eleidioma][129],rec.idioma[rec.eleidioma][40],rec.idioma[rec.eleidioma][97]};
-	DefaultTableModel tablemodel = new DefaultTableModel(null,colu);
+	final Object[][] info ={
+			{"tarea manolo", "wp2", "25"},
+			{"tarea frey", "wp1", "10"},
+			{"tarea ruben", "wp2", "5"},
+			{"tarea berna", "wp3", "40"},
+			{"tarea felix", "wp1", "2"}
+	};
+	final String colu[] = {rec.idioma[rec.eleidioma][129],rec.idioma[rec.eleidioma][40],rec.idioma[rec.eleidioma][97]};
+	JTable jtblTime = new JTable(info, colu);
+	
 	
 	int id_wp = 0;
 	String datos [][];
@@ -77,6 +84,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 	int Tarea, workpaquet, vacio = 0;
 	
 	public PnlAlta_TimeSheet(){
+		for (int cont=0; cont < 3; cont++){
+		System.out.println(colu[cont]);
+		}
 		System.out.println("HOLAAAAAAAAA");
 		this.setLayout(new BorderLayout());
 		Jproyecto.setLayout(new GridBagLayout());
@@ -84,13 +94,8 @@ public class PnlAlta_TimeSheet extends JPanel{
 		Jtabla.setLayout(new GridBagLayout());
 		
 		datos = new String[Tarea][workpaquet];
-		//tablemodel=cargar_tabla(datos);
-		jtblTime  = new JTable(tablemodel){
-			public boolean isCellEditable(int rowIndex, int mColIndex) {
-	        return false;
-	       }
-	    };
-	    
+
+		jtblTime.setPreferredScrollableViewportSize(new Dimension(1000,150));
 	    
 	    
 		String[] fieldNamesproyecto = {
@@ -413,7 +418,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 	      CmbWorkpaquets.addActionListener(accionwp);
 	      jbtnaceptar.addActionListener(accionba);
 	      jbtnlimpiar.addActionListener(accionbl);
-	      
+
 			this.add(Jproyecto,BorderLayout.NORTH);
 			this.add(Jtarea,BorderLayout.CENTER);
 			this.add(Jtabla,BorderLayout.SOUTH);
