@@ -12,14 +12,14 @@ public class PnlBienvenida extends JPanel{
 		
 		this.setLayout(new GridBagLayout());
 		this.setBackground(new Color(0xED,0xED,0xED,0xED));
-		jlblbienvenida = new JLabel(rec.idioma[rec.eleidioma][6]);
+		//jlblbienvenida = new JLabel(rec.idioma[rec.eleidioma][6]);
 		GridBagConstraints poslblbienvenida = new GridBagConstraints();
 		titulo = new JLabel("Titulo");
 		
 		Font auxFont = titulo.getFont();
-		jlblbienvenida.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),50));
+		//jlblbienvenida.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),50));
 		
-		this.add(jlblbienvenida);
+		//this.add(jlblbienvenida);
 		
 		this.setOpaque(true);
 	}
