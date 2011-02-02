@@ -3,17 +3,14 @@ package pkGesproject.informes;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.sql.ResultSet;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
+
 import javax.swing.JPanel;
-import javax.swing.filechooser.FileNameExtensionFilter;
+
 
 import ar.com.fdvs.dj.core.DynamicJasperHelper;
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
@@ -28,16 +25,11 @@ import ar.com.fdvs.dj.test.TestRepositoryProducts;
 import pkGesproject.ConexionDb;
 
 import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRResultSetDataSource;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
+
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.view.JasperDesignViewer;
 import net.sf.jasperreports.view.JasperViewer;
 
 public class PnlInformesProyecto extends JPanel{
@@ -52,12 +44,12 @@ public class PnlInformesProyecto extends JPanel{
 	ConexionDb conexion= new ConexionDb();
 	JFileChooser filechooser;
 	String ruta;
-	
+	DynamicReport dr = null;
 	public PnlInformesProyecto(){
 		
 		this.setLayout(new GridBagLayout());
 		this.add(btngenerar);
-		fileName = System.getProperty("user.dir")+"//src//pkGesproject//reports//prueba.jrxml";
+		//fileName = System.getProperty("user.dir")+"//src//pkGesproject//reports//prueba.jrxml";
 		generar = new ActionListener(){
 
 			@Override
@@ -66,7 +58,7 @@ public class PnlInformesProyecto extends JPanel{
 				
 				
 				FastReportBuilder drb = new FastReportBuilder();
-				DynamicReport dr = null;
+				
 				try {
 					dr = drb.addColumn("State", "state", String.class.getName(),30)
 					.addColumn("Branch", "branch", String.class.getName(),30)
@@ -91,7 +83,9 @@ public class PnlInformesProyecto extends JPanel{
 
 				JRDataSource ds = new JRBeanCollectionDataSource(TestRepositoryProducts.getDummyCollection());
 				JasperPrint jp = null;
+				
 				try {
+				//	jp = JasperFillManager.fillReport(dr, new ClassicLayoutManager(), ds);
 					jp = DynamicJasperHelper.generateJasperPrint(dr, new ClassicLayoutManager(), ds);
 				} catch (JRException e1) {
 					// TODO Auto-generated catch block
