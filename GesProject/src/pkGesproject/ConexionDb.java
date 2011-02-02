@@ -40,7 +40,7 @@ public class ConexionDb {
 		
 	
 	*/
-		   System.out.println("Se ABRE conexión");
+		 //  System.out.println("Se ABRE conexión");
 	}
 	public void cerrarConexion(){
 		/*try {
@@ -49,7 +49,7 @@ public class ConexionDb {
         }catch (SQLException e) {
             System.err.println(e.getMessage());
         }*/
-        System.out.println("Se CIERRA conexión");
+      //  System.out.println("Se CIERRA conexión");
 	}
 	
 	public ResultSet ConsultaSQL(String consultaSQL){
