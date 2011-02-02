@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.sql.ResultSet;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,9 +15,19 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import ar.com.fdvs.dj.core.DynamicJasperHelper;
+import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
+import ar.com.fdvs.dj.domain.DynamicReport;
+import ar.com.fdvs.dj.domain.builders.ColumnBuilderException;
+import ar.com.fdvs.dj.domain.builders.FastReportBuilder;
+import ar.com.fdvs.dj.test.TestRepositoryProducts;
+
+
+
 
 import pkGesproject.ConexionDb;
 
+import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
@@ -25,6 +36,9 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperDesignViewer;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class PnlInformesProyecto extends JPanel{
 
@@ -51,6 +65,47 @@ public class PnlInformesProyecto extends JPanel{
 				// TODO Auto-generated method stub
 				
 				
+				FastReportBuilder drb = new FastReportBuilder();
+				DynamicReport dr = null;
+				try {
+					dr = drb.addColumn("State", "state", String.class.getName(),30)
+					.addColumn("Branch", "branch", String.class.getName(),30)
+					.addColumn("Product Line", "productLine", String.class.getName(),50)
+					.addColumn("Item", "item", String.class.getName(),50)
+					.addColumn("Item Code", "id", Long.class.getName(),30,true)
+					.addColumn("Quantity", "quantity", Long.class.getName(),60,true)
+					.addColumn("Amount", "amount", Float.class.getName(),70,true)
+					.addGroups(2)
+					.setTitle("November 2006 sales report")
+					.setSubtitle("This report was generated at " + new Date())
+					.setPrintBackgroundOnOddRows(true)
+					.setUseFullPageWidth(true)
+					.build();
+				} catch (ColumnBuilderException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				JRDataSource ds = new JRBeanCollectionDataSource(TestRepositoryProducts.getDummyCollection());
+				JasperPrint jp = null;
+				try {
+					jp = DynamicJasperHelper.generateJasperPrint(dr, new ClassicLayoutManager(), ds);
+				} catch (JRException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				JasperViewer.viewReport(jp);    //finally display the report report
+				
+				
+				//test.testReport();
+				//test.exportToJRXML();
+				//JRDataSource ds = new JRBeanCollectionDataSource(TestRepositoryProducts.getDummyCollection());
+				//JasperPrint jp = DynamicJasperHelper.generateJasperPrint(dr, new ClassicLayoutManager(), ds);
+				//JasperViewer.viewReport(jp);    //finally display the report report
+		  		
 				try
 				{
 					
@@ -109,5 +164,25 @@ public class PnlInformesProyecto extends JPanel{
 
 		btngenerar.addActionListener(generar);
 		this.setVisible(true);
+	}
+	
+public DynamicReport buildReport() throws Exception{
+		
+	FastReportBuilder drb = new FastReportBuilder();
+	drb.addColumn("State", "state", String.class.getName(),30)
+		.addColumn("Branch", "branch", String.class.getName(),30)
+		.addColumn("Product Line", "productLine", String.class.getName(),50)
+		.addColumn("Item", "item", String.class.getName(),50)
+		.addColumn("Item Code", "id", Long.class.getName(),30,true)
+		.addColumn("Quantity", "quantity", Long.class.getName(),60,true)
+		.addColumn("Amount", "amount", Float.class.getName(),70,true)
+		.setTitle("November \"2006\" sales report")
+		.setSubtitle("This report was generated at " + new Date())
+  			.setPrintBackgroundOnOddRows(true)			
+  			.setUseFullPageWidth(true);
+  
+	DynamicReport dr = drb.build();
+	  
+	  		return dr;
 	}
 }
