@@ -43,9 +43,9 @@ public class SpnInformes extends JSplitPane{
 		this.setOpaque(true);
 		//modificar.setBorder(empty);
 		
-		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[13],rec.idioma[rec.eleidioma][19]},
-				{recursos.icono[14],rec.idioma[rec.eleidioma][20]},
-				{recursos.icono[15],rec.idioma[rec.eleidioma][21]}};
+		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[31],rec.idioma[rec.eleidioma][19]},
+				{recursos.icono[31],rec.idioma[rec.eleidioma][20]},
+				{recursos.icono[31],rec.idioma[rec.eleidioma][21]}};
 		
 		
 		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {

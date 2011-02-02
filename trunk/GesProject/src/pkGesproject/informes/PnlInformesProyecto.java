@@ -49,6 +49,8 @@ public class PnlInformesProyecto extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
+				
+				
 				try
 				{
 					
@@ -58,6 +60,7 @@ public class PnlInformesProyecto extends JPanel{
 										"PARTNER_PROYECTOS pp ON pa.cod_part= pp.cod_part INNER JOIN PROYECTOS p ON pp.id_pro = p.id_pro ORDER BY p.nombre";
 					conexion.Conectardb();
 					rs = conexion.ConsultaSQL(consulta);
+					
 					JRResultSetDataSource resulset = new JRResultSetDataSource(rs);
 					
 					//1-Compilamos el archivo XML y lo cargamos en memoria
@@ -89,10 +92,11 @@ public class PnlInformesProyecto extends JPanel{
 							}else{
 								ruta = file.getPath();
 							}
+							JasperExportManager.exportReportToPdfFile(jasperPrint, ruta);
+							System.out.println("SE A CREADO CORRECTAMENTE EL PDF");
 					    } 		
 					
-					JasperExportManager.exportReportToPdfFile(jasperPrint, ruta);
-					System.out.println("SE A CREADO CORRECTAMENTE EL PDF");
+					
 				}
 				catch (JRException e)
 				{
