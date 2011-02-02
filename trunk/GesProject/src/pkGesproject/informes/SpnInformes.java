@@ -34,7 +34,7 @@ public class SpnInformes extends JSplitPane{
 	Border empty = new EmptyBorder(0,0,0,0);
 	PnlModificarsocio mods = PnlModificarsocio.Obtener_Instancia();
 	Component[] panlsStaff = {
-			new PnlInformesProyecto(),
+			new prueba(),
 			new JPanel(),
 			new JPanel()};
 
