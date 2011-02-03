@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -86,22 +87,39 @@ public class PnlImportarExportar extends JPanel{
 					e.printStackTrace();
 				}
 	        	//2 Se accede a la hoja y a la casilla
-	        	HSSFSheet tuSheet = tuWorkBook.getSheetAt(6); // Segunda hoja del libro excel (debe existir en tu plantilla porque de lo contrario te dar� una excepci�n al estar fuera del �ndice.
-	        	short row = (short) 2; // Tercera fila
-	        	short column = (short) 3; // Cuarta columna
+	        	HSSFSheet tuSheet = tuWorkBook.getSheetAt(2); // Segunda hoja del libro excel (debe existir en tu plantilla porque de lo contrario te dar� una excepci�n al estar fuera del �ndice.
+	        	short row = (short) 8; // Tercera fila
+	        	short column = (short) 1; // Cuarta columna
 	        	HSSFRow tuRow= tuSheet.getRow(row);
 	        	HSSFCell tuCell = tuRow.getCell(column);
 	        	//3 Ahora que tienes la celda ya puedes extraerle el contenido 
 
 	            // Se crea el contenido de la celda y se mete en ella.
-	            HSSFRichTextString texto = new HSSFRichTextString("uno");
-	            rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS");
+	           // HSSFRichTextString texto = new HSSFRichTextString("aqui");
+	            rs = conexion.ConsultaSQL("SELECT nombre FROM PARTNER");
+	            String nombre = null;
+	        	try {
+					while(rs.next()){
+						nombre = rs.getString(1);
+						tuCell.setCellValue(nombre);
+						row+=1;
+						tuCell = tuRow.getCell(column);
+						tuRow= tuSheet.getRow(row);
+						
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	            
+				
 	            System.out.println("Contenido del RS:"+rs);
-	            tuCell.setCellValue(texto);
+	            
+	           
 	            
 	            HSSFCell celda2 = tuRow.createCell((short) 4);
 	            
-	            HSSFRichTextString texto2 = new HSSFRichTextString("dos");
+	            HSSFRichTextString texto2 = new HSSFRichTextString("alla");
 	            celda2.setCellValue(texto2);
 	            try
 	    		{
