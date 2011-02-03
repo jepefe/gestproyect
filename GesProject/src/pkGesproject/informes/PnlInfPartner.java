@@ -56,8 +56,80 @@ public class PnlInfPartner extends JPanel{
 	ConexionDb conexion= new ConexionDb();
 	
 	public PnlInfPartner(){
+		
+		//cargamos la interfaz del panel lo primero
+		cargar_panel();
+		
+		// Evento doble click primer JLIST
+		MouseListener mouseListener = new MouseAdapter() {
+
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					modelo2.addElement(lista1.getSelectedValue());
+					gbordenar.addItem(lista1.getSelectedValue());		    
+					modelo.removeElement(lista1.getSelectedValue());
+				}
+			}
+		};
+	
+		// Evento doble click segundo  JLIST (lsitaP2)
+		MouseListener mouseListener2 = new MouseAdapter() {
+
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					modelo.addElement(lista2.getSelectedValue());
+					gbordenar.removeItem(lista2.getSelectedValue());	
+					modelo2.removeElement(lista2.getSelectedValue());
+				}
+			}
+		};
+		
+		//accion generar 
+		generar = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+				//se genera el reporte
+				generar_reporte();
+				
+			}
+			
+		};
+		
+		//añadimos los eventos a los componentes correspondientes
+		jbtngenerar.addActionListener(generar);
+		lista1.addMouseListener(mouseListener);
+		lista2.addMouseListener(mouseListener2);
+		
+		modelo.toArray();
+	}
+	
+	/**
+	 * Método que busca una palabra dentro de un array y devuelve su posicion dentro del array
+	 * @param array
+	 * @param cadena
+	 * @return
+	 */
+	public int buscar(String[][] array, String cadena){
+		int cuenta=0;
+		for(int i=0;i<array[0].length;i++ ){
+			if(array[0][i].equals(cadena)){
+				cuenta = i;
+			}
+		}
+	
+		return cuenta;
+	}
+	
+	/**
+	 * Método que crea los componentes del panel y los añade
+	 */
+	public void cargar_panel(){
 		this.setLayout(new GridBagLayout());
 		
+		//Label Agrupar
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = new Insets(0,0,0,5);
@@ -65,12 +137,18 @@ public class PnlInfPartner extends JPanel{
 		gbc.gridy = 0; // El área de texto empieza en la fila 
 		gbc.gridwidth = 1; // El área de texto ocupa x columnas.
 		this.add(jlbagrupa = new JLabel(rec.idioma[rec.eleidioma][131]),gbc);
+		
+		//combo Agrupar
 		gbc.gridx = 1; // El área de texto empieza en la columna
 		this.add(gbagrupa = new GpComboBox(),gbc);
 		gbagrupa.setPreferredSize(new Dimension(165,30));
+		
+		//Label ordenar
 		gbc.insets = new Insets(20,30,15,5);
 		gbc.gridx = 2; // El área de texto empieza en la columna
 		this.add(jlbordenar = new JLabel(rec.idioma[rec.eleidioma][132]),gbc);
+		
+		//Combo ordenar
 		gbc.insets = new Insets(20,0,15,5);
 		gbc.gridx = 3; // El área de texto empieza en la columna
 		this.add(gbordenar = new GpComboBox(),gbc);
@@ -79,7 +157,7 @@ public class PnlInfPartner extends JPanel{
 
 		
 		
-		// JLIST
+		// modelo para el jlist
 		modelo = new DefaultListModel(); // modelos JLIST
 		modelo2 = new DefaultListModel(); 
 
@@ -101,6 +179,8 @@ public class PnlInfPartner extends JPanel{
 		gbc.insets = new Insets(25,40,25,100);
 		//gbc.anchor = GridBagConstraints.WEST;
 		this.add(sp1,gbc);
+		
+		
 		// Segundo JLIST
 		lista2 = new JList(modelo2);
 		JScrollPane sp2 = new JScrollPane(lista2);
@@ -114,7 +194,7 @@ public class PnlInfPartner extends JPanel{
 		
 
 		
-		
+		//Boton generar
 		gbc.gridy = 2; // El área de texto empieza en la fila
 		//gbc.gridx = 0;
 		gbc.gridwidth = 4; // El área de texto ocupa x columnas.
@@ -122,195 +202,141 @@ public class PnlInfPartner extends JPanel{
 		this.add(jbtngenerar = new JButton(rec.idioma[rec.eleidioma][133]),gbc);
 		
 		
-		/*
-		CbCoordinador = new GpComboBox() ; //ComboBox (Coordinador)
-		CbCoordinador.setPreferredSize(new Dimension(165,30));
-		jpnl.add(CbCoordinador,gbc);
-		 */
-		// Evento doble click primer JLIST
-		MouseListener mouseListener = new MouseAdapter() {
-
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					modelo2.addElement(lista1.getSelectedValue());
-					gbordenar.addItem(lista1.getSelectedValue());		    
-					modelo.removeElement(lista1.getSelectedValue());
-				}
-			}
-		};
-		lista1.addMouseListener(mouseListener);
-
-		modelo.toArray();
-		
-		
-		// Evento doble click segundo  JLIST (lsitaP2)
-		MouseListener mouseListener2 = new MouseAdapter() {
-
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					modelo.addElement(lista2.getSelectedValue());
-					gbordenar.removeItem(lista2.getSelectedValue());	
-					modelo2.removeElement(lista2.getSelectedValue());
-				}
-			}
-		};
-		lista2.addMouseListener(mouseListener2);
-		
-		//Cargamos los combobox
+		//Cargamos el combobox agrupar
 		for(int i = 0; i<agrupar.length;i++){
 			gbagrupa.addItem(agrupar[i]);
 		}
 		
 		
-		generar = new ActionListener(){
+	}
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-				if(gbagrupa.getSelectedItem().equals("Ninguno")){
-					int pos=0;
-					String orden;
-					pos = buscar(datos,(String) gbordenar.getSelectedItem());
-					if(datos[1][pos].equals("sector")){
-						orden = "s."+datos[1][pos];
-					}else{
-						if(datos[1][pos].equals("pais")){
-							orden = "pais."+datos[1][pos];
-						}else{
-							orden = "pa."+datos[1][pos];
-						}
-					}
-					String consulta = "SELECT p.nombre AS proyecto,pa.cod_part,pa.nombre,pa.direccion,pa.codpostal,pa.telefono,pa.telefono2," +
-							"pa.fax,pa.email,pa.email2,s.sector,pais.pais FROM PARTNER pa INNER JOIN "+
-					"PARTNER_PROYECTOS pp ON pa.cod_part= pp.cod_part INNER JOIN PROYECTOS p ON pp.id_pro = p.id_pro " +
-					"INNER JOIN SECTORES s ON pa.sector = s.id_sector INNER JOIN PAIS pais ON pa.pais = pais.id_pais ORDER BY "+orden;
-					
-					conexion.Conectardb();
-					rs = conexion.ConsultaSQL(consulta);
-					final JRResultSetDataSource resulset = new JRResultSetDataSource(rs);
-					
-					FastReportBuilder drb = new FastReportBuilder();
-					DynamicReport dr = null;
-					try {
-						dr = drb.build();
-						pos=0;
-						for(int i = 0; i<lista2.getModel().getSize();i++){
-							//System.out.println(lista2.getModel().getElementAt(i));
-							pos = buscar(datos,(String) lista2.getModel().getElementAt(i));
-							drb.addColumn((String) lista2.getModel().getElementAt(i), datos[1][pos], String.class.getName(),dimension[pos]);
-						}
-						
-						drb.setPrintBackgroundOnOddRows(true);
-						drb.setTitle("PARTNERS");
-						//.setSubtitle("This report was generated at " + new Date())
-						//.setPrintBackgroundOnOddRows(true)
-						drb.setUseFullPageWidth(true);
-						//.build();
-					} catch (ColumnBuilderException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
-					JRDataSource ds = new JRBeanCollectionDataSource(TestRepositoryProducts.getDummyCollection());
-					JasperPrint jp = null;
-					try {
-						jp = DynamicJasperHelper.generateJasperPrint(dr, new ClassicLayoutManager(), resulset);
-					} catch (JRException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-					JasperViewer.viewReport(jp,false);    //finally display the report report
-				
+	/**
+	 * Método que se encarga de generar el reporte
+	 */
+	
+	public void generar_reporte(){
+		
+		//Lo primero comprobamos si se va a agrupar o no para hacer de una forma u otra
+		if(gbagrupa.getSelectedItem().equals("Ninguno")){
+			int pos=0;
+			String orden;
+			pos = buscar(datos,(String) gbordenar.getSelectedItem());
+			
+			if(datos[1][pos].equals("sector")){
+				orden = "s."+datos[1][pos];
+			}else{
+				if(datos[1][pos].equals("pais")){
+					orden = "pais."+datos[1][pos];
 				}else{
-					int pos=0;
-					String orden;
-					pos = buscar(datos,(String) gbordenar.getSelectedItem());
-					if(datos[1][pos].equals("sector")){
-						orden = "s."+datos[1][pos];
-					}else{
-						if(datos[1][pos].equals("pais")){
-							orden = "pais."+datos[1][pos];
-						}else{
-							orden = "pa."+datos[1][pos];
-						}
-					}
-					String consulta = "SELECT p.nombre AS proyecto,pa.cod_part,pa.nombre,pa.direccion,pa.codpostal,pa.telefono,pa.telefono2," +
-							"pa.fax,pa.email,pa.email2,s.sector,pais.pais FROM PARTNER pa INNER JOIN "+
-					"PARTNER_PROYECTOS pp ON pa.cod_part= pp.cod_part INNER JOIN PROYECTOS p ON pp.id_pro = p.id_pro " +
-					"INNER JOIN SECTORES s ON pa.sector = s.id_sector INNER JOIN PAIS pais ON pa.pais = pais.id_pais ORDER BY proyecto,"+orden;
-					
-					conexion.Conectardb();
-					rs = conexion.ConsultaSQL(consulta);
-					final JRResultSetDataSource resulset = new JRResultSetDataSource(rs);
-					
-					FastReportBuilder drb = new FastReportBuilder();
-					DynamicReport dr = null;
-					try {
-						dr = drb.build();
-						drb.addColumn("Proyecto", "proyecto", String.class.getName(),30);
-						pos=0;
-						for(int i = 0; i<lista2.getModel().getSize();i++){
-							//System.out.println(lista2.getModel().getElementAt(i));
-							pos = buscar(datos,(String) lista2.getModel().getElementAt(i));
-							drb.addColumn((String) lista2.getModel().getElementAt(i), datos[1][pos], String.class.getName(),dimension[pos]);
-						}
-						
-						drb.addGroups(1);
-						drb.setPrintBackgroundOnOddRows(true);
-						drb.setTitle("PARTNERS POR PROYECTO");
-						//.setSubtitle("This report was generated at " + new Date())
-						//.setPrintBackgroundOnOddRows(true)
-						drb.setUseFullPageWidth(true);
-						//.build();
-					} catch (ColumnBuilderException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
-					JRDataSource ds = new JRBeanCollectionDataSource(TestRepositoryProducts.getDummyCollection());
-					JasperPrint jp = null;
-					try {
-						jp = DynamicJasperHelper.generateJasperPrint(dr, new ClassicLayoutManager(), resulset);
-					} catch (JRException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-					JasperViewer.viewReport(jp,false);    //finally display the report report
+					orden = "pa."+datos[1][pos];
 				}
-				
 			}
 			
-		};
-		
-		jbtngenerar.addActionListener(generar);
-		
-		
-	}
-	
-	/**
-	 * Método que busca una palabra dentro de un array y devuelve su posicion dentro del array
-	 * @param array
-	 * @param cadena
-	 * @return
-	 */
-	public int buscar(String[][] array, String cadena){
-		int cuenta=0;
-		for(int i=0;i<array[0].length;i++ ){
-			if(array[0][i].equals(cadena)){
-				cuenta = i;
+			//hacemos la consulta con los campos correspondientes
+			String consulta = "SELECT p.nombre AS proyecto,pa.cod_part,pa.nombre,pa.direccion,pa.codpostal,pa.telefono,pa.telefono2," +
+					"pa.fax,pa.email,pa.email2,s.sector,pais.pais FROM PARTNER pa INNER JOIN "+
+			"PARTNER_PROYECTOS pp ON pa.cod_part= pp.cod_part INNER JOIN PROYECTOS p ON pp.id_pro = p.id_pro " +
+			"INNER JOIN SECTORES s ON pa.sector = s.id_sector INNER JOIN PAIS pais ON pa.pais = pais.id_pais ORDER BY "+orden;
+			
+			conexion.Conectardb();
+			rs = conexion.ConsultaSQL(consulta);
+			JRResultSetDataSource resulset = new JRResultSetDataSource(rs);
+			FastReportBuilder drb = new FastReportBuilder();
+			DynamicReport dr = null;
+			
+			//Con este for creamos las columnas que se han elegido
+			try {
+				dr = drb.build();
+				pos=0;
+				for(int i = 0; i<lista2.getModel().getSize();i++){
+					//System.out.println(lista2.getModel().getElementAt(i));
+					pos = buscar(datos,(String) lista2.getModel().getElementAt(i));
+					drb.addColumn((String) lista2.getModel().getElementAt(i), datos[1][pos], String.class.getName(),dimension[pos]);
+				}
+				
+				drb.setPrintBackgroundOnOddRows(false);
+				drb.setTitle("PARTNERS");
+				//.setSubtitle("This report was generated at " + new Date())
+				//.setPrintBackgroundOnOddRows(true)
+				drb.setUseFullPageWidth(true);
+				//.build();
+			} catch (ColumnBuilderException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-		}
-	
-		return cuenta;
-	}
 
+			//generamos el jasperprint pasandole el resulset con los datos
+			JRDataSource ds = new JRBeanCollectionDataSource(TestRepositoryProducts.getDummyCollection());
+			JasperPrint jp = null;
+			try {
+				jp = DynamicJasperHelper.generateJasperPrint(dr, new ClassicLayoutManager(), resulset);
+			} catch (JRException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			//Por último mostramos el reporte por pantalla 
+			JasperViewer.viewReport(jp,false); 
+		
+		}else{
+			int pos=0;
+			String orden;
+			pos = buscar(datos,(String) gbordenar.getSelectedItem());
+			if(datos[1][pos].equals("sector")){
+				orden = "s."+datos[1][pos];
+			}else{
+				if(datos[1][pos].equals("pais")){
+					orden = "pais."+datos[1][pos];
+				}else{
+					orden = "pa."+datos[1][pos];
+				}
+			}
+			String consulta = "SELECT p.nombre AS proyecto,pa.cod_part,pa.nombre,pa.direccion,pa.codpostal,pa.telefono,pa.telefono2," +
+					"pa.fax,pa.email,pa.email2,s.sector,pais.pais FROM PARTNER pa INNER JOIN "+
+			"PARTNER_PROYECTOS pp ON pa.cod_part= pp.cod_part INNER JOIN PROYECTOS p ON pp.id_pro = p.id_pro " +
+			"INNER JOIN SECTORES s ON pa.sector = s.id_sector INNER JOIN PAIS pais ON pa.pais = pais.id_pais ORDER BY proyecto,"+orden;
+			
+			conexion.Conectardb();
+			rs = conexion.ConsultaSQL(consulta);
+			final JRResultSetDataSource resulset = new JRResultSetDataSource(rs);
+			
+			FastReportBuilder drb = new FastReportBuilder();
+			DynamicReport dr = null;
+			try {
+				dr = drb.build();
+				drb.addColumn("Proyecto", "proyecto", String.class.getName(),30);
+				pos=0;
+				for(int i = 0; i<lista2.getModel().getSize();i++){
+					//System.out.println(lista2.getModel().getElementAt(i));
+					pos = buscar(datos,(String) lista2.getModel().getElementAt(i));
+					drb.addColumn((String) lista2.getModel().getElementAt(i), datos[1][pos], String.class.getName(),dimension[pos]);
+				}
+				
+				drb.addGroups(1);
+				drb.setPrintBackgroundOnOddRows(false);
+				drb.setTitle("PARTNERS POR PROYECTO");
+				drb.setUseFullPageWidth(true);
+			} catch (ColumnBuilderException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			JRDataSource ds = new JRBeanCollectionDataSource(TestRepositoryProducts.getDummyCollection());
+			JasperPrint jp = null;
+			try {
+				jp = DynamicJasperHelper.generateJasperPrint(dr, new ClassicLayoutManager(), resulset);
+			} catch (JRException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			JasperViewer.viewReport(jp,false);    //finally display the report report
+		}
+	}
 }
