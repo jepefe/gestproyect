@@ -33,14 +33,14 @@ public class SpnTimesheet extends JSplitPane{
 	JScrollPane modificar;
 	Border empty = new EmptyBorder(0,0,0,0);
 	Component[] panlsStaff = {
-			new JScrollPane(new PnlAlta_TimeSheet()),
+			modificar = new JScrollPane(new PnlAlta_TimeSheet()),
 			new JPanel(),
 			new JPanel()};
 
 	public SpnTimesheet(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
-		//modificar.setBorder(empty);
+		modificar.setBorder(empty);
 		
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[28],rec.idioma[rec.eleidioma][98]},
 				{recursos.icono[29],rec.idioma[rec.eleidioma][20]},
