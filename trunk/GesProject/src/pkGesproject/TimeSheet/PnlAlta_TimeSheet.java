@@ -48,6 +48,7 @@ import pkGesproject.RsGesproject;
 
 public class PnlAlta_TimeSheet extends JPanel{
 	
+	private static final String BorderLayout = null;
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	JTextField[] jtxtpro,jtxtta ;
@@ -100,7 +101,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 		
 		datos = new String[Tarea][workpaquet];
 
-		jtblTime.setPreferredScrollableViewportSize(new Dimension(816,250));
+		jtblTime.setPreferredScrollableViewportSize(new Dimension(816,200));
 		final JScrollPane jspntabla = new JScrollPane(jtblTime);
 	    JScrollPane scrollpanel = new JScrollPane(jtblTime);
 		
@@ -118,14 +119,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 		jtxtpro = new JTextField[fieldNamesproyecto.length];
 		jlblpro = new JLabel[fieldNamesproyecto.length];
 		
-		GridBagConstraints gbc = new GridBagConstraints();
 		
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.insets = new Insets(20,0,15,0);
-		
-		gbc.anchor = GridBagConstraints.WEST;
-		gbc.insets = new Insets(5,10,5,5);
 		
 		
 		//declaramos el campo que vamos a utilizar para a�adir las fechas
@@ -477,17 +471,18 @@ public class PnlAlta_TimeSheet extends JPanel{
 	      //Se agregan los action listener a los objetos
 	       
 	      
-	      CmbProyecto.addActionListener(accionpro);
-	      CmbTareas.addActionListener(accionta);
-	      CmbWorkpaquets.addActionListener(accionwp);
-	      jbtnaceptar.addActionListener(accionba);
-	      jbtnlimpiar.addActionListener(accionbl);
-          GridBagConstraints gbbc = new GridBagConstraints();
+		      CmbProyecto.addActionListener(accionpro);
+	      	CmbTareas.addActionListener(accionta);
+	      	CmbWorkpaquets.addActionListener(accionwp);
+	      	jbtnaceptar.addActionListener(accionba);
+	      	jbtnlimpiar.addActionListener(accionbl);
+          	GridBagConstraints gbbc = new GridBagConstraints();
           //gbbc.gridx = 0; // El área de texto empieza en la columna
-          gbbc.gridy = 0; // El área de texto empieza en la fila
-          
+          	gbbc.gridy = 0; // El área de texto empieza en la fila
+          	gbbc.insets = new Insets(15,0,100,0);
 			this.add(Jproyecto,gbbc);
 			gbbc.gridy = 1; // El área de texto empieza en la fila
+			gbbc.insets = new Insets(0,0,100,0);
 			this.add(Jtarea,gbbc);
 			gbbc.gridy = 2; // El área de texto empieza en la fila
 			this.add(Jtabla,gbbc);
