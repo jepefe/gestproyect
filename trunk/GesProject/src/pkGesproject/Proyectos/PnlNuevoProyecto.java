@@ -251,7 +251,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 		gbc.gridwidth = GridBagConstraints.REMAINDER; 
 
 		CbCoordinador = new GpComboBox() ; //ComboBox (Coordinador)
-		CbCoordinador.setPreferredSize(new Dimension(165,30));
+		 
 		jpnl.add(CbCoordinador,gbc);
 
 		// Evento doble click primer JLIST
@@ -416,6 +416,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 									for (int i = 0 ; i<listaP2.getModel().getSize(); i++){
 										modelo2.addElement(listaP2.getModel().getElementAt(i));
 									}
+									modelo.removeAllElements();	
 
 								}else{		
 
