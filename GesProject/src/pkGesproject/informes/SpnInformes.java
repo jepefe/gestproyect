@@ -30,20 +30,24 @@ public class SpnInformes extends JSplitPane{
 	JPanel panel = new JPanel();
 	JPanel pnllateral = new JPanel();
 	JTable jtblLateral;
-	JScrollPane modificar;
+	JScrollPane partner,proyecto,staff,wp,tareas;
 	Border empty = new EmptyBorder(0,0,0,0);
 	PnlModificarsocio mods = PnlModificarsocio.Obtener_Instancia();
 	Component[] panlsStaff = {
-			modificar = new JScrollPane(new PnlInfPartner()),
-			new PnlInformesProyecto(),
-			new JPanel(),
-			new JPanel(),
-			new JPanel(),};
+			partner = new JScrollPane(new PnlInfPartner()),
+			proyecto = new JScrollPane(new PnlInformesProyecto()),
+			staff = new JScrollPane(new PnlInfStaff()),
+			wp = new JScrollPane(new PnlInfWp()),
+			tareas= new JScrollPane(new PnlInfTareas()),};
 
 	public SpnInformes(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
-		modificar.setBorder(empty);
+		partner.setBorder(empty);
+		proyecto.setBorder(empty);
+		staff.setBorder(empty);
+		wp.setBorder(empty);
+		tareas.setBorder(empty);
 		
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[31],rec.idioma[rec.eleidioma][57]},
 				{recursos.icono[31],rec.idioma[rec.eleidioma][55]},
