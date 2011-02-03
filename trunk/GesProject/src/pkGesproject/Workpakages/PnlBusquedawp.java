@@ -10,6 +10,7 @@ package pkGesproject.Workpakages;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -135,7 +136,7 @@ public class PnlBusquedawp extends JPanel{
            }
     	};
     	
-		    
+    	jtblLateral.setPreferredScrollableViewportSize(new Dimension(700,160));
         	//jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));
        
     		jtxt=new JTextField(20);

@@ -3,6 +3,7 @@ package pkGesproject.Staff;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -112,7 +113,7 @@ public class PnlBusquedastaff extends JPanel{
     	
 		    
         	jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));
-       
+        	jtblLateral.setPreferredScrollableViewportSize(new Dimension(700,160));
     		jtxt=new JTextField(20);
     		jtxt.setText("Buscar...");
     		jtxt.putClientProperty("JTextField.variant", "search");

@@ -1,6 +1,7 @@
  package pkGesproject.Proyectos;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -82,7 +83,7 @@ public class PnlModificarProyecto extends JPanel{
              return false;
            }
     	};
-    		
+    	jtblLateral.setPreferredScrollableViewportSize(new Dimension(700,160));
 		
 		/*
     	 * Solucion para que la Matriz de Busqueda sea Dinamica.

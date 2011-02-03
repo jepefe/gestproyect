@@ -1,6 +1,7 @@
 package pkGesproject.Tareas;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -79,7 +80,7 @@ public class PnlModificarTarea extends JPanel{
              return false;
            }
     	};
-    	
+    	jtblLateral.setPreferredScrollableViewportSize(new Dimension(700,160));
     	/*
     	String resul[]= new String[3];
     	conexion.Conectardb();
