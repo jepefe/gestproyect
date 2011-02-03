@@ -86,7 +86,7 @@ public class PnlImportarExportar extends JPanel{
 	public void exportar(){
 		
 		//1 Abrir la plantilla como un libro de excel
-    	String ruta = "src/Pruebas_POI/ReportIn.xls";
+    	String ruta = "src/PkModelosExcel/ReportIn.xls";
     	HSSFWorkbook libro = null;
     	//FileInputStream tuFlujoDeDatos = null;
 		InputStream tuFlujoDeDatos = cftp.Descargar("135"); //Descarga el fichero en memoria,no contemplado fallo al descargar
@@ -149,12 +149,7 @@ public class PnlImportarExportar extends JPanel{
 		
         System.out.println("Contenido del RS:"+rs);
         
-       
-        
-        HSSFCell celda2 = tuRow.createCell((short) 4);
-        
-        HSSFRichTextString texto2 = new HSSFRichTextString("alla");
-        celda2.setCellValue(texto2);
+            
         try
 		{
         	// Se salva el libro.          
