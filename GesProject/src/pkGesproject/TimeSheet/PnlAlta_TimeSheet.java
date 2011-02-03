@@ -68,13 +68,18 @@ public class PnlAlta_TimeSheet extends JPanel{
 	JScrollPane JScroll; 
 	
 	final Object[][] info ={
-			{"tarea manolo", "wp2", "25"},
-			{"tarea frey", "wp1", "10"},
-			{"tarea ruben", "wp2", "5"},
-			{"tarea berna", "wp3", "40"},
-			{"tarea felix", "wp1", "2"}
+			{"15/05/2010","tarea manolo", "wp2", "25"},
+			{"18/12/2010","tarea frey", "wp1", "10"},
+			{"01/01/2011","tarea ruben", "wp2", "5"},
+			{"05/01/2011","tarea berna", "wp3", "40"},
+			{"07/01/2011","tarea felix", "wp1", "2"},
+			{"07/01/2011","tarea juan", "wp1", "2"},
+			{"10/01/2011","tarea vicente", "wp1", "23"},
+			{"10/01/2011","tarea esteban", "wp3", "4"},
+			{"03/02/2011","tarea josodo", "wp1", "45"},
+			{"03/02/2011","tarea vlad", "wp3", "2"}
 	};
-	final String colu[] = {rec.idioma[rec.eleidioma][129],rec.idioma[rec.eleidioma][40],rec.idioma[rec.eleidioma][97]};
+	final String colu[] = {rec.idioma[rec.eleidioma][95],rec.idioma[rec.eleidioma][129],rec.idioma[rec.eleidioma][40],rec.idioma[rec.eleidioma][97]};
 	JTable jtblTime = new JTable(info, colu);
 	
 	
@@ -88,16 +93,17 @@ public class PnlAlta_TimeSheet extends JPanel{
 		System.out.println(colu[cont]);
 		}
 		System.out.println("HOLAAAAAAAAA");
-		this.setLayout(new BorderLayout());
+		this.setLayout(new GridBagLayout());
 		Jproyecto.setLayout(new GridBagLayout());
 		Jtarea.setLayout(new GridBagLayout());
 		Jtabla.setLayout(new GridBagLayout());
 		
 		datos = new String[Tarea][workpaquet];
 
-		jtblTime.setPreferredScrollableViewportSize(new Dimension(1000,150));
-	    
-	    
+		jtblTime.setPreferredScrollableViewportSize(new Dimension(816,250));
+		final JScrollPane jspntabla = new JScrollPane(jtblTime);
+	    JScrollPane scrollpanel = new JScrollPane(jtblTime);
+		
 		String[] fieldNamesproyecto = {
 		   rec.idioma[rec.eleidioma][111],rec.idioma[rec.eleidioma][101], rec.idioma[rec.eleidioma][102], rec.idioma[rec.eleidioma][125], rec.idioma[rec.eleidioma][105]
 		   };
@@ -132,23 +138,29 @@ public class PnlAlta_TimeSheet extends JPanel{
 		 * nombres de campos hayamos metido en fieldNames.
 		 */
 	      
-	      //campos para proyecto
-		 
+	      
+	      GridBagConstraints gbt = new GridBagConstraints();
+          
 	      
 	      for(int i=0;i<fieldNamesproyecto.length;++i) {
 				
-				System.out.println("Fieldnames = " + fieldNamesproyecto.length + " / i = " + i);
+				//System.out.println("Fieldnames = " + fieldNamesproyecto.length + " / i = " + i);
 				
-			   gbc.gridwidth = GridBagConstraints.RELATIVE;
-			   Jproyecto.add(jlblpro[i]=new JLabel(fieldNamesproyecto[i]),gbc);
+				//gbc.gridwidth = GridBagConstraints.RELATIVE;
+				//Jproyecto.add(jlblpro[i]=new JLabel(fieldNamesproyecto[i]),gbc);
 
-			   
+			   //campos para proyecto
 			   switch(i){
 			   
 			   case (0)://nombre combo
-				   gbc.gridwidth = GridBagConstraints.REMAINDER;
-				   System.out.println("Entra combo nombre");
-			   	Jproyecto.add(CmbProyecto,gbc);
+				gbt.insets = new Insets(10,0,10,5);
+				gbt.gridx = 0; // El área de texto empieza en la columna
+				gbt.gridy = 0; // El área de texto empieza en la fila
+				//gbc.gridwidth = GridBagConstraints.REMAINDER;
+				Jproyecto.add(jlblpro[i]=new JLabel(fieldNamesproyecto[i]),gbt);
+				gbt.insets = new Insets(10,0,10,0);
+				gbt.gridx = 1; // El área de texto empieza en la columna
+			   	Jproyecto.add(CmbProyecto,gbt);
 			   CmbProyecto.setPreferredSize(new Dimension(140,30));
 			   
 				conexion.Conectardb();
@@ -166,15 +178,27 @@ public class PnlAlta_TimeSheet extends JPanel{
 				conexion.cerrarConexion();
 				break;
 			   case (1)://contract number
-				   gbc.gridwidth = GridBagConstraints.REMAINDER;
+				   gbt.insets = new Insets(10,17,10,5);
+					gbt.gridx = 2; // El área de texto empieza en la columna
+					gbt.gridy = 0; // El área de texto empieza en la fila
+				   Jproyecto.add(jlblpro[i]=new JLabel(fieldNamesproyecto[i]),gbt);
+				   //gbc.gridwidth = GridBagConstraints.REMAINDER;
 				   System.out.println("Entra contract numbre");
-				   Jproyecto.add(jtxtpro[i]=new JTextField(fieldWidths[i]),gbc);
+				   gbt.insets = new Insets(10,0,10,0);
+				   gbt.gridx = 3; // El área de texto empieza en la fila
+				   Jproyecto.add(jtxtpro[i]=new JTextField(fieldWidths[i]),gbt);
 				   jtxtpro[i].disable();
 			   		break;
 			   case (2)://institución
-				   gbc.gridwidth = GridBagConstraints.REMAINDER;
+				   gbt.insets = new Insets(10,0,10,5);
+					gbt.gridx = 0; // El área de texto empieza en la columna
+					gbt.gridy = 1; // El área de texto empieza en la fila
+				   Jproyecto.add(jlblpro[i]=new JLabel(fieldNamesproyecto[i]),gbt);
+				   //gbc.gridwidth = GridBagConstraints.REMAINDER;
 				   System.out.println("Entra combo institucion");
-				   Jproyecto.add(CmbPart,gbc);
+				   gbt.insets = new Insets(10,0,10,0);
+				   gbt.gridx = 1; // El área de texto empieza en la columna
+				   Jproyecto.add(CmbPart,gbt);
 			   CmbPart.setPreferredSize(new Dimension(140,30));
 	   
 	   				conexion.Conectardb();
@@ -192,10 +216,16 @@ public class PnlAlta_TimeSheet extends JPanel{
 	   								conexion.cerrarConexion();
 				   break;
 			   case (3):
-				   gbc.gridwidth = GridBagConstraints.REMAINDER;
-				   System.out.println("Entra combo staff");
-			   	Jproyecto.add(CmbStaff,gbc);
-			   	CmbStaff.setPreferredSize(new Dimension(140,30));
+				gbt.insets = new Insets(10,17,10,5);
+				gbt.gridx = 2; // El área de texto empieza en la columna
+				gbt.gridy = 1; // El área de texto empieza en la fila
+				Jproyecto.add(jlblpro[i]=new JLabel(fieldNamesproyecto[i]),gbt);
+				//gbc.gridwidth = GridBagConstraints.REMAINDER;
+				System.out.println("Entra combo staff");
+				gbt.insets = new Insets(10,0,10,0);
+				gbt.gridx = 3; // El área de texto empieza en la columna
+			   	Jproyecto.add(CmbStaff,gbt);
+			   	CmbStaff.setPreferredSize(new Dimension(230,30));
 			   
 				conexion.Conectardb();
 				rs = conexion.ConsultaSQL("SELECT nombre,id_staff FROM STAFF ORDER BY nombre");
@@ -212,28 +242,44 @@ public class PnlAlta_TimeSheet extends JPanel{
 				conexion.cerrarConexion();
 				break;
 			   case (4)://rol en el proyecto
-				   gbc.gridwidth = GridBagConstraints.REMAINDER;
-				   System.out.println("Entra rol proyecto");
-				   Jproyecto.add(jtxtpro[i]=new JTextField(fieldWidths[i]),gbc);
-				   JTextFieldLimit ljtxt2 = new JTextFieldLimit(20);
-				   jtxtpro[i].setDocument(ljtxt2);
-				   break;
+				gbt.insets = new Insets(10,17,10,5);
+				gbt.gridx = 4; // El área de texto empieza en la columna
+				gbt.gridy = 1; // El área de texto empieza en la fila
+				Jproyecto.add(jlblpro[i]=new JLabel(fieldNamesproyecto[i]),gbt);
+				//gbc.gridwidth = GridBagConstraints.REMAINDER;
+				//System.out.println("Entra rol proyecto");
+				gbt.insets = new Insets(10,0,10,0);
+				gbt.gridx = 5; // El área de texto empieza en la columna
+				Jproyecto.add(jtxtpro[i]=new JTextField(fieldWidths[i]),gbt);
+				JTextFieldLimit ljtxt2 = new JTextFieldLimit(20);
+				jtxtpro[i].setDocument(ljtxt2);
+				  	break;
 			   		
 			   }//fin switch proyecto
 			   
 			   //campos del panel de tareas
 		switch (i){
 				case (0)://fecha
-					gbc.gridwidth = GridBagConstraints.RELATIVE;
-					Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbc);
-		   			{gbc.gridwidth = GridBagConstraints.REMAINDER; Jtarea.add(jdc1,gbc);}
+					gbt.insets = new Insets(10,0,10,5);
+					gbt.gridx = 0; // El área de texto empieza en la columna
+					gbt.gridy = 0; // El área de texto empieza en la fila
+					//gbc.gridwidth = GridBagConstraints.RELATIVE;
+					Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbt);
+					gbt.insets = new Insets(10,0,10,0);
+					gbt.gridx = 1; // El área de texto empieza en la columna
+		   			Jtarea.add(jdc1,gbt);
 					break;
 				case (1)://tarea
-					gbc.gridwidth = GridBagConstraints.RELATIVE;
-					Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbc);
+					gbt.insets = new Insets(10,0,10,5);
+					gbt.gridx = 0; // El área de texto empieza en la columna
+					gbt.gridy = 1; // El área de texto empieza en la fila
+					//gbc.gridwidth = GridBagConstraints.RELATIVE;
+					Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbt);
 					System.out.println("Entra combo nombre tareas");
-					gbc.gridwidth = GridBagConstraints.REMAINDER;
-			   		Jtarea.add(CmbTareas,gbc);
+					//gbc.gridwidth = GridBagConstraints.REMAINDER;
+					gbt.insets = new Insets(10,0,10,0);
+					gbt.gridx = 1; // El área de texto empieza en la columna
+			   		Jtarea.add(CmbTareas,gbt);
 			   		CmbTareas.setPreferredSize(new Dimension(140,30));
 			   
 			   		conexion.Conectardb();
@@ -251,11 +297,16 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   		conexion.cerrarConexion();
 					break;
 			   	case (2)://workpaquet
-			   	gbc.gridwidth = GridBagConstraints.RELATIVE;
-			   	Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbc);
+			   	gbt.insets = new Insets(10,17,10,5);
+			   	gbt.gridx =2; // El área de texto empieza en la columna
+				gbt.gridy = 1; // El área de texto empieza en la fila
+			   	//gbc.gridwidth = GridBagConstraints.RELATIVE;
+			   	Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbt);
 				System.out.println("Entra combo nombre workpaquets");
-				gbc.gridwidth = GridBagConstraints.REMAINDER;
-		   		Jtarea.add(CmbWorkpaquets,gbc);
+				//gbc.gridwidth = GridBagConstraints.REMAINDER;
+				gbt.insets = new Insets(10,0,10,0);
+				gbt.gridx =3; // El área de texto empieza en la columna
+		   		Jtarea.add(CmbWorkpaquets,gbt);
 		   		CmbTareas.setPreferredSize(new Dimension(140,30));
 		   
 		   		conexion.Conectardb();
@@ -273,10 +324,15 @@ public class PnlAlta_TimeSheet extends JPanel{
 		   		conexion.cerrarConexion();
 			   		break;
 			   	case (3)://horas
-			   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-			   		Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbc);
-			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
-			   		Jtarea.add(jtxtta[i]=new JTextField(fieldWidths[i]),gbc);
+			   		gbt.insets = new Insets(10,17,10,5);
+				   	gbt.gridx = 4; // El área de texto empieza en la columna
+			   		gbt.gridy = 1; // El área de texto empieza en la fila
+			   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
+			   		Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbt);
+			   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+			   		gbt.insets = new Insets(10,0,10,0);
+			   		gbt.gridx = 5; // El área de texto empieza en la columna
+			   		Jtarea.add(jtxtta[i]=new JTextField(fieldWidths[i]),gbt);
 			   		JTextFieldLimit ljtxt0 = new JTextFieldLimit(4);
 			   		jtxtta[i].setDocument(ljtxt0);
 			   		break;
@@ -349,11 +405,19 @@ public class PnlAlta_TimeSheet extends JPanel{
 			}
 	    	  
 	      };
-	      gbc.gridwidth = GridBagConstraints.RELATIVE;
-	      Jtarea.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
-	      gbc.gridwidth = GridBagConstraints.REMAINDER;
-	      Jtarea.add(jbtnlimpiar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
-	      Jtabla.add(jtblTime);
+	      	//gbc.gridwidth = GridBagConstraints.RELATIVE;
+	      	gbt.gridx = 8; // El área de texto empieza en la columna
+	   		gbt.gridy = 1; // El área de texto empieza en la fila
+	   		/*
+	   		 * Se agregan los botones al panel
+	   		 */
+	   		gbt.insets = new Insets(10,20,10,9);
+	   		Jtarea.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][134]),gbt);
+	   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   		gbt.gridx = 9; // El área de texto empieza en la columna
+	   		gbt.insets = new Insets(10,0,10,9);
+	   		Jtarea.add(jbtnlimpiar=new JButton(rec.idioma[rec.eleidioma][74]),gbt);
+	   		Jtabla.add(scrollpanel);
 	      
 	      
 	    //action listener para combo workpaquets
@@ -418,10 +482,15 @@ public class PnlAlta_TimeSheet extends JPanel{
 	      CmbWorkpaquets.addActionListener(accionwp);
 	      jbtnaceptar.addActionListener(accionba);
 	      jbtnlimpiar.addActionListener(accionbl);
-
-			this.add(Jproyecto,BorderLayout.NORTH);
-			this.add(Jtarea,BorderLayout.CENTER);
-			this.add(Jtabla,BorderLayout.SOUTH);
+          GridBagConstraints gbbc = new GridBagConstraints();
+          //gbbc.gridx = 0; // El área de texto empieza en la columna
+          gbbc.gridy = 0; // El área de texto empieza en la fila
+          
+			this.add(Jproyecto,gbbc);
+			gbbc.gridy = 1; // El área de texto empieza en la fila
+			this.add(Jtarea,gbbc);
+			gbbc.gridy = 2; // El área de texto empieza en la fila
+			this.add(Jtabla,gbbc);
 			this.setVisible(true);
 		}//fin constructor
 	}//fin clase
