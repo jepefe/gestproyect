@@ -2,6 +2,7 @@ package pkGesproject.Socios;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -82,6 +83,8 @@ public class PnlModificarsocio extends JPanel{
                  return false;
                }
     	};
+    	
+    	jtblLateral.setPreferredScrollableViewportSize(new Dimension(700,160));
         	/**
         	 * Creamos el jtextfield para la busquera y le añadimos un focus listener para que se borre su contenido
         	 **/
