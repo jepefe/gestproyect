@@ -54,7 +54,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 	JTextField[] jtxtpro,jtxtta ;
 	JLabel[] jlblpro, jlblta, jlblhe;
 	JDateChooser jdc1;
-	JButton jbtnaceptar, jbtnlimpiar;
+	JButton jbtnaceptar, jbtnlimpiar,jbtneliminar;
 	GpComboBox CmbTareas = new GpComboBox();
 	GpComboBox CmbProyecto = new GpComboBox();
 	GpComboBox CmbPart = new GpComboBox();
@@ -100,6 +100,16 @@ public class PnlAlta_TimeSheet extends JPanel{
 		Jtabla.setLayout(new GridBagLayout());
 		
 		datos = new String[Tarea][workpaquet];
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.insets = new Insets(20,0,15,0);
+		
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.insets = new Insets(5,10,5,5);
+		
 
 		jtblTime.setPreferredScrollableViewportSize(new Dimension(816,200));
 		final JScrollPane jspntabla = new JScrollPane(jtblTime);
@@ -411,8 +421,16 @@ public class PnlAlta_TimeSheet extends JPanel{
 	   		gbt.gridx = 9; // El área de texto empieza en la columna
 	   		gbt.insets = new Insets(10,0,10,9);
 	   		Jtarea.add(jbtnlimpiar=new JButton(rec.idioma[rec.eleidioma][74]),gbt);
-	   		Jtabla.add(scrollpanel);
-	      
+	   		//gbt.gridx = 6; // El área de texto empieza en la columna
+	   		//gbt.gridy = 1; // El área de texto empieza en la fila
+	   		//gbt.insets = new Insets(10,0,10,0);
+	   		gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   		Jtabla.add(scrollpanel,gbc);
+	   		gbc.anchor = GridBagConstraints.EAST;
+			gbc.insets = new Insets(30,10,5,5);
+			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   		//gbt.gridy = 2; // El área de texto empieza en la fila
+	   		Jtabla.add(jbtneliminar = new JButton(rec.idioma[rec.eleidioma][39]),gbc);
 	      
 	    //action listener para combo workpaquets
 	      ActionListener accionwp = new ActionListener(){
@@ -476,6 +494,8 @@ public class PnlAlta_TimeSheet extends JPanel{
 	      	CmbWorkpaquets.addActionListener(accionwp);
 	      	jbtnaceptar.addActionListener(accionba);
 	      	jbtnlimpiar.addActionListener(accionbl);
+	      	//jbtneliminar.setActionCommand("eliminar");
+            //jbtneliminar.addActionListener(event);
           	GridBagConstraints gbbc = new GridBagConstraints();
           //gbbc.gridx = 0; // El área de texto empieza en la columna
           	gbbc.gridy = 0; // El área de texto empieza en la fila
