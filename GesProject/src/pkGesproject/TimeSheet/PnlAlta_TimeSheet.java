@@ -67,8 +67,15 @@ public class PnlAlta_TimeSheet extends JPanel{
 	JPanel Jtarea = new JPanel();
 	JPanel Jtabla = new JPanel();
 	JScrollPane JScroll; 
+	int cuenta = 0;
+	int columnas;
+	String auxdatos[][];
+	String[] fila;
+	final String colu[] = {rec.idioma[rec.eleidioma][95],rec.idioma[rec.eleidioma][129],rec.idioma[rec.eleidioma][40],rec.idioma[rec.eleidioma][97]};
 	
-	final Object[][] info ={
+	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
+	
+	/*final Object[][] info ={
 			{"15/05/2010","tarea manolo", "wp2", "25"},
 			{"18/12/2010","tarea frey", "wp1", "10"},
 			{"01/01/2011","tarea ruben", "wp2", "5"},
@@ -79,10 +86,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 			{"10/01/2011","tarea esteban", "wp3", "4"},
 			{"03/02/2011","tarea josodo", "wp1", "45"},
 			{"03/02/2011","tarea vlad", "wp3", "2"}
-	};
-	final String colu[] = {rec.idioma[rec.eleidioma][95],rec.idioma[rec.eleidioma][129],rec.idioma[rec.eleidioma][40],rec.idioma[rec.eleidioma][97]};
-	JTable jtblTime = new JTable(info, colu);
-	
+	};*/
+
+	JTable jtblTime = new JTable(null, colu);	
 	
 	int id_wp = 0;
 	String datos [][];
@@ -90,6 +96,23 @@ public class PnlAlta_TimeSheet extends JPanel{
 	int Tarea, workpaquet, vacio = 0;
 	
 	public PnlAlta_TimeSheet(){
+		
+    	/**
+    	 * Cargamos los array y la tabla con los datos de la bd
+    	 */
+    	cuenta=contar_reg();
+    	fila = new String[colu.length+1];
+    	columnas =4;
+    	datos = new String[cuenta][columnas];
+		auxdatos = new String[cuenta][columnas];
+    	tablemodel=cargar_tabla(datos,columnas);
+    	jtblTime  = new JTable(tablemodel){
+    		 public boolean isCellEditable(int rowIndex, int mColIndex) {
+                 return false;
+               }
+    	};
+		
+		
 		for (int cont=0; cont < 3; cont++){
 		System.out.println(colu[cont]);
 		}
@@ -484,10 +507,14 @@ public class PnlAlta_TimeSheet extends JPanel{
 					CmbWorkpaquets.setSelectedItem(null);
 					jtxtta[3].setText("");
 				}
+				
 		    	  
 		      };
-	      //Se agregan los action listener a los objetos
-	       
+		      
+		      
+		      
+	      //Se agregan los action listener a los objeto
+		      
 	      
 		      CmbProyecto.addActionListener(accionpro);
 	      	CmbTareas.addActionListener(accionta);
@@ -508,6 +535,65 @@ public class PnlAlta_TimeSheet extends JPanel{
 			this.add(Jtabla,gbbc);
 			this.setVisible(true);
 		}//fin constructor
+	
+	/**
+     * Este metodo coje la matriz datos, descarga de la BD los datos de los partners y genera un tablemodel, el cual es devuelto por
+     * este método.
+     * @param datos
+     * @return
+     **/
+    
+    public DefaultTableModel cargar_tabla(String datos[][],int columna){
+    	
+    	String resul[]= new String[3];
+    	conexion.Conectardb();
+		
+    	
+    	rs = conexion.ConsultaSQL("SELECT fecha,actividades_relacionadas,observaciones,horas FROM TIMESHEET ORDER BY horas");
+    	int i=0;
+    	try {
+			while(rs.next()){
+				for(int j = 1;j<columna+1;j++){
+					datos[i][j-1] = rs.getString(j);
+					fila[j-1]=datos[i][j-1];
+					//System.out.print(fila[j-1]+";");
+				}
+				//System.out.print("\n");
+				i++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	conexion.cerrarConexion();
+    	
+    	DefaultTableModel tablemodel= new DefaultTableModel(datos,colu);
+    	return tablemodel;
+    }
+    
+    /**
+     * Este método lo que hace es devolvernos los registros que existen actualmente en la tabla timesheet
+     **/
+    public int contar_reg(){
+		
+    	conexion.Conectardb();
+    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
+    	rs = conexion.ConsultaSQL("SELECT id_ts,fecha,horas,id_task FROM TIMESHEET");
+    	cuenta = 0;
+    	try {
+			while(rs.next()){
+				cuenta++;
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		conexion.cerrarConexion();
+    	return cuenta;
+    	
+    }
+		
 	}//fin clase
 
 	
