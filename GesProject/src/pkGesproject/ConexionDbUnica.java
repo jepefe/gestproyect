@@ -16,9 +16,12 @@ public class ConexionDbUnica {
 	public Connection conexion;
 	Statement st;
 	static ConexionDbUnica instancia = new ConexionDbUnica();
-	
+	public int timeout;
+	boolean conectado = false;
+	Thread hmantenerviva = null;
 	private ConexionDbUnica(){
 		//this.Conectardb();
+	
 	}
 	
 	public void Conectardb(){
@@ -30,6 +33,7 @@ public class ConexionDbUnica {
 	dataSource.setServerName(recursos.DBSERVER);
 	try {
 		conexion = dataSource.getConnection();
+		conectado = true;
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -41,10 +45,65 @@ public class ConexionDbUnica {
 			e.printStackTrace();
 			
 	}
-		
+		mantenerviva();
 	
 	
 	}
+	
+	
+	private void mantenerviva(){
+		if(hmantenerviva == null){
+		hmantenerviva = new Thread(new Runnable(){
+
+			@Override
+			public void run() {
+				while(true){
+					if (timeout >= 180000){  //Si la conexion lleva tres minutos inactiva la cerramos
+						cerrarConexion();
+						System.out.println("Conexion cerrada por inactividad");
+						conectado=false;
+					}
+				try {
+					Thread.sleep(1000);
+					incrementatimeout();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				}
+				
+			}
+			
+		});
+	hmantenerviva.start();
+		}
+	}
+	
+	
+	
+	private synchronized void setTimeout(int time){
+		if (time != 0){
+			if(this.timeout < 180000){
+			this.timeout += time;
+			}
+		}else{
+		this.timeout = time;
+		}
+	}
+	
+	public void reseteatimeout(){
+		if(!conectado){
+			Conectardb();
+			conectado = true;
+		}
+
+		setTimeout(0);
+		
+	}
+	public void incrementatimeout(){
+		setTimeout(1000);
+	}
+	
 	public void cerrarConexion(){
 		try {
             st.close();
@@ -56,7 +115,8 @@ public class ConexionDbUnica {
 	
 	public synchronized ResultSet ConsultaSQL(String consultaSQL){
 		ResultSet rs=null;
-		
+		 reseteatimeout();
+
 		try {
 			rs = st.executeQuery(consultaSQL);
 		} catch (SQLException e) {
@@ -71,6 +131,8 @@ public class ConexionDbUnica {
 	public String executeUpdate(String consultaSQL){
 		ResultSet rs=null;
 		String autoid = null;
+		 reseteatimeout();
+
 		try {
 			st.executeUpdate(consultaSQL, Statement.RETURN_GENERATED_KEYS);
 			rs = st.getGeneratedKeys();
