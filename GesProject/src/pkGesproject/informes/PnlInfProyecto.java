@@ -10,24 +10,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.ResultSet;
+import java.util.Date;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRResultSetDataSource;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.view.JasperViewer;
-import pkGesproject.ConexionDb;
-import pkGesproject.GesIdioma;
-import pkGesproject.GpComboBox;
+import javax.swing.JPanel;
+
+
 import ar.com.fdvs.dj.core.DynamicJasperHelper;
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
 import ar.com.fdvs.dj.domain.DynamicReport;
@@ -35,7 +29,23 @@ import ar.com.fdvs.dj.domain.builders.ColumnBuilderException;
 import ar.com.fdvs.dj.domain.builders.FastReportBuilder;
 import ar.com.fdvs.dj.test.TestRepositoryProducts;
 
-public class PnlInfStaff extends JPanel{
+
+
+
+import pkGesproject.ConexionDb;
+import pkGesproject.GesIdioma;
+import pkGesproject.GpComboBox;
+
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
+
+public class PnlInfProyecto extends JPanel{
 
 	
 	JLabel jlbagrupa, jlbordenar;
@@ -44,18 +54,18 @@ public class PnlInfStaff extends JPanel{
 	JButton jbtngenerar;
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	DefaultListModel modelo,modelo2;
-	String[][] datos = {{"Code Staff","Dni","Name","Surname","Birth Date", "Country", "Province","Region","City","Address","PostalCode","Phone1","Phone2","Fax","Email"},
-						{"sid_staff","dni","nombre","apellidos","f_nac","pais_en_ingles","estado","region","ciudad","direccion","codpostal","telefono","telefono2","fax","email"}};
+	String[][] datos = {{"Cod Project","Name","Description","State","Budget","Start Date", "End Date","Contract Number"},
+						{"id_pro","nombre","descripcion","espana","presupuesto","f_ini","f_fin","num_contrato"}};
 	String[] agrupar = {"Ninguno","Partner"};
 	
-	int dimension[] = {7,8,20,20,8,8,8,8,8,15,5,9,9,9,12};
+	int dimension[] = {7,20,30,10,7,8,8,15};
 	ActionListener generar;
 	JasperReport jasperReport;
 	JasperPrint jasperPrint;
 	ResultSet rs;
 	ConexionDb conexion= new ConexionDb();
 	
-	public PnlInfStaff(){
+	public PnlInfProyecto(){
 		
 		//cargamos la interfaz del panel lo primero
 		cargar_panel();
@@ -222,21 +232,16 @@ public class PnlInfStaff extends JPanel{
 			String orden;
 			pos = buscar(datos,(String) gbordenar.getSelectedItem());
 			
-			/*if(datos[1][pos].equals("sector")){
-				orden = "s."+datos[1][pos];
+			if(datos[1][pos].equals("espana")){
+				orden = "e."+datos[1][pos];
 			}else{
-				if(datos[1][pos].equals("pais")){
-					orden = "pais."+datos[1][pos];
-				}else{
-					orden = "pa."+datos[1][pos];
-				}
+				orden = "p."+datos[1][pos];
 			}
-			*/
+			
 			//hacemos la consulta con los campos correspondientes
-			String consulta = "SELECT s.id_staff, s.dni, s.nombre,s.apellidos,s.f_nac,e.pais_en_ingles," +
-					" pro.estado,s.region,s.ciudad,s.direccion,s.codpostal,s.telefono, s.telefono2,s.fax,s.email " +
-					" FROM STAFF as s inner join PAIS  as e on s.pais = e.id_pais INNER JOIN PROVINCIAS as pro on s.provincia = pro.id_provincias " +
-					" ORDER BY s."+datos[1][pos];
+			String consulta = "SELECT p.id_pro,p.nombre,p.descripcion,e.espana,p.presupuesto,p.f_ini,p.f_fin,p.num_contrato FROM PROYECTOS as p " +
+							"INNER JOIN ESTADOS_PROYECTO as e on p.estado = e.id_est " +
+							"ORDER BY "+orden;
 			
 			conexion.Conectardb();
 			rs = conexion.ConsultaSQL(consulta);
@@ -255,7 +260,7 @@ public class PnlInfStaff extends JPanel{
 				}
 				
 				drb.setPrintBackgroundOnOddRows(false);
-				drb.setTitle("STAFF");
+				drb.setTitle("PROYECTOS");
 				//.setSubtitle("This report was generated at " + new Date())
 				//.setPrintBackgroundOnOddRows(true)
 				drb.setUseFullPageWidth(true);
@@ -285,22 +290,14 @@ public class PnlInfStaff extends JPanel{
 			int pos=0;
 			String orden;
 			pos = buscar(datos,(String) gbordenar.getSelectedItem());
-			if(datos[1][pos].equals("pais_en_ingles")){
+			if(datos[1][pos].equals("espana")){
 				orden = "e."+datos[1][pos];
 			}else{
-				if(datos[1][pos].equals("estado")){
-					orden = "pro."+datos[1][pos];
-				}else{
-				if(datos[1][pos].equals("partner")){
-					orden = "p."+datos[1][pos];
-				}
-					orden = "s."+datos[1][pos];
-				}
+				orden = "p."+datos[1][pos];
 			}
-			String consulta = "SELECT p.nombre as Partner ,s.id_staff, s.dni, s.nombre,s.apellidos,s.f_nac,e.pais_en_ingles," +
-			" pro.estado,s.region,s.ciudad,s.direccion,s.codpostal,s.telefono, s.telefono2,s.fax,s.email " +
-			" FROM STAFF as s inner join PAIS  as e on s.pais = e.id_pais INNER JOIN PROVINCIAS as pro on s.provincia = pro.id_provincias INNER JOIN PARTNER as p on p.cod_part = s.cod_part " +
-			" ORDER BY p.nombre,"+orden;
+			String consulta = "SELECT pa.nombre AS PARTNER, p.id_pro,p.nombre,p.descripcion,e.espana,p.presupuesto,p.f_ini,p.f_fin,p.num_contrato FROM PROYECTOS as p " +
+			"INNER JOIN PARTNER_PROYECTOS as pp on pp.id_pro = p.id_pro INNER JOIN PARTNER as pa ON pp.cod_part = pa.cod_part INNER JOIN ESTADOS_PROYECTO "+
+			" as e on p.estado = e.id_est ORDER BY PARTNER , p."+datos[1][pos];
 			
 			conexion.Conectardb();
 			rs = conexion.ConsultaSQL(consulta);
@@ -310,9 +307,7 @@ public class PnlInfStaff extends JPanel{
 			DynamicReport dr = null;
 			try {
 				dr = drb.build();
-				
-				
-				drb.addColumn("Partner","Partner", String.class.getName(),20);
+				drb.addColumn("PARTNER", "PARTNER", String.class.getName(),20);
 				pos=0;
 				for(int i = 0; i<lista2.getModel().getSize();i++){
 					//System.out.println(lista2.getModel().getElementAt(i));
@@ -321,14 +316,9 @@ public class PnlInfStaff extends JPanel{
 				}
 				
 				drb.addGroups(1);
-			
 				drb.setPrintBackgroundOnOddRows(false);
-				drb.setTitle("STAFF FROM PARTNER");
-				drb.setPrintColumnNames(true);
+				drb.setTitle("PROYETOS POR PARTNERS");
 				drb.setUseFullPageWidth(true);
-			
-
-
 			} catch (ColumnBuilderException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -349,6 +339,4 @@ public class PnlInfStaff extends JPanel{
 			JasperViewer.viewReport(jp,false);    //finally display the report report
 		}
 	}
-	
-	
 }

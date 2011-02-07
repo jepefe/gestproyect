@@ -249,7 +249,6 @@ public class PnlNuevoProyecto extends JScrollPane{
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		jpnl.add(new JLabel(rec.idioma[rec.eleidioma][81]),gbc);
 		gbc.gridwidth = GridBagConstraints.REMAINDER; 
-
 		CbCoordinador = new GpComboBox() ; //ComboBox (Coordinador)
 		 
 		jpnl.add(CbCoordinador,gbc);
