@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
 
 import pkGesproject.GesIdioma;
 import pkGesproject.RsGesproject;
-import pkGesproject.informes.PnlInformesProyecto;
+import pkGesproject.informes.PnlInfProyecto;
 
 public class SpnProyectos extends JSplitPane{
 
@@ -40,7 +40,7 @@ public class SpnProyectos extends JSplitPane{
 	Component[] panlsStaff = {
 			new PnlNuevoProyecto(),
 			 modificar = new JScrollPane(modpro),
-			 informes= new JScrollPane(new PnlInformesProyecto())};
+			 informes= new JScrollPane(new PnlInfProyecto())};
 	
 	public SpnProyectos(){
 		this.setOneTouchExpandable(true);

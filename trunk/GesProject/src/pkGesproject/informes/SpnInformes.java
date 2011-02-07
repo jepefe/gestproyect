@@ -35,7 +35,7 @@ public class SpnInformes extends JSplitPane{
 	PnlModificarsocio mods = PnlModificarsocio.Obtener_Instancia();
 	Component[] panlsStaff = {
 			partner = new JScrollPane(new PnlInfPartner()),
-			proyecto = new JScrollPane(new PnlInformesProyecto()),
+			proyecto = new JScrollPane(new PnlInfProyecto()),
 			staff = new JScrollPane(new PnlInfStaff()),
 			wp = new JScrollPane(new PnlInfWp()),
 			tareas= new JScrollPane(new PnlInfTareas()),};
