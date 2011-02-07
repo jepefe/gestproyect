@@ -315,7 +315,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   		Jtarea.add(CmbTareas,gbt);
 			   		CmbTareas.setPreferredSize(new Dimension(140,30));
 			   
-			   		conexion.Conectardb();
+			   		/*conexion.Conectardb();
 			   		rs = conexion.ConsultaSQL("SELECT nombre,id_task FROM TAREAS ORDER BY nombre");
 			   		try {
 			   			while(rs.next()){
@@ -327,7 +327,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   				e1.printStackTrace();
 						}
 			   		CmbTareas.setSelectedItem(null);
-			   		conexion.cerrarConexion();
+			   		conexion.cerrarConexion();*/
 					break;
 			   	case (2)://workpaquet
 			   	gbt.insets = new Insets(10,17,10,5);
@@ -342,7 +342,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 		   		Jtarea.add(CmbWorkpaquets,gbt);
 		   		CmbTareas.setPreferredSize(new Dimension(140,30));
 		   
-		   		conexion.Conectardb();
+		   		/*conexion.Conectardb();
 		   		rs = conexion.ConsultaSQL("SELECT nombre,id_wp FROM WORKPAQUETS ORDER BY nombre");
 		   		try {
 		   			while(rs.next()){
@@ -354,7 +354,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 		   				e1.printStackTrace();
 					}
 		   		CmbWorkpaquets.setSelectedItem(null);
-		   		conexion.cerrarConexion();
+		   		conexion.cerrarConexion();*/
 			   		break;
 			   	case (3)://horas
 			   		gbt.insets = new Insets(10,17,10,5);
@@ -372,6 +372,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   }//fin switch tareas
 			   
 			}//fin for de proyectos
+
+	      
+	      
 	      
 	      /**
 	       * agregamos la tabla
@@ -427,12 +430,15 @@ public class PnlAlta_TimeSheet extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO acction listener combo proyectos
 				if (CmbProyecto.getSelectedItem() != null){
+					int idpro = 0;
+					int idwp = 0;
 					conexion.Conectardb();
-					rs = conexion.ConsultaSQL("SELECT num_contrato FROM PROYECTOS WHERE nombre LIKE '"+CmbProyecto.getSelectedItem()+"'");
+					rs = conexion.ConsultaSQL("SELECT num_contrato, id_pro FROM PROYECTOS WHERE nombre LIKE '"+CmbProyecto.getSelectedItem()+"'");
 					
 					try {
 						rs.next();
 						nombrepro = rs.getString(1);
+						idpro = rs.getInt(2);
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -440,6 +446,35 @@ public class PnlAlta_TimeSheet extends JPanel{
 					System.out.println(nombrepro);
 					jtxtpro[1].setText(nombrepro);
 					conexion.cerrarConexion();
+					
+			   		conexion.Conectardb();
+			   		rs = conexion.ConsultaSQL("SELECT nombre,id_wp FROM WORKPAQUETS WHERE id_pro = '"+idpro+"' ORDER BY nombre");
+			   		try {
+			   			while(rs.next()){
+			   				CmbWorkpaquets.addItem(rs.getString(1));	
+			   				idwp = rs.getInt(2);
+			   			}
+			   			} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+			   				e1.printStackTrace();
+						}
+			   		CmbWorkpaquets.setSelectedItem(null);
+			   		conexion.cerrarConexion();
+			   		
+			   		conexion.Conectardb();
+			   		rs = conexion.ConsultaSQL("SELECT nombre,id_task FROM TAREAS WHERE i_wp = '"+idwp+"' ORDER BY nombre");
+			   		try {
+			   			while(rs.next()){
+			   				CmbTareas.addItem(rs.getString(1));	
+					
+			   			}
+			   			} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+			   				e1.printStackTrace();
+						}
+			   		CmbTareas.setSelectedItem(null);
+			   		conexion.cerrarConexion();
+			   		
 				}
 			}
 	    	  
@@ -495,6 +530,21 @@ public class PnlAlta_TimeSheet extends JPanel{
 							JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
 				
 							conexion.cerrarConexion();
+							
+					    	/**
+					    	 * Cargamos los array y la tabla con los datos de la bd
+					    	 */
+					    	cuenta=contar_reg();
+					    	fila = new String[colu.length+1];
+					    	columnas =4;
+					    	datos = new String[cuenta][columnas];
+							auxdatos = new String[cuenta][columnas];
+					    	tablemodel=cargar_tabla(datos,columnas);
+					    	jtblTime  = new JTable(tablemodel){
+					    		 public boolean isCellEditable(int rowIndex, int mColIndex) {
+					                 return false;
+					               }
+					    	};
 						}
 					}
 				}
@@ -532,13 +582,41 @@ public class PnlAlta_TimeSheet extends JPanel{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					// cambiar fecha a sql
-					java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
-					  
-					conexion.Conectardb();
-					conexion.executeUpdate("INSERT INTO TIMESHEET (fecha, actividades_relacionadas, horas, obsevaciones, id_task) VALUES ('"+sqlDate1+"','"+jtxtta[0].getText()+"','"+CmbTareas.getSelectedItem()+"','"+CmbWorkpaquets.getSelectedItem()+"','"+jtxtta[3].getText()+"')");
+					if (CmbTareas.getSelectedItem()!=null || CmbProyecto.getSelectedItem()!=null){
+						// cambiar fecha a sql
+						java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
+						  
+						conexion.Conectardb();
+						conexion.executeUpdate("INSERT INTO TIMESHEET (fecha, actividades_relacionadas, horas, obsevaciones, id_task) VALUES ('"+sqlDate1+"','"+jtxtta[0].getText()+"','"+CmbTareas.getSelectedItem()+"','"+CmbWorkpaquets.getSelectedItem()+"','"+jtxtta[3].getText()+"')");
+						
+						conexion.cerrarConexion();
+						
+				    	/**
+				    	 * Cargamos los array y la tabla con los datos de la bd despues de crear el alta nueva
+				    	 */
+				    	cuenta=contar_reg();
+				    	fila = new String[colu.length+1];
+				    	columnas =4;
+				    	datos = new String[cuenta][columnas];
+						auxdatos = new String[cuenta][columnas];
+				    	tablemodel=cargar_tabla(datos,columnas);
+				    	jtblTime  = new JTable(tablemodel){
+				    		 public boolean isCellEditable(int rowIndex, int mColIndex) {
+				                 return false;
+				               }
+				    	};
+				    	
+				    	CmbTareas.setSelectedItem(null);
+				    	CmbProyecto.setSelectedItem(null);
+				    	jtxtta[0].setText("");
+				    	jtxtta[3].setText("");
+				    	jdc1.setDate(null);
+				    	
+					}else{
+						JOptionPane.showMessageDialog( null, "Se ha de seleccionar tarea o workpaquet"); 
+					}
 					
-					conexion.cerrarConexion();
+					
 					
 				}
 		    	  
@@ -611,7 +689,7 @@ public class PnlAlta_TimeSheet extends JPanel{
     	conexion.Conectardb();
 		
     	
-    	rs = conexion.ConsultaSQL("SELECT fecha,actividades_relacionadas,observaciones,id_task FROM TIMESHEET ORDER BY fecha");
+    	rs = conexion.ConsultaSQL("SELECT fecha,id_tarea,id_wp,horas FROM TIMESHEET ORDER BY fecha");
     	int i=0;
     	try {
 			while(rs.next()){
@@ -640,7 +718,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 		
     	conexion.Conectardb();
     	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
-    	rs = conexion.ConsultaSQL("SELECT id_ts,fecha,horas,id_task FROM TIMESHEET");
+    	rs = conexion.ConsultaSQL("SELECT fecha,id_tarea,id_wp,horas FROM TIMESHEET");
     	cuenta = 0;
     	try {
 			while(rs.next()){
