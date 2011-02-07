@@ -40,6 +40,7 @@ public class RsGesproject {
 	public int progresocarga = 0;
 	public String txtcarga;
 	public FrmLogin instanciafrmlogin;
+	public int permisos;
 	/**String constante que contiene el titulo de la aplicaion*/
 	public final String APNAME = "GesProyect - Florida"; //Constante que contiene el nombre de la aplicacion
 	public  Image[] imagen = {

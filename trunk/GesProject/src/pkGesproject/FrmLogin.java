@@ -268,7 +268,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 				ResultSet rs;
 
 				conexdb.Conectardb();
-				rs = conexdb.ConsultaSQL("Select id_staff,password,nick_usuario,idioma from STAFF where nick_usuario = '" + jtxfUsuario.getText()+ "'");
+				rs = conexdb.ConsultaSQL("Select id_staff,password,nick_usuario,idioma,permisos from STAFF where nick_usuario = '" + jtxfUsuario.getText()+ "'");
 				try {
 					if(!rs.next()){
 						jlbconexion.setText("Incorrect USER/PASSWORD");
@@ -284,6 +284,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 								jpnl_conexion.setVisible(false);
 								recursos.setIdusuario(rs.getInt(1));
 								rec.eleidioma = rs.getInt(4);
+								recursos.permisos = rs.getInt(5);
 								System.out.println(recursos.getIdusuario() + "idioma:"+rec.eleidioma);
 
 								Runnable rppal = new Runnable() 
