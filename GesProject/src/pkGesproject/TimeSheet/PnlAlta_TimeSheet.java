@@ -9,6 +9,7 @@ package pkGesproject.TimeSheet;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -27,6 +28,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -176,7 +178,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 				//gbc.gridwidth = GridBagConstraints.RELATIVE;
 				//Jproyecto.add(jlblpro[i]=new JLabel(fieldNamesproyecto[i]),gbc);
 
-			   //campos para proyecto
+			   /**
+			    * Cargamos los campos para proyecto mediante el swith
+			    */
 			   switch(i){
 			   
 			   case (0)://nombre combo
@@ -284,7 +288,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   		
 			   }//fin switch proyecto
 			   
-			   //campos del panel de tareas
+			   /**
+			    * campos del panel de tareas
+			    */
 		switch (i){
 				case (0)://fecha
 					gbt.insets = new Insets(10,0,10,5);
@@ -367,7 +373,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   
 			}//fin for de proyectos
 	      
-	      //agregamos la tabla
+	      /**
+	       * agregamos la tabla
+	       */
 	      
 	      Jtabla.add(JScroll = new JScrollPane(jtblTime));
 	      //accion tarea
@@ -408,7 +416,11 @@ public class PnlAlta_TimeSheet extends JPanel{
 			}
 	    	  
 	      };
-	      //action listener para combo proyectos
+	      
+	      
+	      /**
+	       * action listener para combo proyectos
+	       */
 	      ActionListener accionpro = new ActionListener(){
 
 			@Override
@@ -435,7 +447,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 	      	//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	      	gbt.gridx = 8; // El área de texto empieza en la columna
 	   		gbt.gridy = 1; // El área de texto empieza en la fila
-	   		/*
+	   		
+	   		
+	   		/**
 	   		 * Se agregan los botones al panel
 	   		 */
 	   		gbt.insets = new Insets(10,20,10,9);
@@ -454,8 +468,41 @@ public class PnlAlta_TimeSheet extends JPanel{
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   		//gbt.gridy = 2; // El área de texto empieza en la fila
 	   		Jtabla.add(jbtneliminar = new JButton(rec.idioma[rec.eleidioma][39]),gbc);
-	      
-	    //action listener para combo workpaquets
+	   		
+	   		
+	    /**
+	     * Accion para el boton eliminar
+	     */
+	   		ActionListener event = new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(e.getActionCommand().equals("eliminar")){
+						Component aviso = null;
+						int s = JOptionPane.showConfirmDialog(aviso, "Esta seguro??");
+				
+						if(s==0){
+							conexion.Conectardb();
+							conexion.executeUpdate("DELETE FROM TIMESHEET WHERE tarea = '"+datos[jtblTime.getSelectedRow()][2]+"'");
+					
+							cuenta=contar_reg();
+							datos = new String[cuenta][columnas];
+							auxdatos = new String[cuenta][columnas];
+							tablemodel =cargar_tabla(datos,columnas);
+							jtblTime.setModel(tablemodel);
+							//jtblTime.repaint();
+							//jtblTime.revalidate();
+					
+							JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
+				
+							conexion.cerrarConexion();
+						}
+					}
+				}
+	   		};
+	   		
+	    /**
+	     * action listener para combo workpaquets
+	     */
 	      ActionListener accionwp = new ActionListener(){
 
 			@Override
@@ -476,18 +523,31 @@ public class PnlAlta_TimeSheet extends JPanel{
 				}
 			};
 			
-		    //action listener para boton aceptar
+			
+		    /**
+		     * action listener para boton aceptar
+		     */
 		      ActionListener accionba = new ActionListener(){
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
+					// cambiar fecha a sql
+					java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
+					  
+					conexion.Conectardb();
+					conexion.executeUpdate("INSERT INTO TIMESHEET (fecha, actividades_relacionadas, horas, obsevaciones, id_task) VALUES ('"+sqlDate1+"','"+jtxtta[0].getText()+"','"+CmbTareas.getSelectedItem()+"','"+CmbWorkpaquets.getSelectedItem()+"','"+jtxtta[3].getText()+"')");
+					
+					conexion.cerrarConexion();
 					
 				}
 		    	  
 		      };
 		     
-			//action listener para boton limpiar
+		      
+			/**
+			 * action listener para boton limpiar
+			 */
 		      ActionListener accionbl = new ActionListener(){
 
 				@Override
@@ -513,7 +573,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 		      
 		      
 		      
-	      //Se agregan los action listener a los objeto
+	      /**
+	       * Se agregan los action listener a los objeto
+	       */
 		      
 	      
 		      CmbProyecto.addActionListener(accionpro);
@@ -521,8 +583,8 @@ public class PnlAlta_TimeSheet extends JPanel{
 	      	CmbWorkpaquets.addActionListener(accionwp);
 	      	jbtnaceptar.addActionListener(accionba);
 	      	jbtnlimpiar.addActionListener(accionbl);
-	      	//jbtneliminar.setActionCommand("eliminar");
-            //jbtneliminar.addActionListener(event);
+	      	jbtneliminar.setActionCommand("eliminar");
+            jbtneliminar.addActionListener(event);
           	GridBagConstraints gbbc = new GridBagConstraints();
           //gbbc.gridx = 0; // El área de texto empieza en la columna
           	gbbc.gridy = 0; // El área de texto empieza en la fila
@@ -549,7 +611,7 @@ public class PnlAlta_TimeSheet extends JPanel{
     	conexion.Conectardb();
 		
     	
-    	rs = conexion.ConsultaSQL("SELECT fecha,actividades_relacionadas,observaciones,horas FROM TIMESHEET ORDER BY horas");
+    	rs = conexion.ConsultaSQL("SELECT fecha,actividades_relacionadas,observaciones,id_task FROM TIMESHEET ORDER BY fecha");
     	int i=0;
     	try {
 			while(rs.next()){
