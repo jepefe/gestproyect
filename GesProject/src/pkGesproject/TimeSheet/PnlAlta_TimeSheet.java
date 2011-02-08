@@ -315,7 +315,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   		Jtarea.add(CmbTareas,gbt);
 			   		CmbTareas.setPreferredSize(new Dimension(140,30));
 			   
-			   		/*conexion.Conectardb();
+			   		conexion.Conectardb();
 			   		rs = conexion.ConsultaSQL("SELECT nombre,id_task FROM TAREAS ORDER BY nombre");
 			   		try {
 			   			while(rs.next()){
@@ -327,7 +327,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   				e1.printStackTrace();
 						}
 			   		CmbTareas.setSelectedItem(null);
-			   		conexion.cerrarConexion();*/
+			   		conexion.cerrarConexion();
 					break;
 			   	case (2)://workpaquet
 			   	gbt.insets = new Insets(10,17,10,5);
@@ -340,9 +340,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 				gbt.insets = new Insets(10,0,10,0);
 				gbt.gridx =3; // El área de texto empieza en la columna
 		   		Jtarea.add(CmbWorkpaquets,gbt);
-		   		CmbTareas.setPreferredSize(new Dimension(140,30));
+		   		CmbWorkpaquets.setPreferredSize(new Dimension(140,30));
 		   
-		   		/*conexion.Conectardb();
+		   		conexion.Conectardb();
 		   		rs = conexion.ConsultaSQL("SELECT nombre,id_wp FROM WORKPAQUETS ORDER BY nombre");
 		   		try {
 		   			while(rs.next()){
@@ -354,7 +354,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 		   				e1.printStackTrace();
 					}
 		   		CmbWorkpaquets.setSelectedItem(null);
-		   		conexion.cerrarConexion();*/
+		   		conexion.cerrarConexion();
 			   		break;
 			   	case (3)://horas
 			   		gbt.insets = new Insets(10,17,10,5);
@@ -447,7 +447,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 					jtxtpro[1].setText(nombrepro);
 					conexion.cerrarConexion();
 					
-			   		conexion.Conectardb();
+			   		/*conexion.Conectardb();
 			   		rs = conexion.ConsultaSQL("SELECT nombre,id_wp FROM WORKPAQUETS WHERE id_pro = '"+idpro+"' ORDER BY nombre");
 			   		try {
 			   			while(rs.next()){
@@ -459,9 +459,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   				e1.printStackTrace();
 						}
 			   		CmbWorkpaquets.setSelectedItem(null);
-			   		conexion.cerrarConexion();
+			   		conexion.cerrarConexion();*/
 			   		
-			   		conexion.Conectardb();
+			   		/*conexion.Conectardb();
 			   		rs = conexion.ConsultaSQL("SELECT nombre,id_task FROM TAREAS WHERE i_wp = '"+idwp+"' ORDER BY nombre");
 			   		try {
 			   			while(rs.next()){
@@ -473,7 +473,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   				e1.printStackTrace();
 						}
 			   		CmbTareas.setSelectedItem(null);
-			   		conexion.cerrarConexion();
+			   		conexion.cerrarConexion();*/
 			   		
 				}
 			}
@@ -517,7 +517,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 				
 						if(s==0){
 							conexion.Conectardb();
-							conexion.executeUpdate("DELETE FROM TIMESHEET WHERE tarea = '"+datos[jtblTime.getSelectedRow()][2]+"'");
+							conexion.executeUpdate("DELETE FROM TIMESHEET WHERE id_tarea = '"+datos[jtblTime.getSelectedRow()][1]+"'");
 					
 							cuenta=contar_reg();
 							datos = new String[cuenta][columnas];
@@ -587,7 +587,52 @@ public class PnlAlta_TimeSheet extends JPanel{
 						java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 						  
 						conexion.Conectardb();
-						conexion.executeUpdate("INSERT INTO TIMESHEET (fecha, actividades_relacionadas, horas, obsevaciones, id_task) VALUES ('"+sqlDate1+"','"+jtxtta[0].getText()+"','"+CmbTareas.getSelectedItem()+"','"+CmbWorkpaquets.getSelectedItem()+"','"+jtxtta[3].getText()+"')");
+						conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre = '"+CmbProyecto.getSelectedItem()+"' ");
+						int idpro = 0;
+						try {
+							rs.next();
+							idpro = rs.getInt(1);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre = '"+CmbPart.getSelectedItem()+"' ");
+						int idpart = 0;
+						try {
+							rs.next();
+							idpart = rs.getInt(1);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						conexion.ConsultaSQL("SELECT id_staff FROM STAFF WHERE nombre = '"+CmbStaff.getSelectedItem()+"' ");
+						int idstaff = 0;
+						try {
+							rs.next();
+							idstaff = rs.getInt(1);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						conexion.ConsultaSQL("SELECT id_task FROM TAREA WHERE nombre = '"+CmbTareas.getSelectedItem()+"' ");
+						int idtar = 0;
+						try {
+							rs.next();
+							idtar = rs.getInt(1);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS WHERE nombre = '"+CmbWorkpaquets.getSelectedItem()+"' ");
+						int idwpp = 0;
+						try {
+							rs.next();
+							idwpp = rs.getInt(1);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						conexion.executeUpdate("INSERT INTO TIMESHEET (id_pro, id_part, id_staff, rol, fecha, id_tarea, id_wp, horas) VALUES (,'"+idpro+"','"+idpart+"','"+idstaff+"','"+jtxtpro[4].getText()+"','"+sqlDate1+"','"+idtar+"','"+idwpp+"','"+jtxtta[3].getText()+"')");
 						
 						conexion.cerrarConexion();
 						
