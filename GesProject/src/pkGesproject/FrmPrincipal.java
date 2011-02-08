@@ -11,6 +11,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -57,6 +58,7 @@ public class FrmPrincipal extends JFrame {
 	JToggleButton jbtnTablas = new JToggleButton(recursos.icono[11]);
 	JToggleButton jbtnTimesheet = new JToggleButton(recursos.icono[12]);
 	JToggleButton jbtnInformes = new JToggleButton(recursos.icono[31]);
+	JPanel jpnlppal = new JPanel();
 	
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
 	
@@ -75,6 +77,9 @@ public class FrmPrincipal extends JFrame {
 	private Rectangle maxBounds;
 	
 	public FrmPrincipal(){
+		switch(recursos.permisos){
+		
+		case 1:{
 		recursos.progresocarga =1;
 		recursos.txtcarga = "Loading  Staff";
 		spnstaff = new SpnStaff();
@@ -101,6 +106,33 @@ public class FrmPrincipal extends JFrame {
 		nueva = new FrmNuevapalabra();
 		//a falta de progres bar
 		spninformes = new SpnInformes();
+		jtlbFrmppal.add(jbtnInicio);
+		jbtnInicio.setSelected(true);
+		jtlbFrmppal.add(jbtnUsuarios);
+		jtlbFrmppal.add(jbtnSocios);
+		jtlbFrmppal.add(jbtnProyectos);
+		jtlbFrmppal.add(jbtnWorkpack);
+		jtlbFrmppal.add(jbtnTareas);
+		jtlbFrmppal.add(jbtnTablas);
+		jtlbFrmppal.add(jbtnTimesheet);
+		jtlbFrmppal.add(jbtnInformes);
+		jtlbFrmppal.add(jbtnAgregar);
+		}break;
+		case 2:{
+			recursos.txtcarga = "Loading  Time Sheets";
+			spntimesheet = new SpnTimesheet();
+			jtlbFrmppal.add(jbtnTimesheet);
+
+			recursos.progresocarga =10;
+		}
+		case 3:{
+			recursos.txtcarga = "Loading  Time Sheets";
+			spntimesheet = new SpnTimesheet();
+			recursos.progresocarga =10;
+			jtlbFrmppal.add(jbtnTimesheet);
+
+		}
+		}
 		
 		//Maximizamos la ventana principal
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -128,6 +160,8 @@ public class FrmPrincipal extends JFrame {
 	 * Este metodo se encarga de inicializar todas las propiedades de la ventana principal que sean necesarias
 	 */
 	public void inicializar(){		
+			jpnlppal.setLayout(new BorderLayout());
+			add(jpnlppal,BorderLayout.CENTER);
 			this.setVisible(true);
 			this.Carga_toolbar();
 			repaint();
@@ -140,8 +174,11 @@ public class FrmPrincipal extends JFrame {
 		//Creamos un action listener para los botones de la jtoolbar
 		ActionListener jtlbAcListener = new ActionListener() {
 	         public void actionPerformed(ActionEvent e) {
-	        	 
-	        	
+	        	int i;
+	        	 if(jpnlppal.getComponentCount()>0){
+	        	jpnlppal.remove(0);
+	        	 }
+	        	/*
 	        	remove(pnlbienvenida);
 	        	remove(spnsocios);
 	        	remove(spnproyectos);
@@ -163,10 +200,13 @@ public class FrmPrincipal extends JFrame {
 	        	jbtnTimesheet.setSelected(false);
 	        	jbtnInformes.setSelected(false);
 	        	repaint();
-	        	validate();
+	        	validate();*/
+	        	 for(i=0;i<jtlbFrmppal.getComponentCount();i++){
+	        		  ((AbstractButton) jtlbFrmppal.getComponentAtIndex(i)).setSelected(false);
+	        	 }
 	         if (e.getActionCommand().equals("socios")){
 	        	jbtnSocios.setSelected(true);
-	        	add(spnsocios);
+	        	jpnlppal.add(spnsocios);
 	        	repaint();
 	        	validate();
 	        	
@@ -174,10 +214,10 @@ public class FrmPrincipal extends JFrame {
 	         if (e.getActionCommand().equals("usuarios")){
 		        	jbtnUsuarios.setSelected(true); 
 		        
-		        	add(spnstaff);
+		        	jpnlppal.add(spnstaff);
 		        	repaint();
 		        	validate();
-		        	//new DlgSiNo("Seguro que desea salir?").start();
+		        
 		        
 		         }
 	         if (e.getActionCommand().equals("inicio")){
@@ -190,14 +230,14 @@ public class FrmPrincipal extends JFrame {
 	         
 	         if (e.getActionCommand().equals("proyectos")){
 	        	jbtnProyectos.setSelected(true);
-	        	add(spnproyectos);
+	        	jpnlppal.add(spnproyectos);
 	        	repaint();
 	        	validate();
 	         	}
 	         
 	         if (e.getActionCommand().equals("workpack")){
 	        	 jbtnWorkpack.setSelected(true);
-	        	 add(spnworkpack, BorderLayout.CENTER);
+	        	 jpnlppal.add(spnworkpack, BorderLayout.CENTER);
 	        	 repaint();
 	        	 validate();
 	        	 
@@ -205,7 +245,7 @@ public class FrmPrincipal extends JFrame {
 	         
 	         if (e.getActionCommand().equals("tareas")){
 	        	 jbtnTareas.setSelected(true);
-	        	 add(spntareas, BorderLayout.CENTER);
+	        	 jpnlppal.add(spntareas, BorderLayout.CENTER);
 	        	 repaint();
 	        	 validate();
 	        	 
@@ -213,7 +253,7 @@ public class FrmPrincipal extends JFrame {
 	         
 	         if (e.getActionCommand().equals("tablas")){
 	        	 jbtnTablas.setSelected(true);
-	        	 add(spntablas, BorderLayout.CENTER);
+	        	 jpnlppal.add(spntablas, BorderLayout.CENTER);
 	        	 repaint();
 	        	 validate();
 	        	 
@@ -228,14 +268,14 @@ public class FrmPrincipal extends JFrame {
 	         
 	         if (e.getActionCommand().equals("timesheet")){
 	        	 jbtnTimesheet.setSelected(true);
-	        	 add(spntimesheet, BorderLayout.CENTER);
+	        	 jpnlppal.add(spntimesheet, BorderLayout.CENTER);
 	        	 repaint();
 	        	 validate();
 	         }
 	         
 	         if (e.getActionCommand().equals("informes")){
 	        	 jbtnInformes.setSelected(true);
-	        	 add(spninformes, BorderLayout.CENTER);
+	        	 jpnlppal.add(spninformes, BorderLayout.CENTER);
 	        	 repaint();
 	        	 validate();
 	         }
@@ -265,17 +305,7 @@ public class FrmPrincipal extends JFrame {
 		jtlbFrmppal.setFloatable(false); //Impedimos que el toolbar se pueda separar de la ventana
 		jtlbFrmppal.setPreferredSize(new Dimension(this.getWidth(),50));
 		jtlbFrmppal.setVisible(true);
-		jtlbFrmppal.add(jbtnInicio);
-		jbtnInicio.setSelected(true);
-		jtlbFrmppal.add(jbtnUsuarios);
-		jtlbFrmppal.add(jbtnSocios);
-		jtlbFrmppal.add(jbtnProyectos);
-		jtlbFrmppal.add(jbtnWorkpack);
-		jtlbFrmppal.add(jbtnTareas);
-		jtlbFrmppal.add(jbtnTablas);
-		jtlbFrmppal.add(jbtnTimesheet);
-		jtlbFrmppal.add(jbtnInformes);
-		jtlbFrmppal.add(jbtnAgregar);
+		
 		this.add(jtlbFrmppal,BorderLayout.NORTH);
 		
 
