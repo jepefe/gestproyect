@@ -48,12 +48,13 @@ public class PnlInfPartner extends JPanel{
 						{"cod_part","nombre","sector","pais","direccion","codpostal","telefono","telefono2","fax","email","email2"}};
 	String[] agrupar = {"Ninguno","Proyecto"};
 	
-	int dimension[] = {7,30,30,15,25,6,13,13,13,30,30};
+	int dimension[] = {7,15,20,15,25,6,13,13,13,30,30};
 	ActionListener generar;
 	JasperReport jasperReport;
 	JasperPrint jasperPrint;
 	ResultSet rs;
 	ConexionDb conexion= new ConexionDb();
+	int ancho = 0;
 	
 	public PnlInfPartner(){
 		
@@ -65,9 +66,16 @@ public class PnlInfPartner extends JPanel{
 
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					modelo2.addElement(lista1.getSelectedValue());
-					gbordenar.addItem(lista1.getSelectedValue());		    
-					modelo.removeElement(lista1.getSelectedValue());
+					int pos = buscar(datos,(String) lista1.getModel().getElementAt(lista1.getSelectedIndex()));
+					if((ancho+dimension[pos])<=75){
+						modelo2.addElement(lista1.getSelectedValue());
+						gbordenar.addItem(lista1.getSelectedValue());
+						ancho = ancho+dimension[pos];
+						System.out.println(ancho);
+						modelo.removeElement(lista1.getSelectedValue());
+					}else{
+						
+					}
 				}
 			}
 		};
@@ -77,8 +85,11 @@ public class PnlInfPartner extends JPanel{
 
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
+					int pos = buscar(datos,(String) lista2.getModel().getElementAt(lista2.getSelectedIndex()));
 					modelo.addElement(lista2.getSelectedValue());
 					gbordenar.removeItem(lista2.getSelectedValue());	
+					ancho = ancho - dimension[pos];
+					System.out.println(ancho);
 					modelo2.removeElement(lista2.getSelectedValue());
 				}
 			}
@@ -252,6 +263,7 @@ public class PnlInfPartner extends JPanel{
 					//System.out.println(lista2.getModel().getElementAt(i));
 					pos = buscar(datos,(String) lista2.getModel().getElementAt(i));
 					drb.addColumn((String) lista2.getModel().getElementAt(i), datos[1][pos], String.class.getName(),dimension[pos]);
+					
 				}
 				
 				drb.setPrintBackgroundOnOddRows(false);
@@ -307,7 +319,7 @@ public class PnlInfPartner extends JPanel{
 			DynamicReport dr = null;
 			try {
 				dr = drb.build();
-				drb.addColumn("Proyecto", "proyecto", String.class.getName(),30);
+				drb.addColumn("Proyecto", "proyecto", String.class.getName(),20);
 				pos=0;
 				for(int i = 0; i<lista2.getModel().getSize();i++){
 					//System.out.println(lista2.getModel().getElementAt(i));
