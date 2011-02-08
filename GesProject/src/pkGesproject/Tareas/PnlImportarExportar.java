@@ -1,5 +1,9 @@
 package pkGesproject.Tareas;
-
+/**
+ * Clase que modifica el documento excel, para presentar los informes de los avances de los proyectos,
+ * con toda la información disponibles en la BD, partners,prosupuestos,gastos,avances.
+ * @author Freyder Espinosa V y js.
+ */
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
