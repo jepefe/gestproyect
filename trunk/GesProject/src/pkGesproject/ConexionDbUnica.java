@@ -60,7 +60,7 @@ public class ConexionDbUnica {
 				while(true){
 					if (timeout >= 180000){  //Si la conexion lleva tres minutos inactiva la cerramos
 						cerrarConexion();
-						System.out.println("Conexion cerrada por inactividad");
+					//	System.out.println("Conexion cerrada por inactividad");
 						conectado=false;
 					}
 				try {
