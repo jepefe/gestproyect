@@ -97,7 +97,7 @@ public class PnlInfStaff extends JPanel{
 					if(gbordenar.getSelectedItem()== null){
 					mensaje("Debe Seleccionar una columna para ordenar",false);
 					}else{
-						mensaje.setVisible(true);
+						mensaje.setVisible(false);
 						generar_reporte();
 					}
 				}
@@ -300,7 +300,7 @@ public class PnlInfStaff extends JPanel{
 			//hacemos la consulta con los campos correspondientes
 			String consulta = "SELECT s.id_staff, s.dni, s.nombre,s.apellidos,s.f_nac,e.pais_en_ingles," +
 					" pro.estado,s.region,s.ciudad,s.direccion,s.codpostal,s.telefono, s.telefono2,s.fax,s.email " +
-					" FROM STAFF as s inner join PAIS  as e on s.pais = e.id_pais INNER JOIN PROVINCIAS as pro on s.provincia = pro.id_provincias " +
+					" FROM STAFF as s LEFT JOIN PAIS  as e on s.pais = e.id_pais LEFT JOIN PROVINCIAS as pro on s.provincia = pro.id_provincias " +
 					" ORDER BY s."+datos[1][pos];
 			
 			conexion.Conectardb();
