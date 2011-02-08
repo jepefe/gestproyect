@@ -48,7 +48,7 @@ public class PnlInfPartner extends JPanel{
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	DefaultListModel modelo,modelo2;
 	String[][] datos = {{"Partner Code","Name","Sector","Country", "Address", "Postal Code", "Phone 1", "Phone 2", "Fax", "Email 1", "Email 2"},
-						{"cod_part","nombre","sector","pais","direccion","codpostal","telefono","telefono2","fax","email","email2"}};
+						{"cod_part","nombre","sector","nombre","direccion","codpostal","telefono","telefono2","fax","email","email2"}};
 	String[] agrupar = {"Ninguno","Proyecto"};
 	
 	int dimension[] = {7,15,20,15,25,6,13,13,13,30,30};
@@ -97,9 +97,11 @@ public class PnlInfPartner extends JPanel{
 				
 				if(arg0.getActionCommand().equals("generar")){
 					//se genera el reporte
+					
 					if(gbordenar.getSelectedItem() == null){
 						mensaje("Debe seleccionar una columna para ordenar",false);
 					}else{
+						mensaje.setVisible(false);
 						generar_reporte();
 					}
 				}
@@ -254,7 +256,7 @@ public class PnlInfPartner extends JPanel{
 			if(datos[1][pos].equals("sector")){
 				orden = "s."+datos[1][pos];
 			}else{
-				if(datos[1][pos].equals("pais")){
+				if(datos[1][pos].equals("nombre")){
 					orden = "pais."+datos[1][pos];
 				}else{
 					orden = "pa."+datos[1][pos];
@@ -263,9 +265,9 @@ public class PnlInfPartner extends JPanel{
 			
 			//hacemos la consulta con los campos correspondientes
 			String consulta = "SELECT p.nombre AS proyecto,pa.cod_part,pa.nombre,pa.direccion,pa.codpostal,pa.telefono,pa.telefono2," +
-					"pa.fax,pa.email,pa.email2,s.sector,pais.pais FROM PARTNER pa INNER JOIN "+
+					"pa.fax,pa.email,pa.email2,s.sector,pais.nombre FROM PARTNER pa INNER JOIN "+
 			"PARTNER_PROYECTOS pp ON pa.cod_part= pp.cod_part INNER JOIN PROYECTOS p ON pp.id_pro = p.id_pro " +
-			"INNER JOIN SECTORES s ON pa.sector = s.id_sector INNER JOIN PAIS pais ON pa.pais = pais.id_pais ORDER BY "+orden;
+			"INNER JOIN SECTORES s ON pa.sector = s.id_sector INNER JOIN TASAS_PAIS pais ON pa.pais = pais.id_pais ORDER BY "+orden;
 			
 			conexion.Conectardb();
 			rs = conexion.ConsultaSQL(consulta);
@@ -318,16 +320,16 @@ public class PnlInfPartner extends JPanel{
 			if(datos[1][pos].equals("sector")){
 				orden = "s."+datos[1][pos];
 			}else{
-				if(datos[1][pos].equals("pais")){
+				if(datos[1][pos].equals("nombre")){
 					orden = "pais."+datos[1][pos];
 				}else{
 					orden = "pa."+datos[1][pos];
 				}
 			}
 			String consulta = "SELECT p.nombre AS proyecto,pa.cod_part,pa.nombre,pa.direccion,pa.codpostal,pa.telefono,pa.telefono2," +
-					"pa.fax,pa.email,pa.email2,s.sector,pais.pais FROM PARTNER pa INNER JOIN "+
+					"pa.fax,pa.email,pa.email2,s.sector,pais.nombre FROM PARTNER pa INNER JOIN "+
 			"PARTNER_PROYECTOS pp ON pa.cod_part= pp.cod_part INNER JOIN PROYECTOS p ON pp.id_pro = p.id_pro " +
-			"INNER JOIN SECTORES s ON pa.sector = s.id_sector INNER JOIN PAIS pais ON pa.pais = pais.id_pais ORDER BY proyecto,"+orden;
+			"INNER JOIN SECTORES s ON pa.sector = s.id_sector INNER JOIN TASAS_PAIS pais ON pa.pais = pais.id_pais ORDER BY proyecto,"+orden;
 			
 			conexion.Conectardb();
 			rs = conexion.ConsultaSQL(consulta);
