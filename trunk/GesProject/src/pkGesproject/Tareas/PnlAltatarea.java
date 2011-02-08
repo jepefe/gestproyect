@@ -5,8 +5,10 @@
  */
 package pkGesproject.Tareas;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -54,6 +56,7 @@ public class PnlAltatarea extends JScrollPane{
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	JTextField[] jtxt;
 	JLabel[] jlbl;
+	JLabel alerta;
 	JButton jbtnaceptar, jbtncancelar,jbtnaceptarM, jbtncancelarM ;
 	JDateChooser jdc1,jdc2;
 	GpComboBox CmbWp = new GpComboBox();
@@ -68,9 +71,14 @@ public class PnlAltatarea extends JScrollPane{
 	char caracter;
 	Border empty = new EmptyBorder(0,0,0,0);
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
+	int permetir_alta = 0;
+	int mensaje = 0;
 	
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
+	//Panel de aviso
+	JPanel contenedor = new JPanel();
+	JPanel mesage = new JPanel();
 	protected Object cbpais;
 	
 	public PnlAltatarea (){
@@ -79,10 +87,10 @@ public class PnlAltatarea extends JScrollPane{
 		panel.setLayout(new GridBagLayout());
 		  
 		String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][13], rec.idioma[rec.eleidioma][40],
-		   rec.idioma[rec.eleidioma][25],rec.idioma[rec.eleidioma][26],rec.idioma[rec.eleidioma][41], rec.idioma[rec.eleidioma][64]
+		   rec.idioma[rec.eleidioma][3]+"*", rec.idioma[rec.eleidioma][40]+"*",
+		   rec.idioma[rec.eleidioma][25]+"*",rec.idioma[rec.eleidioma][26]+"*",rec.idioma[rec.eleidioma][41]+"*", rec.idioma[rec.eleidioma][64]
 		   };
-		int[] fieldWidths = {20,9,15,10,6,6,6};
+		int[] fieldWidths = {20,10,6,6,6};
 		
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
@@ -131,7 +139,13 @@ public class PnlAltatarea extends JScrollPane{
 	    	JScrollPane sp2 = new JScrollPane(textarea2,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 	    	JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    	
-	     
+	    
+	    	alerta=new JLabel();
+			alerta.setFont(new Font(Font.SANS_SERIF,Font.BOLD,11));
+			mesage.add(alerta);
+			mesage.setBackground(Color.decode("#D0E495"));
+			mesage.setVisible(false);	
+	    
 		
 		for(int i=0;i<fieldNames.length;++i) {
 		
@@ -145,11 +159,10 @@ public class PnlAltatarea extends JScrollPane{
 		   switch(i){
 		   
 		   case (0):
-		   case (1):
 			  //panel.add(jtxt[i] = new JFormattedTextField(NumberFormat.getCurrencyInstance()));
 			   	panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 		   		break;
-		   case (2):
+		   case (1):
 			 
 			   panel.add(CmbWp,gbc);
 			   CmbWp.setPreferredSize(new Dimension(140,30));
@@ -171,33 +184,21 @@ public class PnlAltatarea extends JScrollPane{
 						e1.printStackTrace();
 						}
 			   	break;
-		   case (3):
+		   case (2):
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);}
 		   		break;
-		   case (4):
+		   case (3):
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc2,gbc);}
 		   		break;
-		   case (5):
+		   case (4):
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp),gbc);}
 			   	break;
-		   case (6):
+		   case (5):
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp2),gbc);}
 		   		break;
 		   		
 		   }
 		   //Jformat
-		   if(i==1 ){
-				jtxt[i].addKeyListener(new KeyAdapter(){
-				   public void keyTyped(KeyEvent e){
-				      caracter = e.getKeyChar();
-				      if(((caracter < '0') ||(caracter > '9')) &&
-				         (caracter != KeyEvent.VK_BACK_SPACE) &&
-				         (caracter != '+') && (caracter != '(') && (caracter != ')')) {
-				         e.consume();  
-				      }
-				   }
-				});
-				}
 		   
 		   if(i==0 ){
 			 	 
@@ -242,7 +243,31 @@ public class PnlAltatarea extends JScrollPane{
 
 			public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					if(e.getActionCommand().equals("aceptar")){
+				
+				/**
+				 * Realizamos las validaciones de los campos
+				 */
+				
+				for(int i=0;i<1;++i) {
+						if (jtxt[i].getText().length() > 1){
+						}else{
+						permetir_alta = 1;
+						}
+				}
+				
+				if((CmbWp.getSelectedItem() != null) && (jdc1.getDate() != null) && (jdc2.getDate() != null) && (textarea.getText().length() > 1)){
+					//Comparar la fecha inicio con la fecha fin
+					if(jdc1.getDate().getTime() > jdc2.getDate().getTime() ){
+						permetir_alta = 1;
+						mensaje = 1;
+						
+					}
+				}else{
+					permetir_alta = 1;
+
+				}
+
+					if(e.getActionCommand().equals("aceptar") && permetir_alta == 0){
 						ConexionDb conexdb = new ConexionDb();
 						conexdb.Conectardb();
 						//nomwp = cbtipo.getSelectedItem().toString();
@@ -264,12 +289,12 @@ public class PnlAltatarea extends JScrollPane{
 				//if (sqlDate1.getTime()< sqlDate2.getTime()){
 						
 						
-						conexdb.executeUpdate("INSERT INTO TAREAS (nombre, id_wp, descripcion, presupuesto,f_ini, f_fin, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+id_wp+"','"+textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
+						conexdb.executeUpdate("INSERT INTO TAREAS (nombre, id_wp, descripcion,f_ini, f_fin, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+id_wp+"','"+textarea.getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
 						
 						/*
 						 * limpiamos todos los ocampos des pues de insertar datos
 						 */
-						for(int i=0;i<2;++i) {	
+						for(int i=0;i<1;++i) {	
 							jtxt[i].setText("");
 						}	
 						
@@ -279,6 +304,7 @@ public class PnlAltatarea extends JScrollPane{
 						textarea2.setText(null);
 						  
 						CmbWp.setSelectedItem(null);
+						mesage.setVisible(false);
 						/**
 						 * Código para actualizar el table model
 						 */
@@ -293,6 +319,22 @@ public class PnlAltatarea extends JScrollPane{
 						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
 						conexdb.cerrarConexion();
 					}
+					else{
+						switch(mensaje){
+							case (0):
+								alerta.setText(rec.idioma[rec.eleidioma][79]);
+								mesage.setBackground(Color.decode("#ec8989"));
+								mesage.setVisible(true);
+							break;
+							case (1):
+								alerta.setText(rec.idioma[rec.eleidioma][72]);
+								mesage.setBackground(Color.decode("#ec8989"));
+								mesage.setVisible(true);
+							break;
+						}
+						permetir_alta = 0;
+						mensaje = 0;
+					}
 					
 					
 				//}else{
@@ -304,14 +346,15 @@ public class PnlAltatarea extends JScrollPane{
 				
 				// Borrar cuando damos al boton cancelar
 				if( e.getActionCommand().equals("cancelar")){
-					for(int i=0;i<2;++i) {	
+					for(int i=0;i<1;++i) {	
 						jtxt[i].setText(null);
 					}	
 					jdc1.setDate(null);
 					jdc2.setDate(null);
 					textarea.setText(null);
 					textarea2.setText(null);
-					
+					CmbWp.setSelectedItem(null);
+					mesage.setVisible(false);
 					// Borrar cuando termine de añadir
 					/*for(int i=0;i<5;++i) {	
 						System.out.println("aquiii");
@@ -341,8 +384,13 @@ public class PnlAltatarea extends JScrollPane{
 		jbtncancelarM.addActionListener(accion);
 		jbtncancelarM.setVisible(false);
 		
-		panel.setVisible(true);
-		this.setViewportView(panel);
+		//Panel de avisos
+		contenedor.setLayout(new BorderLayout());
+		panel.setOpaque(true);
+		contenedor.add(mesage,BorderLayout.NORTH);
+		contenedor.add(panel,BorderLayout.CENTER);
+		
+		this.setViewportView(contenedor);
 		
 	}
 }
