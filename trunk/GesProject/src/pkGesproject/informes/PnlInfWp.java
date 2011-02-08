@@ -1,6 +1,9 @@
 package pkGesproject.informes;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -38,7 +41,7 @@ import ar.com.fdvs.dj.test.TestRepositoryProducts;
 public class PnlInfWp extends JPanel{
 
 	
-	JLabel jlbagrupa, jlbordenar;
+	JLabel jlbagrupa, jlbordenar,alerta;
 	GpComboBox gbagrupa, gbordenar;
 	JList lista1,lista2;
 	JButton jbtngenerar;
@@ -54,20 +57,22 @@ public class PnlInfWp extends JPanel{
 	JasperPrint jasperPrint;
 	ResultSet rs;
 	ConexionDb conexion= new ConexionDb();
+	int ancho =0;
+	JPanel panel,mensaje;
 	
 	public PnlInfWp(){
 		
 		//cargamos la interfaz del panel lo primero
 		cargar_panel();
+		//creamos el mensaje
+		crear_mensaje();
 		
 		// Evento doble click primer JLIST
 		MouseListener mouseListener = new MouseAdapter() {
 
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					modelo2.addElement(lista1.getSelectedValue());
-					gbordenar.addItem(lista1.getSelectedValue());		    
-					modelo.removeElement(lista1.getSelectedValue());
+					añadir();
 				}
 			}
 		};
@@ -77,9 +82,7 @@ public class PnlInfWp extends JPanel{
 
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					modelo.addElement(lista2.getSelectedValue());
-					gbordenar.removeItem(lista2.getSelectedValue());	
-					modelo2.removeElement(lista2.getSelectedValue());
+					quitar();
 				}
 			}
 		};
@@ -91,8 +94,26 @@ public class PnlInfWp extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				
-				//se genera el reporte
-				generar_reporte();
+				if(arg0.getActionCommand().equals("generar")){
+					//se genera el reporte
+					if(gbordenar.getSelectedItem() == null){
+						mensaje("Debe seleccionar una columna para ordenar",false);
+					}else{
+						mensaje.setVisible(false);
+						generar_reporte();
+					}
+				}
+				
+				if(arg0.getActionCommand().equals("agrupar")){
+					if(gbagrupa.getSelectedItem().toString().equals("Ninguno")){
+						ancho = ancho-20;
+						mensaje("Ahora tiene mas espacio para introducir columnas",true);
+					}else{
+						limpiar_campos();
+						ancho = 20;
+						mensaje("Introduzca las columnas",true);
+					}
+				}
 				
 			}
 			
@@ -100,10 +121,17 @@ public class PnlInfWp extends JPanel{
 		
 		//añadimos los eventos a los componentes correspondientes
 		jbtngenerar.addActionListener(generar);
+		gbagrupa.addActionListener(generar);
+		gbagrupa.setActionCommand("agrupar");
+		jbtngenerar.setActionCommand("generar");
 		lista1.addMouseListener(mouseListener);
 		lista2.addMouseListener(mouseListener2);
 		
 		modelo.toArray();
+		
+		this.setLayout(new BorderLayout());
+		this.add(mensaje,BorderLayout.NORTH);
+		this.add(panel,BorderLayout.CENTER);
 	}
 	
 	/**
@@ -127,7 +155,8 @@ public class PnlInfWp extends JPanel{
 	 * Método que crea los componentes del panel y los añade
 	 */
 	public void cargar_panel(){
-		this.setLayout(new GridBagLayout());
+		panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
 		
 		//Label Agrupar
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -136,22 +165,22 @@ public class PnlInfWp extends JPanel{
 		gbc.gridx = 0; // El área de texto empieza en la columna
 		gbc.gridy = 0; // El área de texto empieza en la fila 
 		gbc.gridwidth = 1; // El área de texto ocupa x columnas.
-		this.add(jlbagrupa = new JLabel(rec.idioma[rec.eleidioma][131]),gbc);
+		panel.add(jlbagrupa = new JLabel(rec.idioma[rec.eleidioma][131]),gbc);
 		
 		//combo Agrupar
 		gbc.gridx = 1; // El área de texto empieza en la columna
-		this.add(gbagrupa = new GpComboBox(),gbc);
+		panel.add(gbagrupa = new GpComboBox(),gbc);
 		gbagrupa.setPreferredSize(new Dimension(165,30));
 		
 		//Label ordenar
 		gbc.insets = new Insets(20,30,15,5);
 		gbc.gridx = 2; // El área de texto empieza en la columna
-		this.add(jlbordenar = new JLabel(rec.idioma[rec.eleidioma][132]),gbc);
+		panel.add(jlbordenar = new JLabel(rec.idioma[rec.eleidioma][132]),gbc);
 		
 		//Combo ordenar
 		gbc.insets = new Insets(20,0,15,5);
 		gbc.gridx = 3; // El área de texto empieza en la columna
-		this.add(gbordenar = new GpComboBox(),gbc);
+		panel.add(gbordenar = new GpComboBox(),gbc);
 		gbordenar.setPreferredSize(new Dimension(165,30));
 		
 
@@ -178,7 +207,7 @@ public class PnlInfWp extends JPanel{
 		gbc.gridwidth = 2; // El área de texto ocupa x columnas.
 		gbc.insets = new Insets(25,40,25,100);
 		//gbc.anchor = GridBagConstraints.WEST;
-		this.add(sp1,gbc);
+		panel.add(sp1,gbc);
 		
 		
 		// Segundo JLIST
@@ -190,7 +219,7 @@ public class PnlInfWp extends JPanel{
 		gbc.gridx = 2; 
 		gbc.gridwidth = 2; // El área de texto ocupa x columnas.
 		//gbc.anchor = GridBagConstraints.WEST;
-		this.add(sp2,gbc);
+		panel.add(sp2,gbc);
 		
 
 		
@@ -199,7 +228,7 @@ public class PnlInfWp extends JPanel{
 		//gbc.gridx = 0;
 		gbc.gridwidth = 4; // El área de texto ocupa x columnas.
 		gbc.anchor = GridBagConstraints.WEST;
-		this.add(jbtngenerar = new JButton(rec.idioma[rec.eleidioma][133]),gbc);
+		panel.add(jbtngenerar = new JButton(rec.idioma[rec.eleidioma][133]),gbc);
 		
 		
 		//Cargamos el combobox agrupar
@@ -254,7 +283,7 @@ public class PnlInfWp extends JPanel{
 				
 				drb.setPrintBackgroundOnOddRows(false);
 				drb.setTitle("WORKPAQUETS");
-				//.setSubtitle("This report was generated at " + new Date())
+				//.setSubtitle("panel report was generated at " + new Date())
 				//.setPrintBackgroundOnOddRows(true)
 				drb.setUseFullPageWidth(true);
 				//.build();
@@ -334,6 +363,62 @@ public class PnlInfWp extends JPanel{
 			
 			JasperViewer.viewReport(jp,false);    //finally display the report report
 		}
+	}
+	
+	public void añadir(){
+		int pos = buscar(datos,(String) lista1.getModel().getElementAt(lista1.getSelectedIndex()));
+		if((ancho+dimension[pos])<=75){
+			mensaje.setVisible(false);
+			if(lista1.getSelectedValue().equals("")){}else{
+				modelo2.addElement(lista1.getSelectedValue());
+				gbordenar.addItem(lista1.getSelectedValue());
+				ancho = ancho+dimension[pos];
+				modelo.removeElement(lista1.getSelectedValue());
+			}
+		}else{
+			mensaje("No caben mas columnas en el informe!",false);
+		}
+	}
+	
+	public void quitar(){
+		int pos = buscar(datos,(String) lista2.getModel().getElementAt(lista2.getSelectedIndex()));
+		if(lista2.getSelectedValue().equals("")){}else{
+			mensaje.setVisible(false);
+			modelo.addElement(lista2.getSelectedValue());
+			gbordenar.removeItem(lista2.getSelectedValue());	
+			ancho = ancho - dimension[pos];
+			modelo2.removeElement(lista2.getSelectedValue());
+		}
+	}
+	
+	public void crear_mensaje(){
+		mensaje = new JPanel();
+		alerta=new JLabel();
+		alerta.setFont(new Font(Font.SANS_SERIF,Font.BOLD,11));
+		mensaje.add(alerta);
+		mensaje.setBackground(Color.decode("#D0E495"));
+		mensaje.setVisible(false);
+	}
+	
+	public void mensaje(String msg, boolean color){
+		
+		alerta.setText(msg);
+		if(color){
+			mensaje.setBackground(Color.decode("#D0E495"));
+		}else{
+			mensaje.setBackground(Color.decode("#ec8989"));
+		}
+		mensaje.setVisible(true);
+	}
+	
+	public void limpiar_campos(){
+		modelo.removeAllElements();
+		modelo2.removeAllElements();
+		gbordenar.removeAllItems();
+		for(int j=0; j<dimension.length ; j++){
+			modelo.addElement(datos[0][j]);  
+		}
+		gbordenar.setSelectedItem(null);
 	}
 }
 
