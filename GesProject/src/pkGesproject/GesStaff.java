@@ -27,6 +27,7 @@ public class GesStaff {
 	private String password;
 	private String permisos;
 	private int cod_part;
+	static RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	
 	/**
 	 * Metodo para crear un nuevo staff
@@ -165,6 +166,54 @@ public class GesStaff {
 	}
 	
 	
+	public static ResultSet allowedWP(){
+		
+		ResultSet rs;
+		ConexionDbUnica cdbu = ConexionDbUnica.instancia;
+		switch(recursos.representante){
+		//Devolvemos todos los WP en los que staff tiene una tarea asignada
+		case 0: rs = cdbu.ConsultaSQL("SELECT * FROM WORKPAQUETS  WHERE id_wp IN (SELECT id_wp FROM TAREAS WHERE id_task IN (SELECT id_task	FROM STAFF_TAREAS WHERE id_staff =" + Integer.toString(recursos.getIdusuario()) +"))");
+		return rs;
+		case 1:
+			//Devolvemos todos los WP del partner
+			rs = cdbu.ConsultaSQL("SELECT * FROM WORKPAQUETS  WHERE id_wp IN (SELECT id_wp FROM PARTNER_WORKPAQUETS WHERE cod_part = (SELECT cod_part FROM STAFF WHERE id_staff =" + Integer.toString(recursos.getIdusuario()) +"))");	
+	}
+		rs = cdbu.ConsultaSQL("SELECT * FROM WORKPAQUETS");
+		return rs;
+	
+}
+	public static ResultSet allowedTask(){
+		
+		ResultSet rs;
+		ConexionDbUnica cdbu = ConexionDbUnica.instancia;
+		switch(recursos.representante){
+		//Devolvemos todos las tareas de un usuario
+		case 0: 
+			rs = cdbu.ConsultaSQL("SELECT * FROM TAREAS WHERE id_task IN (SELECT id_task FROM STAFF_TAREAS WHERE id_staff = " + Integer.toString(recursos.getIdusuario()) +"))");
+		return rs;
+		case 1:
+			//Devolvemos todos los WP del partner
+				rs = cdbu.ConsultaSQL("SELECT * FROM TAREAS  WHERE id_task IN (SELECT id_task FROM STAFF_TAREAS WHERE id_staff = " + Integer.toString(recursos.getIdusuario()) +"))");	
+	}
+	
+		return null;
+		
+	}
+	
+	
+	public static boolean esRepresentante(){
+		boolean rep = false;
+		if(recursos.representante == 0){
+			rep = false;
+		}
+			else{
+				rep = true;
+			}
+		return rep;
+
+	}
 	
 	
 }
+
+
