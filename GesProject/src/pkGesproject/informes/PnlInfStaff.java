@@ -48,7 +48,7 @@ public class PnlInfStaff extends JPanel{
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	DefaultListModel modelo,modelo2;
 	String[][] datos = {{"Code Staff","Dni","Name","Surname","Birth Date", "Country", "Province","Region","City","Address","PostalCode","Phone1","Phone2","Fax","Email"},
-						{"sid_staff","dni","nombre","apellidos","f_nac","pais_en_ingles","estado","region","ciudad","direccion","codpostal","telefono","telefono2","fax","email"}};
+						{"id_staff","dni","nombre","apellidos","f_nac","pais_en_ingles","estado","region","ciudad","direccion","codpostal","telefono","telefono2","fax","email"}};
 	String[] agrupar = {"Ninguno","Partner"};
 	
 	int dimension[] = {7,8,20,20,8,8,8,8,8,15,5,9,9,9,12};
