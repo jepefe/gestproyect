@@ -42,18 +42,18 @@ import net.sf.jasperreports.engine.JasperReport;
 public class PnlImportarExportar extends JPanel{
 
 
+	String ruta;
+	ResultSet rs;
 	ActionListener exportar;
 	ActionListener importar;
-	JasperReport jasperReport;
-	JasperPrint jasperPrint;
-	String fileName;
-	ResultSet rs;
-	ConexionDb conexion= new ConexionDb();
 	JFileChooser filechooser;
+	ConexionFTP cftp=new ConexionFTP();
+	ConexionDb conexion= new ConexionDb();
 	JButton btnExportar = new JButton("Exportar");
 	JButton btnImportar = new JButton("Importar");
-	String ruta;
-	ConexionFTP cftp=new ConexionFTP();
+	JFileChooser fileChooser = new JFileChooser();
+	
+	
 	
 	public PnlImportarExportar(){
 		
@@ -86,7 +86,7 @@ public class PnlImportarExportar extends JPanel{
 	public void exportar(){
 		
 		//1 Abrir la plantilla como un libro de excel
-    	String ruta = "src/PkModelosExcel/ReportIn.xls";
+    	//String ruta = "src/PkModelosExcel/ReportIn.xls";
     	HSSFWorkbook libro = null;
     	//FileInputStream tuFlujoDeDatos = null;
 		InputStream tuFlujoDeDatos = cftp.Descargar("135"); //Descarga el fichero en memoria,no contemplado fallo al descargar
@@ -109,6 +109,8 @@ public class PnlImportarExportar extends JPanel{
     	short row = (short) 8; // Tercera fila
     	short column = (short) 1; // Cuarta columna
     	short column2 = (short) 2; // Cuarta columna
+    	
+    	
     	HSSFRow tuRow= tuSheet.getRow(row);
     	HSSFCell tuCell = tuRow.getCell(column);
     	
@@ -119,20 +121,41 @@ public class PnlImportarExportar extends JPanel{
        // HSSFRichTextString texto = new HSSFRichTextString("aqui");
         rs = conexion.ConsultaSQL("SELECT nombre,pais FROM PARTNER");
         String nombre = null;
-    	try {
-			while(rs.next()){
-				nombre = rs.getString(1);
-				tuCell.setCellValue(nombre);
-				row+=1;
-				tuCell = tuRow.getCell(column);
-				tuRow= tuSheet.getRow(row);
-				
-			}
-		} catch (SQLException e) {
+        int i;
+        
+        
+        for(i=0;i<=2;i++){
+	    	try {
+				while(rs.next()){
+					
+					nombre = rs.getString(i);
+					
+					System.out.println(nombre);
+					tuCell.setCellValue(nombre);
+					row+=1;
+					//System.out.println("Columna = " + column + " / Fila = " + row);
+					tuCell = tuRow.getCell(column);
+					//System.out.println("Qué pasa?");
+					//System.out.println(tuSheet.getRow(row));
+					//obtenemos filas hasta encontrar la fula null
+					if (tuSheet.getRow(row) != null){
+						tuRow= tuSheet.getRow(row);
+						System.out.println("Dentro del if");
+					} else {
+						tuRow = tuSheet.createRow(row);
+						System.out.println("Dentro del else");
+						tuCell = tuRow.createCell(column);
+						}
+					
+				}
+			} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		try {
+			}
+        }
+        column++;
+		System.out.println("Después del while");
+		/*try {
 			while(rs.next()){
 				nombre = rs.getString(2);
 				tuCell1.setCellValue(nombre);
@@ -144,24 +167,37 @@ public class PnlImportarExportar extends JPanel{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
         
 		
-        System.out.println("Contenido del RS:"+rs);
+       //System.out.println("Contenido del RS:"+rs);
         
             
         try
 		{
         	// Se salva el libro.          
             // Volcamos la informaci�n a un archivo.
-
-			FileOutputStream stream = new FileOutputStream("src/PkModelosExcel/Info_Pro.xls");
-			
-			tuWorkBook.write(stream);
-			stream.close();
+        	int seleccion = fileChooser.showSaveDialog(null);
         	
+        	/*if (seleccion == JFileChooser.APPROVE_OPTION)
+        	{
+        	   File fichero = fileChooser.getSelectedFile();
+        	   ruta = fichero.getPath();
+        	   // Aquí debemos abrir el fichero para escritura
+        	   // y salvar nuestros datos.
+        	    * 
+        	    */
+        	    
+        	    
+        	   FileOutputStream stream = new FileOutputStream("c:/users/freyder espinosa v/desktop/excel.xls");
+   			
+   			tuWorkBook.write(stream);
+   			stream.close();
+        	  
         	
-		}
+ 	
+		
+        	}
 		catch (FileNotFoundException fe)
 		{
 			fe.printStackTrace();
@@ -178,3 +214,6 @@ public class PnlImportarExportar extends JPanel{
 	
 	
 }
+
+	
+
