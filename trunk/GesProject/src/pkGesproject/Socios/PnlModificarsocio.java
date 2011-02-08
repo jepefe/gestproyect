@@ -268,7 +268,7 @@ public class PnlModificarsocio extends JPanel{
 									mod.jtxt[i-1].setText(rs.getString(i));
 								}
 								mod.textarea.setText(rs.getString(i));
-								rs=conexion.ConsultaSQL("SELECT p.pais FROM PAIS p INNER JOIN PARTNER pa ON p.id_pais = pa.pais WHERE pa.cod_part = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
+								rs=conexion.ConsultaSQL("SELECT p.nombre FROM TASAS_PAIS p INNER JOIN PARTNER pa ON p.id_pais = pa.pais WHERE pa.cod_part = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 								rs.next();
 								mod.cbpais.setSelectedItem(rs.getString(1));
 							

@@ -136,7 +136,7 @@ public class PnlAltasocio extends JScrollPane{
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 
-				rs = conexion.ConsultaSQL("SELECT * FROM PAIS");
+				rs = conexion.ConsultaSQL("SELECT id_pais,nombre FROM TASAS_PAIS");
 
 				panel.add(cbpais,gbc);
 				try {
@@ -354,7 +354,7 @@ public class PnlAltasocio extends JScrollPane{
 									e1.printStackTrace();
 								}
 
-								rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpais.getSelectedItem().toString()+"'");
+								rs=conexion.ConsultaSQL("SELECT id_pais FROM TASAS_PAIS WHERE nombre like '"+cbpais.getSelectedItem().toString()+"'");
 
 								String pais = null;
 								try {
@@ -436,8 +436,8 @@ public class PnlAltasocio extends JScrollPane{
 							jtxt[i].setText("");
 						}
 						textarea.setText("");
-						cbsector.setSelectedIndex(0);
-						cbpais.setSelectedIndex(0);
+						cbsector.setSelectedItem(null);
+						cbpais.setSelectedItem(null);
 						alerta.setText("");
 						mensaje.setVisible(false);
 						jtxt[0].setBackground(Color.white);
@@ -467,7 +467,7 @@ public class PnlAltasocio extends JScrollPane{
 							e1.printStackTrace();
 						}
 
-						rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpais.getSelectedItem().toString()+"'");
+						rs=conexion.ConsultaSQL("SELECT id_pais FROM TASAS_PAIS WHERE nombre like '"+cbpais.getSelectedItem().toString()+"'");
 
 						String pais = null;
 						try {
