@@ -43,6 +43,7 @@ import com.toedter.calendar.JDateChooser;
 
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
+import pkGesproject.GesStaff;
 import pkGesproject.GpComboBox;
 import pkGesproject.JTextFieldLimit;
 import pkGesproject.LimiteDocumento;
@@ -74,7 +75,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 	String auxdatos[][];
 	String[] fila;
 	final String colu[] = {rec.idioma[rec.eleidioma][95],rec.idioma[rec.eleidioma][129],rec.idioma[rec.eleidioma][40],rec.idioma[rec.eleidioma][97]};
-	
+	String nomsta = "";
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
 	
 	/*final Object[][] info ={
@@ -270,6 +271,33 @@ public class PnlAlta_TimeSheet extends JPanel{
 						e1.printStackTrace();
 						}
 					CmbStaff.setSelectedItem(null);
+					if (!GesStaff.esRepresentante()){
+						
+					rs = conexion.ConsultaSQL("SELECT nombre FROM STAFF WHERE id_staff='"+Integer.toString(recursos.getIdusuario())+"'");
+					try {
+						rs.next();
+						nomsta = rs.getString(1);
+						
+						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					CmbStaff.setSelectedItem(nomsta);
+					CmbStaff.setEnabled(false);
+					}
+					rs = conexion.ConsultaSQL("SELECT nombre FROM STAFF WHERE id_staff='"+Integer.toString(recursos.getIdusuario())+"'");
+					try {
+						rs.next();
+						nomsta = rs.getString(1);
+						
+						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					CmbStaff.setSelectedItem(nomsta);
+					
 				conexion.cerrarConexion();
 				break;
 			   case (4)://rol en el proyecto
