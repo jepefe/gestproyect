@@ -79,7 +79,7 @@ public class FrmPrincipal extends JFrame {
 	public FrmPrincipal(){
 		switch(recursos.permisos){
 		
-		case 1:{
+		case 0:{
 		recursos.progresocarga =1;
 		recursos.txtcarga = "Loading  Staff";
 		spnstaff = new SpnStaff();
@@ -118,12 +118,19 @@ public class FrmPrincipal extends JFrame {
 		jtlbFrmppal.add(jbtnInformes);
 		jtlbFrmppal.add(jbtnAgregar);
 		}break;
-		case 2:{
+		case 1:{
 			recursos.txtcarga = "Loading  Time Sheets";
 			spntimesheet = new SpnTimesheet();
 			jtlbFrmppal.add(jbtnTimesheet);
 
 			recursos.progresocarga =10;
+		}
+		case 2:{
+			recursos.txtcarga = "Loading  Time Sheets";
+			spntimesheet = new SpnTimesheet();
+			recursos.progresocarga =10;
+			jtlbFrmppal.add(jbtnTimesheet);
+
 		}
 		case 3:{
 			recursos.txtcarga = "Loading  Time Sheets";
