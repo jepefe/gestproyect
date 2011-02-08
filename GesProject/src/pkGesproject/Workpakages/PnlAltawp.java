@@ -473,6 +473,10 @@ public class PnlAltawp extends JScrollPane{
 				jdc2.setDate(null);
 				textarea.setText(null);
 				textarea2.setText(null);
+				jtxt[0].setText("");
+				jtxt[1].setText("");
+				jdc2.setBackground(null);
+				CmbPro.setSelectedItem(null);
 				
 				// Borrar cuando termine de añadir
 				for(int i=0;i<2;++i) {	
@@ -549,6 +553,7 @@ public class PnlAltawp extends JScrollPane{
 					}
 					if(e.getActionCommand().equals("cancelar")){
 						PnlBusquedawp.modificar.dispose();
+						
 					}
 				}
 			};

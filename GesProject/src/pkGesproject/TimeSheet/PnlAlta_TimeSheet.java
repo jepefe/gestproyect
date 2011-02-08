@@ -62,7 +62,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 	GpComboBox CmbPart = new GpComboBox();
 	GpComboBox CmbWorkpaquets = new GpComboBox();
 	GpComboBox CmbStaff = new GpComboBox();
-	ResultSet rs;
+	ResultSet rs,rs2;
 	ConexionDb conexion = new ConexionDb();
 	JFrame aviso = new JFrame();
 	JPanel Jproyecto = new JPanel();
@@ -540,11 +540,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 					    	datos = new String[cuenta][columnas];
 							auxdatos = new String[cuenta][columnas];
 					    	tablemodel=cargar_tabla(datos,columnas);
-					    	jtblTime  = new JTable(tablemodel){
-					    		 public boolean isCellEditable(int rowIndex, int mColIndex) {
-					                 return false;
-					               }
-					    	};
+					    	jtblTime.setModel(tablemodel);
 						}
 					}
 				}
@@ -587,7 +583,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 						java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 						  
 						conexion.Conectardb();
-						conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre = '"+CmbProyecto.getSelectedItem()+"' ");
+						rs = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre = '"+CmbProyecto.getSelectedItem()+"' ");
 						int idpro = 0;
 						try {
 							rs.next();
@@ -596,7 +592,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre = '"+CmbPart.getSelectedItem()+"' ");
+						rs = conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre = '"+CmbPart.getSelectedItem()+"' ");
 						int idpart = 0;
 						try {
 							rs.next();
@@ -605,7 +601,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						conexion.ConsultaSQL("SELECT id_staff FROM STAFF WHERE nombre = '"+CmbStaff.getSelectedItem()+"' ");
+						rs = conexion.ConsultaSQL("SELECT id_staff FROM STAFF WHERE nombre = '"+CmbStaff.getSelectedItem()+"' ");
 						int idstaff = 0;
 						try {
 							rs.next();
@@ -614,7 +610,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						conexion.ConsultaSQL("SELECT id_task FROM TAREA WHERE nombre = '"+CmbTareas.getSelectedItem()+"' ");
+						rs = conexion.ConsultaSQL("SELECT id_task FROM TAREAS WHERE nombre = '"+CmbTareas.getSelectedItem()+"' ");
 						int idtar = 0;
 						try {
 							rs.next();
@@ -623,7 +619,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS WHERE nombre = '"+CmbWorkpaquets.getSelectedItem()+"' ");
+						rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS WHERE nombre = '"+CmbWorkpaquets.getSelectedItem()+"' ");
 						int idwpp = 0;
 						try {
 							rs.next();
@@ -632,7 +628,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						conexion.executeUpdate("INSERT INTO TIMESHEET (id_pro, id_part, id_staff, rol, fecha, id_tarea, id_wp, horas) VALUES (,'"+idpro+"','"+idpart+"','"+idstaff+"','"+jtxtpro[4].getText()+"','"+sqlDate1+"','"+idtar+"','"+idwpp+"','"+jtxtta[3].getText()+"')");
+						conexion.executeUpdate("INSERT INTO TIMESHEET (id_pro, id_part, id_staff, rol, fecha, id_tarea, id_wp, horas) VALUES ('"+idpro+"','"+idpart+"','"+idstaff+"','"+jtxtpro[4].getText()+"','"+sqlDate1+"','"+idtar+"','"+idwpp+"','"+jtxtta[3].getText()+"')");
 						
 						conexion.cerrarConexion();
 						
@@ -645,15 +641,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 				    	datos = new String[cuenta][columnas];
 						auxdatos = new String[cuenta][columnas];
 				    	tablemodel=cargar_tabla(datos,columnas);
-				    	jtblTime  = new JTable(tablemodel){
-				    		 public boolean isCellEditable(int rowIndex, int mColIndex) {
-				                 return false;
-				               }
-				    	};
+				    	jtblTime.setModel(tablemodel);
 				    	
 				    	CmbTareas.setSelectedItem(null);
-				    	CmbProyecto.setSelectedItem(null);
-				    	jtxtta[0].setText("");
 				    	jtxtta[3].setText("");
 				    	jdc1.setDate(null);
 				    	
@@ -736,6 +726,27 @@ public class PnlAlta_TimeSheet extends JPanel{
     	
     	rs = conexion.ConsultaSQL("SELECT fecha,id_tarea,id_wp,horas FROM TIMESHEET ORDER BY fecha");
     	int i=0;
+    	int idta = 0;
+    	int idwp = 0;
+    	String nomta;
+    	String nomwp;
+    	/*try {
+    		rs.next();
+			idta = rs.getInt(2);
+			idwp = rs.getInt(3);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	rs2 = conexion.ConsultaSQL("SELECT nombre FROM TAREAS WHERE id_task = '"+idta+"'");
+    	try {
+    		rs2.next();
+			nomta = rs2.getString(1);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+		
     	try {
 			while(rs.next()){
 				for(int j = 1;j<columna+1;j++){
