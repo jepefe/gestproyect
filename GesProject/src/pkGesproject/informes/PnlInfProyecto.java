@@ -104,6 +104,7 @@ public class PnlInfProyecto extends JPanel{
 					if(gbordenar.getSelectedItem()== null){
 					mensaje("Debe Seleccionar una columna para ordenar",false);
 					}else{
+						mensaje.setVisible(false);
 						generar_reporte();
 					}
 				}

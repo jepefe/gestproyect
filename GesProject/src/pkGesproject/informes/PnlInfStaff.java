@@ -97,6 +97,7 @@ public class PnlInfStaff extends JPanel{
 					if(gbordenar.getSelectedItem()== null){
 					mensaje("Debe Seleccionar una columna para ordenar",false);
 					}else{
+						mensaje.setVisible(true);
 						generar_reporte();
 					}
 				}
