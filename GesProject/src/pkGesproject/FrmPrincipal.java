@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
@@ -22,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
@@ -58,6 +60,7 @@ public class FrmPrincipal extends JFrame {
 	JToggleButton jbtnTablas = new JToggleButton(recursos.icono[11]);
 	JToggleButton jbtnTimesheet = new JToggleButton(recursos.icono[12]);
 	JToggleButton jbtnInformes = new JToggleButton(recursos.icono[31]);
+	
 	JPanel jpnlppal = new JPanel();
 	
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
@@ -77,6 +80,42 @@ public class FrmPrincipal extends JFrame {
 	private Rectangle maxBounds;
 	
 	public FrmPrincipal(){
+		int i;
+		jbtnUsuarios.setVerticalTextPosition(SwingConstants.BOTTOM);
+		jbtnUsuarios.setHorizontalTextPosition(SwingConstants.CENTER);
+		jbtnUsuarios.setText(rec.idioma[rec.eleidioma][137]);
+		jbtnSocios.setVerticalTextPosition(SwingConstants.BOTTOM);
+		jbtnSocios.setHorizontalTextPosition(SwingConstants.CENTER);
+		jbtnSocios.setText(rec.idioma[rec.eleidioma][138]);
+		jbtnProyectos.setVerticalTextPosition(SwingConstants.BOTTOM);
+		
+		jbtnProyectos.setHorizontalTextPosition(SwingConstants.CENTER);
+		jbtnProyectos.setText(rec.idioma[rec.eleidioma][55]);
+		
+		jbtnWorkpack.setVerticalTextPosition(SwingConstants.BOTTOM);
+		jbtnWorkpack.setHorizontalTextPosition(SwingConstants.CENTER);
+		
+		jbtnTareas.setVerticalTextPosition(SwingConstants.BOTTOM);
+		jbtnTareas.setHorizontalTextPosition(SwingConstants.CENTER);
+		jbtnTareas.setText(rec.idioma[rec.eleidioma][136]);
+		
+		jbtnTablas.setVerticalTextPosition(SwingConstants.BOTTOM);
+		jbtnTablas.setHorizontalTextPosition(SwingConstants.CENTER);
+		jbtnTablas.setText(rec.idioma[rec.eleidioma][109]);
+		
+		jbtnTimesheet.setVerticalTextPosition(SwingConstants.BOTTOM);
+		jbtnTimesheet.setHorizontalTextPosition(SwingConstants.CENTER);
+		jbtnTimesheet.setText(rec.idioma[rec.eleidioma][139]);
+		
+		jbtnInformes.setVerticalTextPosition(SwingConstants.BOTTOM);
+		jbtnInformes.setHorizontalTextPosition(SwingConstants.CENTER);
+		jbtnInformes.setText(rec.idioma[rec.eleidioma][140]);
+		
+		jbtnWorkpack.setVerticalTextPosition(SwingConstants.BOTTOM);
+		jbtnWorkpack.setHorizontalTextPosition(SwingConstants.CENTER);
+		jbtnWorkpack.setText(rec.idioma[rec.eleidioma][141]);
+		
+	
 		switch(recursos.permisos){
 		
 		case 0:{
@@ -106,7 +145,7 @@ public class FrmPrincipal extends JFrame {
 		nueva = new FrmNuevapalabra();
 		//a falta de progres bar
 		spninformes = new SpnInformes();
-		jtlbFrmppal.add(jbtnInicio);
+		//jtlbFrmppal.add(jbtnInicio);
 		jbtnInicio.setSelected(true);
 		jtlbFrmppal.add(jbtnUsuarios);
 		jtlbFrmppal.add(jbtnSocios);
@@ -117,6 +156,7 @@ public class FrmPrincipal extends JFrame {
 		jtlbFrmppal.add(jbtnTimesheet);
 		jtlbFrmppal.add(jbtnInformes);
 		jtlbFrmppal.add(jbtnAgregar);
+		
 		}break;
 		case 1:{
 			recursos.txtcarga = "Loading  Time Sheets";
@@ -140,6 +180,10 @@ public class FrmPrincipal extends JFrame {
 
 		}
 		}
+		for(i=0;i<jtlbFrmppal.getComponentCount();i++){
+	  		  ((AbstractButton) jtlbFrmppal.getComponentAtIndex(i)).setSelected(false);
+	  		  ((AbstractButton) jtlbFrmppal.getComponentAtIndex(i)).setFont(new Font(Font.SANS_SERIF, Font.BOLD,11));
+	  	 }
 		
 		//Maximizamos la ventana principal
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -310,7 +354,7 @@ public class FrmPrincipal extends JFrame {
 		jbtnTimesheet.setActionCommand("timesheet");
 		jbtnInformes.setActionCommand("informes");
 		jtlbFrmppal.setFloatable(false); //Impedimos que el toolbar se pueda separar de la ventana
-		jtlbFrmppal.setPreferredSize(new Dimension(this.getWidth(),50));
+		//jtlbFrmppal.setPreferredSize(new Dimension(this.getWidth(),50));
 		jtlbFrmppal.setVisible(true);
 		
 		this.add(jtlbFrmppal,BorderLayout.NORTH);
