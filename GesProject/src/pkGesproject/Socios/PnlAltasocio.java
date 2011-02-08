@@ -217,7 +217,7 @@ public class PnlAltasocio extends JScrollPane{
 				jtxt[i].addKeyListener(new KeyAdapter(){
 					public void keyTyped(KeyEvent e){
 						caracter = e.getKeyChar();
-						if(((caracter < 'a') ||(caracter > 'z')) &&
+						if(((caracter < 'a') ||(caracter > 'z')) && 
 								((caracter < 'A') ||(caracter > 'Z')) &&
 								(caracter != KeyEvent.VK_BACK_SPACE) &&
 								(caracter != '+') && (caracter != '(') && (caracter != ')')) {
