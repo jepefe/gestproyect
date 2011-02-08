@@ -419,6 +419,7 @@ public class PnlInfPartner extends JPanel{
 	public void limpiar_campos(){
 		modelo.removeAllElements();
 		modelo2.removeAllElements();
+		gbordenar.removeAllItems();
 		for(int j=0; j<dimension.length ; j++){
 			modelo.addElement(datos[0][j]);  
 		}
