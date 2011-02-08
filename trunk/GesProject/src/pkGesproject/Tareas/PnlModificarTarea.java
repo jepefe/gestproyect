@@ -302,7 +302,7 @@ public class PnlModificarTarea extends JPanel{
 									
 								//aki lo que te dixo antes, cojes el 1 y el 2 y los metes en el txt 0 y 1
 								rs.next();
-								for(i=1;i<3;i++){
+								for(i=1;i<2;i++){
 									mod.jtxt[i-1].setText(rs.getString(i));
 								}
 								mod.jdc1.setDate(rs.getDate(3));

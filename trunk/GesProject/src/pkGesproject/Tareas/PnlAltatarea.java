@@ -88,7 +88,7 @@ public class PnlAltatarea extends JScrollPane{
 		this.setBorder(empty);
 		
 		panel.setLayout(new GridBagLayout());
-		  
+		 
 		String[] fieldNames = {
 		   rec.idioma[rec.eleidioma][3]+"*", rec.idioma[rec.eleidioma][40]+"*",
 		   rec.idioma[rec.eleidioma][25]+"*",rec.idioma[rec.eleidioma][26]+"*",rec.idioma[rec.eleidioma][41]+"*", rec.idioma[rec.eleidioma][64]
@@ -164,6 +164,7 @@ public class PnlAltatarea extends JScrollPane{
 		   case (0):
 			  //panel.add(jtxt[i] = new JFormattedTextField(NumberFormat.getCurrencyInstance()));
 			   	panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
+		   		//panel.add(jtxt[1]=new JTextField(fieldWidths[i]),gbc);
 		   		break;
 		   case (1):
 			 
@@ -373,11 +374,6 @@ public class PnlAltatarea extends JScrollPane{
 							break;
 							case (1):
 								alerta.setText(rec.idioma[rec.eleidioma][72]);
-								mesage.setBackground(Color.decode("#ec8989"));
-								mesage.setVisible(true);
-							break;
-							case (2):
-								alerta.setText(rec.idioma[rec.eleidioma][75]);
 								mesage.setBackground(Color.decode("#ec8989"));
 								mesage.setVisible(true);
 							break;
