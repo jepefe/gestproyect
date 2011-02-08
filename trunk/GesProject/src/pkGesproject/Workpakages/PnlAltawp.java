@@ -535,6 +535,7 @@ public class PnlAltawp extends JScrollPane{
 						jtxt[0].setText("");
 						jtxt[1].setText("");
 						jdc2.setBackground(null);
+						CmbPro.setSelectedItem(null);
 						modwp.cuenta=modwp.contar_reg();
 						modwp.datos = new String[modwp.cuenta][modwp.columnas];
 						modwp.auxdatos = new String[modwp.cuenta][modwp.columnas];
