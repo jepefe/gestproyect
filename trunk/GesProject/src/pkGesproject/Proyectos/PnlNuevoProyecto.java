@@ -258,9 +258,11 @@ public class PnlNuevoProyecto extends JScrollPane{
 
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
+					if(listaP.getSelectedValue().equals("")){}else{
 					modelo.addElement(listaP.getSelectedValue());
 					CbCoordinador.addItem(listaP.getSelectedValue());		    
 					modelo2.removeElement(listaP.getSelectedValue());
+					}
 				}
 			}
 		};
@@ -274,9 +276,11 @@ public class PnlNuevoProyecto extends JScrollPane{
 
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
+					if(listaP2.getSelectedValue().equals("")){}else{
 					modelo2.addElement(listaP2.getSelectedValue());
 					CbCoordinador.removeItem(listaP2.getSelectedValue());	
 					modelo.removeElement(listaP2.getSelectedValue());
+					}
 				}
 			}
 		};

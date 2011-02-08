@@ -158,7 +158,6 @@ public class PnlModificarProyecto extends JPanel{
             constraints.gridy = 0; // El área de texto empieza en la fila
             constraints.gridwidth = 2; // El área de texto ocupa x columnas.
             constraints.gridheight = 1; // El área de texto ocupa x filas.
-            constraints.anchor = GridBagConstraints.WEST;
             constraints.insets = new Insets(20,30,0,10);
             this.add(jtext,constraints);
             
