@@ -15,6 +15,8 @@ import java.awt.Insets;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.NumberFormat;
@@ -73,6 +75,7 @@ public class PnlAltatarea extends JScrollPane{
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	int permetir_alta = 0;
 	int mensaje = 0;
+	FocusListener foco;
 	
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
@@ -215,7 +218,47 @@ public class PnlAltatarea extends JScrollPane{
 				});
 				}
 		}//fin for
-	  
+		
+		/**
+		 * Revisar si el nombre de proyecto esta disponible
+		 */
+		
+		foco = new FocusListener(){
+
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				// TODO Auto-generated method stub					
+			}
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				// TODO Auto-generated method stub
+				conexion.Conectardb();
+				rs = conexion.ConsultaSQL("SELECT p.nombre FROM TAREAS as p WHERE p.nombre = '"+jtxt[0].getText()+"'");
+				try {
+					if(rs.next()){
+						alerta.setText(rec.idioma[rec.eleidioma][75]);
+						mesage.setBackground(Color.decode("#ec8989"));
+						mesage.setVisible(true);
+						jtxt[0].requestFocus();
+						jtxt[0].selectAll();
+						
+					}else{
+						alerta.setText(rec.idioma[rec.eleidioma][120]);
+						mesage.setBackground(Color.decode("#D0E495"));
+						mesage.setVisible(true);
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				conexion.cerrarConexion();
+			}
+
+		};
+
+		jtxt[0].addFocusListener(foco);
+		
+		
 		/*
 		 * Creamos los dos botones del panel principal para este panel 
 		 */
@@ -266,6 +309,8 @@ public class PnlAltatarea extends JScrollPane{
 					permetir_alta = 1;
 
 				}
+				
+
 
 					if(e.getActionCommand().equals("aceptar") && permetir_alta == 0){
 						ConexionDb conexdb = new ConexionDb();
@@ -328,6 +373,11 @@ public class PnlAltatarea extends JScrollPane{
 							break;
 							case (1):
 								alerta.setText(rec.idioma[rec.eleidioma][72]);
+								mesage.setBackground(Color.decode("#ec8989"));
+								mesage.setVisible(true);
+							break;
+							case (2):
+								alerta.setText(rec.idioma[rec.eleidioma][75]);
 								mesage.setBackground(Color.decode("#ec8989"));
 								mesage.setVisible(true);
 							break;
