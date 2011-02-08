@@ -348,7 +348,7 @@ public class PnlModificarTarea extends JPanel{
 						llena = false;
 						
 						conexion.cerrarConexion();
-						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
+						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][135]);
 					}
 				}
             	
