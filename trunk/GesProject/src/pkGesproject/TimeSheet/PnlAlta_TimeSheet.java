@@ -516,6 +516,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 						int s = JOptionPane.showConfirmDialog(aviso, "Esta seguro??");
 				
 						if(s==0){
+						
 							conexion.Conectardb();
 							conexion.executeUpdate("DELETE FROM TIMESHEET WHERE id_tarea = '"+datos[jtblTime.getSelectedRow()][1]+"'");
 					
@@ -643,9 +644,10 @@ public class PnlAlta_TimeSheet extends JPanel{
 				    	tablemodel=cargar_tabla(datos,columnas);
 				    	jtblTime.setModel(tablemodel);
 				    	
-				    	CmbTareas.setSelectedItem(null);
-				    	jtxtta[3].setText("");
-				    	jdc1.setDate(null);
+						jdc1.setDate(null);
+						CmbTareas.setSelectedItem(null);
+						CmbWorkpaquets.setSelectedItem(null);
+						jtxtta[3].setText("");
 				    	
 					}else{
 						JOptionPane.showMessageDialog( null, "Se ha de seleccionar tarea o workpaquet"); 
