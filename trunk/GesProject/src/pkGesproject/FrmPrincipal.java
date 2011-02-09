@@ -29,6 +29,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 import javax.swing.BorderFactory;
 
+import pkGesproject.Preferencias.SpnPreferencias;
 import pkGesproject.Proyectos.SpnProyectos;
 import pkGesproject.Socios.SpnSocios;
 import pkGesproject.Staff.SpnStaff;
@@ -60,7 +61,7 @@ public class FrmPrincipal extends JFrame {
 	JToggleButton jbtnTablas = new JToggleButton(recursos.icono[11]);
 	JToggleButton jbtnTimesheet = new JToggleButton(recursos.icono[12]);
 	JToggleButton jbtnInformes = new JToggleButton(recursos.icono[31]);
-	
+	JToggleButton jbtnPreferencias = new JToggleButton(recursos.icono[33]);
 	JPanel jpnlppal = new JPanel();
 	
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
@@ -74,6 +75,7 @@ public class FrmPrincipal extends JFrame {
 	SpnTimesheet spntimesheet;
 	SpnInformes spninformes;
 	FrmNuevapalabra nueva;
+	SpnPreferencias spnpreferencias;
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	
 	
@@ -115,6 +117,9 @@ public class FrmPrincipal extends JFrame {
 		jbtnWorkpack.setHorizontalTextPosition(SwingConstants.CENTER);
 		jbtnWorkpack.setText(rec.idioma[rec.eleidioma][141]);
 		
+		jbtnPreferencias.setVerticalTextPosition(SwingConstants.BOTTOM);
+		jbtnPreferencias.setHorizontalTextPosition(SwingConstants.CENTER);
+		jbtnPreferencias.setText(rec.idioma[rec.eleidioma][142]);
 	
 		switch(recursos.permisos){
 		
@@ -143,8 +148,11 @@ public class FrmPrincipal extends JFrame {
 		recursos.progresocarga =10;
 		recursos.txtcarga = "Loading  Data";
 		nueva = new FrmNuevapalabra();
+		
+		
 		//a falta de progres bar
 		spninformes = new SpnInformes();
+		spnpreferencias = new SpnPreferencias();
 		//jtlbFrmppal.add(jbtnInicio);
 		jbtnInicio.setSelected(true);
 		jtlbFrmppal.add(jbtnUsuarios);
@@ -155,6 +163,7 @@ public class FrmPrincipal extends JFrame {
 		jtlbFrmppal.add(jbtnTablas);
 		jtlbFrmppal.add(jbtnTimesheet);
 		jtlbFrmppal.add(jbtnInformes);
+		jtlbFrmppal.add(jbtnPreferencias);
 		jtlbFrmppal.add(jbtnAgregar);
 		
 		}break;
@@ -330,6 +339,13 @@ public class FrmPrincipal extends JFrame {
 	        	 repaint();
 	        	 validate();
 	         }
+	         
+	         if (e.getActionCommand().equals("preferencias")){
+	        	 jbtnPreferencias.setSelected(true);
+	        	 jpnlppal.add(spnpreferencias, BorderLayout.CENTER);
+	        	 repaint();
+	        	 validate();
+	         }
 	         } 
 		};
 		jtlbFrmppal.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
@@ -343,6 +359,7 @@ public class FrmPrincipal extends JFrame {
 		jbtnTablas.addActionListener(jtlbAcListener);
 		jbtnTimesheet.addActionListener(jtlbAcListener);
 		jbtnInformes.addActionListener(jtlbAcListener);
+		jbtnPreferencias.addActionListener(jtlbAcListener);
 		jbtnUsuarios.setActionCommand("usuarios");
 		jbtnSocios.setActionCommand("socios");
 		jbtnInicio.setActionCommand("inicio");
@@ -353,6 +370,7 @@ public class FrmPrincipal extends JFrame {
 		jbtnTablas.setActionCommand("tablas");
 		jbtnTimesheet.setActionCommand("timesheet");
 		jbtnInformes.setActionCommand("informes");
+		jbtnPreferencias.setActionCommand("preferencias");
 		jtlbFrmppal.setFloatable(false); //Impedimos que el toolbar se pueda separar de la ventana
 		//jtlbFrmppal.setPreferredSize(new Dimension(this.getWidth(),50));
 		jtlbFrmppal.setVisible(true);
