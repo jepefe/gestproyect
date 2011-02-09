@@ -24,6 +24,7 @@ public class FrmNuevapalabra extends JPanel{
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	JTextField txtcastellano,txtingles;
 	JButton btnaceptar;
+	String castellano;
 	
 	public FrmNuevapalabra(){
 		RsGesproject recursos = RsGesproject.Obtener_Instancia();
@@ -45,6 +46,8 @@ public class FrmNuevapalabra extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("aceptar")){
+					castellano = txtcastellano.getText();
+					
 					ConexionDb conexdb = new ConexionDb();
 					ResultSet rs;
 					conexdb.Conectardb();
@@ -53,13 +56,17 @@ public class FrmNuevapalabra extends JPanel{
 						Component aviso = null;
 						try {
 							if(rs.next()){
-								JOptionPane.showMessageDialog(aviso, "La palabra ya existe en la base de datos");
+								rs = conexdb.ConsultaSQL("SELECT i.id_idi FROM IDIOMA i WHERE i.castellano ='"+castellano+"'");
+								rs.next();
+								JOptionPane.showMessageDialog(aviso, "La palabra ya existe en la base de datos, en la posicion: "+ rs.getInt(1));
 							}else{
 								conexdb.executeUpdate("INSERT INTO IDIOMA (castellano,ingles) VALUES ('"+ txtcastellano.getText()+"','"+txtingles.getText()+"')");
-								//ResultSet rs = conexdb.ConsultaSQL("SELECT i.id_idi FROM IDIOMA i ORDER BY id_idi DESC");
+								rs = conexdb.ConsultaSQL("SELECT i.id_idi FROM IDIOMA i WHERE i.castellano ='"+castellano+"'");
+								rs.next();
+								
 								txtcastellano.setText("");
 								txtingles.setText("");
-								JOptionPane.showMessageDialog(aviso, "Se ha introducido en la posicion: ");
+								JOptionPane.showMessageDialog(aviso, "Se ha introducido en la posicion: "+ rs.getInt(1));
 								
 							}
 						} catch (HeadlessException e1) {

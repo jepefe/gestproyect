@@ -198,6 +198,7 @@ public class FrmPrincipal extends JFrame {
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		jbtnAgregar.setVisible(true);
+		jbtnPreferencias.setVisible(false);
 		super.setBounds(0, 0, recursos.getFrmppalWidth(), recursos.getFrmppalHeight());
 		this.setTitle(recursos.APNAME);
 		this.setLocationRelativeTo(null);

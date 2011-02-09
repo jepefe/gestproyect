@@ -49,11 +49,11 @@ public class SpnInformes extends JSplitPane{
 		wp.setBorder(empty);
 		tareas.setBorder(empty);
 		
-		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[31],rec.idioma[rec.eleidioma][57]},
-				{recursos.icono[31],rec.idioma[rec.eleidioma][55]},
-				{recursos.icono[31],rec.idioma[rec.eleidioma][130]},
-				{recursos.icono[31],rec.idioma[rec.eleidioma][40]},
-				{recursos.icono[31],rec.idioma[rec.eleidioma][129]},};
+		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[32],rec.idioma[rec.eleidioma][57]},
+				{recursos.icono[32],rec.idioma[rec.eleidioma][55]},
+				{recursos.icono[32],rec.idioma[rec.eleidioma][130]},
+				{recursos.icono[32],rec.idioma[rec.eleidioma][40]},
+				{recursos.icono[32],rec.idioma[rec.eleidioma][129]},};
 		
 		
 		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {

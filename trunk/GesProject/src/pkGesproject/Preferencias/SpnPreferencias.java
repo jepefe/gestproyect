@@ -42,8 +42,8 @@ public class SpnPreferencias extends JSplitPane{
 		this.setOpaque(true);
 		modificar.setBorder(empty);
 		
-		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[13],rec.idioma[rec.eleidioma][19]},
-				{recursos.icono[14],rec.idioma[rec.eleidioma][20]},
+		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[13],rec.idioma[rec.eleidioma][143]},
+				{recursos.icono[14],rec.idioma[rec.eleidioma][144]},
 				{recursos.icono[15],rec.idioma[rec.eleidioma][21]}};
 		
 		
