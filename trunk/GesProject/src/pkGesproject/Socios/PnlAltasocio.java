@@ -378,14 +378,16 @@ public class PnlAltasocio extends JScrollPane{
 								jtxt[0].setBackground(Color.white);
 								//recursos.modso.cargar_tabla();
 
-								modso.cuenta=modso.contar_reg();
+								
+								modso.actualizar_tabla();
+								/*modso.cuenta=modso.contar_reg();
 								modso.datos = new String[modso.cuenta][modso.columnas];
 								modso.auxdatos = new String[modso.cuenta][modso.columnas];
 								modso.tablemodel = modso.cargar_tabla(modso.datos,modso.columnas);
 								modso.jtblLateral.setModel(modso.tablemodel);
 								modso.jtblLateral.repaint();
 								modso.llena = false;
-
+								*/
 
 
 								servdisp = new Runnable(){
@@ -479,6 +481,9 @@ public class PnlAltasocio extends JScrollPane{
 						}
 
 						conexion.executeUpdate("UPDATE PARTNER SET nombre = '"+jtxt[0].getText()+"', sector = "+sector+", pais= "+pais+", direccion = '"+jtxt[1].getText()+"', codpostal = '"+jtxt[2].getText()+"', email = '"+jtxt[3].getText()+"', email2 = '"+jtxt[4].getText()+"', telefono = '"+jtxt[5].getText()+"', telefono2 = '"+jtxt[6].getText()+"', fax = '"+jtxt[7].getText()+"', observaciones = '"+textarea.getText()+"' WHERE cod_part = '"+modso.datos[modso.jtblLateral.getSelectedRow()][3]+"'");
+						
+						modso.actualizar_tabla();
+						/*
 						modso.cuenta=modso.contar_reg();
 						modso.datos = new String[modso.cuenta][modso.columnas];
 						modso.auxdatos = new String[modso.cuenta][modso.columnas];
@@ -486,6 +491,7 @@ public class PnlAltasocio extends JScrollPane{
 						modso.jtblLateral.setModel(modso.tablemodel);
 						modso.jtblLateral.repaint();
 						modso.llena = false;
+						*/
 						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][100]);
 						PnlModificarsocio.modificar.dispose();
 						PnlModificarsocio.modificar = null;
