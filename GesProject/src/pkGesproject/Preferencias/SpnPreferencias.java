@@ -29,11 +29,11 @@ public class SpnPreferencias extends JSplitPane{
 	JPanel panel = new JPanel();
 	JPanel pnllateral = new JPanel();
 	JTable jtblLateral;
-	JScrollPane modificar;
+	JScrollPane modificar,cuenta;
 	Border empty = new EmptyBorder(0,0,0,0);
 	PnlModificarsocio mods = PnlModificarsocio.Obtener_Instancia();
 	Component[] panlsStaff = {
-			new JPanel(),
+			cuenta = new JScrollPane(new PnlCuentaUsuario()),
 			modificar = new JScrollPane(new JPanel()),
 			new JPanel()};
 
@@ -41,9 +41,10 @@ public class SpnPreferencias extends JSplitPane{
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
 		modificar.setBorder(empty);
+		cuenta.setBorder(empty);
 		
-		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[13],rec.idioma[rec.eleidioma][143]},
-				{recursos.icono[14],rec.idioma[rec.eleidioma][144]},
+		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[13],rec.idioma[rec.eleidioma][145]},
+				{recursos.icono[34],rec.idioma[rec.eleidioma][144]},
 				{recursos.icono[15],rec.idioma[rec.eleidioma][21]}};
 		
 		

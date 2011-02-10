@@ -29,6 +29,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 import javax.swing.BorderFactory;
 
+import pkGesproject.Becas.SpnBecas;
 import pkGesproject.Preferencias.SpnPreferencias;
 import pkGesproject.Proyectos.SpnProyectos;
 import pkGesproject.Socios.SpnSocios;
@@ -62,6 +63,7 @@ public class FrmPrincipal extends JFrame {
 	JToggleButton jbtnTimesheet = new JToggleButton(recursos.icono[12]);
 	JToggleButton jbtnInformes = new JToggleButton(recursos.icono[31]);
 	JToggleButton jbtnPreferencias = new JToggleButton(recursos.icono[33]);
+	JToggleButton jbtnBecas = new JToggleButton(recursos.icono[35]);
 	JPanel jpnlppal = new JPanel();
 	
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
@@ -76,6 +78,7 @@ public class FrmPrincipal extends JFrame {
 	SpnInformes spninformes;
 	FrmNuevapalabra nueva;
 	SpnPreferencias spnpreferencias;
+	SpnBecas spnbecas;
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	
 	
@@ -120,6 +123,10 @@ public class FrmPrincipal extends JFrame {
 		jbtnPreferencias.setVerticalTextPosition(SwingConstants.BOTTOM);
 		jbtnPreferencias.setHorizontalTextPosition(SwingConstants.CENTER);
 		jbtnPreferencias.setText(rec.idioma[rec.eleidioma][142]);
+		
+		jbtnBecas.setVerticalTextPosition(SwingConstants.BOTTOM);
+		jbtnBecas.setHorizontalTextPosition(SwingConstants.CENTER);
+		jbtnBecas.setText(rec.idioma[rec.eleidioma][147]);
 	
 		switch(recursos.permisos){
 		
@@ -153,6 +160,7 @@ public class FrmPrincipal extends JFrame {
 		//a falta de progres bar
 		spninformes = new SpnInformes();
 		spnpreferencias = new SpnPreferencias();
+		spnbecas = new SpnBecas();
 		//jtlbFrmppal.add(jbtnInicio);
 		jbtnInicio.setSelected(true);
 		jtlbFrmppal.add(jbtnUsuarios);
@@ -164,6 +172,7 @@ public class FrmPrincipal extends JFrame {
 		jtlbFrmppal.add(jbtnTimesheet);
 		jtlbFrmppal.add(jbtnInformes);
 		jtlbFrmppal.add(jbtnPreferencias);
+		jtlbFrmppal.add(jbtnBecas);
 		jtlbFrmppal.add(jbtnAgregar);
 		
 		}break;
@@ -347,6 +356,13 @@ public class FrmPrincipal extends JFrame {
 	        	 repaint();
 	        	 validate();
 	         }
+	         
+	         if (e.getActionCommand().equals("becas")){
+	        	 jbtnBecas.setSelected(true);
+	        	 jpnlppal.add(spnbecas, BorderLayout.CENTER);
+	        	 repaint();
+	        	 validate();
+	         }
 	         } 
 		};
 		jtlbFrmppal.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
@@ -361,6 +377,7 @@ public class FrmPrincipal extends JFrame {
 		jbtnTimesheet.addActionListener(jtlbAcListener);
 		jbtnInformes.addActionListener(jtlbAcListener);
 		jbtnPreferencias.addActionListener(jtlbAcListener);
+		jbtnBecas.addActionListener(jtlbAcListener);
 		jbtnUsuarios.setActionCommand("usuarios");
 		jbtnSocios.setActionCommand("socios");
 		jbtnInicio.setActionCommand("inicio");
@@ -372,6 +389,7 @@ public class FrmPrincipal extends JFrame {
 		jbtnTimesheet.setActionCommand("timesheet");
 		jbtnInformes.setActionCommand("informes");
 		jbtnPreferencias.setActionCommand("preferencias");
+		jbtnBecas.setActionCommand("becas");
 		jtlbFrmppal.setFloatable(false); //Impedimos que el toolbar se pueda separar de la ventana
 		//jtlbFrmppal.setPreferredSize(new Dimension(this.getWidth(),50));
 		jtlbFrmppal.setVisible(true);

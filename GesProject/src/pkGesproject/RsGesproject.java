@@ -83,6 +83,7 @@ public class RsGesproject {
 			new ImageIcon(getClass().getResource("imagenes/iconoinformes.png")),
 			new ImageIcon(getClass().getResource("imagenes/preferencias.png")),
 			new ImageIcon(getClass().getResource("imagenes/iconoidiomas.png")),
+			new ImageIcon(getClass().getResource("imagenes/becas.png")),
 			};
 	static String SistemaOp = System.getProperty("os.name"); //Nombre del S.O por si necesitamos condicionar codigo 
 	
