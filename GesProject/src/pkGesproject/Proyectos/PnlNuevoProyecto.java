@@ -64,7 +64,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 	int cuenta =0; // cuenta para array dinamica.
 	int idPro; // total partners. para saber ID.
 	int id_partner,id_partner2; // id partner. // id para poder borrar
-	public GpComboBox CbCoordinador, CbCaccion;
+	public GpComboBox CbCoordinador, CbAccion;
 	int estado = 1;
 	Runnable servdisp;
 	MouseListener mouseListener;
@@ -80,9 +80,9 @@ public class PnlNuevoProyecto extends JScrollPane{
 		jpnl.setLayout(new GridBagLayout());
 		// Array  de palabras, Fecha inico, Fecha fin, etc.
 		final String[] fieldNames = {
-				rec.idioma[rec.eleidioma][111]+"*",rec.idioma[rec.eleidioma][101]+"*"
-				,rec.idioma[rec.eleidioma][25]+"*",rec.idioma[rec.eleidioma][26]+"*"
-				,rec.idioma[rec.eleidioma][13]};
+				rec.idioma[rec.eleidioma][111]+"*",rec.idioma[rec.eleidioma][101]+"*",
+				rec.idioma[rec.eleidioma][148]+"*",rec.idioma[rec.eleidioma][25]+"*",
+				rec.idioma[rec.eleidioma][26]+"*",rec.idioma[rec.eleidioma][13]};
 		int[] fieldWidths = {15,17,7,7,8};
 
 		jtxt = new JTextField[fieldNames.length];
@@ -118,54 +118,53 @@ public class PnlNuevoProyecto extends JScrollPane{
 				case 0:
 					jpnl.add(new JLabel(fieldNames[i]),gbc);
 					gbc.gridwidth = GridBagConstraints.REMAINDER; 
+					jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);
+					
 					break;
 				case 1:
 					jpnl.add(new JLabel(fieldNames[i]),gbc);
 					gbc.gridwidth = GridBagConstraints.REMAINDER; 
-					
+					jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);
 					break;
 				case 2:
 					jpnl.add(new JLabel(fieldNames[i]),gbc);
+					CbAccion = new GpComboBox() ;
+					CbAccion.setPreferredSize(new Dimension(170,30));
+					conexion.Conectardb();
+					rs = conexion.ConsultaSQL("SELECT nombre FROM ACTIONS");
+					try {
+						while(rs.next()){
+							CbAccion.addItem(rs.getString(1));
+							}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					conexion.cerrarConexion();
 					gbc.gridwidth = GridBagConstraints.REMAINDER; 
+					jpnl.add(CbAccion,gbc);
 					
 					break;
 				case 3:
 					jpnl.add(new JLabel(fieldNames[i]),gbc);
 					gbc.gridwidth = GridBagConstraints.REMAINDER; 
-					
+					jpnl.add(jdc1,gbc); 
 					break;
 				case 4:
-					jpnl.add(pres = new JLabel(fieldNames[i]),gbc);
-					pres.setVisible(false);
-					
-					break;
-				case 5:
 					jpnl.add(new JLabel(fieldNames[i]),gbc);
 					gbc.gridwidth = GridBagConstraints.REMAINDER; 
-					
+					jpnl.add(jdc2,gbc);
 					break;
-				case 6:
-					
+				case 5:
+					jpnl.add(pres = new JLabel(fieldNames[i]),gbc);
+					pres.setVisible(false);
+					txtprecio = new JTextField(new JTextFieldLimit(10), null, 7);
+					gbc.gridwidth = GridBagConstraints.REMAINDER; 
+					jpnl.add(txtprecio,gbc); 
+					txtprecio.setVisible(false);
 					break;
 				}
 			
 		}
-		for(int  i = 0 ;i<fieldNames.length ;++i) {
-			gbc.gridwidth = GridBagConstraints.RELATIVE;
-			if (i == 4){jpnl.add(pres = new JLabel(fieldNames[i]),gbc);
-			pres.setVisible(false);
-			}else{jpnl.add(new JLabel(fieldNames[i]),gbc);}
-			if ( i != 2 || i != 3 || i!=4 ){gbc.gridwidth = GridBagConstraints.REMAINDER;  } 
-			if( i == 2 || i ==3 || i == 4){}else{ jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);}  
-			if(i == 4){
-				txtprecio = new JTextField(new JTextFieldLimit(10), null, 7);
-				jpnl.add(txtprecio,gbc); 
-				txtprecio.setVisible(false);
-			}
-			if (i == 2 ){  jpnl.add(jdc1,gbc); }
-			if (i == 3){  jpnl.add(jdc2,gbc); }
-		}// fin for
-
 		// KeyListener para solo insertar numeros en el campo txtprecio.
 		txtprecio.addKeyListener(new KeyAdapter(){
 			public void keyTyped(KeyEvent e){
@@ -287,7 +286,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 		jpnl.add(new JLabel(rec.idioma[rec.eleidioma][81]),gbc);
 		gbc.gridwidth = GridBagConstraints.REMAINDER; 
 		CbCoordinador = new GpComboBox() ; //ComboBox (Coordinador)
-		 
+		CbCoordinador.setPreferredSize(new Dimension(160,30));
 		jpnl.add(CbCoordinador,gbc);
 
 		// Evento doble click primer JLIST
@@ -573,5 +572,14 @@ public class PnlNuevoProyecto extends JScrollPane{
 		jpnl.setVisible(true);
 		this.setViewportView(pnlcontenedor);
 	}		
+	
+	/**
+	 *  Crear Todo el panel entero
+	 */
+	public void crear_panel(){
+		
+		
+	}
+	
 }
 

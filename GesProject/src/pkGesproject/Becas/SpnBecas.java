@@ -33,11 +33,10 @@ public class SpnBecas extends JSplitPane {
 	JPanel panel = new JPanel();
 	JTable jtblLateral;
 	Border empty = new EmptyBorder(0,0,0,0);
-    PnlModificarProyecto modpro = PnlModificarProyecto.Obtener_Instancia();
 	JScrollPane modificar,informes;
 	Component[] panlsStaff = {
 			new PnlAltaBecas(),
-			 modificar = new JScrollPane(modpro),
+			 modificar = new JScrollPane(),
 			 informes= new JScrollPane(new PnlInfProyecto())};
 	
 	public SpnBecas(){
