@@ -83,7 +83,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 				rec.idioma[rec.eleidioma][111]+"*",rec.idioma[rec.eleidioma][101]+"*"
 				,rec.idioma[rec.eleidioma][25]+"*",rec.idioma[rec.eleidioma][26]+"*"
 				,rec.idioma[rec.eleidioma][13]};
-		int[] fieldWidths = {15,15,7,7,8};
+		int[] fieldWidths = {15,30,7,7,8};
 
 		jtxt = new JTextField[fieldNames.length];
 		// limite de caracteres 
