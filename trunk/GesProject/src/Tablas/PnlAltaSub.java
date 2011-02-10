@@ -53,11 +53,11 @@ public class PnlAltaSub extends JScrollPane{
 	JTextField[] jtxt;
 	JLabel[] jlbl;
 	JButton jbtnaceptar, jbtncancelar;
-	JDateChooser jdc1,jdc2;
-	GpComboBox CmbWp = new GpComboBox();;
+	GpComboBox CmbSector = new GpComboBox();
+	GpComboBox CmbPais = new GpComboBox();
+	GpComboBox CmbProvincia = new GpComboBox();
 	ConexionDb conexion = new ConexionDb();
 	JTextArea textarea = new JTextArea();
-	JTextArea textarea2 = new JTextArea();
 	ResultSet rs;
 	String nomwp;
 	int indexwp;
@@ -75,8 +75,9 @@ public class PnlAltaSub extends JScrollPane{
 		panel.setLayout(new GridBagLayout());
 		  
 		String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][104],rec.idioma[rec.eleidioma][57],
-		   rec.idioma[rec.eleidioma][41],rec.idioma[rec.eleidioma][106],rec.idioma[rec.eleidioma][41], rec.idioma[rec.eleidioma][64]
+		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][4],
+		   rec.idioma[rec.eleidioma][46],rec.idioma[rec.eleidioma][48],
+		   rec.idioma[rec.eleidioma][64]
 		   };
 		int[] fieldWidths = {10,15,10,6,6,6};
 		
@@ -88,43 +89,25 @@ public class PnlAltaSub extends JScrollPane{
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = new Insets(20,0,15,0);
-		//panel.add(new JLabel("Alta Partner"),gbc);
 		
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(5,10,5,5);
 		
 		
-		//declaramos el campo que vamos a utilizar para a�adir las fechas
-	      jdc1 = new JDateChooser();
-	      jdc2 = new JDateChooser();
-	      jdc2.setDateFormatString("DD/MM/YYYY");
-	      jdc1.setDateFormatString("DD/MM/YYYY");
-	    
-	      
 		/**
 		 * Con el bucle for vamos creando tantos labels y textfields como 
 		 * nombres de campos hayamos metido en fieldNames.
 		 */
 	      
 	      
-	   //cuadro con scroll para las descripciones
-			
-	  		LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
-	   		textarea = (new JTextArea(3,18));
-	   		textarea.setLineWrap(true);
-	   		textarea.setDocument(lpd);
-	   		JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-	   		JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	   		
-	    
 		
 	  //cuadro con scroll para las observaciones
 
-	    	LimiteDocumento lpd2 = new LimiteDocumento(200); // Limite JTextArea
-	    	textarea2 = (new JTextArea(3,18));
-	    	textarea2.setDocument(lpd2);
-	    	textarea2.setLineWrap(true);
-	    	JScrollPane sp2 = new JScrollPane(textarea2,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+	    	LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
+	    	textarea = (new JTextArea(3,18));
+	    	textarea.setDocument(lpd);
+	    	textarea.setLineWrap(true);
+	    	JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 	    	JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    	
 	     
@@ -144,56 +127,73 @@ public class PnlAltaSub extends JScrollPane{
 		   	   	panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 		   		break;
 		   case (1):
-			   panel.add(CmbWp,gbc);
-			   CmbWp.setPreferredSize(new Dimension(140,30));
+			   panel.add(CmbSector,gbc);
+		   	   CmbSector.setPreferredSize(new Dimension(140,30));
 			   
 				/**
 				 * Creacion del JComboBox y a�adir los items.
 				 *Se conecta a la BD para realizar la consulta
 				 **/
 				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT nombre,id_wp FROM WORKPAQUETS");
+				rs = conexion.ConsultaSQL("SELECT sector,id_sector FROM SECTORES");
 				try {
 				while(rs.next()){
-					CmbWp.addItem(rs.getString(1));	
+					CmbSector.addItem(rs.getString(1));	
 					
 				}
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						}
+					conexion.cerrarConexion();
 			   	break;
+		
 		   case (2):
-		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);}
-		   		break;
-		   case (4):
-		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc2,gbc);}
-		   		break;
-		   case (5):
-		   		{gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp),gbc);}
-			   	break;
-		   case (6):
-		   		{gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp2),gbc);}
-		   		break;
-		   		
-		   }
-		   //Jformat
-		  /* if(i==1 ){
-				jtxt[i].addKeyListener(new KeyAdapter(){
-				   public void keyTyped(KeyEvent e){
-				      caracter = e.getKeyChar();
-				      if(((caracter < '0') ||(caracter > '9')) &&
-				         (caracter != KeyEvent.VK_BACK_SPACE) &&
-				         (caracter != '+') && (caracter != '(') && (caracter != ')')) {
-				         e.consume();  
-				      }
-				   }
-				});
+			   panel.add(CmbPais,gbc);
+		   	   CmbPais.setPreferredSize(new Dimension(140,30));
+			   
+				/**
+				 * Creacion del JComboBox y a�adir los items.
+				 *Se conecta a la BD para realizar la consulta
+				 **/
+				conexion.Conectardb();
+				rs = conexion.ConsultaSQL("SELECT pais,id_pais FROM PAIS");
+				try {
+				while(rs.next()){
+					CmbPais.addItem(rs.getString(1));	
+					
 				}
-		   
-		  */
-		}//fin for
-	  /*  
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						}
+					conexion.cerrarConexion();
+					break;			
+		   	case (3):
+		   		panel.add(CmbProvincia,gbc);
+		   		CmbProvincia.setPreferredSize(new Dimension(140,30));
+			   
+				/**
+				 * Creacion del JComboBox y a�adir los items.
+				 *Se conecta a la BD para realizar la consulta
+				 **/
+				conexion.Conectardb();
+				rs = conexion.ConsultaSQL("SELECT estado,id_provincias,id_pais FROM PROVINCIAS");
+				try {
+				while(rs.next()){
+					CmbProvincia.addItem(rs.getString(1));	
+					
+				}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						}
+			   	break;			
+			   case (4):
+				{gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp),gbc);}		   		break;
+		   }
+		}
+		/*  
 		**
 		 * Creamos los dos botones para este panel 
 		 */
@@ -215,7 +215,7 @@ public class PnlAltaSub extends JScrollPane{
 					conexdb.Conectardb();
 					//nomwp = cbtipo.getSelectedItem().toString();
 					
-					rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS W WHERE W.nombre like'"+ CmbWp.getSelectedItem().toString()+"'" );
+					rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS W WHERE W.nombre like'"+ CmbSector.getSelectedItem().toString()+"'" );
 					String id_wp = null;
 					try {
 						rs.next();
@@ -224,37 +224,19 @@ public class PnlAltaSub extends JScrollPane{
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-									
-					// cambiar fecha a sql
-					  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
-					  java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
-					
-			//if (sqlDate1.getTime()< sqlDate2.getTime()){
-					conexdb.executeUpdate("INSERT INTO TAREAS (nombre, id_wp, descripcion, presupuesto,f_ini, f_fin, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+id_wp+"','"+textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
-					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
-					conexdb.cerrarConexion();
+
 				}
-				
-				jdc1.setDate(null);
-				jdc2.setDate(null);
+
 				textarea.setText(null);
-				textarea2.setText(null);
-			//}else{
-				//JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
-				// Marcar campo FECHA con error en ROJO 
-				//jdc2.setBackground(Color.red);
-		
-		//}
+
 			
 			// Borrar cuando damos al boton cancelar
 			if( e.getActionCommand().equals("cancelar")){
 				for(int i=0;i<2;++i) {	
 					jtxt[i].setText("");
 					}	
-				jdc1.setDate(null);
-				jdc2.setDate(null);
+
 				textarea.setText(null);
-				textarea2.setText(null);
 				
 				// Borrar cuando termine de añadir
 				for(int i=0;i<2;++i) {	
@@ -274,3 +256,4 @@ public class PnlAltaSub extends JScrollPane{
 		
 	}
 }
+
