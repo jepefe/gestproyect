@@ -1,6 +1,4 @@
-/**
- /**
- * Esta clase se encarga de realizar el alta de nuevas tareas 
+/** Esta clase se encarga de realizar el alta de nuevas tareas 
  * 
  * @author Félix Perona G
  */
