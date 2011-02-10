@@ -87,7 +87,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 
 		jtxt = new JTextField[fieldNames.length];
 		// limite de caracteres 
-		int [] limite = {20,35,7,10,10}; 
+		int [] limite = {20,50,7,10,10}; 
 		// Campos Calendario y formato
 		jdc1 = new JDateChooser();
 		jdc2 = new JDateChooser();
