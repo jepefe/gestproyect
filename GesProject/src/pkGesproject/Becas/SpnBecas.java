@@ -36,7 +36,7 @@ public class SpnBecas extends JSplitPane {
     PnlModificarProyecto modpro = PnlModificarProyecto.Obtener_Instancia();
 	JScrollPane modificar,informes;
 	Component[] panlsStaff = {
-			new PnlNuevoProyecto(),
+			new PnlAltaBecas(),
 			 modificar = new JScrollPane(modpro),
 			 informes= new JScrollPane(new PnlInfProyecto())};
 	
