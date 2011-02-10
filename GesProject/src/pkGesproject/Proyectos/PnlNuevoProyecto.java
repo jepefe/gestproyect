@@ -64,7 +64,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 	int cuenta =0; // cuenta para array dinamica.
 	int idPro; // total partners. para saber ID.
 	int id_partner,id_partner2; // id partner. // id para poder borrar
-	public GpComboBox CbCoordinador;
+	public GpComboBox CbCoordinador, CbCaccion;
 	int estado = 1;
 	Runnable servdisp;
 	MouseListener mouseListener;
@@ -110,7 +110,46 @@ public class PnlNuevoProyecto extends JScrollPane{
 		mensaje.add(alerta);
 		mensaje.setBackground(Color.decode("#D0E495"));
 		mensaje.setVisible(false);
-
+		
+		for(int  i = 0 ;i<fieldNames.length ;++i) {
+			gbc.gridwidth = GridBagConstraints.RELATIVE;
+			
+			switch(i){
+				case 0:
+					jpnl.add(new JLabel(fieldNames[i]),gbc);
+					gbc.gridwidth = GridBagConstraints.REMAINDER; 
+					break;
+				case 1:
+					jpnl.add(new JLabel(fieldNames[i]),gbc);
+					gbc.gridwidth = GridBagConstraints.REMAINDER; 
+					
+					break;
+				case 2:
+					jpnl.add(new JLabel(fieldNames[i]),gbc);
+					gbc.gridwidth = GridBagConstraints.REMAINDER; 
+					
+					break;
+				case 3:
+					jpnl.add(new JLabel(fieldNames[i]),gbc);
+					gbc.gridwidth = GridBagConstraints.REMAINDER; 
+					
+					break;
+				case 4:
+					jpnl.add(pres = new JLabel(fieldNames[i]),gbc);
+					pres.setVisible(false);
+					
+					break;
+				case 5:
+					jpnl.add(new JLabel(fieldNames[i]),gbc);
+					gbc.gridwidth = GridBagConstraints.REMAINDER; 
+					
+					break;
+				case 6:
+					
+					break;
+				}
+			
+		}
 		for(int  i = 0 ;i<fieldNames.length ;++i) {
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
 			if (i == 4){jpnl.add(pres = new JLabel(fieldNames[i]),gbc);
@@ -122,9 +161,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 				txtprecio = new JTextField(new JTextFieldLimit(10), null, 7);
 				jpnl.add(txtprecio,gbc); 
 				txtprecio.setVisible(false);
-				
 			}
-			System.out.println("Estoy en el final del for");
 			if (i == 2 ){  jpnl.add(jdc1,gbc); }
 			if (i == 3){  jpnl.add(jdc2,gbc); }
 		}// fin for
