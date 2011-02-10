@@ -298,6 +298,7 @@ public class PnlModificarProyecto extends JPanel{
 						mod.pres.setVisible(true);
 						modificar.setModal(true);
 						modificar.setLocationRelativeTo(null);
+						mod.jtxt[0].removeFocusListener(mod.foco);
 	/*
 	 *
 	 * Introducir datos al panel para poder modificar
