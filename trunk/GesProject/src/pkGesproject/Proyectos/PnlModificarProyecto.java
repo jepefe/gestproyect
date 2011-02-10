@@ -371,6 +371,8 @@ public class PnlModificarProyecto extends JPanel{
             jbtneliminar.addActionListener(event);
             
             jtext.addKeyListener(accion);  
+            this.setVisible(true);
+            panel.setVisible(true);
     }
     /**
      * Este metodo coje la matriz datos, descarga de la BD los datos de los partners y genera un tablemodel, el cual es devuelto por
