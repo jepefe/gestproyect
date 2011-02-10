@@ -60,24 +60,28 @@ public class PnlAlta_equipamientos extends JPanel{
 			   rec.idioma[rec.eleidioma][118]+"*",rec.idioma[rec.eleidioma][119]+"*"
 	};
 	
+	JFrame aviso = new JFrame();
 	JPanel panel = new JPanel();
 	JPanel contenedor = new JPanel();
 	JPanel mesage = new JPanel();
+	
+	int permetir_alta = 0;
 		
 	public PnlAlta_equipamientos (){
-		//Llamamos la medoto de la interfaz
+		//Llamamos al medoto de la interfaz
 		crear_interfaz();
 		
 		ActionListener accion = new ActionListener(){
 
 		public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(e.getActionCommand().equals("aceptar")){
+				validar_campos();
+				if(e.getActionCommand().equals("aceptar") && permetir_alta == 0){
 					ConexionDb conexdb = new ConexionDb();
 					conexdb.Conectardb();
 					
-				// cambiar fecha a sql
-					  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
+					// cambiar fecha a sql
+					java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 
 					conexdb.executeUpdate("INSERT INTO EQUIPAMIENTOS (partner,descripcion,justificacion,wp,coste_total,fecha,compra_alguiler,grado_depreciacion,meses_usara,grado_utilizacion,costes_subvencionados ) VALUES ('"
 							+ Integer.toString(CmbPar.getSelectedIndex())+"','"+textdescripcion.getText()+"','"+textjustificacion.getText()+"','"+Integer.toString(Cmbwp.getSelectedIndex())+"','"+jtxt[0].getText()+"','"+sqlDate1+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"')");
@@ -88,9 +92,29 @@ public class PnlAlta_equipamientos extends JPanel{
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-						}
+					}
+					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
 					
-		}
+					//limpiamos los campos despues de dar de alta
+					for(int i=0;i<2;++i) {	
+						jtxt[i].setText("");
+						}	
+					jdc1.setDate(null);
+					textdescripcion.setText(null);
+					textjustificacion.setText(null);
+
+					for(int i=0;i<fieldNames.length;++i) {	
+						jtxt[i].setText("");
+					}
+					CmbPar.setSelectedItem(null);
+					Cmbwp.setSelectedItem(null);
+					mesage.setVisible(false);
+				}else{
+					alerta.setText(rec.idioma[rec.eleidioma][79]);
+					mesage.setBackground(Color.decode("#ec8989"));
+					mesage.setVisible(true);
+					permetir_alta = 0;
+				}
 			
 			// Borrar cuando damos al boton cancelar
 			if( e.getActionCommand().equals("cancelar")){
@@ -104,7 +128,10 @@ public class PnlAlta_equipamientos extends JPanel{
 				// Borrar cuando termine de añadir
 				for(int i=0;i<fieldNames.length;++i) {	
 					jtxt[i].setText("");
-					}	
+					}
+				CmbPar.setSelectedItem(null);
+				Cmbwp.setSelectedItem(null);
+				mesage.setVisible(false);
 			}
 		}
 			
@@ -142,7 +169,7 @@ public class PnlAlta_equipamientos extends JPanel{
 		
 		//declaramos el campo que vamos a utilizar para anadir las fechas
 	      jdc1 = new JDateChooser();
-	      jdc1.setDateFormatString("DD/MM/YYYY");
+	      jdc1.setDateFormatString("dd/MM/yyyy");
 	    
 	      
 		/**
@@ -179,7 +206,8 @@ public class PnlAlta_equipamientos extends JPanel{
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				CmbPar.setPreferredSize(new Dimension(177,30));
-				this.add(CmbPar,gbc);//fin combo partner	
+				this.add(CmbPar,gbc);//fin combo partner
+				CmbPar.setSelectedItem(null);
 				
 				//Creo el textarea descripcion
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
@@ -225,6 +253,7 @@ public class PnlAlta_equipamientos extends JPanel{
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				Cmbwp.setPreferredSize(new Dimension(177,30));
 				this.add(Cmbwp,gbc);//fin combo WP	
+				Cmbwp.setSelectedItem(null);
 
 				}//Fin del if
 			
@@ -261,4 +290,25 @@ public class PnlAlta_equipamientos extends JPanel{
 		this.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
 		
 	}
+	
+	public void validar_campos(){
+		
+		for(int i=0;i<fieldNames.length;++i) {
+			if (jtxt[i].getText().length() > 0){
+			}else{
+				permetir_alta = 1;
+			}
+			if((CmbPar.getSelectedItem() != null) && (Cmbwp.getSelectedItem() != null) && (jdc1.getDate() != null) && (textdescripcion.getText().length() > 1) && (textjustificacion.getText().length() > 1)){	
+			
+			}else{
+				permetir_alta = 1;
+			}
+			
+	}
+		
+	}
+	
+	
+	
+	
 }
