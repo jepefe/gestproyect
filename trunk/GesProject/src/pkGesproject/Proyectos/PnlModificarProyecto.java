@@ -299,11 +299,9 @@ public class PnlModificarProyecto extends JPanel{
 						modificar.setModal(true);
 						modificar.setLocationRelativeTo(null);
 						mod.jtxt[0].removeFocusListener(mod.foco);
-	/*
-	 *
-	 * Introducir datos al panel para poder modificar
-	 * 
-	 */
+						/*
+						 * Introducir datos al panel para poder modificar
+						 */
 						conexion.Conectardb();
 				    	rs = conexion.ConsultaSQL("SELECT id_pro, p.nombre,p.num_contrato, p.descripcion,p.presupuesto, p.f_ini, p.f_fin FROM PROYECTOS as p WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
 							try {									
@@ -328,8 +326,26 @@ public class PnlModificarProyecto extends JPanel{
 									mod.modelo.addElement(rs.getString(1));
 									mod.CbCoordinador.addItem(rs.getString(1));
 									mod.modelo2.removeElement(rs.getString(1));
-									
-									
+								}					
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							rs = conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER as p inner join PARTNER_PROYECTOS as pp on p.cod_part = pp.cod_part WHERE pp.id_pro = '"+id_pro+"'AND pp.coordinador ="+1+"");
+							try {									
+								while(rs.next()){
+									mod.CbCoordinador.setSelectedItem(rs.getString(1));
+								}					
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							conexion.cerrarConexion();
+							
+							rs = conexion.ConsultaSQL("SELECT a.nombre FROM PROYECTOS as p inner join ACTIONS as a  on a.id_accion = p.action WHERE p.id_pro = '"+id_pro+"'");
+							try {									
+								while(rs.next()){
+									mod.CbAccion.setSelectedItem(rs.getString(1));
 								}					
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block

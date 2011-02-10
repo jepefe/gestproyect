@@ -76,6 +76,20 @@ public class PnlNuevoProyecto extends JScrollPane{
 	 */
 
 	public PnlNuevoProyecto()  {
+
+		// creamos el panel.
+		crear_panel();
+		// accion del panel
+		accion_evento();		
+		aviso_msg();
+
+	}		
+
+	/**
+	 *  Crear Todo el panel 
+	 */
+
+	public void crear_panel(){
 		this.setBorder(empty);
 		jpnl.setLayout(new GridBagLayout());
 		// Array  de palabras, Fecha inico, Fecha fin, etc.
@@ -110,60 +124,60 @@ public class PnlNuevoProyecto extends JScrollPane{
 		mensaje.add(alerta);
 		mensaje.setBackground(Color.decode("#D0E495"));
 		mensaje.setVisible(false);
-		
+
 		for(int  i = 0 ;i<fieldNames.length ;++i) {
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
-			
+
 			switch(i){
-				case 0:
-					jpnl.add(new JLabel(fieldNames[i]),gbc);
-					gbc.gridwidth = GridBagConstraints.REMAINDER; 
-					jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);
-					
-					break;
-				case 1:
-					jpnl.add(new JLabel(fieldNames[i]),gbc);
-					gbc.gridwidth = GridBagConstraints.REMAINDER; 
-					jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);
-					break;
-				case 2:
-					jpnl.add(new JLabel(fieldNames[i]),gbc);
-					CbAccion = new GpComboBox() ;
-					CbAccion.setPreferredSize(new Dimension(170,30));
-					conexion.Conectardb();
-					rs = conexion.ConsultaSQL("SELECT nombre FROM ACTIONS");
-					try {
-						while(rs.next()){
-							CbAccion.addItem(rs.getString(1));
-							}
-					} catch (SQLException e) {
-						e.printStackTrace();
+			case 0:
+				jpnl.add(new JLabel(fieldNames[i]),gbc);
+				gbc.gridwidth = GridBagConstraints.REMAINDER; 
+				jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);
+
+				break;
+			case 1:
+				jpnl.add(new JLabel(fieldNames[i]),gbc);
+				gbc.gridwidth = GridBagConstraints.REMAINDER; 
+				jpnl.add(jtxt[i] = new JTextField( new JTextFieldLimit(limite[i]), null, fieldWidths[i]),gbc);
+				break;
+			case 2:
+				jpnl.add(new JLabel(fieldNames[i]),gbc);
+				CbAccion = new GpComboBox() ;
+				CbAccion.setPreferredSize(new Dimension(170,30));
+				conexion.Conectardb();
+				rs = conexion.ConsultaSQL("SELECT nombre FROM ACTIONS");
+				try {
+					while(rs.next()){
+						CbAccion.addItem(rs.getString(1));
 					}
-					conexion.cerrarConexion();
-					gbc.gridwidth = GridBagConstraints.REMAINDER; 
-					jpnl.add(CbAccion,gbc);
-					
-					break;
-				case 3:
-					jpnl.add(new JLabel(fieldNames[i]),gbc);
-					gbc.gridwidth = GridBagConstraints.REMAINDER; 
-					jpnl.add(jdc1,gbc); 
-					break;
-				case 4:
-					jpnl.add(new JLabel(fieldNames[i]),gbc);
-					gbc.gridwidth = GridBagConstraints.REMAINDER; 
-					jpnl.add(jdc2,gbc);
-					break;
-				case 5:
-					jpnl.add(pres = new JLabel(fieldNames[i]),gbc);
-					pres.setVisible(false);
-					txtprecio = new JTextField(new JTextFieldLimit(10), null, 7);
-					gbc.gridwidth = GridBagConstraints.REMAINDER; 
-					jpnl.add(txtprecio,gbc); 
-					txtprecio.setVisible(false);
-					break;
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
-			
+				conexion.cerrarConexion();
+				gbc.gridwidth = GridBagConstraints.REMAINDER; 
+				jpnl.add(CbAccion,gbc);
+
+				break;
+			case 3:
+				jpnl.add(new JLabel(fieldNames[i]),gbc);
+				gbc.gridwidth = GridBagConstraints.REMAINDER; 
+				jpnl.add(jdc1,gbc); 
+				break;
+			case 4:
+				jpnl.add(new JLabel(fieldNames[i]),gbc);
+				gbc.gridwidth = GridBagConstraints.REMAINDER; 
+				jpnl.add(jdc2,gbc);
+				break;
+			case 5:
+				jpnl.add(pres = new JLabel(fieldNames[i]),gbc);
+				pres.setVisible(false);
+				txtprecio = new JTextField(new JTextFieldLimit(10), null, 7);
+				gbc.gridwidth = GridBagConstraints.REMAINDER; 
+				jpnl.add(txtprecio,gbc); 
+				txtprecio.setVisible(false);
+				break;
+			}
+
 		}
 		// KeyListener para solo insertar numeros en el campo txtprecio.
 		txtprecio.addKeyListener(new KeyAdapter(){
@@ -176,40 +190,9 @@ public class PnlNuevoProyecto extends JScrollPane{
 				}
 			}
 		});   
-		foco = new FocusListener(){
+		// Foco del campo jtxt[0] (campo nombre).
+		foco_1();
 
-			@Override
-			public void focusGained(FocusEvent arg0) {
-				// TODO Auto-generated method stub					
-			}
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				// TODO Auto-generated method stub
-				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT p.nombre FROM PROYECTOS as p WHERE p.nombre = '"+jtxt[0].getText()+"'");
-				try {
-					if(rs.next() || jtxt[0].getText().equals("")){
-						alerta.setText(rec.idioma[rec.eleidioma][75]);
-						mensaje.setBackground(Color.decode("#ec8989"));
-						mensaje.setVisible(true);
-						jtxt[0].requestFocus();
-						jtxt[0].selectAll();
-						//JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][75]);
-					}else{
-						alerta.setText(rec.idioma[rec.eleidioma][120]);
-						mensaje.setBackground(Color.decode("#D0E495"));
-						mensaje.setVisible(true);
-					}
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				conexion.cerrarConexion();
-			}
-
-		};
-
-		jtxt[0].addFocusListener(foco);
 
 		// Label 
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
@@ -224,9 +207,6 @@ public class PnlNuevoProyecto extends JScrollPane{
 		JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		jpnl.add((sp),gbc);
-
-
-
 
 		// Conexion 1 BBDD
 		conexion.Conectardb();
@@ -290,37 +270,9 @@ public class PnlNuevoProyecto extends JScrollPane{
 		jpnl.add(CbCoordinador,gbc);
 
 		// Evento doble click primer JLIST
-		MouseListener mouseListener = new MouseAdapter() {
-
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					if(listaP.getSelectedValue().equals("")){}else{
-					modelo.addElement(listaP.getSelectedValue());
-					CbCoordinador.addItem(listaP.getSelectedValue());		    
-					modelo2.removeElement(listaP.getSelectedValue());
-					}
-				}
-			}
-		};
-		listaP.addMouseListener(mouseListener);
-
-		modelo.toArray();
-
-
+		mouseadapter1();
 		// Evento doble click segundo  JLIST (lsitaP2)
-		MouseListener mouseListener2 = new MouseAdapter() {
-
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					if(listaP2.getSelectedValue().equals("")){}else{
-					modelo2.addElement(listaP2.getSelectedValue());
-					CbCoordinador.removeItem(listaP2.getSelectedValue());	
-					modelo.removeElement(listaP2.getSelectedValue());
-					}
-				}
-			}
-		};
-		listaP2.addMouseListener(mouseListener2);
+		mouseadapter2();
 
 		// botones Aceptar Modificar
 		gbc.anchor = GridBagConstraints.EAST;
@@ -343,13 +295,86 @@ public class PnlNuevoProyecto extends JScrollPane{
 		jbtncancelar2.setVisible(false);
 		jbtnaceptar2.setVisible(false);
 
-
 		conexion.cerrarConexion();
+	}
+	/**
+	 * Metodo para añadir un foco al campo Nombre.
+	 */
 
+	public void foco_1(){
+		foco = new FocusListener(){
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				// TODO Auto-generated method stub					
+			}
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				// TODO Auto-generated method stub
+				conexion.Conectardb();
+				rs = conexion.ConsultaSQL("SELECT p.nombre FROM PROYECTOS as p WHERE p.nombre = '"+jtxt[0].getText()+"'");
+				try {
+					if(rs.next() || jtxt[0].getText().equals("")){
+						alerta.setText(rec.idioma[rec.eleidioma][75]);
+						mensaje.setBackground(Color.decode("#ec8989"));
+						mensaje.setVisible(true);
+						jtxt[0].requestFocus();
+						jtxt[0].selectAll();
+						//JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][75]);
+					}else{
+						alerta.setText(rec.idioma[rec.eleidioma][120]);
+						mensaje.setBackground(Color.decode("#D0E495"));
+						mensaje.setVisible(true);
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				conexion.cerrarConexion();
+			}
+		};
+		jtxt[0].addFocusListener(foco);
 
-		// Conectar Base de datos y pasar datos...
+	}
+	/**
+	 * Mouse adapter de la lista 1
+	 */
+	public void mouseadapter1(){
+		MouseListener mouseListener = new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					if(listaP.getSelectedValue().equals("")){}else{
+						modelo.addElement(listaP.getSelectedValue());
+						CbCoordinador.addItem(listaP.getSelectedValue());		    
+						modelo2.removeElement(listaP.getSelectedValue());
+					}
+				}
+			}
+		};
+		listaP.addMouseListener(mouseListener);
+		modelo.toArray();
+	}
+	/**
+	 * Mous adapter de la lista 2
+	 */
+	public void mouseadapter2(){
+		MouseListener mouseListener2 = new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					if(listaP2.getSelectedValue().equals("")){}else{
+						modelo2.addElement(listaP2.getSelectedValue());
+						CbCoordinador.removeItem(listaP2.getSelectedValue());	
+						modelo.removeElement(listaP2.getSelectedValue());
+					}
+				}
+			}
+		};
+		listaP2.addMouseListener(mouseListener2);
+	}
+	/**
+	 *  Metodo donde contiene todas las acciones del panel.
+	 */
+	public void accion_evento(){
 		ActionListener accion = new ActionListener(){
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -382,7 +407,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 								java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 								java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 								if (sqlDate1.getTime()< sqlDate2.getTime()){
-									conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion,estado, f_ini, f_fin, num_contrato) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+estado+"','"+sqlDate1+"','"+sqlDate2+"','"+ jtxt[1].getText()+"')");
+									conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion,estado, f_ini, f_fin, num_contrato,action) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+estado+"','"+sqlDate1+"','"+sqlDate2+"','"+ jtxt[1].getText()+"','"+(CbAccion.getSelectedIndex()+1)+"')");
 
 									/*
 									 * Consegir id proyecto
@@ -414,11 +439,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 										conexdb.executeUpdate("INSERT INTO PARTNER_PROYECTOS(cod_part, id_pro,coordinador) VALUES ('"+id_partner+"','"+idPro+"','"+cord+"')" );	
 
 									}
-
-
-
 									conexion.cerrarConexion();
-
 									servdisp = new Runnable(){
 
 										@Override
@@ -451,6 +472,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 									jtxt[1].setText("");
 									jdc1.setDate(null);
 									jdc2.setDate(null);
+									CbAccion.setSelectedItem(null);
 									textarea.setText(null);		
 									for (int i = 0 ; i<listaP2.getModel().getSize(); i++){
 										modelo2.addElement(listaP2.getModel().getElementAt(i));
@@ -468,17 +490,19 @@ public class PnlNuevoProyecto extends JScrollPane{
 							// TODO Auto-generated catch block
 							f.printStackTrace();
 						}
-					
+
 					}
 				}// Borrar cuando damos al boton borrar datos
 				if( e.getActionCommand().equals("cancelar")){
 
 					System.out.println(jtxt[0].getText());	
 					jtxt[0].setText("");
+					jtxt[1].setText("");
 					jdc1.setDate(null);
 					jdc2.setDate(null);
 					textarea.setText(null);
 					CbCoordinador.removeAllItems();
+					CbAccion.setSelectedItem(null);
 					for (int i = 0 ; i<listaP2.getModel().getSize(); i++){
 						modelo2.addElement(listaP2.getModel().getElementAt(i));
 					}
@@ -497,7 +521,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 					java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 
 					if (sqlDate1.getTime()< sqlDate2.getTime()){
-						conexdb.executeUpdate("UPDATE PROYECTOS SET nombre='"+ jtxt[0].getText()+"', descripcion='"+textarea.getText()+"',estado='"+estado+"',presupuesto='"+txtprecio.getText()+"',f_ini='"+sqlDate1+"',f_fin='"+sqlDate2+"' WHERE id_pro ="+PnlModificarProyecto.id_pro+"");			
+						conexdb.executeUpdate("UPDATE PROYECTOS SET nombre='"+ jtxt[0].getText()+"', descripcion='"+textarea.getText()+"',estado='"+estado+"',presupuesto='"+txtprecio.getText()+"',f_ini='"+sqlDate1+"',f_fin='"+sqlDate2+"',action='"+(CbAccion.getSelectedIndex()+1)+ "'WHERE id_pro ="+PnlModificarProyecto.id_pro+"");			
 					}
 					for (int i = 0 ; i<listaP.getModel().getSize(); i++){
 
@@ -513,7 +537,6 @@ public class PnlNuevoProyecto extends JScrollPane{
 
 					}//fin for
 					for (int i = 0 ; i<listaP2.getModel().getSize(); i++){
-						System.out.println("Numero dentro for:"+listaP2.getModel().getSize());
 						rs = conexion.ConsultaSQL("SELECT p.cod_part From PARTNER as p WHERE p.nombre like '"+modelo.getElementAt(i)+"'");
 						try {
 							rs.next();
@@ -522,18 +545,14 @@ public class PnlNuevoProyecto extends JScrollPane{
 						} catch (SQLException d) {
 							// TODO Auto-generated catch block
 							d.printStackTrace();}
-						System.out.println("id_partner2:"+id_partner2);
+						
 						int cord;
-						if( CbCoordinador.getSelectedItem()== modelo.getElementAt(i)){
+						if( CbCoordinador.getSelectedItem().equals(modelo.getElementAt(i))){
 							cord = 1;
 						}else{
 							cord = 0;
 						}
-						conexdb.executeUpdate("INSERT INTO PARTNER_PROYECTOS (cod_part, id_pro,coordinador) VALUES('"+id_partner2+"','"+PnlModificarProyecto.id_pro+"','"+cord+"')");
-						/*
-						 * Salen errores porque esta duplicado y no puede duplicar la entrada. Funciona Bien.	
-						 */
-
+						conexdb.executeUpdate("UPDATE PARTNER_PROYECTOS SET coordinador="+cord+" WHERE cod_part="+id_partner2+" AND  id_pro ="+PnlModificarProyecto.id_pro+"");			
 					}
 					conexion.cerrarConexion();
 					conexdb.cerrarConexion();
@@ -552,7 +571,6 @@ public class PnlNuevoProyecto extends JScrollPane{
 				modpro.jtblLateral.repaint();
 				modpro.llena = false;
 			}
-
 		};
 		jbtnaceptar.setActionCommand("aceptar");
 		jbtnaceptar.addActionListener(accion);
@@ -562,24 +580,18 @@ public class PnlNuevoProyecto extends JScrollPane{
 		jbtnaceptar2.addActionListener(accion);
 		jbtncancelar2.setActionCommand("cancelar2");
 		jbtncancelar2.addActionListener(accion);
-		/*
-		 * Panel añadir mensaje.	
-		 */
+	}
+	/**
+	 *  Metodo para añadir el Panel del  mensaje.	
+	 */
+	public void aviso_msg(){
+
 		pnlcontenedor.setLayout(new BorderLayout());
 		pnlcontenedor.setOpaque(true);
 		pnlcontenedor.add(mensaje,BorderLayout.NORTH);
 		pnlcontenedor.add(jpnl,BorderLayout.CENTER);
 		jpnl.setVisible(true);
 		this.setViewportView(pnlcontenedor);
-	}		
-	
-	/**
-	 *  Crear Todo el panel entero
-	 */
-	public void crear_panel(){
-		
-		
 	}
-	
-}
 
+}
