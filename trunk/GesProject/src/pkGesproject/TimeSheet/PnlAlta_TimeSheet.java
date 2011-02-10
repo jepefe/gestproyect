@@ -23,6 +23,8 @@ import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -30,12 +32,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
@@ -69,6 +73,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 	JPanel Jproyecto = new JPanel();
 	JPanel Jtarea = new JPanel();
 	JPanel Jtabla = new JPanel();
+	JPanel Jcentral = new JPanel();
 	JScrollPane JScroll; 
 	int cuenta = 0;
 	int columnas;
@@ -77,6 +82,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 	final String colu[] = {rec.idioma[rec.eleidioma][95],rec.idioma[rec.eleidioma][129],rec.idioma[rec.eleidioma][40],rec.idioma[rec.eleidioma][97]};
 	String nomsta = "";
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
+	Border blackline;
 	
 	/*final Object[][] info ={
 			{"15/05/2010","tarea manolo", "wp2", "25"},
@@ -98,7 +104,62 @@ public class PnlAlta_TimeSheet extends JPanel{
 	String nombrepro = null;
 	int Tarea, workpaquet, vacio = 0;
 	
+
+	JRadioButton combota = new JRadioButton();
+	JRadioButton txttare = new JRadioButton();	
+	ButtonGroup group = new ButtonGroup();
+	
+	
+	
+
 	public PnlAlta_TimeSheet(){
+		
+		blackline = BorderFactory.createLineBorder(Color.black);
+		Jproyecto.setBorder(blackline);
+		Jtarea.setBorder(blackline);
+		TitledBorder title;
+		title = BorderFactory.createTitledBorder("Proyecto");
+		Jproyecto.setBorder(title);
+		title = BorderFactory.createTitledBorder("Tarea");
+		Jtarea.setBorder(title);
+		
+		
+		/**
+		 * se ponen las propiedades a los radio button
+		 */
+		
+		combota.setMnemonic('a');
+		txttare.setMnemonic('b');
+		combota.setSelected(true);
+		
+		/**
+		 * se añaden los radio button a un grupo 
+		 */
+	    group.add(combota);
+	    group.add(txttare);
+
+	    /**
+	     * se ponen los action de los radio
+	     */
+	    
+	    ActionListener myListener = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (combota.isSelected() == false){
+					jtxtta[1].setVisible(true);
+					CmbTareas.setVisible(false);
+				}else{
+					jtxtta[1].setVisible(false);
+					CmbTareas.setVisible(true);
+				}
+			}
+	    	
+	    };
+	    combota.addActionListener(myListener);
+	    txttare.addActionListener(myListener);
+
 		
     	/**
     	 * Cargamos los array y la tabla con los datos de la bd
@@ -124,7 +185,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 		Jproyecto.setLayout(new GridBagLayout());
 		Jtarea.setLayout(new GridBagLayout());
 		Jtabla.setLayout(new GridBagLayout());
-		
+		Jcentral.setLayout(new GridBagLayout());
 		datos = new String[Tarea][workpaquet];
 		
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -137,7 +198,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 		gbc.insets = new Insets(5,10,5,5);
 		
 
-		jtblTime.setPreferredScrollableViewportSize(new Dimension(816,200));
+		jtblTime.setPreferredScrollableViewportSize(new Dimension(890,200));
 		final JScrollPane jspntabla = new JScrollPane(jtblTime);
 	    JScrollPane scrollpanel = new JScrollPane(jtblTime);
 		
@@ -247,7 +308,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 	   							CmbPart.setSelectedItem(null);
 	   								conexion.cerrarConexion();
 				   break;
-			   case (3):
+			   case (3)://combo staff
 				gbt.insets = new Insets(10,17,10,5);
 				gbt.gridx = 2; // El área de texto empieza en la columna
 				gbt.gridy = 1; // El área de texto empieza en la fila
@@ -325,6 +386,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 					gbt.gridx = 0; // El área de texto empieza en la columna
 					gbt.gridy = 0; // El área de texto empieza en la fila
 					//gbc.gridwidth = GridBagConstraints.RELATIVE;
+					gbt.anchor = GridBagConstraints.WEST;
 					Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbt);
 					gbt.insets = new Insets(10,0,10,0);
 					gbt.gridx = 1; // El área de texto empieza en la columna
@@ -341,8 +403,27 @@ public class PnlAlta_TimeSheet extends JPanel{
 					gbt.insets = new Insets(10,0,10,0);
 					gbt.gridx = 1; // El área de texto empieza en la columna
 			   		Jtarea.add(CmbTareas,gbt);
-			   		CmbTareas.setPreferredSize(new Dimension(140,30));
-			   
+			   		CmbTareas.setPreferredSize(new Dimension(230,30));
+			   		Jtarea.add(jtxtta[i]=new JTextField(fieldWidths[i]),gbt);
+			   		gbt.gridy = 0; // El área de texto empieza en la fila
+			   		gbt.gridx = 2; // El área de texto empieza en la columna
+			   		gbt.anchor = GridBagConstraints.EAST;
+			   		Jtarea.add(combota,gbt);
+			   		gbt.gridx = 3; // El área de texto empieza en la columna
+			   		gbt.insets = new Insets(0,0,0,0);
+			   		gbt.anchor = GridBagConstraints.WEST;
+			   		Jtarea.add(jlblta[i]=new JLabel("Automático"),gbt);
+			   		
+			   		gbt.gridx = 4; // El área de texto empieza en la columna
+			   		gbt.anchor = GridBagConstraints.EAST;
+			   		Jtarea.add(txttare,gbt);
+			   		
+			   		gbt.gridx = 5; // El área de texto empieza en la columna
+			   		gbt.anchor = GridBagConstraints.WEST;
+			   		Jtarea.add(jlblta[i]=new JLabel("Manual"),gbt);
+			   		jtxtta[i].setVisible(false);
+					JTextFieldLimit ljtxtta= new JTextFieldLimit(20);
+					jtxtta[i].setDocument(ljtxtta);
 			   		conexion.Conectardb();
 			   		rs = conexion.ConsultaSQL("SELECT nombre,id_task FROM TAREAS ORDER BY nombre");
 			   		try {
@@ -416,6 +497,8 @@ public class PnlAlta_TimeSheet extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if (CmbTareas.getSelectedItem() != null){
+					jtxtta[1].disable();
+					
 					vacio = 2;
 					String nomwp = null;
 					//para las tareas
@@ -443,6 +526,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 					}
 					CmbWorkpaquets.setSelectedItem(nomwp);
 					conexion.cerrarConexion();
+				}else{
+						jtxtta[1].enable();
+					
 				}
 			}
 	    	  
@@ -508,18 +594,17 @@ public class PnlAlta_TimeSheet extends JPanel{
 	    	  
 	      };
 	      	//gbc.gridwidth = GridBagConstraints.RELATIVE;
-	      	gbt.gridx = 8; // El área de texto empieza en la columna
+	      	gbt.gridx = 7; // El área de texto empieza en la columna
 	   		gbt.gridy = 1; // El área de texto empieza en la fila
-	   		
-	   		
 	   		/**
 	   		 * Se agregan los botones al panel
 	   		 */
 	   		gbt.insets = new Insets(10,20,10,9);
 	   		Jtarea.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][134]),gbt);
 	   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   		gbt.gridx = 9; // El área de texto empieza en la columna
+	   		gbt.gridx = 8; // El área de texto empieza en la columna
 	   		gbt.insets = new Insets(10,0,10,9);
+	   		
 	   		Jtarea.add(jbtnlimpiar=new JButton(rec.idioma[rec.eleidioma][74]),gbt);
 	   		//gbt.gridx = 6; // El área de texto empieza en la columna
 	   		//gbt.gridy = 1; // El área de texto empieza en la fila
@@ -527,9 +612,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 	   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 	   		Jtabla.add(scrollpanel,gbc);
 	   		gbc.anchor = GridBagConstraints.EAST;
-			gbc.insets = new Insets(30,10,5,5);
+			gbc.insets = new Insets(0,0,0,0);
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   		//gbt.gridy = 2; // El área de texto empieza en la fila
+	   		gbt.gridy = 2; // El área de texto empieza en la fila
 	   		Jtabla.add(jbtneliminar = new JButton(rec.idioma[rec.eleidioma][39]),gbc);
 	   		
 	   		
@@ -546,7 +631,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 						if(s==0){
 						
 							conexion.Conectardb();
-							conexion.executeUpdate("DELETE FROM TIMESHEET WHERE id_tarea = '"+datos[jtblTime.getSelectedRow()][1]+"'");
+							conexion.executeUpdate("DELETE FROM TIMESHEET WHERE id_tarea = '"+datos[jtblTime.getSelectedRow()][1]+"' OR id_wp = '"+datos[jtblTime.getSelectedRow()][2]+"'");
 					
 							cuenta=contar_reg();
 							datos = new String[cuenta][columnas];
@@ -607,6 +692,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
+
 					if (CmbTareas.getSelectedItem()!=null || CmbProyecto.getSelectedItem()!=null){
 						// cambiar fecha a sql
 						java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
@@ -731,13 +817,15 @@ public class PnlAlta_TimeSheet extends JPanel{
           	GridBagConstraints gbbc = new GridBagConstraints();
           //gbbc.gridx = 0; // El área de texto empieza en la columna
           	gbbc.gridy = 0; // El área de texto empieza en la fila
-          	gbbc.insets = new Insets(15,0,100,0);
+          	gbbc.insets = new Insets(15,0,30,0);
 			this.add(Jproyecto,gbbc);
 			gbbc.gridy = 1; // El área de texto empieza en la fila
-			gbbc.insets = new Insets(0,0,100,0);
+			gbbc.insets = new Insets(0,0,30,0);
 			this.add(Jtarea,gbbc);
 			gbbc.gridy = 2; // El área de texto empieza en la fila
-			this.add(Jtabla,gbbc);
+			gbbc.gridwidth = 9; // El área de texto ocupa x columnas.
+			Jtarea.add(Jtabla,gbbc);
+			//this.add(Jtabla,gbbc);
 			this.setVisible(true);
 		}//fin constructor
 	
