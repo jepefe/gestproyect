@@ -83,7 +83,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 				rec.idioma[rec.eleidioma][111]+"*",rec.idioma[rec.eleidioma][101]+"*"
 				,rec.idioma[rec.eleidioma][25]+"*",rec.idioma[rec.eleidioma][26]+"*"
 				,rec.idioma[rec.eleidioma][13]};
-		int[] fieldWidths = {15,25,7,7,8};
+		int[] fieldWidths = {15,17,7,7,8};
 
 		jtxt = new JTextField[fieldNames.length];
 		// limite de caracteres 
@@ -152,7 +152,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 				conexion.Conectardb();
 				rs = conexion.ConsultaSQL("SELECT p.nombre FROM PROYECTOS as p WHERE p.nombre = '"+jtxt[0].getText()+"'");
 				try {
-					if(rs.next()){
+					if(rs.next() || jtxt[0].getText().equals("")){
 						alerta.setText(rec.idioma[rec.eleidioma][75]);
 						mensaje.setBackground(Color.decode("#ec8989"));
 						mensaje.setVisible(true);
