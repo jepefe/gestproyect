@@ -35,13 +35,13 @@ public class SpnPreferencias extends JSplitPane{
 	PnlModificarsocio mods = PnlModificarsocio.Obtener_Instancia();
 	Component[] panlsStaff = {
 			cuenta = new JScrollPane(new PnlCuentaUsuario()),
-			modificar = new JScrollPane(new JPanel()),
+			new TbIdiomas(),
 			agregar = new JScrollPane(new FrmNuevapalabra())};
 
 	public SpnPreferencias(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
-		modificar.setBorder(empty);
+		//modificar.setBorder(empty);
 		cuenta.setBorder(empty);
 		
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[13],rec.idioma[rec.eleidioma][145]},
