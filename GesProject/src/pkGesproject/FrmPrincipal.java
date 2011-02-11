@@ -171,8 +171,8 @@ public class FrmPrincipal extends JFrame {
 		jtlbFrmppal.add(jbtnTablas);
 		jtlbFrmppal.add(jbtnTimesheet);
 		jtlbFrmppal.add(jbtnInformes);
-		jtlbFrmppal.add(jbtnPreferencias);
 		jtlbFrmppal.add(jbtnBecas);
+		jtlbFrmppal.add(jbtnPreferencias);
 		jtlbFrmppal.add(jbtnAgregar);
 		
 		}break;
