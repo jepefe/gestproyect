@@ -53,6 +53,7 @@ public class PnlImportarExportar extends JPanel{
 	JFileChooser filechooser;
 	ConexionFTP cftp=new ConexionFTP();
 	ConexionDb conexion= new ConexionDb();
+	HSSFWorkbook tuWorkBook = new HSSFWorkbook();
 	JButton btnExportar = new JButton("Exportar");
 	JButton btnImportar = new JButton("Importar");
 	JFileChooser fileChooser = new JFileChooser();
@@ -71,12 +72,11 @@ public class PnlImportarExportar extends JPanel{
 		exportar = new ActionListener(){
 		@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//HSSFWorkbook libro = null;
-		    	//FileInputStream tuFlujoDeDatos = null;
-				//InputStream tuFlujoDeDatos = cftp.Descargar("135"); //Descarga el fichero en memoria,no contemplado fallo al descargar
 				
-				exportar_partners();
+				Abrir_Libro();
 				exportar_summary();
+			  	exportar_partners();
+				
 			}
 		
 		};
@@ -85,28 +85,131 @@ public class PnlImportarExportar extends JPanel{
 		this.setVisible(true);
 	}
 	
+
+	//--------------------EXPORTAR TABLA SUMMARY---------------------//
+    
+	public void exportar_summary(){
+		
+		
+	    	HSSFSheet tuSheet = tuWorkBook.getSheetAt(0); // Segunda hoja del libro excel (debe existir en tu plantilla porque de lo contrario te dar� una excepci�n al estar fuera del �ndice.
+		    	
+	    		short row = (short) 14; // Tercera fila
+		    	short column = (short) 2; // Cuarta columna
+		    	
+	    	
+	    	
+	    	HSSFRow tuRow= tuSheet.getRow(row);
+	    	HSSFCell tuCell = tuRow.getCell(column);
+	    	
+	    	HSSFCell tuCell1 = tuRow.getCell(column);
+	    	//3 Ahora que tienes la celda ya puedes extraerle el contenido 
+	    	rp = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE id_pro = 43");
+	    	String id_p = null;
+	    	try {
+	    		rp.next();
+				id_p = rp.getString(1);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	   
+	     rs = conexion.ConsultaSQL("SELECT p.id_pro, p.nombre, p.f_ini, p.f_fin, p.num_contrato, a.nombre,pa.nombre,pa.direccion+" +
+	     		" FROM proyectos p INNER JOIN partner_proyectos pp on p.id_pro=pp.id_pro inner join partner pa on pp.cod_part=pa.cod_part+" +
+	     		" INNER JOIN actions a on p.action=a.id_action WHERE pp.coordinador=”1” AND p.id_pro="+id_p);
+	      
+	        String nombre = null;
+	        String pais = null;
+	        int i;
+	        int j;
+	        	try {
+					while(rs.next()){
+						
+						nombre = rs.getString(1);
+						pais = rs.getString(2);
+						
+						tuCell.setCellValue(nombre);
+						tuCell1.setCellValue(pais);
+						tuCell1 = tuRow.getCell(column);
+						tuRow= tuSheet.getRow(row);
+						row+=1;
+				
+						tuCell = tuRow.getCell(column);
+					
+						if (tuSheet.getRow(row) != null){
+							tuRow= tuSheet.getRow(row);
+						} else {
+							tuRow = tuSheet.createRow(row);
+							tuCell = tuRow.createCell(column);
+							}
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+	   }
 	
+	//--------------------EXPORTAR TABLA PROGRES---------------------//
+    
+	public void exportar_progres(){
+		
+		
+	    	HSSFSheet tuSheet = tuWorkBook.getSheetAt(1); // Segunda hoja del libro excel (debe existir en tu plantilla porque de lo contrario te dar� una excepci�n al estar fuera del �ndice.
+		    	
+	    		short row = (short) 14; // Tercera fila
+		    	short column = (short) 1; // Cuarta columna
+		    	short column2 = (short) 2; // Cuarta columna
+	    	
+	    	
+	    	HSSFRow tuRow= tuSheet.getRow(row);
+	    	HSSFCell tuCell = tuRow.getCell(column);
+	    	
+	    	HSSFCell tuCell1 = tuRow.getCell(column2);
+	    	//3 Ahora que tienes la celda ya puedes extraerle el contenido 
+	    	rp = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE id_pro = 39");
+	    	String id_p = null;
+	    	try {
+	    		rp.next();
+				id_p = rp.getString(1);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	   
+	     rs = conexion.ConsultaSQL("select p.id_pro, p.nombre, p.f_ini, p.f_fin, p.num_contrato, a.nombre,pa.nombre,pa.direccion from proyectos p inner join partner_proyectos pp on p.id_pro=pp.id_pro inner join partner pa on pp.cod_part=pa.cod_part inner join actions a on p.action=a.id_action where pp.coordinador=”1” and p.id_pro="+id_p);
+	      
+	        String nombre = null;
+	        String pais = null;
+	        int i;
+	        int j;
+	        	try {
+					while(rs.next()){
+						
+						nombre = rs.getString(1);
+						pais = rs.getString(2);
+						
+						tuCell.setCellValue(nombre);
+						tuCell1.setCellValue(pais);
+						tuCell1 = tuRow.getCell(column2);
+						tuRow= tuSheet.getRow(row);
+						row+=1;
+				
+						tuCell = tuRow.getCell(column);
+					
+						if (tuSheet.getRow(row) != null){
+							tuRow= tuSheet.getRow(row);
+						} else {
+							tuRow = tuSheet.createRow(row);
+							tuCell = tuRow.createCell(column);
+							}
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+	   }
+	
+//----------------Hoja 2 PARTNERS--------------------//
 	public void exportar_partners(){
 		
-		//1 Abrir la plantilla como un libro de excel
-    	//String ruta = "src/PkModelosExcel/ReportIn.xls";
-    	HSSFWorkbook libro = null;
-    	//FileInputStream tuFlujoDeDatos = null;
-		InputStream tuFlujoDeDatos = cftp.Descargar("135"); //Descarga el fichero en memoria,no contemplado fallo al descargar
-    	/*try {
-		tuFlujoDeDatos = new FileInputStream(ruta );
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}    */    	
-    	// Si todo ha ido bien
-    	HSSFWorkbook tuWorkBook = null;
-		try {
-			tuWorkBook = new HSSFWorkbook(tuFlujoDeDatos );
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
     	//2 Se accede a la hoja y a la casilla
     	HSSFSheet tuSheet = tuWorkBook.getSheetAt(2); // Segunda hoja del libro excel (debe existir en tu plantilla porque de lo contrario te dar� una excepci�n al estar fuera del �ndice.
     	short row = (short) 8; // Tercera fila
@@ -119,7 +222,7 @@ public class PnlImportarExportar extends JPanel{
     	
     	HSSFCell tuCell1 = tuRow.getCell(column2);
     	//3 Ahora que tienes la celda ya puedes extraerle el contenido 
-    	rp = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE id_pro = 39");
+    	rp = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE id_pro = 43");
     	String id_p= null ;
     	try {
     		rp.next();
@@ -217,15 +320,12 @@ public class PnlImportarExportar extends JPanel{
 		}
 }
 	
-//--------------------EXPORTAR TABLA SUMMARY---------------------//
-	                                        
-	public void exportar_summary(){
+	//--------------------EXPORTAR TABLA staff---------------------//
+    
+	public void exportar_staff(){
 		
-			//1 Abrir la plantilla como un libro de excel
-	    	// Si todo ha ido bien
-	    	HSSFWorkbook tuWorkBook = null;
-			//2 Se accede a la hoja y a la casilla
-	    	HSSFSheet tuSheet = tuWorkBook.getSheetAt(1); // Segunda hoja del libro excel (debe existir en tu plantilla porque de lo contrario te dar� una excepci�n al estar fuera del �ndice.
+		
+	    	HSSFSheet tuSheet = tuWorkBook.getSheetAt(3); // Segunda hoja del libro excel (debe existir en tu plantilla porque de lo contrario te dar� una excepci�n al estar fuera del �ndice.
 		    	
 	    		short row = (short) 14; // Tercera fila
 		    	short column = (short) 1; // Cuarta columna
@@ -278,4 +378,140 @@ public class PnlImportarExportar extends JPanel{
 					e.printStackTrace();
 				}
 	   }
+	//--------------------EXPORTAR TABLA travel---------------------//
+    
+	public void exportar_travel(){
+		
+		
+	    	HSSFSheet tuSheet = tuWorkBook.getSheetAt(4); // Segunda hoja del libro excel (debe existir en tu plantilla porque de lo contrario te dar� una excepci�n al estar fuera del �ndice.
+		    	
+	    		short row = (short) 14; // Tercera fila
+		    	short column = (short) 1; // Cuarta columna
+		    	short column2 = (short) 2; // Cuarta columna
+	    	
+	    	
+	    	HSSFRow tuRow= tuSheet.getRow(row);
+	    	HSSFCell tuCell = tuRow.getCell(column);
+	    	
+	    	HSSFCell tuCell1 = tuRow.getCell(column2);
+	    	//3 Ahora que tienes la celda ya puedes extraerle el contenido 
+	    	rp = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE id_pro = 39");
+	    	String id_p = null;
+	    	try {
+	    		rp.next();
+				id_p = rp.getString(1);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	   
+	     rs = conexion.ConsultaSQL("select p.id_pro, p.nombre, p.f_ini, p.f_fin, p.num_contrato, a.nombre,pa.nombre,pa.direccion from proyectos p inner join partner_proyectos pp on p.id_pro=pp.id_pro inner join partner pa on pp.cod_part=pa.cod_part inner join actions a on p.action=a.id_action where pp.coordinador=”1” and p.id_pro="+id_p);
+	      
+	        String nombre = null;
+	        String pais = null;
+	        int i;
+	        int j;
+	        	try {
+					while(rs.next()){
+						
+						nombre = rs.getString(1);
+						pais = rs.getString(2);
+						
+						tuCell.setCellValue(nombre);
+						tuCell1.setCellValue(pais);
+						tuCell1 = tuRow.getCell(column2);
+						tuRow= tuSheet.getRow(row);
+						row+=1;
+				
+						tuCell = tuRow.getCell(column);
+					
+						if (tuSheet.getRow(row) != null){
+							tuRow= tuSheet.getRow(row);
+						} else {
+							tuRow = tuSheet.createRow(row);
+							tuCell = tuRow.createCell(column);
+							}
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+	   }
+	//--------------------EXPORTAR TABLA equipment---------------------//
+    
+	public void exportar_equipment(){
+		
+		
+	    	HSSFSheet tuSheet = tuWorkBook.getSheetAt(5); // Segunda hoja del libro excel (debe existir en tu plantilla porque de lo contrario te dar� una excepci�n al estar fuera del �ndice.
+		    	
+	    		short row = (short) 14; // Tercera fila
+		    	short column = (short) 1; // Cuarta columna
+		    	short column2 = (short) 2; // Cuarta columna
+	    	
+	    	
+	    	HSSFRow tuRow= tuSheet.getRow(row);
+	    	HSSFCell tuCell = tuRow.getCell(column);
+	    	
+	    	HSSFCell tuCell1 = tuRow.getCell(column2);
+	    	//3 Ahora que tienes la celda ya puedes extraerle el contenido 
+	    	rp = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE id_pro = 39");
+	    	String id_p = null;
+	    	try {
+	    		rp.next();
+				id_p = rp.getString(1);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	   
+	     rs = conexion.ConsultaSQL("select p.id_pro, p.nombre, p.f_ini, p.f_fin, p.num_contrato, a.nombre,pa.nombre,pa.direccion from proyectos p inner join partner_proyectos pp on p.id_pro=pp.id_pro inner join partner pa on pp.cod_part=pa.cod_part inner join actions a on p.action=a.id_action where pp.coordinador=”1” and p.id_pro="+id_p);
+	      
+	        String nombre = null;
+	        String pais = null;
+	        int i;
+	        int j;
+	        	try {
+					while(rs.next()){
+						
+						nombre = rs.getString(1);
+						pais = rs.getString(2);
+						
+						tuCell.setCellValue(nombre);
+						tuCell1.setCellValue(pais);
+						tuCell1 = tuRow.getCell(column2);
+						tuRow= tuSheet.getRow(row);
+						row+=1;
+				
+						tuCell = tuRow.getCell(column);
+					
+						if (tuSheet.getRow(row) != null){
+							tuRow= tuSheet.getRow(row);
+						} else {
+							tuRow = tuSheet.createRow(row);
+							tuCell = tuRow.createCell(column);
+							}
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+	   }
+//---------------------------------------...............---------------------------------------//
+	/**
+	 * Método que abre el libro excel para poder introducir la información del proyecto activo.
+	 * @author Freyder Espinosa V
+	 * 
+	 */
+	public void Abrir_Libro(){
+		//1 Abrir la plantilla como un libro de excel
+       	HSSFWorkbook libro = null;
+    	InputStream tuFlujoDeDatos = cftp.Descargar("135"); //Descarga el fichero en memoria,no contemplado fallo al descargar
+       	
+    	// Si todo ha ido bien
+    	try {
+			tuWorkBook = new HSSFWorkbook(tuFlujoDeDatos );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
+	}
 }
