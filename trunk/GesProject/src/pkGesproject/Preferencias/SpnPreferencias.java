@@ -17,6 +17,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import pkGesproject.FrmNuevapalabra;
 import pkGesproject.GesIdioma;
 import pkGesproject.RsGesproject;
 import pkGesproject.Socios.PnlAltasocio;
@@ -29,13 +30,13 @@ public class SpnPreferencias extends JSplitPane{
 	JPanel panel = new JPanel();
 	JPanel pnllateral = new JPanel();
 	JTable jtblLateral;
-	JScrollPane modificar,cuenta;
+	JScrollPane modificar,cuenta,agregar;
 	Border empty = new EmptyBorder(0,0,0,0);
 	PnlModificarsocio mods = PnlModificarsocio.Obtener_Instancia();
 	Component[] panlsStaff = {
 			cuenta = new JScrollPane(new PnlCuentaUsuario()),
 			modificar = new JScrollPane(new JPanel()),
-			new JPanel()};
+			agregar = new JScrollPane(new FrmNuevapalabra())};
 
 	public SpnPreferencias(){
 		this.setOneTouchExpandable(true);
@@ -45,7 +46,7 @@ public class SpnPreferencias extends JSplitPane{
 		
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[13],rec.idioma[rec.eleidioma][145]},
 				{recursos.icono[34],rec.idioma[rec.eleidioma][144]},
-				{recursos.icono[15],rec.idioma[rec.eleidioma][21]}};
+				{recursos.icono[10],"Añadir Palabra"}};
 		
 		
 		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {
