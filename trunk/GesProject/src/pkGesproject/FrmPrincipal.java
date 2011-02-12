@@ -65,6 +65,7 @@ public class FrmPrincipal extends JFrame {
 	JToggleButton jbtnPreferencias = new JToggleButton(recursos.icono[33]);
 	JToggleButton jbtnBecas = new JToggleButton(recursos.icono[35]);
 	JPanel jpnlppal = new JPanel();
+	PnlPrincipal ppal = new PnlPrincipal();
 	
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
 	
@@ -232,6 +233,7 @@ public class FrmPrincipal extends JFrame {
 	public void inicializar(){		
 			jpnlppal.setLayout(new BorderLayout());
 			add(jpnlppal,BorderLayout.CENTER);
+			jpnlppal.add(ppal);
 			this.setVisible(true);
 			this.Carga_toolbar();
 			repaint();

@@ -175,7 +175,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 		cons.gridheight=1;
 		cons.weighty = 0;
 		jpnl_login.add(jlblUsuario, cons);
-		jlblUsuario.setFont(recursos.f);
+		jlblUsuario.setFont(recursos.fuente);
 
 		cons.gridx = 0;
 		cons.gridy = 1;
@@ -183,7 +183,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 		cons.gridheight=1;
 		cons.weighty = 0;
 		jpnl_login.add(jlblPassword, cons);
-		jlblPassword.setFont(recursos.f);
+		jlblPassword.setFont(recursos.fuente);
 
 		cons.gridx = 1;
 		cons.gridy = 0;
@@ -191,7 +191,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 		cons.gridheight=1;
 		cons.weighty = 0;
 		jpnl_login.add(jtxfUsuario, cons);
-		jtxfUsuario.setFont(recursos.f);
+		jtxfUsuario.setFont(recursos.fuente);
 
 		cons.gridx = 1;
 		cons.gridy = 1;
@@ -208,7 +208,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 		cons.weighty = 0;
 		cons.anchor = GridBagConstraints.WEST;
 		jpnl_login.add(jbtnaceptar, cons);
-		jbtnaceptar.setFont(recursos.f);
+		jbtnaceptar.setFont(recursos.fuente);
 
 		cons.gridx = 1;
 		cons.gridy = 2;
@@ -217,7 +217,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 		cons.weighty = 0;
 		cons.anchor = GridBagConstraints.EAST;
 		jpnl_login.add(jbtncancelar, cons);
-		jbtncancelar.setFont(recursos.f);
+		jbtncancelar.setFont(recursos.fuente);
 
 
 	}

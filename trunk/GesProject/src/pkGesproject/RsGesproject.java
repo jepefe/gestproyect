@@ -88,7 +88,7 @@ public class RsGesproject {
 	static String SistemaOp = System.getProperty("os.name"); //Nombre del S.O por si necesitamos condicionar codigo 
 	
 	private int idusuario;
-	public Font f = new Font( "arial",0,14 );
+	public Font fuente = new Font(Font.SANS_SERIF, Font.BOLD,13);
 	/**
 	 * @return Referencia a la instancia de la clase
 	 */
