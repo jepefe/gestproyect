@@ -60,14 +60,17 @@ public class FrmNuevapalabra extends JPanel{
 								rs.next();
 								JOptionPane.showMessageDialog(aviso, "La palabra ya existe en la base de datos, en la posicion: "+ rs.getInt(1));
 							}else{
-								conexdb.executeUpdate("INSERT INTO IDIOMA (castellano,ingles) VALUES ('"+ txtcastellano.getText()+"','"+txtingles.getText()+"')");
-								rs = conexdb.ConsultaSQL("SELECT i.id_idi FROM IDIOMA i WHERE i.castellano ='"+castellano+"'");
-								rs.next();
-								
-								txtcastellano.setText("");
-								txtingles.setText("");
-								JOptionPane.showMessageDialog(aviso, "Se ha introducido en la posicion: "+ rs.getInt(1));
-								
+								if(txtcastellano.getText().equals("")||txtcastellano.getText().equals("")){
+									JOptionPane.showMessageDialog(aviso, "No puedes introducir palabras en blanco");
+								}else{
+									conexdb.executeUpdate("INSERT INTO IDIOMA (castellano,ingles) VALUES ('"+ txtcastellano.getText()+"','"+txtingles.getText()+"')");
+									rs = conexdb.ConsultaSQL("SELECT i.id_idi FROM IDIOMA i WHERE i.castellano ='"+castellano+"'");
+									rs.next();
+									
+									txtcastellano.setText("");
+									txtingles.setText("");
+									JOptionPane.showMessageDialog(aviso, "Se ha introducido en la posicion: "+ rs.getInt(1));
+								}
 							}
 						} catch (HeadlessException e1) {
 							// TODO Auto-generated catch block
