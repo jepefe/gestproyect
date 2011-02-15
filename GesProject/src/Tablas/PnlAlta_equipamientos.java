@@ -272,8 +272,8 @@ public class PnlAlta_equipamientos extends JPanel{
 			
 			if(i==1){
 				
-				CmbComp.addItem("Compra");
-				CmbComp.addItem("Alquiler");
+				CmbComp.addItem("Compra"); //se sube un "0" a la BD
+				CmbComp.addItem("Alquiler"); // se sube un "1" a la BD
 				
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.WEST;
