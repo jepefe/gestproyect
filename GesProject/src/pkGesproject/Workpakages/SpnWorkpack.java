@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
 
 import pkGesproject.GesIdioma;
 import pkGesproject.RsGesproject;
-import pkGesproject.Becas.PnlAltaBecas;
+
 
 public class SpnWorkpack extends JSplitPane{
 
