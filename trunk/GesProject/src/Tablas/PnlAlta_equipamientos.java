@@ -50,13 +50,15 @@ public class PnlAlta_equipamientos extends JPanel{
 	JDateChooser jdc1;
 	GpComboBox CmbPar = new GpComboBox();
 	GpComboBox Cmbwp = new GpComboBox();
+	GpComboBox CmbComp = new GpComboBox();
 	ConexionDb conexion = new ConexionDb();
 	JTextArea textdescripcion = new JTextArea();
 	JTextArea textjustificacion = new JTextArea();
 	ResultSet rs;
 	Border empty = new EmptyBorder(0,0,0,0);
 	String[] fieldNames = {
-			   rec.idioma[rec.eleidioma][114]+"*",rec.idioma[rec.eleidioma][115]+"*", rec.idioma[rec.eleidioma][116]+"*", rec.idioma[rec.eleidioma][117]+"*",
+			   rec.idioma[rec.eleidioma][114]+"*", 
+			   rec.idioma[rec.eleidioma][116]+"*", rec.idioma[rec.eleidioma][117]+"*",
 			   rec.idioma[rec.eleidioma][118]+"*",rec.idioma[rec.eleidioma][119]+"*"
 	};
 	
@@ -66,6 +68,7 @@ public class PnlAlta_equipamientos extends JPanel{
 	JPanel mesage = new JPanel();
 	
 	int permetir_alta = 0;
+	char caracter;
 		
 	public PnlAlta_equipamientos (){
 		//Llamamos al medoto de la interfaz
@@ -83,8 +86,8 @@ public class PnlAlta_equipamientos extends JPanel{
 					// cambiar fecha a sql
 					java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 
-					conexdb.executeUpdate("INSERT INTO EQUIPAMIENTOS (partner,descripcion,justificacion,wp,coste_total,fecha,compra_alguiler,grado_depreciacion,meses_usara,grado_utilizacion,costes_subvencionados ) VALUES ('"
-							+ Integer.toString(CmbPar.getSelectedIndex())+"','"+textdescripcion.getText()+"','"+textjustificacion.getText()+"','"+Integer.toString(Cmbwp.getSelectedIndex())+"','"+jtxt[0].getText()+"','"+sqlDate1+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"')");
+					conexdb.executeUpdate("INSERT INTO EQUIPAMIENTOS (partner,descripcion,justificacion,wp,coste_total,fecha,compra_alquiler,grado_depreciacion,meses_usara,grado_utilizacion ) VALUES ('"
+							+ Integer.toString(CmbPar.getSelectedIndex())+"','"+textdescripcion.getText()+"','"+textjustificacion.getText()+"','"+Integer.toString(Cmbwp.getSelectedIndex())+"','"+jtxt[0].getText()+"','"+sqlDate1+"','"+Integer.toString(CmbComp.getSelectedIndex())+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"')");
 					//para ver la id del workpaquets recien creado
 					rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS WHERE nombre like'"+ jtxt[0].getText()+"'" );
 					try {
@@ -108,6 +111,7 @@ public class PnlAlta_equipamientos extends JPanel{
 					}
 					CmbPar.setSelectedItem(null);
 					Cmbwp.setSelectedItem(null);
+					CmbComp.setSelectedItem(null);
 					mesage.setVisible(false);
 				}else{
 					alerta.setText(rec.idioma[rec.eleidioma][79]);
@@ -131,6 +135,7 @@ public class PnlAlta_equipamientos extends JPanel{
 					}
 				CmbPar.setSelectedItem(null);
 				Cmbwp.setSelectedItem(null);
+				CmbComp.setSelectedItem(null);
 				mesage.setVisible(false);
 			}
 		}
@@ -152,12 +157,12 @@ public class PnlAlta_equipamientos extends JPanel{
 	}
 	
 	public void crear_interfaz(){
-		this.setBorder(empty);
-		this.setLayout(new GridBagLayout());
+		panel.setBorder(empty);
+		panel.setLayout(new GridBagLayout());
 		  
 		
 		//Tamaños de los textfields
-		int[] fieldWidths = {10,10,10,2,10,10};
+		int[] fieldWidths = {10,10,2,10,10};
 		
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
@@ -202,16 +207,16 @@ public class PnlAlta_equipamientos extends JPanel{
 				
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.WEST;
-				this.add(partner=new JLabel(rec.idioma[rec.eleidioma][57]+"*"),gbc);
+				panel.add(partner=new JLabel(rec.idioma[rec.eleidioma][57]+"*"),gbc);
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				CmbPar.setPreferredSize(new Dimension(177,30));
-				this.add(CmbPar,gbc);//fin combo partner
+				panel.add(CmbPar,gbc);//fin combo partner
 				CmbPar.setSelectedItem(null);
 				
 				//Creo el textarea descripcion
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
-		    	this.add(descripcion=new JLabel(rec.idioma[rec.eleidioma][41]+"*"),gbc); 
+		    	panel.add(descripcion=new JLabel(rec.idioma[rec.eleidioma][41]+"*"),gbc); 
 		    	gbc.gridwidth = GridBagConstraints.REMAINDER;
 		    	//cuadro con scroll para las descripciones
 		    	LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
@@ -219,11 +224,11 @@ public class PnlAlta_equipamientos extends JPanel{
 		    	textdescripcion.setLineWrap(true);
 		    	JScrollPane sp = new JScrollPane(textdescripcion,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 		    	JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		    	this.add((sp),gbc);
+		    	panel.add((sp),gbc);
 		    	
 		    	//Creo el textarea justificacion
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
-		    	this.add(justificacion=new JLabel(rec.idioma[rec.eleidioma][123]+"*"),gbc); 
+		    	panel.add(justificacion=new JLabel(rec.idioma[rec.eleidioma][123]+"*"),gbc); 
 		    	gbc.gridwidth = GridBagConstraints.REMAINDER;
 		    	//cuadro con scroll para las justificacion
 		    	LimiteDocumento lpd2 = new LimiteDocumento(200); // Limite JTextArea
@@ -231,7 +236,7 @@ public class PnlAlta_equipamientos extends JPanel{
 		    	textjustificacion.setLineWrap(true);
 		    	JScrollPane sp2 = new JScrollPane(textjustificacion,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 		    	JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		    	this.add((sp2),gbc);
+		    	panel.add((sp2),gbc);
 		    	
 		    	//Combo de WP
 		    	conexion.Conectardb();
@@ -248,31 +253,83 @@ public class PnlAlta_equipamientos extends JPanel{
 				
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.WEST;
-				this.add(wp=new JLabel(rec.idioma[rec.eleidioma][40]+"*"),gbc);
+				panel.add(wp=new JLabel(rec.idioma[rec.eleidioma][40]+"*"),gbc);
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				Cmbwp.setPreferredSize(new Dimension(177,30));
-				this.add(Cmbwp,gbc);//fin combo WP	
+				panel.add(Cmbwp,gbc);//fin combo WP	
 				Cmbwp.setSelectedItem(null);
 
 				}//Fin del if
 			
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
 			gbc.anchor = GridBagConstraints.WEST;
-			this.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 			gbc.anchor = GridBagConstraints.WEST;
 			gbc.gridwidth = GridBagConstraints.REMAINDER;
-			this.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
+			panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 			
-			if (i==3){
+			
+			if(i==1){
+				
+				CmbComp.addItem("Compra");
+				CmbComp.addItem("Alquiler");
+				
+				gbc.gridwidth = GridBagConstraints.RELATIVE;
+				gbc.anchor = GridBagConstraints.WEST;
+				panel.add(partner=new JLabel(rec.idioma[rec.eleidioma][115]+"*"),gbc);
+				gbc.anchor = GridBagConstraints.WEST;
+				gbc.gridwidth = GridBagConstraints.REMAINDER;
+				CmbComp.setPreferredSize(new Dimension(123,30));
+				panel.add(CmbComp,gbc);//fin combo Compra_Alquiler
+				CmbComp.setSelectedItem(null);
+				
+			}
+			
+			if (i==2){
 				//Pongo lo de la fecha
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.WEST;
-				this.add(fecha=new JLabel(rec.idioma[rec.eleidioma][95]+"*"),gbc);
+				panel.add(fecha=new JLabel(rec.idioma[rec.eleidioma][95]+"*"),gbc);
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
-				this.add(jdc1,gbc);
+				panel.add(jdc1,gbc);
 			}//fin del if
+			
+			//filtro para campo Coste Total (tipo float)
+			if(i==0){
+				jtxt[i].addKeyListener(new KeyAdapter(){
+				   public void keyTyped(KeyEvent e){
+				      caracter = e.getKeyChar();
+				      if(((caracter < '0') ||(caracter > '9')) &&
+				         (caracter != KeyEvent.VK_BACK_SPACE)
+				         &&
+				         (caracter != '.')) {
+				         e.consume();  
+				      }
+				   }
+				});
+			}
+			
+			//filtro para numeros normales naturales
+			if(i==1 || i==2 || i==3){
+				jtxt[i].addKeyListener(new KeyAdapter(){
+				   public void keyTyped(KeyEvent e){
+				      caracter = e.getKeyChar();
+				      if(((caracter < '0') ||(caracter > '9')) &&
+				         (caracter != KeyEvent.VK_BACK_SPACE)) {
+				         e.consume();  
+				      }
+				   }
+				});
+			}
+			
+			//ocultar los elementos que sobran
+			if(i==4){
+				jtxt[i].setText("11");
+				jtxt[i].setVisible(false);
+				jlbl[i].setVisible(false);
+			}
 		   
 		}//fin for  Dibujo de los componentes terminado
 	  
@@ -284,27 +341,28 @@ public class PnlAlta_equipamientos extends JPanel{
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.insets = new Insets(30,10,5,5);
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		this.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
+		panel.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		this.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
+		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
 		
 	}
 	
 	public void validar_campos(){
-		
+		/*
+		 * Revisamos si estan rellenados todos los camps obligatorios
+		 */
 		for(int i=0;i<fieldNames.length;++i) {
 			if (jtxt[i].getText().length() > 0){
 			}else{
 				permetir_alta = 1;
-			}
-			if((CmbPar.getSelectedItem() != null) && (Cmbwp.getSelectedItem() != null) && (jdc1.getDate() != null) && (textdescripcion.getText().length() > 1) && (textjustificacion.getText().length() > 1)){	
+			}	
+		}
+		if((CmbPar.getSelectedItem() != null) && (Cmbwp.getSelectedItem() != null) && (CmbComp.getSelectedItem() != null) && (jdc1.getDate() != null) && (textdescripcion.getText().length() > 1) && (textjustificacion.getText().length() > 1)){	
 			
-			}else{
-				permetir_alta = 1;
-			}
-			
-	}
+		}else{
+			permetir_alta = 1;
+		}
 		
 	}
 	
