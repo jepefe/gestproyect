@@ -33,19 +33,38 @@ public class SpnBecas extends JSplitPane {
 	JPanel panel = new JPanel();
 	JTable jtblLateral;
 	Border empty = new EmptyBorder(0,0,0,0);
-	JScrollPane modificar,informes;
-	Component[] panlsStaff = {
-			new PnlAltaBecas(),
-			 modificar = new JScrollPane(),
-			 informes= new JScrollPane(new PnlInfProyecto())};
-	
+	JScrollPane modificar,estudios,practicas,docente,nodocente,conselleria,ministerio,FCT,otra;
+	Component[] panlBecas = {new PnlEstudios(),
+			 practicas = new JScrollPane(new PnlPracticas()),
+			 docente  = new JScrollPane(new PnlDocente()),
+			 nodocente = new JScrollPane(new PnlNoDocente()),
+			 conselleria = new JScrollPane(new PnlConselleria()),
+			 ministerio = new JScrollPane(new PnlMinisterio()),
+			 FCT= new JScrollPane(new PnlFct()),
+			 otra = new JScrollPane(new Pnlotra()),
+			 };
+			
 	public SpnBecas(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
-		modificar.setBorder(empty);
-		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[16],rec.idioma[rec.eleidioma][12]},
-				{recursos.icono[17],rec.idioma[rec.eleidioma][22]},
-				{recursos.icono[18],rec.idioma[rec.eleidioma][124]}};
+		estudios.setBorder(empty);
+		practicas.setBorder(empty);
+		docente.setBorder(empty);
+		nodocente.setBorder(empty);
+		conselleria.setBorder(empty);
+		ministerio.setBorder(empty);
+		FCT.setBorder(empty);
+		otra.setBorder(empty);
+
+		Object[][] elementosbarralateral = new Object[][]{
+				{recursos.icono[16],rec.idioma[rec.eleidioma][152]},
+				{recursos.icono[17],rec.idioma[rec.eleidioma][150]},
+				{recursos.icono[18],rec.idioma[rec.eleidioma][153]},
+				{recursos.icono[18],rec.idioma[rec.eleidioma][154]},
+				{recursos.icono[18],rec.idioma[rec.eleidioma][158]},
+				{recursos.icono[18],rec.idioma[rec.eleidioma][155]},
+				{recursos.icono[18],rec.idioma[rec.eleidioma][156]},
+				{recursos.icono[18],rec.idioma[rec.eleidioma][157]},};
 		
 		
 		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {
@@ -68,7 +87,7 @@ public class SpnBecas extends JSplitPane {
         jtblLateral.getColumnModel().getColumn(0).setPreferredWidth(32);//Tamaño por defecto de la primera columna
         jtblLateral.setRowHeight(32);//Tamaño de cada fila
         jtblLateral.getColumnModel().getColumn(1).setPreferredWidth(170);
-        jtblLateral.getColumnModel().getColumn(1).setMinWidth(170);
+        jtblLateral.getColumnModel().getColumn(1).setMinWidth(200);
         jtblLateral.setColumnSelectionAllowed(false);
         
         
@@ -77,7 +96,7 @@ public class SpnBecas extends JSplitPane {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if(e.getValueIsAdjusting()){
-					setRightComponent(panlsStaff[jtblLateral.getSelectedRow()]);
+					setRightComponent(panlBecas[jtblLateral.getSelectedRow()]);
 				}
 			}});
         
