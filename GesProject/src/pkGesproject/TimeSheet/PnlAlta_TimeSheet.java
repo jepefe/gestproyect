@@ -822,6 +822,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 			this.add(Jtarea,gbbc);
 			gbbc.gridy = 2; // El área de texto empieza en la fila
 			gbbc.gridwidth = 9; // El área de texto ocupa x columnas.
+			gbbc.insets = new Insets(30,30,30,0);
 			Jtarea.add(Jtabla,gbbc);
 			//this.add(Jtabla,gbbc);
 			this.setVisible(true);
@@ -840,7 +841,7 @@ public class PnlAlta_TimeSheet extends JPanel{
     	conexion.Conectardb();
 		
     	
-    	rs = conexion.ConsultaSQL("SELECT fecha,id_tarea,id_wp,horas FROM TIMESHEET ORDER BY fecha");
+    	rs = conexion.ConsultaSQL("SELECT t.fecha,k.nombre,w.nombre,t.horas FROM TIMESHEET t INNER JOIN TAREAS k ON t.id_tarea = k.id_task INNER JOIN WORKPAQUETS w ON t.id_wp = w.id_wp ORDER BY fecha");
     	int i=0;
     	int idta = 0;
     	int idwp = 0;
