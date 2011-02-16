@@ -21,5 +21,11 @@
 	<classpathentry kind="lib" path="lib/DynamicJasper-3.1.8-test-sources.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/jasper-compiler-jdt.jar"/>
+	<classpathentry kind="lib" path="lib/dsn.jar"/>
+	<classpathentry kind="lib" path="lib/imap.jar"/>
+	<classpathentry kind="lib" path="lib/mailapi.jar"/>
+	<classpathentry kind="lib" path="lib/pop3.jar"/>
+	<classpathentry kind="lib" path="lib/smtp.jar"/>
+	<classpathentry kind="lib" path="src/pkGesproject/Avisos/dsn.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
