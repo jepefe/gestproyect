@@ -59,8 +59,9 @@ public class PnlAltaSub extends JScrollPane{
 	ConexionDb conexion = new ConexionDb();
 	JTextArea textarea = new JTextArea();
 	ResultSet rs;
-	String nomwp;
-	int indexwp;
+	int sector = 0;
+	int pais = 0;
+	int provincia = 0;
 	char caracter;
 	Border empty = new EmptyBorder(0,0,0,0);
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
@@ -77,9 +78,10 @@ public class PnlAltaSub extends JScrollPane{
 		String[] fieldNames = {
 		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][4],
 		   rec.idioma[rec.eleidioma][46],rec.idioma[rec.eleidioma][48],
-		   rec.idioma[rec.eleidioma][64]
+		   rec.idioma[rec.eleidioma][7], rec.idioma[rec.eleidioma][8],
+		   rec.idioma[rec.eleidioma][69], rec.idioma[rec.eleidioma][64]
 		   };
-		int[] fieldWidths = {10,15,10,6,6,6};
+		int[] fieldWidths = {11,10,10,10,20,11,11,40};
 		
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
@@ -93,14 +95,7 @@ public class PnlAltaSub extends JScrollPane{
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(5,10,5,5);
 		
-		
-		/**
-		 * Con el bucle for vamos creando tantos labels y textfields como 
-		 * nombres de campos hayamos metido en fieldNames.
-		 */
-	      
-	      
-		
+			
 	  //cuadro con scroll para las observaciones
 
 	    	LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
@@ -110,34 +105,25 @@ public class PnlAltaSub extends JScrollPane{
 	    	JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 	    	JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    	
-	     
-		
-		for(int i=0;i<fieldNames.length;++i) {
-		
-			//System.out.println("Fieldnames = " + fieldNames.length + " / i = " + i);
+	     //Dibujo la interfaz
 			
-		   gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   gbc.gridwidth = GridBagConstraints.REMAINDER;
-		   //desahabilitar campos de texto
-		   
-		   switch(i){
-		   
-		   case (0):
-		   	   	panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
-		   		break;
-		   case (1):
+			    gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(jlbl[0]=new JLabel(fieldNames[0]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   	   	panel.add(jtxt[0]=new JTextField(fieldWidths[0]),gbc);
+
+		   	   	
+			   gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   	   panel.add(jlbl[1]=new JLabel(fieldNames[1]),gbc);
+		   	   gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   panel.add(CmbSector,gbc);
 		   	   CmbSector.setPreferredSize(new Dimension(140,30));
 			   
-				/**
-				 * Creacion del JComboBox y a�adir los items.
-				 *Se conecta a la BD para realizar la consulta
-				 **/
+			
 				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT sector,id_sector FROM SECTORES");
+				rs = conexion.ConsultaSQL("SELECT sector FROM SECTORES");
 				try {
-				while(rs.next()){
+					while(rs.next()){
 					CmbSector.addItem(rs.getString(1));	
 					
 				}
@@ -145,54 +131,95 @@ public class PnlAltaSub extends JScrollPane{
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						}
-					conexion.cerrarConexion();
-			   	break;
-		
-		   case (2):
-			   panel.add(CmbPais,gbc);
-		   	   CmbPais.setPreferredSize(new Dimension(140,30));
-			   
-				/**
-				 * Creacion del JComboBox y a�adir los items.
-				 *Se conecta a la BD para realizar la consulta
-				 **/
-				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT pais,id_pais FROM PAIS");
-				try {
-				while(rs.next()){
-					CmbPais.addItem(rs.getString(1));	
 					
-				}
-					} catch (SQLException e1) {
+					conexion.cerrarConexion();
+
+					
+		   		
+				gbc.gridwidth = GridBagConstraints.RELATIVE;
+			   	panel.add(jlbl[2]=new JLabel(fieldNames[2]),gbc);
+			   	gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		panel.add(CmbPais,gbc);
+		   	    CmbPais.setPreferredSize(new Dimension(140,30));
+			   
+
+		   	    
+				conexion.Conectardb();
+				rs = conexion.ConsultaSQL("SELECT pais FROM PAIS");
+				try {
+					while(rs.next()){
+						CmbPais.addItem(rs.getString(1));	
+						
+					}
+				} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-						}
-					conexion.cerrarConexion();
-					break;			
-		   	case (3):
-		   		panel.add(CmbProvincia,gbc);
+				}
+				
+
+				//Hacer que	se actulize las provincias al cambiar el pais ¿¿ ??	
+				
+				
+					conexion.Conectardb();
+					rs = conexion.ConsultaSQL("select id_pais FROM PAIS WHERE pais like '"+CmbPais.getSelectedItem().toString()+"'");
+					
+					try {
+					rs.next();
+					pais = rs.getInt(1);
+					
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					
+					
+				gbc.gridwidth = GridBagConstraints.RELATIVE;
+			   	panel.add(jlbl[3]=new JLabel(fieldNames[3]),gbc);
+			   	gbc.gridwidth = GridBagConstraints.REMAINDER;
+				panel.add(CmbProvincia,gbc);
 		   		CmbProvincia.setPreferredSize(new Dimension(140,30));
-			   
-				/**
-				 * Creacion del JComboBox y a�adir los items.
-				 *Se conecta a la BD para realizar la consulta
-				 **/
-				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT estado,id_provincias,id_pais FROM PROVINCIAS");
+			   		   		
+		   		conexion.Conectardb();
+				rs = conexion.ConsultaSQL("SELECT * FROM PROVINCIAS WHERE id_pais = "+pais);
 				try {
-				while(rs.next()){
-					CmbProvincia.addItem(rs.getString(1));	
 					
+					CmbProvincia.removeAllItems(); 
+					while(rs.next()){	
+						CmbProvincia.addItem(rs.getString(2));
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						}
-			   	break;			
-			   case (4):
-				{gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp),gbc);}		   		break;
-		   }
-		}
+					conexion.cerrarConexion();
+
+		   		
+					gbc.gridwidth = GridBagConstraints.RELATIVE;
+			   		panel.add(jlbl[4]=new JLabel(fieldNames[4]),gbc);
+			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
+			   		panel.add(jtxt[4]=new JTextField(fieldWidths[4]),gbc);
+			   		
+			   		
+			   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+			   		panel.add(jlbl[5]=new JLabel(fieldNames[5]),gbc);
+			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
+			   		panel.add(jtxt[5]=new JTextField(fieldWidths[5]),gbc);
+			   		
+			   		
+			   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+			   		panel.add(jlbl[6]=new JLabel(fieldNames[6]),gbc);
+			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
+			   		panel.add(jtxt[6]=new JTextField(fieldWidths[6]),gbc);
+
+		   			
+			   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+			   		panel.add(jlbl[7]=new JLabel(fieldNames[7]),gbc);
+			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
+			   		gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp),gbc);	   		
+
+
+			   		
 		/*  
 		**
 		 * Creamos los dos botones para este panel 
@@ -213,36 +240,27 @@ public class PnlAltaSub extends JScrollPane{
 				if(e.getActionCommand().equals("aceptar")){
 					ConexionDb conexdb = new ConexionDb();
 					conexdb.Conectardb();
-					//nomwp = cbtipo.getSelectedItem().toString();
-					
-					rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS W WHERE W.nombre like'"+ CmbSector.getSelectedItem().toString()+"'" );
-					String id_wp = null;
-					try {
-						rs.next();
-						id_wp = rs.getString(1);
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
+										
+					conexion.executeUpdate("INSERT INTO SUBCONTRATA (nombre,sector,pais,provincia,direccion,cod_postal,telf,observaciones) VALUES ('"+ 
+							jtxt[0].getText()+"','"+sector+"','"+pais+"','"+provincia+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"','"+jtxt[6].getText()+textarea.getText()+"')");
+					JOptionPane.showMessageDialog(aviso,"Subido");
 				}
-
 				textarea.setText(null);
 
-			
+			/*
 			// Borrar cuando damos al boton cancelar
 			if( e.getActionCommand().equals("cancelar")){
-				for(int i=0;i<2;++i) {	
+				for(int i=0;i<7;++i) {	
 					jtxt[i].setText("");
 					}	
 
 				textarea.setText(null);
 				
 				// Borrar cuando termine de añadir
-				for(int i=0;i<2;++i) {	
+				for(int i=0;i<7;++i) {	
 					jtxt[i].setText("");
 					}	
-			}
+			}*/
 		}
 			
 		};
