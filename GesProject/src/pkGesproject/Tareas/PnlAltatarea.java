@@ -204,7 +204,7 @@ public class PnlAltatarea extends JScrollPane{
 		   }
 		   //Jformat
 		   
-		   if(i==0 ){
+		   /*if(i==0 ){
 			 	 
 				jtxt[i].addKeyListener(new KeyAdapter(){
 				   public void keyTyped(KeyEvent e){
@@ -217,7 +217,7 @@ public class PnlAltatarea extends JScrollPane{
 				      }
 				   }
 				});
-				}
+				}*/
 		}//fin for
 		
 		/**
