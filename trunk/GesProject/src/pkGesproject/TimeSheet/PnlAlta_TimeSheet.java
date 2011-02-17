@@ -160,10 +160,10 @@ public class PnlAlta_TimeSheet extends JPanel{
 	    combota.addActionListener(myListener);
 	    txttare.addActionListener(myListener);
 
-		
-    	/**
+	    /*
+    	**
     	 * Cargamos los array y la tabla con los datos de la bd
-    	 */
+    	 
     	cuenta=contar_reg();
     	fila = new String[colu.length+1];
     	columnas =4;
@@ -175,6 +175,7 @@ public class PnlAlta_TimeSheet extends JPanel{
                  return false;
                }
     	};
+    	*/
 		
 		
 		for (int cont=0; cont < 3; cont++){
