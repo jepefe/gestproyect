@@ -30,6 +30,7 @@ import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
 import ar.com.fdvs.dj.domain.DynamicReport;
 import ar.com.fdvs.dj.domain.builders.ColumnBuilderException;
 import ar.com.fdvs.dj.domain.builders.FastReportBuilder;
+import ar.com.fdvs.dj.domain.constants.Page;
 import ar.com.fdvs.dj.test.TestRepositoryProducts;
 
 
@@ -67,6 +68,8 @@ public class PnlInfProyecto extends JPanel{
 	ConexionDb conexion= new ConexionDb();
 	JPanel panel, mensaje;
 	int ancho = 0 ;
+	private final int PORTRAIT_PAGE_HEIGHT = 595;  
+	private final int PORTRAIT_PAGE_WIDTH = 842; 
 
 	public PnlInfProyecto(){
 		panel = new JPanel();
@@ -349,7 +352,7 @@ public class PnlInfProyecto extends JPanel{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-
+			
 			JRDataSource ds = new JRBeanCollectionDataSource(TestRepositoryProducts.getDummyCollection());
 			JasperPrint jp = null;
 			try {
@@ -358,7 +361,6 @@ public class PnlInfProyecto extends JPanel{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
 			JasperViewer.viewReport(jp,false);    //finally display the report report
 		}
 	}
@@ -368,7 +370,7 @@ public class PnlInfProyecto extends JPanel{
 	public void agregar(){
 		int pos = buscar(datos,(String)lista1.getModel().getElementAt(lista1.getSelectedIndex()));
 		
-		if((ancho + dimension[pos])<=75){
+		//if((ancho + dimension[pos])<=75){
 			if(lista1.getSelectedValue().equals("")){}else{
 				modelo2.addElement(lista1.getSelectedValue());
 				gbordenar.addItem(lista1.getSelectedValue());
@@ -376,9 +378,9 @@ public class PnlInfProyecto extends JPanel{
 				modelo.removeElement(lista1.getSelectedValue());
 				
 			}
-		}else{
+	/*	}else{
 			mensaje("No caben mas columnas en el informe", false);
-		}
+		}*/
 	}
 	/**
 	 * Metodo para quitar de la lista 2

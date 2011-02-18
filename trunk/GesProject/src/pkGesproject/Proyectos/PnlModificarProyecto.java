@@ -11,6 +11,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -43,7 +46,7 @@ public class PnlModificarProyecto extends JPanel{
 	java.util.Date f_ini , f_fin = new java.util.Date();
 	String datos [][];		
 	String auxdatos[][] ;
-	String colu[] = {"Nombre","Presupuesto","Descripcion","Fecha Inicio","Fecha Fin"};
+	String colu[] = {rec.idioma[rec.eleidioma][11],rec.idioma[rec.eleidioma][13],rec.idioma[rec.eleidioma][41],rec.idioma[rec.eleidioma][173],rec.idioma[rec.eleidioma][26]};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
 			{recursos.icono[7],rec.idioma[rec.eleidioma][33]}};
@@ -61,7 +64,7 @@ public class PnlModificarProyecto extends JPanel{
 	int cuenta;
 	int columnas;
 	Boolean existe = new Boolean(false);
-	
+	MouseListener mouse;
 	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
 	void cerrarpanel(){
@@ -84,46 +87,8 @@ public class PnlModificarProyecto extends JPanel{
            }
     	};
     	jtblLateral.setPreferredScrollableViewportSize(new Dimension(700,160));
+    	
 		
-		/*
-    	 * Solucion para que la Matriz de Busqueda sea Dinamica.
-    	 */
-    	/*conexion.Conectardb();
-    	rs = conexion.ConsultaSQL("SELECT nombre,presupuesto,descripcion,f_ini,f_fin FROM PROYECTOS");
-    	cuenta = 0 ; // Cuenta para hacer la matriz dinamica
-    	try {
-			while(rs.next()){
-			cuenta = cuenta + 1;
-			
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	conexion.cerrarConexion();
-    	datos = new String[cuenta][5];// Matriz Dinamica
-    	auxdatos = new String[cuenta][5];*/
-    /*
-     *  Sacar Datos de la base de datos y ponerlas en la matriz
-     */
-    /*	conexion.Conectardb();
-    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
-    	rs = conexion.ConsultaSQL("SELECT nombre,presupuesto,descripcion,f_ini,f_fin FROM PROYECTOS");
-    	int i = 0; 
-    	try {
-			while(rs.next()){
-				for(int j = 1;j<6;j++){	
-					datos[i][j-1] = rs.getString(j);
-					fila[j-1]=datos[i][j-1];
-					}
-				i++;
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	conexion.cerrarConexion();
-    	   		*/
     	this.setLayout(new GridBagLayout()); //Ponemos el Layout al panel
 		   
         //	jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));
@@ -150,7 +115,6 @@ public class PnlModificarProyecto extends JPanel{
 				}
     			
     		});
-    		
     		
     		// BARRA BUSCAR
             GridBagConstraints constraints = new GridBagConstraints();
@@ -284,81 +248,7 @@ public class PnlModificarProyecto extends JPanel{
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("modificar")){
 					// Frame de modificar con boton presupuesto visible
-					if(jtblLateral.getSelectedRow()==-1){
-						Component aviso = null;
-						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][103]);
-					}else{
-						PnlNuevoProyecto mod;
-						modificar = new JDialog();
-						modificar.add(mod = new PnlNuevoProyecto());
-						modificar.setBounds(0, 0, 500, 600);
-						mod.jbtnaceptar.setVisible(false); mod.jbtncancelar.setVisible(false);
-						mod.jbtnaceptar2.setVisible(true); mod.jbtncancelar2.setVisible(true);
-						mod.txtprecio.setVisible(true);
-						mod.pres.setVisible(true);
-						modificar.setModal(true);
-						modificar.setLocationRelativeTo(null);
-						mod.jtxt[0].removeFocusListener(mod.foco);
-						/*
-						 * Introducir datos al panel para poder modificar
-						 */
-						conexion.Conectardb();
-				    	rs = conexion.ConsultaSQL("SELECT id_pro, p.nombre,p.num_contrato, p.descripcion,p.presupuesto, p.f_ini, p.f_fin FROM PROYECTOS as p WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
-							try {									
-										rs.next();
-											id_pro = rs.getInt(1);
-											mod.jtxt[0].setText(rs.getString(2));
-											mod.jtxt[1].setText(rs.getString(3));
-											mod.textarea.setText(rs.getString(4));
-											mod.txtprecio.setText(String.valueOf(rs.getInt(5))) ;
-											mod.jdc1.setDate(rs.getDate(6));
-											mod.jdc2.setDate(rs.getDate(7));				
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-							/*
-							 * Consulta y añadre a los JLIST los datos.
-							 */
-							rs = conexion.ConsultaSQL("SELECT p.nombre,coordinador FROM PARTNER as p inner join PARTNER_PROYECTOS as pp on p.cod_part = pp.cod_part WHERE pp.id_pro = '"+id_pro+"'");
-							try {									
-								while(rs.next()){	
-									mod.modelo.addElement(rs.getString(1));
-									mod.CbCoordinador.addItem(rs.getString(1));
-									mod.modelo2.removeElement(rs.getString(1));
-								}					
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-							rs = conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER as p inner join PARTNER_PROYECTOS as pp on p.cod_part = pp.cod_part WHERE pp.id_pro = '"+id_pro+"'AND pp.coordinador ="+1+"");
-							try {									
-								while(rs.next()){
-									mod.CbCoordinador.setSelectedItem(rs.getString(1));
-								}					
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-							conexion.cerrarConexion();
-							
-							rs = conexion.ConsultaSQL("SELECT a.nombre FROM PROYECTOS as p inner join ACTIONS as a  on a.id_accion = p.action WHERE p.id_pro = '"+id_pro+"'");
-							try {									
-								while(rs.next()){
-									mod.CbAccion.setSelectedItem(rs.getString(1));
-								}					
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-							conexion.cerrarConexion();
-							
-					/*
-					 * llamada del metodo nuevoitem de pnlnuevoproyecto
-					 */
-						
-						modificar.setVisible(true);
-					}	
+					modificar();
 				}
 				if(e.getActionCommand().equals("eliminar")){
 					conexion.Conectardb();
@@ -380,12 +270,21 @@ public class PnlModificarProyecto extends JPanel{
 				
 			}	
             };
-            
+            mouse = new MouseAdapter() {
+
+    			public void mouseClicked(MouseEvent e) {
+    				if (e.getClickCount() == 2) {
+    					modificar();
+    				}
+    			}
+            	
+            };
+                
             jbtnmodificar.setActionCommand("modificar");
             jbtnmodificar.addActionListener(event);
             jbtneliminar.setActionCommand("eliminar");
             jbtneliminar.addActionListener(event);
-            
+            jtblLateral.addMouseListener(mouse);
             jtext.addKeyListener(accion);  
             this.setVisible(true);
             panel.setVisible(true);
@@ -490,4 +389,87 @@ public class PnlModificarProyecto extends JPanel{
     public static PnlModificarProyecto Obtener_Instancia(){
 		return instancia;
 	}
+    
+    /**
+     * Metodo que crea el panel modificar y  realiza la modificacion.
+     */
+    public void modificar (){
+    	if(jtblLateral.getSelectedRow()==-1){
+			Component aviso = null;
+			JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][103]);
+		}else{
+			PnlNuevoProyecto mod;
+			modificar = new JDialog();
+			modificar.add(mod = new PnlNuevoProyecto());
+			modificar.setBounds(0, 0, 500, 650);
+			mod.jbtnaceptar.setVisible(false); mod.jbtncancelar.setVisible(false);
+			mod.jbtnaceptar2.setVisible(true); mod.jbtncancelar2.setVisible(true);
+			mod.txtprecio.setVisible(true);
+			mod.pres.setVisible(true);
+			modificar.setModal(true);
+			modificar.setLocationRelativeTo(null);
+			mod.jtxt[0].removeFocusListener(mod.foco);
+			/*
+			 * Introducir datos al panel para poder modificar
+			 */
+			conexion.Conectardb();
+	    	rs = conexion.ConsultaSQL("SELECT id_pro, p.nombre,p.num_contrato, p.descripcion,p.presupuesto, p.f_ini, p.f_fin FROM PROYECTOS as p WHERE p.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+				try {									
+							rs.next();
+								id_pro = rs.getInt(1);
+								mod.jtxt[0].setText(rs.getString(2));
+								mod.jtxt[1].setText(rs.getString(3));
+								mod.textarea.setText(rs.getString(4));
+								mod.txtprecio.setText(String.valueOf(rs.getInt(5))) ;
+								mod.jdc1.setDate(rs.getDate(6));
+								mod.jdc2.setDate(rs.getDate(7));				
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				/*
+				 * Consulta y añadre a los JLIST los datos.
+				 */
+				rs = conexion.ConsultaSQL("SELECT p.nombre,coordinador FROM PARTNER as p inner join PARTNER_PROYECTOS as pp on p.cod_part = pp.cod_part WHERE pp.id_pro = '"+id_pro+"'");
+				try {									
+					while(rs.next()){	
+						mod.modelo.addElement(rs.getString(1));
+						mod.CbCoordinador.addItem(rs.getString(1));
+						mod.modelo2.removeElement(rs.getString(1));
+					}					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				rs = conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER as p inner join PARTNER_PROYECTOS as pp on p.cod_part = pp.cod_part WHERE pp.id_pro = '"+id_pro+"'AND pp.coordinador ="+1+"");
+				try {									
+					while(rs.next()){
+						mod.CbCoordinador.setSelectedItem(rs.getString(1));
+					}					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				conexion.cerrarConexion();
+				
+				rs = conexion.ConsultaSQL("SELECT a.nombre FROM PROYECTOS as p inner join ACTIONS as a  on a.id_accion = p.action WHERE p.id_pro = '"+id_pro+"'");
+				try {									
+					while(rs.next()){
+						mod.CbAccion.setSelectedItem(rs.getString(1));
+					}					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				conexion.cerrarConexion();
+				
+		/*
+		 * llamada del metodo nuevoitem de pnlnuevoproyecto
+		 */
+			
+			modificar.setVisible(true);
+		}	
+    	
+    	
+    }
 }

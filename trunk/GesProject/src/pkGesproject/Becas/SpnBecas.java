@@ -34,8 +34,8 @@ public class SpnBecas extends JSplitPane {
 	JTable jtblLateral;
 	Border empty = new EmptyBorder(0,0,0,0);
 	JScrollPane modificar,estudios,practicas,docente,nodocente,conselleria,ministerio,FCT,otra;
-	Component[] panlBecas = {new PnlEstudios(),
-			 estudios = new JScrollPane(new PnlPracticas()),
+	Component[] panlBecas = {
+			 estudios = new JScrollPane(new PnlEstudios()),
 			 practicas = new JScrollPane(new PnlPracticas()),
 			 docente  = new JScrollPane(new PnlDocente()),
 			 nodocente = new JScrollPane(new PnlNoDocente()),
