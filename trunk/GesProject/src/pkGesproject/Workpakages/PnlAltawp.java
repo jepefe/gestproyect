@@ -404,16 +404,6 @@ public class PnlAltawp extends JScrollPane{
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						//para la id del partner
-						//rs = conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like'"+ CmbPar.getSelectedItem().toString()+"'" );
-						
-						/*try {
-							rs.next();
-							id_par = rs.getInt(1);
-						} catch (SQLException e2) {
-							// TODO Auto-generated catch block
-							e2.printStackTrace();
-						}*/
 							
 						
 					// cambiar fecha a sql
@@ -445,7 +435,6 @@ public class PnlAltawp extends JScrollPane{
 							conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS(cod_part, id_wp) VALUES ('"+id_par+"','"+id_wp+"')" );	
 
 						}
-						//conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS (cod_part, id_wp) VALUES ('"+id_par+"','"+id_wp+"')");
 						
 						modwp.cuenta=modwp.contar_reg();
 						modwp.datos = new String[modwp.cuenta][modwp.columnas];
@@ -454,6 +443,7 @@ public class PnlAltawp extends JScrollPane{
 						modwp.jtblLateral.setModel(modwp.tablemodel);
 						modwp.jtblLateral.repaint();
 						modwp.llena = false;
+						
 						
 						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
 						conexdb.cerrarConexion();
@@ -466,6 +456,9 @@ public class PnlAltawp extends JScrollPane{
 					jdc2.setDate(null);
 					textarea.setText(null);
 					textarea2.setText(null);
+					jdc2.setBackground(null);
+					vaciar_lista();
+					
 				}else{
 					System.out.println("eelseee");
 					JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
@@ -490,7 +483,7 @@ public class PnlAltawp extends JScrollPane{
 				jtxt[1].setText("");
 				jdc2.setBackground(null);
 				CmbPro.setSelectedItem(null);
-				
+				vaciar_lista();
 				// Borrar cuando termine de añadir
 				for(int i=0;i<2;++i) {	
 					jtxt[i].setText("");
@@ -583,4 +576,12 @@ public class PnlAltawp extends JScrollPane{
 	public static PnlAltawp Obtener_Instancia(){
 		return instancia;
 	}
+	
+	public void vaciar_lista(){
+		for (int i = 0 ; i<listaP2.getModel().getSize(); i++){
+			modelo2.addElement(listaP2.getModel().getElementAt(i));
+		}
+		modelo.removeAllElements();	
+	}
+	
 }

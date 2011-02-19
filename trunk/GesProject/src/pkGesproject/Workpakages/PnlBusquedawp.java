@@ -352,7 +352,7 @@ public class PnlBusquedawp extends JPanel{
 						/*
 						 * Consulta y añadre a los JLIST los datos.
 						 */
-						rs2 = conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER_WORKPAQUETS wp INNER JOIN PARTNER p ON wp.id_part = p.id_part INNER JOIN WORKPAQUETS w ON wp.id_wp = w.id_wp WHERE w.nombre = '"+datos[jtblLateral.getSelectedRow()][1]+"'");
+						rs2 = conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER_WORKPAQUETS wp INNER JOIN PARTNER p ON wp.cod_part = p.cod_part INNER JOIN WORKPAQUETS w ON wp.id_wp = w.id_wp WHERE w.nombre = '"+datos[jtblLateral.getSelectedRow()][0]+"'");
 						try {									
 							while(rs2.next()){	
 								mod.modelo.addElement(rs2.getString(1));
