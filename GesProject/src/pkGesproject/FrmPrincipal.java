@@ -2,6 +2,7 @@ package pkGesproject;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -17,6 +18,7 @@ import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -66,6 +68,9 @@ public class FrmPrincipal extends JFrame {
 	JToggleButton jbtnBecas = new JToggleButton(recursos.icono[35]);
 	JPanel jpnlppal = new JPanel();
 	PnlPrincipal ppal = new PnlPrincipal();
+	JLabel jlbactual = new JLabel();
+	int posicionxbtn;
+	String seleccionado;
 	
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
 	
@@ -86,7 +91,15 @@ public class FrmPrincipal extends JFrame {
 	private Rectangle maxBounds;
 	
 	public FrmPrincipal(){
+		//jtlbFrmppal.setLayout(null);
 		int i;
+		jbtnInicio.setVerticalTextPosition(SwingConstants.BOTTOM);
+		jbtnInicio.setHorizontalTextPosition(SwingConstants.CENTER);
+		jbtnInicio.setText(rec.idioma[rec.eleidioma][172]);
+				
+		jbtnInicio.setVerticalTextPosition(SwingConstants.BOTTOM);
+		jbtnInicio.setHorizontalTextPosition(SwingConstants.CENTER);
+		jbtnUsuarios.setText(rec.idioma[rec.eleidioma][172]);
 		jbtnUsuarios.setVerticalTextPosition(SwingConstants.BOTTOM);
 		jbtnUsuarios.setHorizontalTextPosition(SwingConstants.CENTER);
 		jbtnUsuarios.setText(rec.idioma[rec.eleidioma][137]);
@@ -162,7 +175,7 @@ public class FrmPrincipal extends JFrame {
 		spninformes = new SpnInformes();
 		spnpreferencias = new SpnPreferencias();
 		spnbecas = new SpnBecas();
-		//jtlbFrmppal.add(jbtnInicio);
+		jtlbFrmppal.add(jbtnInicio);
 		jbtnInicio.setSelected(true);
 		jtlbFrmppal.add(jbtnUsuarios);
 		jtlbFrmppal.add(jbtnSocios);
@@ -178,6 +191,7 @@ public class FrmPrincipal extends JFrame {
 		
 		}break;
 		case 1:{
+			jtlbFrmppal.add(jbtnInicio);
 			recursos.txtcarga = "Loading  Time Sheets";
 			spntimesheet = new SpnTimesheet();
 			jtlbFrmppal.add(jbtnTimesheet);
@@ -185,6 +199,7 @@ public class FrmPrincipal extends JFrame {
 			recursos.progresocarga =10;
 		}
 		case 2:{
+			jtlbFrmppal.add(jbtnInicio);
 			recursos.txtcarga = "Loading  Time Sheets";
 			spntimesheet = new SpnTimesheet();
 			recursos.progresocarga =10;
@@ -192,6 +207,7 @@ public class FrmPrincipal extends JFrame {
 
 		}
 		case 3:{
+			jtlbFrmppal.add(jbtnInicio);
 			recursos.txtcarga = "Loading  Time Sheets";
 			spntimesheet = new SpnTimesheet();
 			recursos.progresocarga =10;
@@ -233,7 +249,7 @@ public class FrmPrincipal extends JFrame {
 	public void inicializar(){		
 			jpnlppal.setLayout(new BorderLayout());
 			add(jpnlppal,BorderLayout.CENTER);
-			jpnlppal.add(ppal);
+			
 			this.setVisible(true);
 			this.Carga_toolbar();
 			repaint();
@@ -241,47 +257,184 @@ public class FrmPrincipal extends JFrame {
 	/*
 	 * Metodo de carga de la barra de herramientas
 	 */
+	
+	
+	public void animacion(final AbstractButton abstractButton,final String cadena){
+		jtlbFrmppal.add(jlbactual);
+		Thread hilo = new Thread(new Runnable(){
+			
+			@Override
+			public void run() {
+				
+				posicionxbtn = abstractButton.getX();
+				
+				int incremento;
+				abstractButton.setSelected(false);
+				jlbactual.setText(cadena);
+				jtlbFrmppal.add(jlbactual);
+				jlbactual.setVisible(false);
+				boolean animando = true;
+				boolean moviendo = true;
+				while((animando || moviendo)){
+					for(int i=0;i<jtlbFrmppal.getComponentCount();i++){
+					if(jtlbFrmppal.getComponent(i)!= abstractButton){
+						if(i%2==0){
+							incremento = 4;
+						}else{
+							incremento = -4;
+						
+						}
+						int x=jtlbFrmppal.getComponent(i).getX();
+						int y=jtlbFrmppal.getComponent(i).getY()+incremento;
+						jtlbFrmppal.getComponent(i).setLocation(x,y);
+					
+					}else{
+						if(jtlbFrmppal.getComponent(i).getX()>20){
+						int x=jtlbFrmppal.getComponent(i).getX()-10;
+						int y=jtlbFrmppal.getComponent(i).getY();
+						
+						jtlbFrmppal.getComponent(i).setLocation(x,y);
+				//		jtlbFrmppal.getComponent(i).repaint();
+						}else{
+						moviendo=false;
+						}
+					}
+					if(jtlbFrmppal.getComponent(i).getY()>60){
+						animando=false;
+					}
+					try {
+						
+						Thread.sleep(1);
+					} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+						e.printStackTrace();
+				}
+					
+				}
+				}
+				abstractButton.setSelected(true);
+				
+				for(int i=0;i<jtlbFrmppal.getComponentCount();i++){
+					if(jtlbFrmppal.getComponent(i)!= abstractButton){
+				 		// jtlbFrmppal.remove(jtlbFrmppal.getComponentAtIndex(i));
+						((Component) jtlbFrmppal.getComponentAtIndex(i)).setVisible(false);
+					}
+					}
+				
+				jlbactual.setText(cadena);
+				//abstractButton.setLocation(40,abstractButton.getY());
+				jlbactual.setFont(new Font(Font.SANS_SERIF, Font.BOLD,48));
+			//	jlbactual.setLocation(abstractButton.getX()+100,abstractButton.getY() );
+				jlbactual.setVisible(true);
+				
+				
+				}
+				
+			}
+    		 
+    	      	 
+    	 
+    	 );
+    	 hilo.start();
+    	 
+	}
+	
+	public void animacionvolver(final Component boton){
+		jtlbFrmppal.remove(jlbactual);	
+		seleccionado = "0";
+		Thread hilo = new Thread(new Runnable(){
+		
+				@Override
+				public void run() {
+					int y,x;
+					boolean animando = true;
+					for(int i=0;i<posicionxbtn;i++){
+						boton.setLocation(boton.getX()+1,boton.getY());
+						try {
+							Thread.sleep(1);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					for(int i=0;i<jtlbFrmppal.getComponentCount();i++){
+						jtlbFrmppal.getComponentAtIndex(i).setVisible(true);
+						if(((i%2!=0)&&(boton!=jtlbFrmppal.getComponentAtIndex(i)))){
+					
+						jtlbFrmppal.getComponentAtIndex(i).setLocation(jtlbFrmppal.getComponentAtIndex(i).getX(),jtlbFrmppal.getComponentAtIndex(i).getY()-50);
+					}else if(boton!=jtlbFrmppal.getComponentAtIndex(i)){
+			
+						jtlbFrmppal.getComponentAtIndex(i).setLocation(jtlbFrmppal.getComponentAtIndex(i).getX(),jtlbFrmppal.getComponentAtIndex(i).getY()+50);
+					}}
+						
+					
+				/*	while(animando){
+						for(int i=0;i<jtlbFrmppal.getComponentCount();i++){
+							
+							y=jtlbFrmppal.getComponentAtIndex(i).getY();
+							
+							if(boton!=jtlbFrmppal.getComponentAtIndex(i) && jtlbFrmppal.getComponentAtIndex(i).getY()!=boton.getY()){
+								if(jtlbFrmppal.getComponentAtIndex(i).getY()>boton.getY() && jtlbFrmppal.getComponentAtIndex(i).getY()!=boton.getY()){
+								
+									jtlbFrmppal.getComponentAtIndex(i).setLocation(jtlbFrmppal.getComponentAtIndex(i).getX(),y+1);
+								}else if(jtlbFrmppal.getComponentAtIndex(i).getY()!=boton.getY()){
+								
+									jtlbFrmppal.getComponentAtIndex(i).setLocation(jtlbFrmppal.getComponentAtIndex(i).getX(), y-1);
+								}
+								
+							}
+						
+						try {
+							Thread.sleep(2);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				
+						}
+						if(jtlbFrmppal.getComponentAtIndex(jtlbFrmppal.getComponentCount()-1).getY()==boton.getY()){
+							animando=false;							
+						}
+					}*/
+						
+					
+					
+				}});
+				hilo.start();	
+				
+				
+				
+	}
 	public void Carga_toolbar(){
-		jtlbFrmppal.setLayout(new GridBagLayout());
+		
 		//Creamos un action listener para los botones de la jtoolbar
+		
 		ActionListener jtlbAcListener = new ActionListener() {
 	         public void actionPerformed(ActionEvent e) {
-	        	int i;
-	        	 if(jpnlppal.getComponentCount()>0){
+	        	 
+	        	 int i;
+	        	
+	        	if(((AbstractButton) e.getSource()).getActionCommand() == seleccionado){
+	        		System.out.println("ya estaba pulsado");
+	        		animacionvolver((Component) e.getSource());
+	        	}else{
+	        		seleccionado = ((AbstractButton) e.getSource()).getActionCommand();
+	        			if(jpnlppal.getComponentCount()>0){
 	        	jpnlppal.remove(0);
 	        	 }
-	        	/*
-	        	remove(pnlbienvenida);
-	        	remove(spnsocios);
-	        	remove(spnproyectos);
-	        	remove(spnstaff);
-	        	remove(spnworkpack);
-	        	remove(spntareas);
-	        	remove(nueva);
-	        	remove(spntablas);
-	        	remove(spntimesheet);
-	        	remove(spninformes);
-	        	jbtnUsuarios.setSelected(false);
-	        	jbtnSocios.setSelected(false);
-	        	jbtnInicio.setSelected(false);
-	        	jbtnProyectos.setSelected(false);
-	        	jbtnWorkpack.setSelected(false);
-	        	jbtnTareas.setSelected(false);
-	        	jbtnAgregar.setSelected(false);
-	        	jbtnTablas.setSelected(false);
-	        	jbtnTimesheet.setSelected(false);
-	        	jbtnInformes.setSelected(false);
-	        	repaint();
-	        	validate();*/
+	        	
 	        	 for(i=0;i<jtlbFrmppal.getComponentCount();i++){
+	        		 if(jtlbFrmppal.getComponentAtIndex(i)==jlbactual){
+	        			 jtlbFrmppal.remove(jtlbFrmppal.getComponentAtIndex(i));
+	        		 }else{
 	        		  ((AbstractButton) jtlbFrmppal.getComponentAtIndex(i)).setSelected(false);
+	        	 }
 	        	 }
 	         if (e.getActionCommand().equals("socios")){
 	        	jbtnSocios.setSelected(true);
 	        	jpnlppal.add(spnsocios);
 	        	repaint();
 	        	validate();
-	        	
 	        	}
 	         if (e.getActionCommand().equals("usuarios")){
 		        	jbtnUsuarios.setSelected(true); 
@@ -294,7 +447,7 @@ public class FrmPrincipal extends JFrame {
 		         }
 	         if (e.getActionCommand().equals("inicio")){
 	        	 jbtnInicio.setSelected(true);
-	        	 add(pnlbienvenida, BorderLayout.CENTER);
+	        	 jpnlppal.add(ppal);
 	        	 repaint();
 	        	 validate();
 	        	 
@@ -365,7 +518,8 @@ public class FrmPrincipal extends JFrame {
 	        	 repaint();
 	        	 validate();
 	         }
-	         } 
+	         animacion((AbstractButton)e.getSource(),((AbstractButton) e.getSource()).getText());
+	         } }
 		};
 		jtlbFrmppal.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
 		jbtnUsuarios.addActionListener(jtlbAcListener);

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
@@ -23,6 +24,8 @@ import ar.com.fdvs.dj.domain.constants.Border;
 
 public class PnlPrincipal extends JPanel {
 	JPanel jpnlinfousuario = new JPanel();
+	JPanel jpnlproyecto = new JPanel();
+	
 	JImageContainer jicusu = new JImageContainer();
 	RsGesproject recursos = RsGesproject.instancia;
 	ConexionDb cdb = new ConexionDb();
@@ -62,7 +65,7 @@ public class PnlPrincipal extends JPanel {
 				ConexionFTP cftp = new ConexionFTP();
 				jlbFoto.setPreferredSize(new Dimension(200,160));
 				
-				jlbFoto.setIcon(new ImageIcon(cftp.ObtenerImagen("fto"+Integer.toString(recursos.getIdusuario())).getScaledInstance(190, 190, 0)));
+				jlbFoto.setIcon(new ImageIcon(cftp.ObtenerImagen("fto"+Integer.toString(recursos.getIdusuario())).getScaledInstance(130, 130, 0)));
 				
 				System.out.println("FOTO OBTENIDA");
 				
@@ -100,6 +103,12 @@ public class PnlPrincipal extends JPanel {
 		jpnlinfousuario.add(jlbpartner);
 		
 		
+		
+	}
+	public void CargarPanelProyecto(){
+		JComboBox jcbproyecto = new JComboBox();
+		ConexionDb cdb = new ConexionDb();
+		ResultSet rs;
 		
 	}
 	
