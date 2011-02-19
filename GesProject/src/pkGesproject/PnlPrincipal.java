@@ -40,8 +40,11 @@ public class PnlPrincipal extends JPanel {
 		
 		this.setLayout(new BorderLayout());
 		CargaInfoUsuario();
+		CargarPanelProyecto();
 		this.add(jpnlinfousuario,BorderLayout.WEST);
-		this.setOpaque(true);
+		//this.setOpaque(true);
+		
+		this.add(jpnlproyecto,BorderLayout.CENTER);
 	}
 	
 	
@@ -63,7 +66,7 @@ public class PnlPrincipal extends JPanel {
 			@Override
 			public void run()  {
 				ConexionFTP cftp = new ConexionFTP();
-				jlbFoto.setPreferredSize(new Dimension(200,160));
+				jlbFoto.setPreferredSize(new Dimension(130,130));
 				
 				jlbFoto.setIcon(new ImageIcon(cftp.ObtenerImagen("fto"+Integer.toString(recursos.getIdusuario())).getScaledInstance(130, 130, 0)));
 				
@@ -105,10 +108,26 @@ public class PnlPrincipal extends JPanel {
 		
 		
 	}
-	public void CargarPanelProyecto(){
+	public void CargarPanelProyecto() {
+		jpnlproyecto.setVisible(true);
 		JComboBox jcbproyecto = new JComboBox();
 		ConexionDb cdb = new ConexionDb();
 		ResultSet rs;
+		rs = GesStaff.allowedProyects();
+		try {
+			if(rs.next()){
+				jcbproyecto.addItem(rs.getString(2));
+				while(rs.next()){
+					jcbproyecto.addItem(rs.getString(2));
+					
+				}
+				jpnlproyecto.add(jcbproyecto);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
