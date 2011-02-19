@@ -188,6 +188,7 @@ public class FrmPrincipal extends JFrame {
 		jtlbFrmppal.add(jbtnBecas);
 		jtlbFrmppal.add(jbtnPreferencias);
 		jtlbFrmppal.add(jbtnAgregar);
+		add(ppal);
 		
 		}break;
 		case 1:{
@@ -195,7 +196,7 @@ public class FrmPrincipal extends JFrame {
 			recursos.txtcarga = "Loading  Time Sheets";
 			spntimesheet = new SpnTimesheet();
 			jtlbFrmppal.add(jbtnTimesheet);
-
+			add(ppal);
 			recursos.progresocarga =10;
 		}
 		case 2:{
@@ -290,7 +291,7 @@ public class FrmPrincipal extends JFrame {
 					
 					}else{
 						if(jtlbFrmppal.getComponent(i).getX()>20){
-						int x=jtlbFrmppal.getComponent(i).getX()-10;
+						int x=jtlbFrmppal.getComponent(i).getX()-16;
 						int y=jtlbFrmppal.getComponent(i).getY();
 						
 						jtlbFrmppal.getComponent(i).setLocation(x,y);
@@ -302,16 +303,19 @@ public class FrmPrincipal extends JFrame {
 					if(jtlbFrmppal.getComponent(i).getY()>60){
 						animando=false;
 					}
-					try {
-						
-						Thread.sleep(1);
-					} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-						e.printStackTrace();
-				}
+				
 					
 				}
+					long t0 = System.currentTimeMillis();
+					  long millisLeft = 1;
+					  while (millisLeft > 0) {
+					 //   Thread.sleep(millisLeft);
+					    long t1 = System.currentTimeMillis();
+					    millisLeft = 1 - (t1 - t0);
+					  }
+				
 				}
+				
 				abstractButton.setSelected(true);
 				
 				for(int i=0;i<jtlbFrmppal.getComponentCount();i++){
@@ -346,17 +350,24 @@ public class FrmPrincipal extends JFrame {
 		
 				@Override
 				public void run() {
-					int y,x;
+					int y,x,a=0;
 					boolean animando = true;
-					for(int i=0;i<posicionxbtn;i++){
-						boton.setLocation(boton.getX()+1,boton.getY());
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+					while(a<posicionxbtn && ((boton.getX()+1)<posicionxbtn)){
+					
+						boton.setLocation(boton.getX()+10,boton.getY());
+						a++;
+						
+							 long t0 = System.currentTimeMillis();
+							  long millisLeft = 1;
+							  while (millisLeft > 0) {
+							 //   Thread.sleep(millisLeft);
+							    long t1 = System.currentTimeMillis();
+							    millisLeft = 1 - (t1 - t0);
+							  }
+						
 					}
+					//animando=false;
+					
 					for(int i=0;i<jtlbFrmppal.getComponentCount();i++){
 						jtlbFrmppal.getComponentAtIndex(i).setVisible(true);
 						if(((i%2!=0)&&(boton!=jtlbFrmppal.getComponentAtIndex(i)))){
