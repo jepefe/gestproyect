@@ -294,7 +294,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 				   gbt.gridx = 1; // El área de texto empieza en la columna
 				   Jproyecto.add(CmbPart,gbt);
 			   CmbPart.setPreferredSize(new Dimension(140,30));
-	   
+				if (!GesStaff.esRepresentante()){
+					CmbPart.setEnabled(false);
+					}
 	   				conexion.Conectardb();
 	   					rs = conexion.ConsultaSQL("SELECT nombre,cod_part FROM PARTNER ORDER BY nombre");
 	   						try {

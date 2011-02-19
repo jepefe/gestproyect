@@ -348,10 +348,16 @@ public class PnlBusquedawp extends JPanel{
 						}
 						conexion.cerrarConexion();
 						conexion.Conectardb();
-							rs2=conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER p WHERE p.cod_part = '"+id_par+"'");
-							try {
-								rs2.next();
-								mod.CmbPar.setSelectedItem(rs2.getString(1));
+						
+						/*
+						 * Consulta y añadre a los JLIST los datos.
+						 */
+						rs2 = conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER_WORKPAQUETS wp INNER JOIN PARTNER p ON wp.id_part = p.id_part INNER JOIN WORKPAQUETS w ON wp.id_wp = w.id_wp WHERE w.nombre = '"+datos[jtblLateral.getSelectedRow()][1]+"'");
+						try {									
+							while(rs2.next()){	
+								mod.modelo.addElement(rs2.getString(1));
+								mod.modelo2.removeElement(rs2.getString(1));
+							}					
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
