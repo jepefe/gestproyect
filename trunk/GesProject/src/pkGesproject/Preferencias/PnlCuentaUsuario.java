@@ -48,6 +48,8 @@ public class PnlCuentaUsuario extends JPanel{
 		gbc.gridx = 1; // El área de texto empieza en la columna
 		this.add(gbidioma = new GpComboBox(),gbc);
 		
+		
+		
 		gbc.gridx = 0; // El área de texto empieza en la columna
 		gbc.gridy = 0; // El área de texto empieza en la fila
 		//contraseña.setLayout(new GridBagLayout());

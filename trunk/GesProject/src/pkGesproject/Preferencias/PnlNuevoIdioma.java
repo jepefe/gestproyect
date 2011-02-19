@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -29,7 +30,8 @@ public class PnlNuevoIdioma extends JPanel{
 	ResultSet rs;
 	JLabel jlbl[],lblidioma;
 	JTextField jtxt[],txtidioma;
-	JPanel pnllista, pnlcabecera;
+	JPanel pnlmensaje,pnllista, pnlcabecera;
+	JButton jbtnadd;
 	JScrollPane lista, cabecera;
 	GridBagConstraints gbc = new GridBagConstraints();
 	Border blackline;
@@ -41,7 +43,7 @@ public class PnlNuevoIdioma extends JPanel{
 	}
 	
 	public void crear_interfaz(){
-		this.setLayout(new BorderLayout());
+		//this.setLayout(new GridBagLayout());
 		
 		blackline = BorderFactory.createLineBorder(Color.black);
 		
@@ -52,12 +54,18 @@ public class PnlNuevoIdioma extends JPanel{
 		title = BorderFactory.createTitledBorder("Idioma");
 		pnlcabecera.setBorder(title);
 		pnlcabecera.setLayout(new GridBagLayout());
+		//pnlcabecera.setSize(300, 300);
 		pnllista.setLayout(new GridBagLayout());
-		
+		lista = new JScrollPane(pnllista);
+		lista.setBorder(blackline);
+		title = BorderFactory.createTitledBorder("Idioma");
+		lista.setBorder(title);
+		//lista.setSize(600, 600);
+		//pnllista.setSize(600, 600);
 		
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		gbc.insets = new Insets(0,10,3,0);
-		gbc.anchor = GridBagConstraints.EAST;
+		//gbc.anchor = GridBagConstraints.BOTH;
 		
 		pnlcabecera.add(lblidioma = new JLabel("Nombre idioma:"),gbc);
 		pnlcabecera.add(txtidioma = new JTextField(10),gbc);
@@ -101,11 +109,12 @@ public class PnlNuevoIdioma extends JPanel{
 			
 		}
 		
-		this.add(pnlcabecera,BorderLayout.NORTH);
-		this.add(lista = new JScrollPane(pnllista),BorderLayout.CENTER);
-		lista.setBorder(blackline);
-		title = BorderFactory.createTitledBorder("Idioma");
-		lista.setBorder(title);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.insets = new Insets(0,10,3,0);
+		gbc.anchor = GridBagConstraints.CENTER;
+		this.add(pnlcabecera);
+		this.add(lista);
+		
 		this.setVisible(true);
 	}
 	
