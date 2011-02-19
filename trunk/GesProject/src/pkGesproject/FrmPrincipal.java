@@ -188,6 +188,7 @@ public class FrmPrincipal extends JFrame {
 		jtlbFrmppal.add(jbtnBecas);
 		jtlbFrmppal.add(jbtnPreferencias);
 		jtlbFrmppal.add(jbtnAgregar);
+		add(ppal);
 		
 		}break;
 		case 1:{
@@ -195,7 +196,7 @@ public class FrmPrincipal extends JFrame {
 			recursos.txtcarga = "Loading  Time Sheets";
 			spntimesheet = new SpnTimesheet();
 			jtlbFrmppal.add(jbtnTimesheet);
-
+			add(ppal);
 			recursos.progresocarga =10;
 		}
 		case 2:{

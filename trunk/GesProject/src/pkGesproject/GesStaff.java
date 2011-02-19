@@ -214,17 +214,18 @@ public class GesStaff {
 	}
 public static ResultSet allowedProyects(){
 		
-		ResultSet rs;
+		ResultSet rs = null;
 		ConexionDbUnica cdbu = ConexionDbUnica.instancia;
 		switch(recursos.representante){
 		//Devolvemos todos los WP en los que staff tiene una tarea asignada
 		case 0: rs = cdbu.ConsultaSQL("SELECT * FROM PROYECTOS WHERE id_pro IN (SELECT id_pro FROM WORKPAQUETS  WHERE id_wp IN (SELECT id_wp FROM TAREAS WHERE id_task IN (SELECT id_task	FROM STAFF_TAREAS WHERE id_staff =" + Integer.toString(recursos.getIdusuario()) +")))");
-		return rs;
+		break;
 		case 1:
 			//Devolvemos todos los WP del partner
-			rs = cdbu.ConsultaSQL("SELECT * FROM WORKPAQUETS  WHERE id_wp IN (SELECT id_wp FROM PARTNER_WORKPAQUETS WHERE cod_part = (SELECT cod_part FROM STAFF WHERE id_staff =" + Integer.toString(recursos.getIdusuario()) +"))");	
-	}
-		rs = cdbu.ConsultaSQL("SELECT * FROM WORKPAQUETS");
+			rs = cdbu.ConsultaSQL("SELECT * FROM PROYECTOS WHERE id_pro IN (SELECT id_pro FROM WORKPAQUETS  WHERE id_wp IN (SELECT id_wp FROM PARTNER_WORKPAQUETS WHERE cod_part = (SELECT cod_part FROM STAFF WHERE id_staff =" + Integer.toString(recursos.getIdusuario()) +")))");	
+		break;
+		}
+		//rs = cdbu.ConsultaSQL("SELECT * FROM WORKPAQUETS");
 		return rs;
 	
 }
