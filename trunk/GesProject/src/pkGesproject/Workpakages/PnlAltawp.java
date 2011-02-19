@@ -82,6 +82,8 @@ public class PnlAltawp extends JScrollPane{
 	String Npartners[] ;	// array con partners
 	int cuenta =0; // cuenta para array dinamica.
 	
+	int id_par = 0;
+	
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
 	
@@ -403,16 +405,16 @@ public class PnlAltawp extends JScrollPane{
 							e1.printStackTrace();
 						}
 						//para la id del partner
-						rs = conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like'"+ CmbPar.getSelectedItem().toString()+"'" );
-						String id_par = null;
-						try {
+						//rs = conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like'"+ CmbPar.getSelectedItem().toString()+"'" );
+						
+						/*try {
 							rs.next();
-							id_par = rs.getString(1);
+							id_par = rs.getInt(1);
 						} catch (SQLException e2) {
 							// TODO Auto-generated catch block
 							e2.printStackTrace();
-						}
-						String id_wp = null;	
+						}*/
+							
 						
 					// cambiar fecha a sql
 						  java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
@@ -423,16 +425,27 @@ public class PnlAltawp extends JScrollPane{
 					System.out.println("entraen if");
 						conexdb.executeUpdate("INSERT INTO WORKPAQUETS (nombre, id_pro, descripcion, presupuesto,f_ini, f_fin, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+id_pro+"','"+textarea.getText()+"','"+jtxt[1].getText()+"','"+sqlDate1+"','"+sqlDate2+"','"+textarea2.getText()+"')");
 						//para ver la id del workpaquets recien creado
+					
 						rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS WHERE nombre like'"+ jtxt[0].getText()+"'" );
 						try {
 							rs.next();
-							id_wp = rs.getString(1);
+							id_wp = rs.getInt(1);
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 							
 						}
-						conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS (cod_part, id_wp) VALUES ('"+id_par+"','"+id_wp+"')");
+						for (int i = 0 ; i<listaP2.getModel().getSize(); i++){
+							rs = conexion.ConsultaSQL("SELECT cod_part From PARTNER WHERE nombre = '"+modelo.getElementAt(i)+"'");
+							try {
+								while(rs.next()){id_par = rs.getInt(1); }
+							} catch (SQLException d) {
+								// TODO Auto-generated catch block
+								d.printStackTrace();}
+							conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS(cod_part, id_wp) VALUES ('"+id_par+"','"+id_wp+"')" );	
+
+						}
+						//conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS (cod_part, id_wp) VALUES ('"+id_par+"','"+id_wp+"')");
 						
 						modwp.cuenta=modwp.contar_reg();
 						modwp.datos = new String[modwp.cuenta][modwp.columnas];
