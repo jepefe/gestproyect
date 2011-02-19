@@ -280,9 +280,9 @@ public class FrmPrincipal extends JFrame {
 					for(int i=0;i<jtlbFrmppal.getComponentCount();i++){
 					if(jtlbFrmppal.getComponent(i)!= abstractButton){
 						if(i%2==0){
-							incremento = 4;
+							incremento = 5;
 						}else{
-							incremento = -4;
+							incremento = -5;
 						
 						}
 						int x=jtlbFrmppal.getComponent(i).getX();
@@ -370,13 +370,7 @@ public class FrmPrincipal extends JFrame {
 					
 					for(int i=0;i<jtlbFrmppal.getComponentCount();i++){
 						jtlbFrmppal.getComponentAtIndex(i).setVisible(true);
-						if(((i%2!=0)&&(boton!=jtlbFrmppal.getComponentAtIndex(i)))){
-					
-						jtlbFrmppal.getComponentAtIndex(i).setLocation(jtlbFrmppal.getComponentAtIndex(i).getX(),jtlbFrmppal.getComponentAtIndex(i).getY()-50);
-					}else if(boton!=jtlbFrmppal.getComponentAtIndex(i)){
-			
-						jtlbFrmppal.getComponentAtIndex(i).setLocation(jtlbFrmppal.getComponentAtIndex(i).getX(),jtlbFrmppal.getComponentAtIndex(i).getY()+50);
-					}}
+					}
 						
 					
 				/*	while(animando){
