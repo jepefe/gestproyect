@@ -54,7 +54,7 @@ import com.toedter.calendar.JDateChooser;
 
 
 public class PnlAltatarea extends JScrollPane{
-	
+	//1433 pueerto sql server
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	JTextField[] jtxt;
 	JLabel[] jlbl;
@@ -343,6 +343,7 @@ public class PnlAltatarea extends JScrollPane{
 						for(int i=0;i<1;++i) {	
 							jtxt[i].setText("");
 						}	
+						//velneo
 						
 						jdc1.setDate(null);
 						jdc2.setDate(null);

@@ -10,30 +10,31 @@ import javax.mail.internet.MimeMessage;
 
 
 class SendAuthentication{
+	   static String asunto = "No-Reply-avisos";
 	//Message msg = new Message;
 
     public static void Send(){
 
-        String host ="192.168.2.103";//Suponiendo que el servidor SMTPsea la propia m�quina
-        String from ="Avisos_Gesproject";
+        String host ="127.0.0.1";//Suponiendo que el servidor SMTPsea la propia máquina
+        String from ="freygil@msn.com";
         String to = "freygil@gmail.com";
-       //String asunto = "No-Reply";
+     
 
         //System.out.println("aqui");
         System.out.println ("Prueba para envios mail...Avisos Gesproject. " + new java.util.Date());
 
         Properties prop = new Properties();
 
-        /*A�adir esta linea si queremos ver una salida detallada del programa*/
+        /*Añadir esta linea si queremos ver una salida detallada del programa*/
         //prop.put("mail.debug", "true");
         
         /*prop.put("mail.smtp.host", host);
-        *Esta l�nea es la que indica al API que debe autenticarse*
+        *Esta línea es la que indica al API que debe autenticarse*
        prop.put("mail.smtp.auth", "true");*/
        
-       prop.put("smtp.gmail.com", host);
-       /*Esta l�nea es la que indica al API que debe autenticarse*/
-      prop.put("pop3.gmail.com","true");
+       prop.put("mail.smtp.host", host);
+       /*Esta línea es la que indica al API que debe autenticarse*/
+      prop.put("mail.smtp.auth","true");
        
 
         try{
@@ -66,11 +67,12 @@ class SendAuthentication{
 
             MimeMessage msg = new MimeMessage(session);
             //System.out.println("Llego hasta aqui.");
-            msg.setText("Este mail es una aviso enviado desde la aplicaci�n Gesproject," +
+            msg.setText("Este mail es una aviso enviado desde la aplicación Gesproject," +
             		" El presupuesto de XXXX se ha sobre pasado en YYYY.");
             System.out.println("El mesnaje contiene:");
             msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             msg.setFrom(new InternetAddress(from,"freygil@msn.com"));
+            msg.setSubject(asunto);
             Transport.send(msg);
             
             return msg;

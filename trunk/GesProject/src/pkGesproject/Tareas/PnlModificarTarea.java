@@ -289,6 +289,7 @@ public class PnlModificarTarea extends JPanel{
 						mod.jbtnaceptar.setVisible(false);
 						mod.jbtnaceptarM.setVisible(true);
 						mod.jbtncancelarM.setVisible(true);
+						mod.jtxt[0].removeFocusListener(mod.foco);
 						conexion.Conectardb();
 				    	
 						/**
