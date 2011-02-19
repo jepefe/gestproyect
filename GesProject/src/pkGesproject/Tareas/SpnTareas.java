@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 import pkGesproject.GesIdioma;
 import pkGesproject.RsGesproject;
+import pkGesproject.Avisos.PnlSendMail;
 import pkGesproject.Proyectos.PnlModificarProyecto;
 
 public class SpnTareas extends JSplitPane{
@@ -34,7 +35,8 @@ public class SpnTareas extends JSplitPane{
 	Component[] panlsStaff = {
 			new PnlAltatarea(),
 			 miscroll=new JScrollPane(modificar),
-			 new PnlImportarExportar()};
+			 new PnlImportarExportar(),
+			new PnlSendMail()};
 
 	public SpnTareas(){
 		this.setOneTouchExpandable(true);
@@ -42,7 +44,9 @@ public class SpnTareas extends JSplitPane{
 		miscroll.setBorder(empty);
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[22],rec.idioma[rec.eleidioma][32]},
 				{recursos.icono[23],rec.idioma[rec.eleidioma][33]},
-				{recursos.icono[24],rec.idioma[rec.eleidioma][34]}};
+				{recursos.icono[24],rec.idioma[rec.eleidioma][34]},
+				{recursos.icono[24],"Mail"},
+				{recursos.icono[24],rec.idioma[rec.eleidioma][177]}};
 		
 		
 		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {
