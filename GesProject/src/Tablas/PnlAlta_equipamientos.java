@@ -87,7 +87,7 @@ public class PnlAlta_equipamientos extends JPanel{
 					java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 
 					conexdb.executeUpdate("INSERT INTO EQUIPAMIENTOS (partner,descripcion,justificacion,wp,coste_total,fecha,compra_alquiler,grado_depreciacion,meses_usara,grado_utilizacion ) VALUES ('"
-							+ Integer.toString(CmbPar.getSelectedIndex())+"','"+textdescripcion.getText()+"','"+textjustificacion.getText()+"','"+Integer.toString(Cmbwp.getSelectedIndex())+"','"+jtxt[0].getText()+"','"+sqlDate1+"','"+Integer.toString(CmbComp.getSelectedIndex())+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"')");
+							+ Integer.toString(CmbPar.getSelectedIndex()+1)+"','"+textdescripcion.getText()+"','"+textjustificacion.getText()+"','"+Integer.toString(Cmbwp.getSelectedIndex()+1)+"','"+jtxt[0].getText()+"','"+sqlDate1+"','"+Integer.toString(CmbComp.getSelectedIndex())+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"')");
 					//para ver la id del workpaquets recien creado
 					rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS WHERE nombre like'"+ jtxt[0].getText()+"'" );
 					try {
@@ -261,17 +261,18 @@ public class PnlAlta_equipamientos extends JPanel{
 				Cmbwp.setSelectedItem(null);
 
 				}//Fin del if
-			
-			gbc.gridwidth = GridBagConstraints.RELATIVE;
-			gbc.anchor = GridBagConstraints.WEST;
-			panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-			gbc.anchor = GridBagConstraints.WEST;
-			gbc.gridwidth = GridBagConstraints.REMAINDER;
-			panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
-			
-			
+
 			if(i==1){
+				//fecha
 				
+				gbc.gridwidth = GridBagConstraints.RELATIVE;
+				gbc.anchor = GridBagConstraints.WEST;
+				panel.add(fecha=new JLabel(rec.idioma[rec.eleidioma][95]+"*"),gbc);
+				gbc.anchor = GridBagConstraints.WEST;
+				gbc.gridwidth = GridBagConstraints.REMAINDER;
+				panel.add(jdc1,gbc);
+				
+				//combo de compra/alquiler
 				CmbComp.addItem("Compra"); //se sube un "0" a la BD
 				CmbComp.addItem("Alquiler"); // se sube un "1" a la BD
 				
@@ -285,16 +286,12 @@ public class PnlAlta_equipamientos extends JPanel{
 				CmbComp.setSelectedItem(null);
 				
 			}
-			
-			if (i==2){
-				//Pongo lo de la fecha
-				gbc.gridwidth = GridBagConstraints.RELATIVE;
-				gbc.anchor = GridBagConstraints.WEST;
-				panel.add(fecha=new JLabel(rec.idioma[rec.eleidioma][95]+"*"),gbc);
-				gbc.anchor = GridBagConstraints.WEST;
-				gbc.gridwidth = GridBagConstraints.REMAINDER;
-				panel.add(jdc1,gbc);
-			}//fin del if
+			gbc.gridwidth = GridBagConstraints.RELATIVE;
+			gbc.anchor = GridBagConstraints.WEST;
+			panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			gbc.anchor = GridBagConstraints.WEST;
+			gbc.gridwidth = GridBagConstraints.REMAINDER;
+			panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 			
 			//filtro para campo Coste Total (tipo float)
 			if(i==0){
