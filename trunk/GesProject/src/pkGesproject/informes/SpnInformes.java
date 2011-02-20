@@ -21,6 +21,7 @@ import pkGesproject.GesIdioma;
 import pkGesproject.RsGesproject;
 import pkGesproject.Socios.PnlAltasocio;
 import pkGesproject.Socios.PnlModificarsocio;
+import pkGesproject.Tareas.PnlImportarExportar;
 
 public class SpnInformes extends JSplitPane{
 	
@@ -30,7 +31,7 @@ public class SpnInformes extends JSplitPane{
 	JPanel panel = new JPanel();
 	JPanel pnllateral = new JPanel();
 	JTable jtblLateral;
-	JScrollPane partner,proyecto,staff,wp,tareas;
+	JScrollPane partner,proyecto,staff,wp,tareas,reporting;
 	Border empty = new EmptyBorder(0,0,0,0);
 	PnlModificarsocio mods = PnlModificarsocio.Obtener_Instancia();
 	Component[] panlsStaff = {
@@ -38,7 +39,8 @@ public class SpnInformes extends JSplitPane{
 			proyecto = new JScrollPane(new PnlInfProyecto()),
 			staff = new JScrollPane(new PnlInfStaff()),
 			wp = new JScrollPane(new PnlInfWp()),
-			tareas= new JScrollPane(new PnlInfTareas()),};
+			tareas= new JScrollPane(new PnlInfTareas()),
+			reporting = new JScrollPane(new PnlImportarExportar())};
 
 	public SpnInformes(){
 		this.setOneTouchExpandable(true);
@@ -53,7 +55,8 @@ public class SpnInformes extends JSplitPane{
 				{recursos.icono[32],rec.idioma[rec.eleidioma][55]},
 				{recursos.icono[32],rec.idioma[rec.eleidioma][130]},
 				{recursos.icono[32],rec.idioma[rec.eleidioma][40]},
-				{recursos.icono[32],rec.idioma[rec.eleidioma][129]},};
+				{recursos.icono[32],rec.idioma[rec.eleidioma][129]},
+				{recursos.icono[32],"Reporting Tool"}};
 		
 		
 		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {

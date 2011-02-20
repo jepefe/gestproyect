@@ -4,6 +4,8 @@ package pkGesproject.Tareas;
  * con toda la información disponibles en la BD, partners,prosupuestos,gastos,avances.
  * @author Freyder Espinosa V y js.
  */
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,6 +35,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import pkGesproject.ConexionDb;
 import pkGesproject.ConexionFTP;
+import pkGesproject.GesIdioma;
+import pkGesproject.GpComboBox;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -44,10 +48,14 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 
 public class PnlImportarExportar extends JPanel{
-
+	GesIdioma rec = GesIdioma.obtener_instancia();
+//3928
 
 	String ruta;
+	JLabel[] jlbl;
+	String id_p = null;
 	ResultSet rs,rp;
+	String[] projects = new String[200];
 	ActionListener exportar;
 	ActionListener importar;
 	JFileChooser filechooser;
@@ -57,17 +65,16 @@ public class PnlImportarExportar extends JPanel{
 	JButton btnExportar = new JButton("Exportar");
 	JButton btnImportar = new JButton("Importar");
 	JFileChooser fileChooser = new JFileChooser();
+	GpComboBox CmbPro = new GpComboBox();
 	
 	
 	
 	public PnlImportarExportar(){
 		
+		GridBagConstraints gbc = new GridBagConstraints();
 		
-		this.setLayout(new GridBagLayout());
-		this.add(btnExportar);
+		
 	
-		btnImportar.setActionCommand("importar");
-		btnExportar.setActionCommand("exportar");
 		
 		exportar = new ActionListener(){
 		@Override
@@ -75,13 +82,56 @@ public class PnlImportarExportar extends JPanel{
 				
 				Abrir_Libro();
 				exportar_summary();
+				//System.out.println("ha ejecutado summary");
 			  	exportar_partners();
-			  	exportar_equipment();
+			  	//System.out.println("ha ejecutado partners");
+			  	//exportar_equipment();
+			  	//System.out.println("ha ejecutado equipment");
 			  	guardar();
 				
 			}
 		
-		};
+		};//fin event
+		String[] fieldNames = {rec.idioma[rec.eleidioma][178]};
+		jlbl = new JLabel[fieldNames.length];
+		int i=0;
+		this.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+
+		this.add(CmbPro,gbc);
+		   CmbPro.setPreferredSize(new Dimension(140,30));
+		   
+			/**
+			 * Creacion del JComboBox y a�adir los items.
+			 *Se conecta a la BD para realizar la consulta
+			 **/
+			conexion.Conectardb();
+			rp = conexion.ConsultaSQL("SELECT nombre,id_pro FROM PROYECTOS ORDER BY nombre");
+			
+			int j=0;
+			try {
+				
+			while(rp.next()){
+				
+				projects[j]= Integer.toString(rp.getInt(2));
+				
+				CmbPro.addItem(rp.getString(1));
+				j++;
+				CmbPro.setSelectedItem(null);
+				
+			}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					}
+				
+//--------------------------------------------------------
+				this.setLayout(new GridBagLayout());
+				this.add(btnExportar);
+			
+				btnImportar.setActionCommand("importar");
+				btnExportar.setActionCommand("exportar");
+				
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		btnExportar.addActionListener(exportar);
 		btnImportar.addActionListener(importar);
 		this.setVisible(true);
@@ -95,7 +145,7 @@ public class PnlImportarExportar extends JPanel{
 		
 	    	HSSFSheet tuSheet = tuWorkBook.getSheetAt(0); // Segunda hoja del libro excel (debe existir en tu plantilla porque de lo contrario te dar� una excepci�n al estar fuera del �ndice.
 		    	
-	    		short row = (short) 11; // Tercera fila
+	    		short row = (short) 12; // Tercera fila
 		    	short column = (short) 2; // Cuarta columna
 		    	
 	    	
@@ -103,19 +153,13 @@ public class PnlImportarExportar extends JPanel{
 	    	HSSFRow tuRow= tuSheet.getRow(row);
 	    	HSSFCell tuCell = tuRow.getCell(column);
 	    	
-	    	HSSFCell tuCell1 = tuRow.getCell(column);
-	    	//3 Ahora que tienes la celda ya puedes extraerle el contenido 
-	    	rp = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE id_pro = 3");
-	    	String id_p = null;
-	    	try {
-	    		rp.next();
-				id_p = rp.getString(1);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+	      	//3 Ahora que tienes la celda ya puedes extraerle el contenido 
+	    	
+	    
 	   //p.f_ini, p.f_fin,
-	     rs = conexion.ConsultaSQL("SELECT p.id_pro, p.num_contrato,p.nombre FROM PROYECTOS p WHERE p.id_pro="+id_p);
+	    	System.out.println("Proyecto Seleccionado del Combo: "+projects[CmbPro.getSelectedIndex()]);
+	     rs = conexion.ConsultaSQL("SELECT p.num_contrato,p.nombre FROM PROYECTOS p WHERE p.id_pro="+projects[CmbPro.getSelectedIndex()]);
+	     
 	      //SELECT p.id_pro, p.num_contrato,p.nombre, a.nombre,pa.nombre,pa.direccion FROM PROYECTOS p INNER JOIN PARTNER_PROYECTOS pp on p.id_pro=pp.id_pro INNER JOIN PARNERT pa ON pp.cod_part=pa.cod_part INNER JOIN ACTIONS a ON p.action=a.id_action WHERE pp.coordinador=”1” AND p.id_pro="+id_p);
 	        String nombre = null;
 	            
@@ -158,8 +202,8 @@ public class PnlImportarExportar extends JPanel{
 	    	
 	    	HSSFCell tuCell1 = tuRow.getCell(column2);
 	    	//3 Ahora que tienes la celda ya puedes extraerle el contenido 
-	    	rp = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE id_pro = 39");
-	    	String id_p = null;
+	    	
+	    	
 	    	try {
 	    		rp.next();
 				id_p = rp.getString(1);
@@ -214,21 +258,18 @@ public class PnlImportarExportar extends JPanel{
     	HSSFRow tuRow= tuSheet.getRow(row);
     	HSSFCell tuCell = tuRow.getCell(column);
     	
-    	//HSSFCell tuCell1 = tuRow.getCell(column2);
-    	//3 Ahora que tienes la celda ya puedes extraerle el contenido 
-    	rp = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE id_pro = 3");
-    	String id_p= null ;
-    	try {
+    
+    	/*try {
     		rp.next();
 			id_p = rp.getString(1);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}*/
     	
         // Se crea el contenido de la celda y se mete en ella.
        // HSSFRichTextString texto = new HSSFRichTextString("aqui");
-        rs = conexion.ConsultaSQL("SELECT p.nombre, tp.nombre FROM PARTNER p INNER JOIN TASAS_PAIS tp ON p.pais=tp.id_pais INNER JOIN PARTNER_PROYECTOS pp ON p.cod_part=pp.cod_part WHERE pp.id_pro ="+id_p);
+        rs = conexion.ConsultaSQL("SELECT p.nombre, tp.nombre FROM PARTNER p INNER JOIN TASAS_PAIS tp ON p.pais=tp.id_pais INNER JOIN PARTNER_PROYECTOS pp ON p.cod_part=pp.cod_part WHERE pp.id_pro ="+ projects[CmbPro.getSelectedIndex()]);
         /*
          * 
          */
@@ -303,9 +344,7 @@ public class PnlImportarExportar extends JPanel{
 	    	HSSFCell tuCell = tuRow.getCell(column);
 	    	
 	    	HSSFCell tuCell1 = tuRow.getCell(column2);
-	    	//3 Ahora que tienes la celda ya puedes extraerle el contenido 
-	    	rp = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE id_pro = 39");
-	    	String id_p = null;
+	    
 	    	try {
 	    		rp.next();
 				id_p = rp.getString(1);
@@ -362,8 +401,7 @@ public class PnlImportarExportar extends JPanel{
 	    	
 	    	HSSFCell tuCell1 = tuRow.getCell(column2);
 	    	//3 Ahora que tienes la celda ya puedes extraerle el contenido 
-	    	rp = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE id_pro = 39");
-	    	String id_p = null;
+	    
 	    	try {
 	    		rp.next();
 				id_p = rp.getString(1);
@@ -459,7 +497,7 @@ public class PnlImportarExportar extends JPanel{
 	   }
 	
 
-	public void guardarr(){
+	public void guardar(){
 			
 			 try
 				{
@@ -474,7 +512,7 @@ public class PnlImportarExportar extends JPanel{
 		        	   File ruta = fileChooser.getSelectedFile();
 		        	   // Aquí debemos abrir el fichero para escritura
 		        	   // y salvar nuestros datos.
-		        	  FileOutputStream stream = new FileOutputStream(ruta);
+		        	  FileOutputStream stream = new FileOutputStream(ruta.getAbsoluteFile()+".xls");
 		   			
 		   			tuWorkBook.write(stream);
 		   			stream.close();
@@ -493,28 +531,7 @@ public class PnlImportarExportar extends JPanel{
 			
 		
 	}
-	
-	public void guardar(){
-		 try
-			{
-	        	// Se salva el libro.          
-	            // Volcamos la informaci�n a un archivo.
-	        	int seleccion = fileChooser.showSaveDialog(null);
-	        	
-	        	FileOutputStream stream = new FileOutputStream("c:/users/freyder espinosa v/desktop/excel.xls");
-	   			
-	   			tuWorkBook.write(stream);
-	   			stream.close();
-	        }
-			catch (FileNotFoundException fe)
-			{
-				fe.printStackTrace();
-			}
-			catch (IOException ioe)
-			{
-				ioe.printStackTrace();
-			}
-	}
+
 //---------------------------------------...............---------------------------------------//
 	/**
 	 * Método que abre el libro excel para poder introducir la información del proyecto activo.
