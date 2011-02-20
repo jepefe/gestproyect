@@ -58,12 +58,18 @@ public class PnlNuevoProyecto extends JScrollPane{
 	JButton jbtnaceptar2, jbtncancelar2;
 	ConexionDb conexion = new ConexionDb();
 	ResultSet rs, rs2;
+	
+	ResultSet rsv;
+	
 	DefaultListModel modelo;  // listas Partners (lista2)
 	DefaultListModel modelo2;
 	public JList listaP ,listaP2 ;    
 	int cuenta =0; // cuenta para array dinamica.
 	int idPro; // total partners. para saber ID.
 	int id_partner,id_partner2; // id partner. // id para poder borrar
+	
+	int IDpartner;//id partner del partner principal
+	
 	public GpComboBox CbCoordinador, CbAccion;
 	int estado = 1;
 	Runnable servdisp;
@@ -407,7 +413,19 @@ public class PnlNuevoProyecto extends JScrollPane{
 								java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 								java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 								if (sqlDate1.getTime()< sqlDate2.getTime()){
-									conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion,estado, f_ini, f_fin, num_contrato,action) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+estado+"','"+sqlDate1+"','"+sqlDate2+"','"+ jtxt[1].getText()+"','"+(CbAccion.getSelectedIndex()+1)+"')");
+									/*
+									 * añado aqui una consulta para obtener el id del partner principal del proyecto, y lo añado a la lista del insert para añadirlo al nuevo campo del proyecto
+									 */
+									rsv = conexion.ConsultaSQL("SELECT cod_part From PARTNER WHERE nombre = '"+CbCoordinador.getSelectedItem()+"'");//añadido por Vicente Anotnio, revisalo a ver si estas conforme Berna
+									try {
+										rsv.next();
+										IDpartner = rsv.getInt(1);
+									}catch(SQLException d){
+										d.printStackTrace();
+									}
+
+									
+									conexdb.executeUpdate("INSERT INTO PROYECTOS (nombre, descripcion,estado, f_ini, f_fin, num_contrato,action, Coordinador) VALUES ('"+ jtxt[0].getText()+"','"+ textarea.getText()+"','"+estado+"','"+sqlDate1+"','"+sqlDate2+"','"+ jtxt[1].getText()+"','"+(CbAccion.getSelectedIndex()+1)+"','"+IDpartner+"')");
 
 									/*
 									 * Consegir id proyecto
@@ -431,11 +449,14 @@ public class PnlNuevoProyecto extends JScrollPane{
 										} catch (SQLException d) {
 											// TODO Auto-generated catch block
 											d.printStackTrace();}
+									/*
+									//reemplazo a partrir de aqui lo consiguiente, quitando el if y añadiendo mi consulta con la busqueda del ID del partner
 										if( CbCoordinador.getSelectedItem()== modelo.getElementAt(i)){
 											cord = 1;
 										}else{
 											cord = 0;
 										}
+									*/
 										conexdb.executeUpdate("INSERT INTO PARTNER_PROYECTOS(cod_part, id_pro,coordinador) VALUES ('"+id_partner+"','"+idPro+"','"+cord+"')" );	
 
 									}

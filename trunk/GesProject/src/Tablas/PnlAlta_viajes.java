@@ -218,7 +218,7 @@ public class PnlAlta_viajes extends JPanel{
 				
 				if(e.getActionCommand().equals("cbdestino")){
 					int pais = 0;
-					rs = conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpsalida.getSelectedItem().toString()+"'");
+					rs = conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpdestino.getSelectedItem().toString()+"'");
 					
 					try {
 						rs.next();
