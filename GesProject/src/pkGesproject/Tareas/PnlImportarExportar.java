@@ -49,7 +49,7 @@ import net.sf.jasperreports.engine.JasperReport;
 
 public class PnlImportarExportar extends JPanel{
 	GesIdioma rec = GesIdioma.obtener_instancia();
-//3928
+//9637
 
 	String ruta;
 	JLabel[] jlbl;
@@ -82,9 +82,8 @@ public class PnlImportarExportar extends JPanel{
 				
 				Abrir_Libro();
 				exportar_summary();
-				//System.out.println("ha ejecutado summary");
+				exportar_progres();
 			  	exportar_partners();
-			  	//System.out.println("ha ejecutado partners");
 			  	//exportar_equipment();
 			  	//System.out.println("ha ejecutado equipment");
 			  	guardar();
@@ -142,48 +141,33 @@ public class PnlImportarExportar extends JPanel{
     
 	public void exportar_summary(){
 		
-		
-	    	HSSFSheet tuSheet = tuWorkBook.getSheetAt(0); // Segunda hoja del libro excel (debe existir en tu plantilla porque de lo contrario te dar� una excepci�n al estar fuera del �ndice.
+		HSSFSheet tuSheet = tuWorkBook.getSheetAt(0); // Segunda hoja del libro excel (debe existir en tu plantilla porque de lo contrario te dar� una excepci�n al estar fuera del �ndice.
 		    	
-	    		short row = (short) 12; // Tercera fila
-		    	short column = (short) 2; // Cuarta columna
+	    		int row = 11; // Fila once
+		    	int column = 2; // Segunda Columna
 		    	
-	    	
-	    	
 	    	HSSFRow tuRow= tuSheet.getRow(row);
 	    	HSSFCell tuCell = tuRow.getCell(column);
-	    	
-	      	//3 Ahora que tienes la celda ya puedes extraerle el contenido 
-	    	
-	    
-	   //p.f_ini, p.f_fin,
-	    	System.out.println("Proyecto Seleccionado del Combo: "+projects[CmbPro.getSelectedIndex()]);
-	     rs = conexion.ConsultaSQL("SELECT p.num_contrato,p.nombre FROM PROYECTOS p WHERE p.id_pro="+projects[CmbPro.getSelectedIndex()]);
+	    	//3 Ahora que tienes la celda ya puedes extraerle el contenido 
+	    	//System.out.println("Proyecto Seleccionado del Combo: "+projects[CmbPro.getSelectedIndex()]);
+	    //rs = conexion.ConsultaSQL("SELECT p.id_pro, p.f_ini, p.f_fin, p.num_contrato,p.nombre,a.nombre,pa.nombre,pa.direccion FROM PROYECTOS p INNER JOIN PARTNER_PROYECTOS pp ON p.id_pro=pp.id_pro INNER JOIN PARNERT pa ON pp.cod_part=pa.cod_part INNER JOIN ACTIONS a ON p.action=a.id_action WHERE pp.coordinador=”1” AND p.id_pro="+projects[CmbPro.getSelectedIndex()]);
+	     rs = conexion.ConsultaSQL("SELECT p.id_pro, p.f_ini, p.f_fin, p.num_contrato,p.nombre,pa.nombre,pa.direccion FROM PROYECTOS p INNER JOIN PARTNER_PROYECTOS pp ON p.id_pro=pp.id_pro INNER JOIN PARTNER pa ON pp.cod_part=pa.cod_part WHERE p.id_pro="+projects[CmbPro.getSelectedIndex()]);
 	     
-	      //SELECT p.id_pro, p.num_contrato,p.nombre, a.nombre,pa.nombre,pa.direccion FROM PROYECTOS p INNER JOIN PARTNER_PROYECTOS pp on p.id_pro=pp.id_pro INNER JOIN PARNERT pa ON pp.cod_part=pa.cod_part INNER JOIN ACTIONS a ON p.action=a.id_action WHERE pp.coordinador=”1” AND p.id_pro="+id_p);
+	      //SELECT p.id_pro, p.num_contrato,p.nombre,  "+id_p);
 	        String nombre = null;
-	            
+	            int i=1;
 	        	try {
 					while(rs.next()){
-						
-						nombre = rs.getString(1);
-					
-						tuCell.setCellValue(nombre);
-						tuCell = tuRow.getCell(column);
+						nombre = rs.getString(i);
 						tuRow= tuSheet.getRow(row);
+						tuCell.setCellValue(nombre);
 						row+=1;
-				
-						if (tuSheet.getRow(row) != null){
-							tuRow= tuSheet.getRow(row);
-						} else {
-							tuRow = tuSheet.createRow(row);
-							tuCell = tuRow.createCell(column);
-							}
+						i++;
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-	   }
+		}
 	
 	//--------------------EXPORTAR TABLA PROGRES---------------------//
     
@@ -192,9 +176,9 @@ public class PnlImportarExportar extends JPanel{
 		
 	    	HSSFSheet tuSheet = tuWorkBook.getSheetAt(1); // Segunda hoja del libro excel (debe existir en tu plantilla porque de lo contrario te dar� una excepci�n al estar fuera del �ndice.
 		    	
-	    		short row = (short) 14; // Tercera fila
-		    	short column = (short) 1; // Cuarta columna
-		    	short column2 = (short) 2; // Cuarta columna
+	    		short row = (short) 8; // Tercera fila
+		    	short column = (short) 7; // Cuarta columna
+		    	short column2 = (short) 10; // Cuarta columna
 	    	
 	    	
 	    	HSSFRow tuRow= tuSheet.getRow(row);
@@ -204,20 +188,11 @@ public class PnlImportarExportar extends JPanel{
 	    	//3 Ahora que tienes la celda ya puedes extraerle el contenido 
 	    	
 	    	
-	    	try {
-	    		rp.next();
-				id_p = rp.getString(1);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-	   
-	     rs = conexion.ConsultaSQL("select p.id_pro, p.nombre, p.f_ini, p.f_fin, p.num_contrato, a.nombre,pa.nombre,pa.direccion from proyectos p inner join partner_proyectos pp on p.id_pro=pp.id_pro inner join partner pa on pp.cod_part=pa.cod_part inner join actions a on p.action=a.id_action where pp.coordinador=”1” and p.id_pro="+id_p);
+	       
+	     rs = conexion.ConsultaSQL("SELECT f_ini, f_fin FROM PROYECTOS WHERE id_pro="+projects[CmbPro.getSelectedIndex()]);
 	      
 	        String nombre = null;
 	        String pais = null;
-	        int i;
-	        int j;
 	        	try {
 					while(rs.next()){
 						
@@ -228,8 +203,6 @@ public class PnlImportarExportar extends JPanel{
 						tuCell1.setCellValue(pais);
 						tuCell1 = tuRow.getCell(column2);
 						tuRow= tuSheet.getRow(row);
-						row+=1;
-				
 						tuCell = tuRow.getCell(column);
 					
 						if (tuSheet.getRow(row) != null){
@@ -252,45 +225,37 @@ public class PnlImportarExportar extends JPanel{
     	HSSFSheet tuSheet = tuWorkBook.getSheetAt(2); // Segunda hoja del libro excel (debe existir en tu plantilla porque de lo contrario te dar� una excepci�n al estar fuera del �ndice.
     	short row = (short) 8; // Tercera fila
     	short column = (short) 1; // Cuarta columna
-    	//short column2 = (short) 2; // Cuarta columna
+    	short column2 = (short) 2; // Cuarta columna
     	
     	
     	HSSFRow tuRow= tuSheet.getRow(row);
     	HSSFCell tuCell = tuRow.getCell(column);
-    	
-    
-    	/*try {
-    		rp.next();
-			id_p = rp.getString(1);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
-    	
+    	HSSFCell tuCell1 = tuRow.getCell(column2);
+       	
         // Se crea el contenido de la celda y se mete en ella.
        // HSSFRichTextString texto = new HSSFRichTextString("aqui");
         rs = conexion.ConsultaSQL("SELECT p.nombre, tp.nombre FROM PARTNER p INNER JOIN TASAS_PAIS tp ON p.pais=tp.id_pais INNER JOIN PARTNER_PROYECTOS pp ON p.cod_part=pp.cod_part WHERE pp.id_pro ="+ projects[CmbPro.getSelectedIndex()]);
         /*
          * 
          */
-        String nombre = null;
-       // String pais = null;
+        String value = null;
+        String pais = null;
         int i=1;
           	try {
 				while(rs.next()){
 					
-					nombre = rs.getString(i);
-					//pais = rs.getString(2);
-					
-					tuCell.setCellValue(nombre);
+					value = rs.getString(i);
+					pais = rs.getString(i);
+					tuCell.setCellValue(value);
 					column+=1;
 					tuCell = tuRow.getCell(column);
-					//tuCell1.setCellValue(pais);
-					//tuCell1 = tuRow.getCell(column2);
+					tuCell1.setCellValue(pais);
+					tuCell1 = tuRow.getCell(column2);
 					tuRow= tuSheet.getRow(row);
+					row+=1;
 					i+=1;
 				
-					//obtenemos filas hasta encontrar la fula null
+					//obtenemos filas hasta encontrar la fila null
 					if (tuSheet.getRow(row) != null){
 						tuRow= tuSheet.getRow(row);
 					} else {
@@ -300,7 +265,7 @@ public class PnlImportarExportar extends JPanel{
 					
 				}
 				
-				row+=1;
+				
 			
 			} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -512,7 +477,7 @@ public class PnlImportarExportar extends JPanel{
 		        	   File ruta = fileChooser.getSelectedFile();
 		        	   // Aquí debemos abrir el fichero para escritura
 		        	   // y salvar nuestros datos.
-		        	  FileOutputStream stream = new FileOutputStream(ruta.getAbsoluteFile()+".xls");
+		        	  FileOutputStream stream = new FileOutputStream(ruta.getAbsoluteFile()+"_Reporting_tool"+".xls");
 		   			
 		   			tuWorkBook.write(stream);
 		   			stream.close();
