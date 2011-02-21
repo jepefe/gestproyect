@@ -42,6 +42,7 @@ public class RsGesproject {
 	public FrmLogin instanciafrmlogin;
 	public int permisos;
 	public int representante;
+	
 	/**String constante que contiene el titulo de la aplicaion*/
 	public final String APNAME = "GesProyect - Florida"; //Constante que contiene el nombre de la aplicacion
 	public  Image[] imagen = {
@@ -88,6 +89,7 @@ public class RsGesproject {
 	static String SistemaOp = System.getProperty("os.name"); //Nombre del S.O por si necesitamos condicionar codigo 
 	
 	private int idusuario;
+	private int codparter;
 	public Font fuente = new Font(Font.SANS_SERIF, Font.BOLD,13);
 	/**
 	 * @return Referencia a la instancia de la clase
@@ -151,6 +153,14 @@ public class RsGesproject {
 
 	public int getIdusuario() {
 		return idusuario;
+	}
+
+	public void setCodparter(int codparter) {
+		this.codparter = codparter;
+	}
+
+	public int getCodparter() {
+		return codparter;
 	}
 
 	/**
