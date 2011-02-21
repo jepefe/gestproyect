@@ -382,9 +382,11 @@ public class FrmPrincipal extends JFrame {
 										
 					}else{
 						timer.stop();
+						
 						for(int i=0;i<jtlbFrmppal.getComponentCount();i++){
 							jtlbFrmppal.getComponentAtIndex(i).setVisible(true);
 						}
+						jtlbFrmppal.repaint();
 					}
 						}
 					}
