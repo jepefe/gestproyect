@@ -12,10 +12,12 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -71,6 +73,10 @@ public class FrmPrincipal extends JFrame {
 	JLabel jlbactual = new JLabel();
 	int posicionxbtn;
 	String seleccionado;
+	boolean animando = true;
+	boolean moviendo = true;
+    Timer timer;                        // for later start/stop actions
+    int incremento;
 	
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
 	
@@ -91,7 +97,7 @@ public class FrmPrincipal extends JFrame {
 	private Rectangle maxBounds;
 	
 	public FrmPrincipal(){
-		//jtlbFrmppal.setLayout(null);
+		jtlbFrmppal.setLayout(new BoxLayout(jtlbFrmppal,BoxLayout.X_AXIS));
 		int i;
 		jbtnInicio.setVerticalTextPosition(SwingConstants.BOTTOM);
 		jbtnInicio.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -262,6 +268,7 @@ public class FrmPrincipal extends JFrame {
 	
 	public void animacion(final AbstractButton abstractButton,final String cadena){
 		jtlbFrmppal.add(jlbactual);
+		
 		Thread hilo = new Thread(new Runnable(){
 			
 			@Override
@@ -269,20 +276,27 @@ public class FrmPrincipal extends JFrame {
 				
 				posicionxbtn = abstractButton.getX();
 				
-				int incremento;
+				
 				abstractButton.setSelected(false);
 				jlbactual.setText(cadena);
 				jtlbFrmppal.add(jlbactual);
 				jlbactual.setVisible(false);
-				boolean animando = true;
-				boolean moviendo = true;
-				while((animando || moviendo)){
+				animando = true;
+				moviendo = true;
+				
+				timer = new Timer(1,new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						
+						if(animando || moviendo){
 					for(int i=0;i<jtlbFrmppal.getComponentCount();i++){
 					if(jtlbFrmppal.getComponent(i)!= abstractButton){
 						if(i%2==0){
-							incremento = 5;
+							 incremento = 9;
 						}else{
-							incremento = -5;
+							 incremento = -9;
 						
 						}
 						int x=jtlbFrmppal.getComponent(i).getX();
@@ -290,8 +304,8 @@ public class FrmPrincipal extends JFrame {
 						jtlbFrmppal.getComponent(i).setLocation(x,y);
 					
 					}else{
-						if(jtlbFrmppal.getComponent(i).getX()>20){
-						int x=jtlbFrmppal.getComponent(i).getX()-16;
+						if(jtlbFrmppal.getComponent(i).getX()>45){
+						int x=jtlbFrmppal.getComponent(i).getX()-45;
 						int y=jtlbFrmppal.getComponent(i).getY();
 						
 						jtlbFrmppal.getComponent(i).setLocation(x,y);
@@ -304,32 +318,34 @@ public class FrmPrincipal extends JFrame {
 						animando=false;
 					}
 				
-					
-				}
-					long t0 = System.currentTimeMillis();
-					  long millisLeft = 1;
-					  while (millisLeft > 0) {
-					 //   Thread.sleep(millisLeft);
-					    long t1 = System.currentTimeMillis();
-					    millisLeft = 1 - (t1 - t0);
-					  }
-				
-				}
-				
-				abstractButton.setSelected(true);
-				
-				for(int i=0;i<jtlbFrmppal.getComponentCount();i++){
-					if(jtlbFrmppal.getComponent(i)!= abstractButton){
-				 		// jtlbFrmppal.remove(jtlbFrmppal.getComponentAtIndex(i));
-						((Component) jtlbFrmppal.getComponentAtIndex(i)).setVisible(false);
+					}
+					repaint();
+					}
+					else{
+						timer.stop();
+						System.out.println("paramos");
+						abstractButton.setSelected(true);
+						
+						for(int i=0;i<jtlbFrmppal.getComponentCount();i++){
+							if(jtlbFrmppal.getComponent(i)!= abstractButton){
+						 		// jtlbFrmppal.remove(jtlbFrmppal.getComponentAtIndex(i));
+								((Component) jtlbFrmppal.getComponentAtIndex(i)).setVisible(false);
+							}
+							}
+						jlbactual.setVisible(true);
+						jlbactual.setFont(new Font(Font.SANS_SERIF, Font.BOLD,48));
+						jlbactual.setText(cadena);
+						jlbactual.setLocation(abstractButton.getX()+100,abstractButton.getY() );
+						abstractButton.setLocation(40,abstractButton.getY());
+						
+						
 					}
 					}
+				}
 				
-				jlbactual.setText(cadena);
-				//abstractButton.setLocation(40,abstractButton.getY());
-				jlbactual.setFont(new Font(Font.SANS_SERIF, Font.BOLD,48));
-			//	jlbactual.setLocation(abstractButton.getX()+100,abstractButton.getY() );
-				jlbactual.setVisible(true);
+			);
+				timer.start();
+		
 				
 				
 				}
@@ -340,6 +356,7 @@ public class FrmPrincipal extends JFrame {
     	 
     	 );
     	 hilo.start();
+		
     	 
 	}
 	
@@ -352,25 +369,30 @@ public class FrmPrincipal extends JFrame {
 				public void run() {
 					int y,x,a=0;
 					boolean animando = true;
-					while(a<posicionxbtn && ((boton.getX()+1)<posicionxbtn)){
+					animando = true;
+					moviendo = true;
 					
-						boton.setLocation(boton.getX()+10,boton.getY());
-						a++;
+					timer = new Timer(1,new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
 						
-							 long t0 = System.currentTimeMillis();
-							  long millisLeft = 1;
-							  while (millisLeft > 0) {
-							 //   Thread.sleep(millisLeft);
-							    long t1 = System.currentTimeMillis();
-							    millisLeft = 1 - (t1 - t0);
-							  }
-						
+					if(boton.getX()<posicionxbtn && ((boton.getX()+1)<posicionxbtn)){
+					
+						boton.setLocation(boton.getX()+45,boton.getY());
+										
+					}else{
+						timer.stop();
+						for(int i=0;i<jtlbFrmppal.getComponentCount();i++){
+							jtlbFrmppal.getComponentAtIndex(i).setVisible(true);
+						}
 					}
+						}
+					}
+					);
+					timer.start();
 					//animando=false;
 					
-					for(int i=0;i<jtlbFrmppal.getComponentCount();i++){
-						jtlbFrmppal.getComponentAtIndex(i).setVisible(true);
-					}
+				
 						
 					
 				/*	while(animando){
@@ -405,6 +427,7 @@ public class FrmPrincipal extends JFrame {
 					
 					
 				}});
+				
 				hilo.start();	
 				
 				
