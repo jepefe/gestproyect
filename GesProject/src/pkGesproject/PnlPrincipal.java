@@ -383,12 +383,14 @@ public class PnlPrincipal extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(partners!=null){
 		  for(int i=0;i<partners.length;i++){
 				Object []  obj = new Object[1];
 				//jpnlpartproyecto.add(new LstPartner(rs.getString(1)));
 				obj[0] = new LstPartner(partners[i]);
 				tablemodelpart.addRow(obj);
-			}
+			}}
+		  partners=null;
 		  jtblpartners.repaint();
 		jpnlpartproyecto.validate();		
 		
@@ -564,12 +566,15 @@ public class PnlPrincipal extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(staff!=null){
 		  for(int i=0;i<staff.length;i++){
 				Object []  obj = new Object[1];
 				//jpnlpartproyecto.add(new LstPartner(rs.getString(1)));
 				obj[0] = new LstStaff(Integer.toString(4));
 				tablemodelstaff.addRow(obj);
 			}
+		}
+		  staff=null;
 		
 		
 		
