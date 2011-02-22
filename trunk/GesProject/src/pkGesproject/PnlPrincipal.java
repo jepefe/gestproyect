@@ -213,6 +213,7 @@ public class PnlPrincipal extends JPanel {
 	
 		
 		GridBagConstraints gbc = new GridBagConstraints();
+		jpnlproyecto.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
 		jlbpronom.setText(" "+rec.idioma[rec.eleidioma][111]+": ");
 		jlbprodesc.setText(" "+rec.idioma[rec.eleidioma][41]+": ");
 		jlbpropresu.setText(" "+rec.idioma[rec.eleidioma][13]+": ");
@@ -400,6 +401,7 @@ public class PnlPrincipal extends JPanel {
 	
 	public void CargarWP(){
 		GridBagConstraints gbc = new GridBagConstraints();
+	   
 		jlbwpnom.setText(" "+rec.idioma[rec.eleidioma][3]+": ");
 		jlbwpdes.setText(" "+rec.idioma[rec.eleidioma][41]+": ");
 		jlbwppresu.setText(" "+rec.idioma[rec.eleidioma][13]+": ");
@@ -570,7 +572,7 @@ public class PnlPrincipal extends JPanel {
 		  for(int i=0;i<staff.length;i++){
 				Object []  obj = new Object[1];
 				//jpnlpartproyecto.add(new LstPartner(rs.getString(1)));
-				obj[0] = new LstStaff(Integer.toString(4));
+				obj[0] = new LstStaff(staff[i]);
 				tablemodelstaff.addRow(obj);
 			}
 		}
