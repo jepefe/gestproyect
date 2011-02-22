@@ -1,7 +1,7 @@
 /**
- * Esta clase se encarga de realizar el alta de nuevas tareas 
+ * Esta clase se encarga de realizar el alta de nuevas Subcontratas 
  * 
- * @author Freyder Espinosa V
+ * @author Esteban Salmerón
  */
 package Tablas;
 
@@ -157,7 +157,7 @@ public class PnlAltaSub extends JScrollPane{
 				}
 				
 
-				//Hacer que	se actulize las provincias al cambiar el pais ¿¿ ??	
+				//Hacer que	se actulize las provincias al cambiar el pais
 				
 				
 					
@@ -176,8 +176,6 @@ public class PnlAltaSub extends JScrollPane{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
-				
 					
 			
 			   		   		
