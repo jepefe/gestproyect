@@ -17,7 +17,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 
-public class LstPartner extends JPanel{
+public class LstStaff extends JPanel{
 	ConexionDb cdb = new ConexionDb();
 	ConexionFTP cftp = new ConexionFTP();
 	JLabel jlbllogo = new JLabel();
@@ -31,11 +31,11 @@ public class LstPartner extends JPanel{
 	RsGesproject recursos = RsGesproject.instancia;
 	
 	
-	public LstPartner(){
+	public LstStaff(){
 		
 	
 	}
-	public LstPartner(String cod_part){
+	public LstStaff(String cod_part){
 		jlblnombre.setFont(recursos.fuente);
 		jlblcontacto.setForeground(Color.gray);
 		jlbllogo.setIcon(recursos.icono[1]);
@@ -79,12 +79,12 @@ public class LstPartner extends JPanel{
 	
 	
 	public void CargaDatos(){
-		rs = cdb.ConsultaSQL("SELECT nombre,telefono,email FROM PARTNER WHERE cod_part='"+codigo+"'");
+		rs = cdb.ConsultaSQL("SELECT nombre,apellidos,telefono,email FROM STAFF WHERE id_staff='"+codigo+"'");
 		try {
 			if(rs.next()){
-					nombre = rs.getString(1);
+					nombre = rs.getString(1) +" "+ rs.getString(2);;
 					jlblnombre.setText(nombre);
-					contacto = rs.getString(2) +" - "+ rs.getString(3);
+					contacto = rs.getString(3) +" - "+ rs.getString(4);
 					jlblcontacto.setText(contacto);
 					
 			}
@@ -103,11 +103,11 @@ public class LstPartner extends JPanel{
 			@Override
 			public void run()  {
 				ConexionFTP cftp = new ConexionFTP();
-				jlbllogo.setPreferredSize(new Dimension(190,50));
+				jlbllogo.setPreferredSize(new Dimension(50,50));
 				
-				jlbllogo.setIcon(new ImageIcon(cftp.ObtenerImagen("logo"+codigo).getScaledInstance(190, 50, 0)));
+				jlbllogo.setIcon(new ImageIcon(cftp.ObtenerImagen("fto"+codigo).getScaledInstance(50, 50, 0)));
 				
-				System.out.println("LOGO OBTENIDO");
+				System.out.println("AFOTO OBTENIDO");
 				
 				jlbllogo.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
 				
