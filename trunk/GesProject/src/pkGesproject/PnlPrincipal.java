@@ -6,7 +6,10 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -35,8 +38,11 @@ public class PnlPrincipal extends JPanel {
 	JPanel jpnlinfousuario = new JPanel();
 	JPanel jpncentral = new JPanel();
 	JPanel jpnlproyecto = new JPanel();
+	JPanel jpnlwp = new JPanel();
 	JScrollPane jscppartpro = new JScrollPane();
+	JScrollPane jscwpsrtpro = new JScrollPane();
 	JPanel jpnlpartproyecto = new JPanel();
+	JPanel jpnlstaffwp = new JPanel();
 	
 	JImageContainer jicusu = new JImageContainer();
 	RsGesproject recursos = RsGesproject.instancia;
@@ -61,15 +67,26 @@ public class PnlPrincipal extends JPanel {
 	JLabel jlbpropresu = new JLabel();
 	JLabel jlbprofini = new JLabel();
 	JLabel jlbproffin = new JLabel();
+	JLabel jlbwpnom = new JLabel();
+	JLabel jlbwpdes = new JLabel();
+	JLabel jlbwppresu = new JLabel();
+	JLabel jlbwpfini = new JLabel();
+	JLabel jlbwpffin = new JLabel();
+	JLabel jlbstaffwp =new JLabel();
+	Integer[] wp;
+	
 	JLabel jlbprocontrato = new JLabel();
 	JLabel jlbpartproyecto = new JLabel();
 	JComboBox jcbproyecto = new JComboBox();
-	ActionListener alpro;
+	JComboBox jcbwp = new JComboBox();
+	ActionListener alpro,alstaff;
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	Integer[] proyectos;
-	JTable jtblpartners;
+	JTable jtblpartners,jtblstaff;
 	String[] partners;
+	String[] staff;
 	DefaultTableModel tablemodelpart = new DefaultTableModel();
+	DefaultTableModel tablemodelstaff = new DefaultTableModel();
 	
 	public PnlPrincipal(){
 		jpncentral.setLayout(new GridLayout(0,2));
@@ -77,6 +94,8 @@ public class PnlPrincipal extends JPanel {
 		CargaInfoUsuario();
 		CargarPanelProyecto();
 		ActualizarPartnersProyecto();
+		CargarWP();
+		ActualizarStaffWp();
 		this.add(jpnlinfousuario,BorderLayout.WEST);
 		this.setOpaque(true);
 		this.add(jpncentral,BorderLayout.CENTER);
@@ -183,32 +202,38 @@ public class PnlPrincipal extends JPanel {
 		jpnlinfousuario.add(jlbemail);
 		jpnlinfousuario.add(jlbLogo);
 		jpnlinfousuario.add(jlbpartner);
-		jpnlinfousuario.add(jlbpartsector);
-		jpnlinfousuario.add(jlbpartdireccion);
-		jpnlinfousuario.add(jlbpartcodpostal);
-		jpnlinfousuario.add(jlbpartpais);
+		//jpnlinfousuario.add(jlbpartsector);
+		//jpnlinfousuario.add(jlbpartdireccion);
+		//jpnlinfousuario.add(jlbpartcodpostal);
+		//jpnlinfousuario.add(jlbpartpais);
 		
 		
 	}
 	public void CargarPanelProyecto() {
 	
 		
-	
-		jlbpronom.setText(" "+rec.idioma[rec.eleidioma][111]);
-		jlbprodesc.setText(" "+rec.idioma[rec.eleidioma][41]);
-		jlbpropresu.setText(" "+rec.idioma[rec.eleidioma][13]);
-		jlbprofini.setText(" "+rec.idioma[rec.eleidioma][25]);
-		jlbproffin.setText(" "+rec.idioma[rec.eleidioma][26]);
-		jlbprocontrato.setText(" "+rec.idioma[rec.eleidioma][101]);
-		jpnlproyecto.setLayout(new BoxLayout(jpnlproyecto,1));
-		jcbproyecto.setPreferredSize(new Dimension(100,100));
-		jpnlproyecto.add(jcbproyecto);
-		jpnlproyecto.add(jlbpronom);
-		jpnlproyecto.add(jlbprofini);
-		jpnlproyecto.add(jlbproffin);
-		jpnlproyecto.add(jlbpropresu);
-		jpnlproyecto.add(jlbprocontrato);
-		jpnlproyecto.add(jlbprodesc);
+		GridBagConstraints gbc = new GridBagConstraints();
+		jlbpronom.setText(" "+rec.idioma[rec.eleidioma][111]+": ");
+		jlbprodesc.setText(" "+rec.idioma[rec.eleidioma][41]+": ");
+		jlbpropresu.setText(" "+rec.idioma[rec.eleidioma][13]+": ");
+		jlbprofini.setText(" "+rec.idioma[rec.eleidioma][25]+": ");
+		jlbproffin.setText(" "+rec.idioma[rec.eleidioma][26]+": ");
+		jlbprocontrato.setText(" "+rec.idioma[rec.eleidioma][101]+": ");
+		jcbproyecto.setPreferredSize(new Dimension(300,20));
+		jpnlproyecto.setLayout(new GridBagLayout());
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.insets = new Insets(0,0,5,0);
+        jpnlproyecto.add(jcbproyecto,gbc);
+       // gbc.gridwidth = GridBagConstraints.REMAINDER;
+		
+		
+		jpnlproyecto.add(jlbpronom,gbc);
+		jpnlproyecto.add(jlbprofini,gbc);
+		jpnlproyecto.add(jlbproffin,gbc);
+		jpnlproyecto.add(jlbpropresu,gbc);
+		jpnlproyecto.add(jlbprocontrato,gbc);
+		jpnlproyecto.add(jlbprodesc,gbc);
 		jpncentral.add(jpnlproyecto);
 		//jpnlproyecto.setVisible(true);
 		//jpnlproyecto.setOpaque(true);
@@ -253,15 +278,15 @@ public class PnlPrincipal extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				ConexionDb cdb = new ConexionDb();
 				ResultSet rs;
-				rs = cdb.ConsultaSQL("SELECT nombre,descripcion,presupuesto,f_ini,f_fin,num_contrato,Coordinador FROM PROYECTOS WHERE id_pro='"+proyectos[jcbproyecto.getSelectedIndex()].toString() +"'");
+				rs = cdb.ConsultaSQL("SELECT nombre,descripcion,presupuesto,f_ini,f_fin,num_contrato FROM PROYECTOS WHERE id_pro='"+proyectos[jcbproyecto.getSelectedIndex()].toString() +"'");
 				try {
 					while(rs.next()){
-						jlbpronom.setText(" "+rec.idioma[rec.eleidioma][111]+rs.getString(1));
-						jlbprodesc.setText(" "+rec.idioma[rec.eleidioma][41]+rs.getString(2));
-						jlbpropresu.setText(" "+rec.idioma[rec.eleidioma][13]+Integer.toString(rs.getInt(3)));
-						jlbprofini.setText(" "+rec.idioma[rec.eleidioma][25]+rs.getDate(4).toString());
-						jlbproffin.setText(" "+rec.idioma[rec.eleidioma][26]+rs.getDate(5).toString());
-						jlbprocontrato.setText(" "+rec.idioma[rec.eleidioma][101]+rs.getString(6));
+						jlbpronom.setText(" "+rec.idioma[rec.eleidioma][111]+": "+rs.getString(1));
+						jlbprodesc.setText(" "+rec.idioma[rec.eleidioma][41]+": "+rs.getString(2));
+						jlbpropresu.setText(" "+rec.idioma[rec.eleidioma][13]+": "+Integer.toString(rs.getInt(3)));
+						jlbprofini.setText(" "+rec.idioma[rec.eleidioma][25]+": "+rs.getDate(4).toString());
+						jlbproffin.setText(" "+rec.idioma[rec.eleidioma][26]+": "+rs.getDate(5).toString());
+						jlbprocontrato.setText(" "+rec.idioma[rec.eleidioma][101]+": "+rs.getString(6));
 					
 					}
 					ActualizarPartnersProyecto(Integer.toString(proyectos[jcbproyecto.getSelectedIndex()]));
@@ -281,7 +306,7 @@ public class PnlPrincipal extends JPanel {
 		jpnlpartproyecto.setLayout(new BoxLayout(jpnlpartproyecto, 1));
 		jlbpartproyecto.setText(rec.idioma[rec.eleidioma][179]);
 		jlbpartproyecto.setFont(new Font(Font.SANS_SERIF, Font.BOLD,30));
-		//jpnlpartproyecto.add(jlbpartproyecto);
+		jpnlpartproyecto.add(jlbpartproyecto);
 		jpnlpartproyecto.setVisible(true);
 		jpnlpartproyecto.setOpaque(true);
 	//	jpnlpartproyecto.setBackground(Color.gray);
@@ -289,44 +314,8 @@ public class PnlPrincipal extends JPanel {
 		jscppartpro.setViewportView(jpnlpartproyecto);
 		jpncentral.add(jscppartpro);
 		tablemodelpart.addColumn("PARTNER");
-		
-		
-		
-		
-		
-	}
-	public void ActualizarPartnersProyecto(String proyecto){
-		
-		rs = cdb.ConsultaSQL("SELECT cod_part FROM PARTNER_PROYECTOS WHERE id_pro='"+proyecto+"'" );
-		
-		jtblpartners = null;
-		for(int i=0;i<tablemodelpart.getRowCount();i++){
-			tablemodelpart.removeRow(i);
-		}
-		try {
-			if(rs.next()){
-				rs.last();
-				 partners = new String[rs.getRow()];
-				 rs.beforeFirst();
-			
-			while (rs.next()){
-				partners[rs.getRow()-1] = rs.getString(1);
-				
-				
-			}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		  for(int i=0;i<partners.length;i++){
-				Object []  obj = new Object[1];
-				//jpnlpartproyecto.add(new LstPartner(rs.getString(1)));
-				obj[0] = new LstPartner(partners[i]);
-				tablemodelpart.addRow(obj);
-			}
 		jtblpartners = new JTable(tablemodelpart){
-           
+	           
 			@Override
             public Class<?> getColumnClass(int column) {
                 if (convertColumnIndexToModel(column) == 0) {
@@ -359,8 +348,230 @@ public class PnlPrincipal extends JPanel {
 			});
         jtblpartners.setRowHeight(50);
 		jpnlpartproyecto.add(jtblpartners);
-		jtblpartners.repaint();
+		
+		
+		
+		
+		
+	}
+	public void ActualizarPartnersProyecto(String proyecto){
+		//for(int i =0;i<jpnlpartproyecto.getComponentCount();i++){
+		//	jpnlpartproyecto.remove(jpnlpartproyecto.getComponent(1));
+	//	}
+		
+	//	jpnlpartproyecto.add(jlbpartproyecto);
+		rs = cdb.ConsultaSQL("SELECT cod_part FROM PARTNER_PROYECTOS WHERE id_pro='"+proyecto+"'" );
+		
+	//	tablemodelpart = new DefaultTableModel();
+		for(int i=0;i<tablemodelpart.getRowCount();i++){
+			tablemodelpart.removeRow(i);
+		}
+		
+		try {
+			if(rs.next()){
+				rs.last();
+				 partners = new String[rs.getRow()];
+				 rs.beforeFirst();
+			
+			while (rs.next()){
+				partners[rs.getRow()-1] = rs.getString(1);
+				
+				
+			}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  for(int i=0;i<partners.length;i++){
+				Object []  obj = new Object[1];
+				//jpnlpartproyecto.add(new LstPartner(rs.getString(1)));
+				obj[0] = new LstPartner(partners[i]);
+				tablemodelpart.addRow(obj);
+			}
+		  jtblpartners.repaint();
 		jpnlpartproyecto.validate();		
+		
+		
+		
+	}
+	
+	public void CargarWP(){
+		GridBagConstraints gbc = new GridBagConstraints();
+		jlbwpnom.setText(" "+rec.idioma[rec.eleidioma][3]+": ");
+		jlbwpdes.setText(" "+rec.idioma[rec.eleidioma][41]+": ");
+		jlbwppresu.setText(" "+rec.idioma[rec.eleidioma][13]+": ");
+		jlbwpfini.setText(" "+rec.idioma[rec.eleidioma][25]+": ");
+		jlbwpffin.setText(" "+rec.idioma[rec.eleidioma][26]+": ");
+		jcbwp.setPreferredSize(new Dimension(300,20));
+		jpnlwp.setLayout(new GridBagLayout());
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.insets = new Insets(0,0,5,0);
+		jpnlwp.add(jcbwp,gbc);
+       // gbc.gridwidth = GridBagConstraints.REMAINDER;
+		
+		
+		jpnlwp.add(jlbwpnom,gbc);
+		jpnlwp.add(jlbwpfini,gbc);
+		jpnlwp.add(jlbwpffin,gbc);
+		jpnlwp.add(jlbwppresu,gbc);
+		jpnlwp.add(jlbwpdes,gbc);
+		jpncentral.add(jpnlwp);
+		//jpnlproyecto.setVisible(true);
+		//jpnlproyecto.setOpaque(true);
+		
+		
+		ConexionDb cdb = new ConexionDb();
+		ResultSet rs;
+		rs = GesStaff.allowedWP();
+		
+		try {
+			
+			
+			if(rs.next()){
+				
+				rs.last();
+				wp = new Integer[rs.getRow()];
+				rs.beforeFirst();
+				while(rs.next()){
+					wp[rs.getRow()-1] = rs.getInt(1);
+					jcbwp.addItem(rs.getString(3));
+					
+					
+				}
+				
+				
+				
+				
+				
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		cdb.ConsultaSQL("SELECT nombre,descripcion,presupuesto,f_ini,f_fin,num_contrato,Coordinador FROM PROYECTOS WHERE id_pro='"+proyectos[jcbproyecto.getSelectedIndex()].toString() +"'");
+		
+		alstaff = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ConexionDb cdb = new ConexionDb();
+				ResultSet rs;
+				rs = cdb.ConsultaSQL("SELECT nombre,descripcion,presupuesto,f_ini,f_fin FROM WORKPAQUETS WHERE id_wp='"+wp[jcbwp.getSelectedIndex()].toString() +"'");
+				try {
+					while(rs.next()){
+						
+						jlbwpnom.setText(" "+rec.idioma[rec.eleidioma][3]+": "+rs.getString(1));
+						jlbwpdes.setText(" "+rec.idioma[rec.eleidioma][41]+": "+rs.getString(2));
+						jlbwppresu.setText(" "+rec.idioma[rec.eleidioma][13]+": "+Integer.toString(rs.getInt(3)));
+						jlbwpfini.setText(" "+rec.idioma[rec.eleidioma][25]+": "+rs.getDate(4).toString());
+						jlbwpffin.setText(" "+rec.idioma[rec.eleidioma][26]+": "+rs.getDate(5).toString());
+					}
+					ActualizarStaffWp(Integer.toString(wp[jcbwp.getSelectedIndex()]));
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+			}
+			
+		};
+		jcbwp.addActionListener(alstaff);
+	}
+	
+	
+	public void ActualizarStaffWp(){
+		jpnlstaffwp.setLayout(new BoxLayout(jpnlstaffwp, 1));
+		jlbstaffwp.setText(rec.idioma[rec.eleidioma][180]);
+		jlbstaffwp.setFont(new Font(Font.SANS_SERIF, Font.BOLD,30));
+		jpnlstaffwp.add(jlbstaffwp);
+		//jpnlpartproyecto.add(jlbpartproyecto);
+		jpnlstaffwp.setVisible(true);
+		jpnlstaffwp.setOpaque(true);
+	//	jpnlpartproyecto.setBackground(Color.gray);
+		//jpnlpartproyecto.add(jtblpartners);
+		jscwpsrtpro.setViewportView(jpnlstaffwp);
+		jpncentral.add(jscwpsrtpro);
+		tablemodelstaff.addColumn("STAFF");
+		jtblstaff = new JTable(tablemodelstaff){
+	           
+			@Override
+            public Class<?> getColumnClass(int column) {
+                if (convertColumnIndexToModel(column) == 0) {
+                    return LstStaff.class;
+                } else {
+                    return LstStaff.class;
+                }
+            }
+            public boolean isCellEditable(int rowIndex, int mColIndex) {
+                return false;
+              }
+        };
+      
+        jtblstaff.setDefaultRenderer(LstStaff.class, new TableCellRenderer() {
+			
+			@Override
+			 public Component getTableCellRendererComponent(JTable table, Object value,
+				        boolean isSelected, boolean hasFocus, int row, int column) {
+				 
+				    LstStaff panel = (LstStaff) value;
+
+				    if (isSelected) {
+				      panel.setBackground(table.getSelectionBackground());
+				    }else{
+				      panel.setBackground(table.getSelectionForeground());
+				    }
+				    return panel;
+				  }
+			
+			});
+        jtblstaff.setRowHeight(50);
+		jpnlstaffwp.add(jtblstaff);
+		jtblstaff.revalidate();
+		
+		
+		
+	}
+	
+	public void ActualizarStaffWp(String workpack){
+		
+		
+		rs = cdb.ConsultaSQL("SELECT id_staff FROM STAFF_TAREAS WHERE id_task IN (SELECT id_task FROM TAREAS WHERE id_wp='"+workpack+"')");
+		
+		//jtblstaff= null;
+		//tablemodelstaff=new DefaultTableModel();
+		for(int i=0;i<tablemodelstaff.getRowCount();i++){
+			tablemodelstaff.removeRow(i);
+		}
+		try {
+			if(rs.next()){
+				rs.last();
+				 staff = new String[rs.getRow()];
+				 rs.beforeFirst();
+			
+			while (rs.next()){
+				staff[rs.getRow()-1] = rs.getString(1);
+				
+				
+			}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  for(int i=0;i<staff.length;i++){
+				Object []  obj = new Object[1];
+				//jpnlpartproyecto.add(new LstPartner(rs.getString(1)));
+				obj[0] = new LstStaff(Integer.toString(4));
+				tablemodelstaff.addRow(obj);
+			}
+		
+		
 		
 		
 		
