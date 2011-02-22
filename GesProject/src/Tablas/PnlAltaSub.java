@@ -68,14 +68,14 @@ public class PnlAltaSub extends JScrollPane{
 	
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
-	protected Object cbpais;
+
 	
 	public PnlAltaSub (){
 		this.setBorder(empty);
 		
 		panel.setLayout(new GridBagLayout());
 		  
-		String[] fieldNames = {
+		final String[] fieldNames = {
 		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][4],
 		   rec.idioma[rec.eleidioma][46],rec.idioma[rec.eleidioma][48],
 		   rec.idioma[rec.eleidioma][7], rec.idioma[rec.eleidioma][8],
@@ -83,10 +83,10 @@ public class PnlAltaSub extends JScrollPane{
 		   };
 		int[] fieldWidths = {11,10,10,10,20,11,11,40};
 		
-		jtxt = new JTextField[fieldNames.length];
+		jtxt = new JTextField[4];
 		jlbl = new JLabel[fieldNames.length];
 		
-		GridBagConstraints gbc = new GridBagConstraints();
+		final GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -145,10 +145,10 @@ public class PnlAltaSub extends JScrollPane{
 
 		   	    
 				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT pais FROM PAIS");
+				rs = conexion.ConsultaSQL("SELECT * FROM PAIS");
 				try {
 					while(rs.next()){
-						CmbPais.addItem(rs.getString(1));	
+						CmbPais.addItem(rs.getString(2));	
 						
 					}
 				} catch (SQLException e1) {
@@ -160,6 +160,11 @@ public class PnlAltaSub extends JScrollPane{
 				//Hacer que	se actulize las provincias al cambiar el pais ¿¿ ??	
 				
 				
+					
+			
+				CmbPais.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent arg0){
 					conexion.Conectardb();
 					rs = conexion.ConsultaSQL("select id_pais FROM PAIS WHERE pais like '"+CmbPais.getSelectedItem().toString()+"'");
 					
@@ -172,13 +177,9 @@ public class PnlAltaSub extends JScrollPane{
 						e.printStackTrace();
 					}
 					
+				
 					
-					
-				gbc.gridwidth = GridBagConstraints.RELATIVE;
-			   	panel.add(jlbl[3]=new JLabel(fieldNames[3]),gbc);
-			   	gbc.gridwidth = GridBagConstraints.REMAINDER;
-				panel.add(CmbProvincia,gbc);
-		   		CmbProvincia.setPreferredSize(new Dimension(140,30));
+			
 			   		   		
 		   		conexion.Conectardb();
 				rs = conexion.ConsultaSQL("SELECT * FROM PROVINCIAS WHERE id_pais = "+pais);
@@ -193,24 +194,32 @@ public class PnlAltaSub extends JScrollPane{
 					e.printStackTrace();
 				}
 					conexion.cerrarConexion();
-
-		   		
+				
+				}
+				});
+					gbc.gridwidth = GridBagConstraints.RELATIVE;
+				   	panel.add(jlbl[3]=new JLabel(fieldNames[3]),gbc);
+				   	gbc.gridwidth = GridBagConstraints.REMAINDER;
+					panel.add(CmbProvincia,gbc);
+			   		CmbProvincia.setPreferredSize(new Dimension(140,30));
+			
+				
 					gbc.gridwidth = GridBagConstraints.RELATIVE;
 			   		panel.add(jlbl[4]=new JLabel(fieldNames[4]),gbc);
 			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
-			   		panel.add(jtxt[4]=new JTextField(fieldWidths[4]),gbc);
+			   		panel.add(jtxt[1]=new JTextField(fieldWidths[4]),gbc);
 			   		
 			   		
 			   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 			   		panel.add(jlbl[5]=new JLabel(fieldNames[5]),gbc);
 			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
-			   		panel.add(jtxt[5]=new JTextField(fieldWidths[5]),gbc);
+			   		panel.add(jtxt[2]=new JTextField(fieldWidths[5]),gbc);
 			   		
 			   		
 			   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 			   		panel.add(jlbl[6]=new JLabel(fieldNames[6]),gbc);
 			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
-			   		panel.add(jtxt[6]=new JTextField(fieldWidths[6]),gbc);
+			   		panel.add(jtxt[3]=new JTextField(fieldWidths[6]),gbc);
 
 		   			
 			   		gbc.gridwidth = GridBagConstraints.RELATIVE;
@@ -219,7 +228,7 @@ public class PnlAltaSub extends JScrollPane{
 			   		gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp),gbc);	   		
 
 
-			   		
+					  		
 		/*  
 		**
 		 * Creamos los dos botones para este panel 
@@ -242,25 +251,24 @@ public class PnlAltaSub extends JScrollPane{
 					conexdb.Conectardb();
 										
 					conexion.executeUpdate("INSERT INTO SUBCONTRATA (nombre,sector,pais,provincia,direccion,cod_postal,telf,observaciones) VALUES ('"+ 
-							jtxt[0].getText()+"','"+sector+"','"+pais+"','"+provincia+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"','"+jtxt[6].getText()+textarea.getText()+"')");
+							jtxt[0].getText()+"','"+Integer.toString(CmbSector.getSelectedIndex()+1)+"','"+Integer.toString(CmbPais.getSelectedIndex()+1)+"','"+Integer.toString(CmbProvincia.getSelectedIndex()+1)+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+textarea.getText()+"')");
 					JOptionPane.showMessageDialog(aviso,"Subido");
 				}
+				for(int i=0;i<4;++i) {	
+					jtxt[i].setText("");
+				}	
+				CmbProvincia.setSelectedItem(null);
 				textarea.setText(null);
 
-			/*
+			
 			// Borrar cuando damos al boton cancelar
 			if( e.getActionCommand().equals("cancelar")){
-				for(int i=0;i<7;++i) {	
+				for(int i=0;i<4;++i) {	
 					jtxt[i].setText("");
-					}	
-
+				}	
+				CmbProvincia.setSelectedItem(null);
 				textarea.setText(null);
-				
-				// Borrar cuando termine de añadir
-				for(int i=0;i<7;++i) {	
-					jtxt[i].setText("");
-					}	
-			}*/
+			}
 		}
 			
 		};
