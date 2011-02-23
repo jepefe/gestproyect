@@ -44,31 +44,34 @@ public class LstPartner extends JPanel{
 		CargarFoto();
 		
 		this.setLayout(new GridBagLayout());
-		constraints.anchor=GridBagConstraints.WEST;
-		constraints.fill = GridBagConstraints.WEST;
+		constraints.anchor=GridBagConstraints.LINE_START;
+		//constraints.fill = GridBagConstraints.WEST;
 		constraints.gridx = 0; 
 		constraints.gridy = 0;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 2; 
-		//constraints.weighty = 1.0; 
+		constraints.weighty = 1.0; 
+		constraints.weightx = 1.0; 
 		this.add(jlbllogo,constraints);
 		constraints.weighty = 0.0;
-		
+		constraints.anchor=GridBagConstraints.WEST;
+		constraints.fill = GridBagConstraints.WEST;
 		constraints.gridx = 1; 
 		constraints.gridy = 0; 
-		constraints.gridwidth = 1; 
+		constraints.gridwidth = 1;
 		constraints.gridheight = 1; 
-		//constraints.weighty = 1.0; 
+		constraints.weightx = 0; 
 		this.add(jlblnombre,constraints);
-		constraints.weighty = 0.0;
+		
+		//constraints.weighty = 0.0;
 		
 		constraints.gridx = 1; 
 		constraints.gridy = 1; 
 		constraints.gridwidth = 1; 
 		constraints.gridheight = 1; 
-		//constraints.weighty = 1.0; 
+		constraints.weightx = 1.0; 
 		this.add(jlblcontacto,constraints);
-		constraints.weighty = 0.0;
+	//	constraints.weighty = 0.0;
 		
 		this.setOpaque(true);
 		this.setVisible(true);
@@ -103,9 +106,9 @@ public class LstPartner extends JPanel{
 			@Override
 			public void run()  {
 				ConexionFTP cftp = new ConexionFTP();
-				jlbllogo.setPreferredSize(new Dimension(190,50));
+				jlbllogo.setPreferredSize(new Dimension(110,50));
 				
-				jlbllogo.setIcon(new ImageIcon(cftp.ObtenerImagen("logo"+codigo).getScaledInstance(190, 50, 0)));
+				jlbllogo.setIcon(new ImageIcon(cftp.ObtenerImagen("logo"+codigo).getScaledInstance(110, 50, 0)));
 				
 				System.out.println("LOGO OBTENIDO");
 				

@@ -410,16 +410,21 @@ public class PnlPrincipal extends JPanel {
 		jcbwp.setPreferredSize(new Dimension(300,20));
 		jpnlwp.setLayout(new GridBagLayout());
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.insets = new Insets(0,0,5,0);
+		gbc.weightx=1.0;
+		gbc.weighty=0.0;
+		gbc.anchor = GridBagConstraints.CENTER;
+	//	gbc.insets = new Insets(0,0,3,0);
 		jpnlwp.add(jcbwp,gbc);
-       // gbc.gridwidth = GridBagConstraints.REMAINDER;
-		
-		
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.weightx=1.0;
+		gbc.weighty=0.0;
+		gbc.anchor = GridBagConstraints.LINE_START;
+		//gbc.insets = new Insets(0,0,3,0);
 		jpnlwp.add(jlbwpnom,gbc);
 		jpnlwp.add(jlbwpfini,gbc);
 		jpnlwp.add(jlbwpffin,gbc);
 		jpnlwp.add(jlbwppresu,gbc);
+		gbc.weighty=1.0;
 		jpnlwp.add(jlbwpdes,gbc);
 		jpncentral.add(jpnlwp);
 		//jpnlproyecto.setVisible(true);
