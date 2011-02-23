@@ -29,11 +29,11 @@ public class PnlAlta_viajes extends JPanel{
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	JTextField[] jtxt;
 	JLabel[] jlbl;
-	JLabel jlblpartner,jlblsalida,jlbldestino,jlblf_ini,jlblf_fin;
+	JLabel jlblpartner,jlblproyecto,jlblsalida,jlbldestino,jlblf_ini,jlblf_fin;
 	JButton jbtnaceptar, jbtnlimpiar;
-	GpComboBox cbpartner,cbcsalida,cbpsalida,cbcdestino,cbpdestino;
+	GpComboBox cbpartner,cbproyecto,cbcsalida,cbpsalida,cbcdestino,cbpdestino;
 	ConexionDb conexion= new ConexionDb();
-	ResultSet rs;
+	ResultSet rs,rs2;
 	JDateChooser jdc1,jdc2;
 	Component aviso;
 	int i;
@@ -46,9 +46,9 @@ public class PnlAlta_viajes extends JPanel{
 		 */
 		
 		String[] fieldNames = {
-				rec.idioma[rec.eleidioma][89]+"*",
-				rec.idioma[rec.eleidioma][90]+"*",rec.idioma[rec.eleidioma][93]+"*",
-				rec.idioma[rec.eleidioma][94]+"*",
+				rec.idioma[rec.eleidioma][89]+"*",//nombre de la persona
+				rec.idioma[rec.eleidioma][90]+"*",rec.idioma[rec.eleidioma][93]+"*",//proposito del viaje // gastos del viaje
+				rec.idioma[rec.eleidioma][94]+"*",//gastos de estancia
 		};
 		
 		/**
@@ -79,7 +79,7 @@ public class PnlAlta_viajes extends JPanel{
 			if(i==0){
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlblpartner=new JLabel(rec.idioma[rec.eleidioma][57]),gbc);
+				this.add(jlblpartner=new JLabel(rec.idioma[rec.eleidioma][57]),gbc);//Partner
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				rs=conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER p");
@@ -94,12 +94,30 @@ public class PnlAlta_viajes extends JPanel{
 					e.printStackTrace();
 				}
 				
+				//proyecto cmbbox
+				gbc.gridwidth = GridBagConstraints.RELATIVE;
+				gbc.anchor = GridBagConstraints.EAST;
+				this.add(jlblproyecto=new JLabel(rec.idioma[rec.eleidioma][55]),gbc);//Proyecto
+				gbc.anchor = GridBagConstraints.WEST;
+				gbc.gridwidth = GridBagConstraints.REMAINDER;
+				rs2=conexion.ConsultaSQL("SELECT nombre FROM PROYECTOS");
+				this.add(cbproyecto = new GpComboBox(),gbc);
+				try {
+					while(rs2.next()){
+						cbproyecto.addItem(rs2.getString(1));
+					
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				cbproyecto.setPreferredSize(new Dimension(233,30));
 			}
 			
 			if(i==2){
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlblsalida=new JLabel(rec.idioma[rec.eleidioma][91]),gbc);
+				this.add(jlblsalida=new JLabel(rec.idioma[rec.eleidioma][91]),gbc);//Ciudad y Pais de salida
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				rs=conexion.ConsultaSQL("SELECT p.pais FROM PAIS p");
@@ -125,7 +143,7 @@ public class PnlAlta_viajes extends JPanel{
 				
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlbldestino=new JLabel(rec.idioma[rec.eleidioma][92]),gbc);
+				this.add(jlbldestino=new JLabel(rec.idioma[rec.eleidioma][92]),gbc);//Ciudad y Pais de destino
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				rs=conexion.ConsultaSQL("SELECT p.pais FROM PAIS p");
@@ -150,14 +168,14 @@ public class PnlAlta_viajes extends JPanel{
 				
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlblf_ini=new JLabel(rec.idioma[rec.eleidioma][25]+"*"),gbc);
+				this.add(jlblf_ini=new JLabel(rec.idioma[rec.eleidioma][25]+"*"),gbc);//Fecha inicio
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				this.add(jdc1,gbc);
 				
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlblf_ini=new JLabel(rec.idioma[rec.eleidioma][26]+"*"),gbc);
+				this.add(jlblf_ini=new JLabel(rec.idioma[rec.eleidioma][26]+"*"),gbc);//Fecha fin
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				this.add(jdc2,gbc);
@@ -179,10 +197,10 @@ public class PnlAlta_viajes extends JPanel{
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.insets = new Insets(30,10,5,5);
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		this.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
+		this.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);//Aceptar
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		this.add(jbtnlimpiar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
+		this.add(jbtnlimpiar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);//Limpiar campos
 	
 		ActionListener accion = new ActionListener(){
 
@@ -242,7 +260,34 @@ public class PnlAlta_viajes extends JPanel{
 						e1.printStackTrace();
 					}
 				}
-				
+				//
+				if(e.getActionCommand().equals("cbpartner")){
+					int part = 0;
+					rs = conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like '"+cbpartner.getSelectedItem().toString()+"'");
+					
+					try {
+						rs.next();
+						part = rs.getInt(1);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					rs = conexion.ConsultaSQL("SELECT PROYECTOS.nombre FROM PROYECTOS INNER JOIN PARTNER_PROYECTOS ON PROYECTOS.id_pro = PARTNER_PROYECTOS.id_pro WHERE cod_part = "+part);
+					int j = 0 ;
+					cbproyecto.removeAllItems(); 
+					try {
+						while(rs.next()){	
+								
+								cbproyecto.addItem(rs.getString(1));
+								j++;
+						}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				//
 				if(e.getActionCommand().equals("aceptar")){
 					System.out.print("entra");
 					if(jtxt[0].equals("")||jtxt[1].equals("")||jtxt[2].equals("")||jtxt[3].equals("")){
@@ -313,10 +358,11 @@ public class PnlAlta_viajes extends JPanel{
 			
 		};
 		
-		
+		cbpartner.addActionListener(accion);
 		cbpsalida.addActionListener(accion);
 		cbpdestino.addActionListener(accion);
 		jbtnaceptar.addActionListener(accion);
+		cbpartner.setActionCommand("cbpartner");
 		cbpsalida.setActionCommand("cbsalida");
 		cbpdestino.setActionCommand("cbdestino");
 		jbtnaceptar.setActionCommand("aceptar");
