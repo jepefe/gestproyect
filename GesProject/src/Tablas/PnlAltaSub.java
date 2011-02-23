@@ -65,6 +65,7 @@ public class PnlAltaSub extends JScrollPane{
 	String idpais;
 	String idprovincia;
 	char caracter;
+	int permetir_alta = 0;
 	Border empty = new EmptyBorder(0,0,0,0);
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	
@@ -78,10 +79,10 @@ public class PnlAltaSub extends JScrollPane{
 		panel.setLayout(new GridBagLayout());
 		  
 		final String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][4],
-		   rec.idioma[rec.eleidioma][46],rec.idioma[rec.eleidioma][48],
-		   rec.idioma[rec.eleidioma][7], rec.idioma[rec.eleidioma][8],
-		   rec.idioma[rec.eleidioma][69], rec.idioma[rec.eleidioma][64]
+		   rec.idioma[rec.eleidioma][3]+"*",rec.idioma[rec.eleidioma][4]+"*",
+		   rec.idioma[rec.eleidioma][46]+"*",rec.idioma[rec.eleidioma][48]+"*",
+		   rec.idioma[rec.eleidioma][7]+"*", rec.idioma[rec.eleidioma][8]+"*",
+		   rec.idioma[rec.eleidioma][69]+"*", rec.idioma[rec.eleidioma][64]+"*"
 		   };
 		int[] fieldWidths = {11,10,10,10,20,11,11,40};
 		
@@ -319,5 +320,24 @@ public class PnlAltaSub extends JScrollPane{
 		this.setViewportView(panel);
 		
 	}
+	
+	public void validar_campos(){
+		/*
+		 * Revisamos si estan rellenados todos los camps obligatorios
+		 */
+		for(int i=0;i<4;++i) {
+			if (jtxt[i].getText().length() > 0){
+			}else{
+				permetir_alta = 1;
+			}	
+		}
+		if((CmbSector.getSelectedItem() != null) && (CmbPais.getSelectedItem() != null) && (CmbProvincia.getSelectedItem() != null) &&  (textarea.getText().length() > 1)){	
+			
+		}else{
+			permetir_alta = 1;
+		}
+		
+	}
+	
 }
 
