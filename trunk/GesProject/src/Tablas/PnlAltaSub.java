@@ -59,9 +59,11 @@ public class PnlAltaSub extends JScrollPane{
 	ConexionDb conexion = new ConexionDb();
 	JTextArea textarea = new JTextArea();
 	ResultSet rs;
-	int sector = 0;
+
 	int pais = 0;
-	int provincia = 0;
+	String idsector;
+	String idpais;
+	String idprovincia;
 	char caracter;
 	Border empty = new EmptyBorder(0,0,0,0);
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
@@ -134,15 +136,14 @@ public class PnlAltaSub extends JScrollPane{
 					
 					conexion.cerrarConexion();
 
-					
-		   		
+							   		
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 			   	panel.add(jlbl[2]=new JLabel(fieldNames[2]),gbc);
 			   	gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		panel.add(CmbPais,gbc);
 		   	    CmbPais.setPreferredSize(new Dimension(140,30));
-			   
 
+		   	    
 		   	    
 				conexion.Conectardb();
 				rs = conexion.ConsultaSQL("SELECT * FROM PAIS");
@@ -195,6 +196,7 @@ public class PnlAltaSub extends JScrollPane{
 				
 				}
 				});
+				
 					gbc.gridwidth = GridBagConstraints.RELATIVE;
 				   	panel.add(jlbl[3]=new JLabel(fieldNames[3]),gbc);
 				   	gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -247,15 +249,52 @@ public class PnlAltaSub extends JScrollPane{
 				if(e.getActionCommand().equals("aceptar")){
 					ConexionDb conexdb = new ConexionDb();
 					conexdb.Conectardb();
+					
+					
+					rs = conexdb.ConsultaSQL("Select id_sector FROM SECTORES WHERE sector='" + CmbSector.getSelectedItem().toString()+"'");
+					if (rs!= null){
+						try {
+							rs.next();
+							idsector = Integer.toString(rs.getInt(1));
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						}
+					
+					
+					rs = conexdb.ConsultaSQL("Select id_pais FROM PAIS WHERE pais='" + CmbPais.getSelectedItem().toString()+"'");
+					if (rs!= null){
+						try {
+							rs.next();
+							idpais = Integer.toString(rs.getInt(1));
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						}
+					
+					
+					rs = conexdb.ConsultaSQL("Select id_provincias FROM PROVINCIAS WHERE estado='" + CmbProvincia.getSelectedItem().toString() + "'" + "AND id_pais='" + pais + "'");
+					if (rs!= null){
+						try {
+							rs.next();
+							idprovincia = Integer.toString(rs.getInt(1));
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						}
+					
 										
 					conexion.executeUpdate("INSERT INTO SUBCONTRATA (nombre,sector,pais,provincia,direccion,cod_postal,telf,observaciones) VALUES ('"+ 
-							jtxt[0].getText()+"','"+Integer.toString(CmbSector.getSelectedIndex()+1)+"','"+Integer.toString(CmbPais.getSelectedIndex()+1)+"','"+Integer.toString(CmbProvincia.getSelectedIndex()+1)+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+textarea.getText()+"')");
-					JOptionPane.showMessageDialog(aviso,"Subido");
+							jtxt[0].getText()+"','"+idsector+"','"+idpais+"','"+idprovincia+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+textarea.getText()+"')");
+					JOptionPane.showMessageDialog(aviso,"Subcontrata dada de alta");
 				}
 				for(int i=0;i<4;++i) {	
 					jtxt[i].setText("");
-				}	
-				CmbProvincia.setSelectedItem(null);
+				}
+				CmbProvincia.removeAllItems();
 				textarea.setText(null);
 
 			
@@ -263,8 +302,8 @@ public class PnlAltaSub extends JScrollPane{
 			if( e.getActionCommand().equals("cancelar")){
 				for(int i=0;i<4;++i) {	
 					jtxt[i].setText("");
-				}	
-				CmbProvincia.setSelectedItem(null);
+				}
+				CmbProvincia.removeAllItems();
 				textarea.setText(null);
 			}
 		}
@@ -272,7 +311,8 @@ public class PnlAltaSub extends JScrollPane{
 		};
 		jbtnaceptar.setActionCommand("aceptar");
 		jbtnaceptar.addActionListener(accion);
-		jbtncancelar.setActionCommand("cancelar"); 
+		jbtncancelar.setActionCommand("cancelar");
+		jbtncancelar.addActionListener(accion);
 
 		
 		panel.setVisible(true);
