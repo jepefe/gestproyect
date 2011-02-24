@@ -899,12 +899,23 @@ public class PnlAlta_TimeSheet extends JPanel{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
+					int codpart = 0;
 					CmbStaff.removeAllItems();
 					conexion.Conectardb();
-					rs = conexion.ConsultaSQL("SELECT s.nombre FROM  STAFF s INNER JOIN PARTNER p ON s.cod_part = p.cod_part WHERE p.cod_part = '"+CmbPart.getSelectedItem()+"' ");
+					rs = conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre='"+CmbPart.getSelectedItem()+"'");
+					try {
+						rs.next();
+						codpart = rs.getInt(1);
+					} catch (SQLException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+					
+					rs = conexion.ConsultaSQL("SELECT nombre FROM  STAFF WHERE cod_part = '"+codpart+"' ");
 		   			try {
 						while(rs.next()){
-							CmbStaff.addItem(rs.getString(1));	
+							CmbStaff.addItem(rs.getString(1));
+							
 
 						}
 					} catch (SQLException e1) {
