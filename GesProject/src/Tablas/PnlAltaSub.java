@@ -75,12 +75,10 @@ public class PnlAltaSub extends JScrollPane{
 	JPanel contenedor = new JPanel();
 	JPanel mesage = new JPanel();
 	JPanel panel = new JPanel();
-	JFrame aviso = new JFrame();
 
 	
 	public PnlAltaSub (){
 		this.setBorder(empty);
-		
 		panel.setLayout(new GridBagLayout());
 		  
 		final String[] fieldNames = {
@@ -278,7 +276,7 @@ public class PnlAltaSub extends JScrollPane{
 		panel.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][2]),gbc);
+		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
 		
 		ActionListener accion = new ActionListener(){
 
@@ -286,6 +284,7 @@ public class PnlAltaSub extends JScrollPane{
 				// TODO Auto-generated method stub
 			validar_campos();
 			if(e.getActionCommand().equals("aceptar") && permetir_alta == 0){
+				
 					ConexionDb conexdb = new ConexionDb();
 					conexdb.Conectardb();
 					
@@ -328,7 +327,7 @@ public class PnlAltaSub extends JScrollPane{
 										
 					conexion.executeUpdate("INSERT INTO SUBCONTRATA (nombre,sector,pais,provincia,direccion,cod_postal,telf,observaciones) VALUES ('"+ 
 							jtxt[0].getText()+"','"+idsector+"','"+idpais+"','"+idprovincia+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+textarea.getText()+"')");
-					JOptionPane.showMessageDialog(aviso,"Subcontrata dada de alta");
+					JOptionPane.showMessageDialog(mesage,"Subcontrata dada de alta");
 				
 				for(int i=0;i<4;++i) {	
 					jtxt[i].setText("");
@@ -336,12 +335,14 @@ public class PnlAltaSub extends JScrollPane{
 				CmbProvincia.removeAllItems();
 				textarea.setText(null);
 				mesage.setVisible(false);
+			
 			}else{
 				alerta.setText(rec.idioma[rec.eleidioma][79]);
 				mesage.setBackground(Color.decode("#ec8989"));
 				mesage.setVisible(true);
 				permetir_alta = 0;
 			}
+			
 			
 			// Borrar cuando damos al boton cancelar
 			if( e.getActionCommand().equals("cancelar")){
@@ -350,6 +351,7 @@ public class PnlAltaSub extends JScrollPane{
 				}
 				CmbProvincia.removeAllItems();
 				textarea.setText(null);
+				alerta.setText("");
 				mesage.setVisible(false);
 			}
 		}
@@ -361,29 +363,27 @@ public class PnlAltaSub extends JScrollPane{
 		jbtncancelar.addActionListener(accion);
 
 		contenedor.setLayout(new BorderLayout());
-		panel.setOpaque(true);
+		contenedor.setOpaque(true);
 		contenedor.add(mesage,BorderLayout.NORTH);
 		contenedor.add(panel,BorderLayout.CENTER);
-		
 		this.setViewportView(contenedor);
-		
-		panel.setVisible(true);
-		this.setViewportView(panel);
-		
+
+			
 	}
 	
 	
-	
-		
 	
 	public void validar_campos(){
 		/*
 		 * Revisamos si estan rellenados todos los camps obligatorios
 		 */
+		
+		
+		permetir_alta = 0;
 		for(int i=0;i<4;++i) {
 			if (jtxt[i].getText().length() > 0){
 			}else{
-				permetir_alta = 1;
+				permetir_alta = 1;				
 			}	
 		}
 		if((CmbSector.getSelectedItem() != null) && (CmbPais.getSelectedItem() != null) && (CmbProvincia.getSelectedItem() != null) &&  (textarea.getText().length() > 1)){	
