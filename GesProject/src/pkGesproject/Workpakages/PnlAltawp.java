@@ -183,7 +183,7 @@ public class PnlAltawp extends JScrollPane{
 		   case (3)://listas para partner
 			// Conexion 1 BBDD
 			      conexion.Conectardb();
-			    	rs = conexion.ConsultaSQL("SELECT nombre FROM PARTNER ORDER BY nombre");
+			    	rs = conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER p  INNER JOIN PARTNER_PROYECTOS pp ON p.cod_part = pp.cod_part INNER JOIN PROYECTOS pr ON pp.id_pro = pr.id_pro WHERE pr.nombre = '"+CmbPro.getSelectedItem()+"' ORDER BY p.nombre");
 			    //	rs2 = conexion.ConsultaSQL("Select count(nombre) From PARTNER");
 			    	 // Cuenta para hacer la matriz dinamica
 			    	try {
@@ -194,7 +194,7 @@ public class PnlAltawp extends JScrollPane{
 			    	Npartners = new String [cuenta] ;
 			    
 			 //Conexion 2 BBDD
-			    	rs = conexion.ConsultaSQL("SELECT  nombre FROM PARTNER ORDER BY nombre");
+			    	rs = conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER p  INNER JOIN PARTNER_PROYECTOS pp ON p.cod_part = pp.cod_part INNER JOIN PROYECTOS pr ON pp.id_pro = pr.id_pro WHERE pr.nombre = '"+CmbPro.getSelectedItem()+"' ORDER BY p.nombre");
 			    	
 			    	 // Cuenta para hacer la matriz dinamica
 			    	int k = 0;
