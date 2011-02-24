@@ -5,8 +5,10 @@
  */
 package Tablas;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -52,6 +54,7 @@ public class PnlAltaSub extends JScrollPane{
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	JTextField[] jtxt;
 	JLabel[] jlbl;
+	JLabel alerta;
 	JButton jbtnaceptar, jbtncancelar;
 	GpComboBox CmbSector = new GpComboBox();
 	GpComboBox CmbPais = new GpComboBox();
@@ -69,6 +72,8 @@ public class PnlAltaSub extends JScrollPane{
 	Border empty = new EmptyBorder(0,0,0,0);
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	
+	JPanel contenedor = new JPanel();
+	JPanel mesage = new JPanel();
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
 
@@ -88,7 +93,9 @@ public class PnlAltaSub extends JScrollPane{
 		
 		jtxt = new JTextField[4];
 		jlbl = new JLabel[fieldNames.length];
-		
+				
+			
+			
 		final GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -108,6 +115,15 @@ public class PnlAltaSub extends JScrollPane{
 	    	JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 	    	JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    	
+	    	
+	    	//Pongo el panel de las alertas
+	    	alerta=new JLabel();
+			alerta.setFont(new Font(Font.SANS_SERIF,Font.BOLD,11));
+	    	mesage.add(alerta);
+			mesage.setBackground(Color.decode("#D0E495"));
+			mesage.setVisible(false);
+			
+			
 	     //Dibujo la interfaz
 			
 			    gbc.gridwidth = GridBagConstraints.RELATIVE;
@@ -204,7 +220,7 @@ public class PnlAltaSub extends JScrollPane{
 					panel.add(CmbProvincia,gbc);
 			   		CmbProvincia.setPreferredSize(new Dimension(140,30));
 			
-				
+			   		
 					gbc.gridwidth = GridBagConstraints.RELATIVE;
 			   		panel.add(jlbl[4]=new JLabel(fieldNames[4]),gbc);
 			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -216,7 +232,7 @@ public class PnlAltaSub extends JScrollPane{
 			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   		panel.add(jtxt[2]=new JTextField(fieldWidths[5]),gbc);
 			   		
-			   		
+			   	
 			   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 			   		panel.add(jlbl[6]=new JLabel(fieldNames[6]),gbc);
 			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -228,7 +244,28 @@ public class PnlAltaSub extends JScrollPane{
 			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   		gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp),gbc);	   		
 
+			   	//filtro para numeros normales naturales del campo cod_postal
 
+					jtxt[2].addKeyListener(new KeyAdapter(){
+					   public void keyTyped(KeyEvent e){
+					      caracter = e.getKeyChar();
+					      if(((caracter < '0') ||(caracter > '9')) &&
+					         (caracter != KeyEvent.VK_BACK_SPACE)) {
+					         e.consume();  
+					      }
+					   }
+					});	
+			   	//filtro para numeros normales naturales del campo telf
+
+					jtxt[3].addKeyListener(new KeyAdapter(){
+					   public void keyTyped(KeyEvent e){
+					      caracter = e.getKeyChar();
+					      if(((caracter < '0') ||(caracter > '9')) &&
+					         (caracter != KeyEvent.VK_BACK_SPACE)) {
+					         e.consume();  
+					      }
+					   }
+					});
 					  		
 		/*  
 		**
@@ -247,7 +284,8 @@ public class PnlAltaSub extends JScrollPane{
 
 		public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(e.getActionCommand().equals("aceptar")){
+			validar_campos();
+			if(e.getActionCommand().equals("aceptar") && permetir_alta == 0){
 					ConexionDb conexdb = new ConexionDb();
 					conexdb.Conectardb();
 					
@@ -285,19 +323,25 @@ public class PnlAltaSub extends JScrollPane{
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						}
+					}
 					
 										
 					conexion.executeUpdate("INSERT INTO SUBCONTRATA (nombre,sector,pais,provincia,direccion,cod_postal,telf,observaciones) VALUES ('"+ 
 							jtxt[0].getText()+"','"+idsector+"','"+idpais+"','"+idprovincia+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+textarea.getText()+"')");
 					JOptionPane.showMessageDialog(aviso,"Subcontrata dada de alta");
-				}
+				
 				for(int i=0;i<4;++i) {	
 					jtxt[i].setText("");
 				}
 				CmbProvincia.removeAllItems();
 				textarea.setText(null);
-
+				mesage.setVisible(false);
+			}else{
+				alerta.setText(rec.idioma[rec.eleidioma][79]);
+				mesage.setBackground(Color.decode("#ec8989"));
+				mesage.setVisible(true);
+				permetir_alta = 0;
+			}
 			
 			// Borrar cuando damos al boton cancelar
 			if( e.getActionCommand().equals("cancelar")){
@@ -306,6 +350,7 @@ public class PnlAltaSub extends JScrollPane{
 				}
 				CmbProvincia.removeAllItems();
 				textarea.setText(null);
+				mesage.setVisible(false);
 			}
 		}
 			
@@ -315,11 +360,21 @@ public class PnlAltaSub extends JScrollPane{
 		jbtncancelar.setActionCommand("cancelar");
 		jbtncancelar.addActionListener(accion);
 
+		contenedor.setLayout(new BorderLayout());
+		panel.setOpaque(true);
+		contenedor.add(mesage,BorderLayout.NORTH);
+		contenedor.add(panel,BorderLayout.CENTER);
+		
+		this.setViewportView(contenedor);
 		
 		panel.setVisible(true);
 		this.setViewportView(panel);
 		
 	}
+	
+	
+	
+		
 	
 	public void validar_campos(){
 		/*
