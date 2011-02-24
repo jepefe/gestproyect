@@ -13,11 +13,10 @@ public class TbSubcontracting extends JTabbedPane{
 
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	
-	JScrollPane Subcontra;
 	public TbSubcontracting(){
-		this.add(rec.idioma[rec.eleidioma][87],Subcontra=new JScrollPane(new PnlAltaSub()));
+		this.add(rec.idioma[rec.eleidioma][87],new PnlAltaSub());
 		
-		this.add(rec.idioma[rec.eleidioma][38],new JPanel());
+		this.add(rec.idioma[rec.eleidioma][38],new PnlMod_Sub());
 		this.add(rec.idioma[rec.eleidioma][88],new JPanel());
 	}
 }
