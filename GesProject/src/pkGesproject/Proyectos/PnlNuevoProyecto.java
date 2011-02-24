@@ -44,7 +44,8 @@ public class PnlNuevoProyecto extends JScrollPane{
 	JPanel pnlcontenedor = new JPanel();
 	JPanel mensaje = new JPanel();
 	ScrollPane Sp = new ScrollPane();
-	JLabel pres = new JLabel();
+	JLabel pres,esta ;
+	
 	FocusListener foco;
 	JLabel alerta ;
 	JTextArea textarea;
@@ -70,7 +71,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 	
 	int IDpartner;//id partner del partner principal
 	
-	public GpComboBox CbCoordinador, CbAccion;
+	public GpComboBox CbCoordinador, CbAccion, CbEstado;
 	int estado = 1;
 	Runnable servdisp;
 	MouseListener mouseListener;
@@ -102,7 +103,8 @@ public class PnlNuevoProyecto extends JScrollPane{
 		final String[] fieldNames = {
 				rec.idioma[rec.eleidioma][111]+"*",rec.idioma[rec.eleidioma][101]+"*",
 				rec.idioma[rec.eleidioma][148]+"*",rec.idioma[rec.eleidioma][25]+"*",
-				rec.idioma[rec.eleidioma][26]+"*",rec.idioma[rec.eleidioma][13]};
+				rec.idioma[rec.eleidioma][26]+"*",rec.idioma[rec.eleidioma][13],
+				rec.idioma[rec.eleidioma][181]};
 		int[] fieldWidths = {15,17,7,7,8};
 
 		jtxt = new JTextField[fieldNames.length];
@@ -181,6 +183,26 @@ public class PnlNuevoProyecto extends JScrollPane{
 				gbc.gridwidth = GridBagConstraints.REMAINDER; 
 				jpnl.add(txtprecio,gbc); 
 				txtprecio.setVisible(false);
+				break;
+			case 6 :
+				jpnl.add(esta = new JLabel(fieldNames[i]),gbc);
+				esta.setVisible(false);
+				CbEstado = new GpComboBox();
+				CbEstado.setPreferredSize(new Dimension(100,30));
+				CbEstado.setVisible(false);
+				conexion.Conectardb();
+				rs = conexion.ConsultaSQL("SELECT estado FROM ESTADOS_PROYECTO");
+				try {
+					while(rs.next()){
+						CbEstado.addItem(rs.getString(1));
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				conexion.cerrarConexion();
+				gbc.gridwidth = GridBagConstraints.REMAINDER; 
+				jpnl.add(CbEstado,gbc);
+
 				break;
 			}
 
@@ -534,6 +556,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("aceptar2")){
+				
 					conexion.Conectardb();
 					ConexionDb conexdb = new ConexionDb();
 					conexdb.Conectardb();
@@ -542,7 +565,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 					java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 
 					if (sqlDate1.getTime()< sqlDate2.getTime()){
-						conexdb.executeUpdate("UPDATE PROYECTOS SET nombre='"+ jtxt[0].getText()+"', descripcion='"+textarea.getText()+"',estado='"+estado+"',presupuesto='"+txtprecio.getText()+"',f_ini='"+sqlDate1+"',f_fin='"+sqlDate2+"',num_contrato='"+ jtxt[1].getText()+"',action='"+(CbAccion.getSelectedIndex()+1)+ "'WHERE id_pro ="+PnlModificarProyecto.id_pro+"");			
+						conexdb.executeUpdate("UPDATE PROYECTOS SET nombre='"+ jtxt[0].getText()+"', descripcion='"+textarea.getText()+"',estado='"+(CbEstado.getSelectedIndex()+1)+"',presupuesto='"+txtprecio.getText()+"',f_ini='"+sqlDate1+"',f_fin='"+sqlDate2+"',num_contrato='"+ jtxt[1].getText()+"',action='"+(CbAccion.getSelectedIndex()+1)+ "'WHERE id_pro ="+PnlModificarProyecto.id_pro+"");			
 					}
 					for (int i = 0 ; i<listaP.getModel().getSize(); i++){
 
@@ -578,6 +601,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 					conexion.cerrarConexion();
 					conexdb.cerrarConexion();
 					JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][100]);
+					PnlModificarProyecto.modificar.dispose();
 
 				}
 				if(e.getActionCommand().equals("cancelar2")){
