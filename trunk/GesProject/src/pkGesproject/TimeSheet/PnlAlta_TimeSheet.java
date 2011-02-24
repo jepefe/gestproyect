@@ -65,6 +65,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 	GpComboBox CmbPart = new GpComboBox();
 	GpComboBox CmbWorkpaquets = new GpComboBox();
 	GpComboBox CmbStaff = new GpComboBox();
+	GpComboBox CmbRol = new GpComboBox();
 	ResultSet rs,rs2;
 	ConexionDb conexion = new ConexionDb();
 	JFrame aviso = new JFrame();
@@ -361,7 +362,15 @@ public class PnlAlta_TimeSheet extends JPanel{
 						//e1.printStackTrace();
 					}
 					CmbStaff.setSelectedItem(nomsta);
+					rs = conexion.ConsultaSQL("SELECT p.nombre FROM STAFF s INNER JOIN PARTNER p ON s.cod_part = p.cod_part WHERE s.nombre= '"+nomsta+"'");
 					
+				try {
+					rs.next();
+					CmbPart.setSelectedItem(rs.getString(1));
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 				conexion.cerrarConexion();
 				/**
 		    	 * Cargamos los array y la tabla con los datos de la bd despues de crear el alta nueva
@@ -383,9 +392,25 @@ public class PnlAlta_TimeSheet extends JPanel{
 				//System.out.println("Entra rol proyecto");
 				gbt.insets = new Insets(10,0,10,0);
 				gbt.gridx = 5; // El área de texto empieza en la columna
-				Jproyecto.add(jtxtpro[i]=new JTextField(fieldWidths[i]),gbt);
-				JTextFieldLimit ljtxt2 = new JTextFieldLimit(20);
-				jtxtpro[i].setDocument(ljtxt2);
+				Jproyecto.add(CmbRol,gbt);
+				conexion.Conectardb();
+				rs = conexion.ConsultaSQL("SELECT rango FROM RANGOS ORDER BY rango");
+				
+				try {
+					while(rs.next()){
+						CmbRol.addItem(rs.getString(1));	
+					}
+					
+					
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				conexion.cerrarConexion();
+				CmbRol.setSelectedItem(null);
+				//Jproyecto.add(jtxtpro[i]=new JTextField(fieldWidths[i]),gbt);
+				//JTextFieldLimit ljtxt2 = new JTextFieldLimit(20);
+				//jtxtpro[i].setDocument(ljtxt2);
 				  	break;
 			   		
 			   }//fin switch proyecto
@@ -777,9 +802,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 							e1.printStackTrace();
 						}
 						if (CmbTareas.getSelectedItem()!= null){
-						conexion.executeUpdate("INSERT INTO TIMESHEET (id_pro, id_part, id_staff, rol, fecha, id_tarea, tarea_des, id_wp, horas) VALUES ('"+idpro+"','"+idpart+"','"+idstaff+"','"+jtxtpro[4].getText()+"','"+sqlDate1+"','"+idtar+"','"+CmbTareas.getSelectedItem()+"','"+idwpp+"','"+jtxtta[3].getText()+"')");
+						conexion.executeUpdate("INSERT INTO TIMESHEET (id_pro, id_part, id_staff, rol, fecha, id_tarea, tarea_des, id_wp, horas) VALUES ('"+idpro+"','"+idpart+"','"+idstaff+"','"+CmbRol.getSelectedItem()+"','"+sqlDate1+"','"+idtar+"','"+CmbTareas.getSelectedItem()+"','"+idwpp+"','"+jtxtta[3].getText()+"')");
 						}else{
-						conexion.executeUpdate("INSERT INTO TIMESHEET (id_pro, id_part, id_staff, rol, fecha, id_tarea, tarea_des, id_wp, horas) VALUES ('"+idpro+"','"+idpart+"','"+idstaff+"','"+jtxtpro[4].getText()+"','"+sqlDate1+"','"+idtar+"','"+jtxtta[1].getText()+"','"+idwpp+"','"+jtxtta[3].getText()+"')");
+						conexion.executeUpdate("INSERT INTO TIMESHEET (id_pro, id_part, id_staff, rol, fecha, id_tarea, tarea_des, id_wp, horas) VALUES ('"+idpro+"','"+idpart+"','"+idstaff+"','"+CmbRol.getSelectedItem()+"','"+sqlDate1+"','"+idtar+"','"+jtxtta[1].getText()+"','"+idwpp+"','"+jtxtta[3].getText()+"')");
 	
 						}
 						
@@ -848,7 +873,8 @@ public class PnlAlta_TimeSheet extends JPanel{
 					CmbProyecto.setSelectedItem(null);
 					jtxtpro[1].setText("");
 					CmbStaff.setSelectedItem(null);
-					jtxtpro[4].setText("");
+					//jtxtpro[4].setText("");
+					CmbRol.setSelectedItem(null);
 					CmbPart.setSelectedItem(null);
 					
 					//vaciamos tarea
@@ -862,6 +888,35 @@ public class PnlAlta_TimeSheet extends JPanel{
 		      };
 		      
 		      
+		      /**
+		       * action listener para el combo partner:
+		       * esto hace que cuando cambie el item seleccionado en el partner
+		       * se cambie el combo staff para que solo se muestren sus propios
+		       * staff de esa institucion.
+		       */
+		      ActionListener partner = new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					CmbStaff.removeAllItems();
+					conexion.Conectardb();
+					rs = conexion.ConsultaSQL("SELECT s.nombre FROM  STAFF s INNER JOIN PARTNER p ON s.cod_part = p.cod_part WHERE p.cod_part = '"+CmbPart.getSelectedItem()+"' ");
+		   			try {
+						while(rs.next()){
+							CmbStaff.addItem(rs.getString(1));	
+
+						}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					conexion.cerrarConexion();
+					CmbStaff.setSelectedItem(null);
+					
+				}
+		    	  
+		      };
 		      
 	      /**
 	       * Se agregan los action listener a los objeto
@@ -869,6 +924,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 		      
 	      
 		      CmbProyecto.addActionListener(accionpro);
+		    CmbPart.addActionListener(partner);
 	      	CmbTareas.addActionListener(accionta);
 	      	CmbWorkpaquets.addActionListener(accionwp);
 	      	jbtnaceptar.addActionListener(accionba);
