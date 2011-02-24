@@ -401,14 +401,19 @@ public class PnlModificarProyecto extends JPanel{
 			PnlNuevoProyecto mod;
 			modificar = new JDialog();
 			modificar.add(mod = new PnlNuevoProyecto());
-			modificar.setBounds(0, 0, 500, 650);
+			modificar.setBounds(0, 0, 500, 680);
 			mod.jbtnaceptar.setVisible(false); mod.jbtncancelar.setVisible(false);
 			mod.jbtnaceptar2.setVisible(true); mod.jbtncancelar2.setVisible(true);
+			mod.CbEstado.setVisible(true); 
 			mod.txtprecio.setVisible(true);
 			mod.pres.setVisible(true);
+			mod.esta.setVisible(true);
 			modificar.setModal(true);
+
+			
 			modificar.setLocationRelativeTo(null);
 			mod.jtxt[0].removeFocusListener(mod.foco);
+			
 			/*
 			 * Introducir datos al panel para poder modificar
 			 */
@@ -422,7 +427,7 @@ public class PnlModificarProyecto extends JPanel{
 								mod.textarea.setText(rs.getString(4));
 								mod.txtprecio.setText(String.valueOf(rs.getInt(5))) ;
 								mod.jdc1.setDate(rs.getDate(6));
-								mod.jdc2.setDate(rs.getDate(7));				
+								mod.jdc2.setDate(rs.getDate(7));
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -451,11 +456,26 @@ public class PnlModificarProyecto extends JPanel{
 					e1.printStackTrace();
 				}
 				conexion.cerrarConexion();
-				
+				/*/
+				 *Cargar combo accion
+				 */
 				rs = conexion.ConsultaSQL("SELECT a.nombre FROM PROYECTOS as p inner join ACTIONS as a  on a.id_accion = p.action WHERE p.id_pro = '"+id_pro+"'");
 				try {									
 					while(rs.next()){
 						mod.CbAccion.setSelectedItem(rs.getString(1));
+					}					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				conexion.cerrarConexion();
+				/*/
+				 *Cargar combo estado
+				 */
+				rs = conexion.ConsultaSQL("SELECT e.estado FROM PROYECTOS as p Inner join ESTADOS_PROYECTO as e on e.id_est = p.estado  WHERE p.id_pro = '"+id_pro+"'");
+				try {									
+					while(rs.next()){
+						mod.CbEstado.setSelectedItem(rs.getString(1));
 					}					
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
