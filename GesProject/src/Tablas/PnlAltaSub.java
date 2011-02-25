@@ -75,7 +75,7 @@ public class PnlAltaSub extends JScrollPane{
 	JPanel contenedor = new JPanel();
 	JPanel mesage = new JPanel();
 	JPanel panel = new JPanel();
-
+	ActionListener accion;
 	
 	public PnlAltaSub (){
 		this.setBorder(empty);
@@ -278,7 +278,7 @@ public class PnlAltaSub extends JScrollPane{
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
 		
-		ActionListener accion = new ActionListener(){
+		accion = new ActionListener(){
 
 		public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub

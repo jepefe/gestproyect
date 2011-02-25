@@ -164,6 +164,7 @@ public class PnlMod_Sub extends JPanel{
 				}
 				
 				
+				
 			}
         	
         };
@@ -206,6 +207,7 @@ public class PnlMod_Sub extends JPanel{
         jbtnmodificar.addActionListener(event);
         jbtneliminar.setActionCommand("eliminar");
         jbtneliminar.addActionListener(event);
+        //mod.jbtnaceptar
         jtxt.addKeyListener(accion);
         jtxt.addFocusListener(foco);
         jtblLateral.addMouseListener(mouse);
@@ -422,28 +424,31 @@ public class PnlMod_Sub extends JPanel{
 		modificar.setModal(true);
 				
 		conexion.Conectardb();
-    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
-    	rs = conexion.ConsultaSQL("SELECT p.nombre,p.direccion,p.codpostal,p.email,p.email2,p.telefono,p.telefono2,p.fax,p.observaciones FROM PARTNER p WHERE p.cod_part = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
+    	rs = conexion.ConsultaSQL("SELECT nombre,direccion,cod_postal,telf,observaciones FROM SUBCONTRATA WHERE cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
     	int i=1;
-    	/*
+    	
 			try {
 					
 				rs.next();
-				for(i=1;i<9;i++){
+				for(i=1;i<5;i++){
 					mod.jtxt[i-1].setText(rs.getString(i));
 				}
 				mod.textarea.setText(rs.getString(i));
-				rs=conexion.ConsultaSQL("SELECT p.nombre FROM TASAS_PAIS p INNER JOIN PARTNER pa ON p.id_pais = pa.pais WHERE pa.cod_part = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
+				
+				rs=conexion.ConsultaSQL("SELECT SECTORES.sector FROM SECTORES INNER JOIN SUBCONTRATA ON SECTORES.id_sector = SUBCONTRATA.sector WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				rs.next();
-				mod.cbpais.setSelectedItem(rs.getString(1));
-			
-				rs=conexion.ConsultaSQL("SELECT s.sector FROM SECTORES s INNER JOIN PARTNER p ON s.id_sector = p.sector WHERE p.cod_part = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
+				mod.CmbSector.setSelectedItem(rs.getString(1));
+				
+				rs=conexion.ConsultaSQL("SELECT PAIS.pais FROM PAIS INNER JOIN SUBCONTRATA ON PAIS.id_pais = SUBCONTRATA.pais WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				rs.next();
-				mod.cbsector.setSelectedItem(rs.getString(1));
-				mod.jbtnaceptar.setVisible(false);
-				mod.jbtncancelar.setVisible(false);
-				mod.jbtnaceptarmod.setVisible(true);
-				mod.jbtncancelarmod.setVisible(true);
+				mod.CmbPais.setSelectedItem(rs.getString(1));
+				
+				rs=conexion.ConsultaSQL("SELECT estado FROM PROVINCIAS INNER JOIN SUBCONTRATA ON PROVINCIAS.id_provincias = SUBCONTRATA.provincia WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
+				rs.next();
+				mod.CmbProvincia.setSelectedItem(rs.getString(1));
+			    
+				mod.jbtnaceptar.removeActionListener(mod.accion);
+				mod.jbtncancelar.removeActionListener(mod.accion);
 			
 				
 				
@@ -456,7 +461,7 @@ public class PnlMod_Sub extends JPanel{
     	conexion.cerrarConexion();
 		
 		modificar.setVisible(true);
-    	*/
+    	
     }
     
     /**
