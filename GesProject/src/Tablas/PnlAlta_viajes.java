@@ -325,10 +325,10 @@ public class PnlAlta_viajes extends JPanel{
 					if(OKalta = true){
 						//guardamos el codigo del partner
 						rs= conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like '"+cbpartner.getSelectedItem().toString()+"'");
-						String partner = null;
+						int partner = 0;
 						try {
 							rs.next();
-							partner = rs.getString(1);
+							partner = Integer.parseInt(rs.getString(1));
 						} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -337,10 +337,10 @@ public class PnlAlta_viajes extends JPanel{
 						//guardamos el codigo del proyecto
 						rs = null;
 						rs = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre like '"+cbproyecto.getSelectedItem().toString()+"'");
-						String proyecto = null;
+						int proyecto = 0;
 						try {
 							rs.next();
-							proyecto = rs.getString(1);
+							proyecto = Integer.parseInt(rs.getString(1));
 						} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -349,10 +349,10 @@ public class PnlAlta_viajes extends JPanel{
 						//guardamos el id del pais de origen
 						rs = null;
 						rs = conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpsalida.getSelectedItem().toString()+"'");
-						String paissalida = null;
+						int paissalida = 0;
 						try {
 							rs.next();
-							paissalida = rs.getString(1);
+							paissalida = Integer.parseInt(rs.getString(1));
 						} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -361,10 +361,10 @@ public class PnlAlta_viajes extends JPanel{
 						//guardamos el id de la provincia de salida
 						rs = null;
 						rs = conexion.ConsultaSQL("SELECT id_provincias FROM PROVINCIAS WHERE estado like '"+cbcsalida.getSelectedItem().toString()+"'");
-						String prosalida = null;
+						int prosalida = 0;
 						try {
 							rs.next();
-							prosalida = rs.getString(1);
+							prosalida = Integer.parseInt(rs.getString(1));
 						} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -373,10 +373,10 @@ public class PnlAlta_viajes extends JPanel{
 						//guardamos el id del pais de destino
 						rs = null;
 						rs= conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+cbpdestino.getSelectedItem().toString()+"'");
-						String paisdestino = null;
+						int paisdestino = 0;
 						try {
 							rs.next();
-							paisdestino = rs.getString(1);
+							paisdestino = Integer.parseInt(rs.getString(1));
 						} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -385,10 +385,10 @@ public class PnlAlta_viajes extends JPanel{
 						//guardamos el id de la provincia de destino
 						rs = null;
 						rs= conexion.ConsultaSQL("SELECT id_provincias FROM PROVINCIAS WHERE estado like '"+cbcdestino.getSelectedItem().toString()+"'");
-						String prodestino = null;
+						int prodestino = 0;
 						try {
 							rs.next();
-							prodestino = rs.getString(1);
+							prodestino = Integer.parseInt(rs.getString(1));
 						} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -396,10 +396,15 @@ public class PnlAlta_viajes extends JPanel{
 						//cambiamos fechas a sql
 						java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 						java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
-					
+						System.out.println(sqlDate1);
+						System.out.println(sqlDate2);
 						
+						//obtenemos los gastos
+						float viaje = Float.valueOf(jtxt[2].getText());
+						float otros = Float.valueOf(jtxt[3].getText());
+						//realizamos el alta
 						conexion.executeUpdate("INSERT INTO TRAVEL_SUBSISTENCE (partner,nombrepersona,motivoviaje,paissalida,ciudad_salida,paisdestino,ciudad_destino,fecha_ini,fecha_fin,coste_viaje,coste_subsistencia,id_pro) VALUES ('"
-								+partner+"','"+jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+paissalida+"','"+prosalida+"','"+paisdestino+"','"+prodestino+"','"+sqlDate1+"','"+sqlDate2+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"')");
+							+partner+"','"+jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+paissalida+"','"+prosalida+"','"+paisdestino+"','"+prodestino+"','"+sqlDate1+"','"+sqlDate2+"','"+viaje+"','"+otros+"','"+proyecto+"')");
 							//JOptionPane.showMessageDialog(aviso,"Subido");
 				
 						
