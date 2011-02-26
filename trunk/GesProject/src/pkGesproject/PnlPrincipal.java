@@ -364,10 +364,11 @@ public class PnlPrincipal extends JPanel {
 		rs = cdb.ConsultaSQL("SELECT cod_part FROM PARTNER_PROYECTOS WHERE id_pro='"+proyecto+"'" );
 		
 	//	tablemodelpart = new DefaultTableModel();
+		if(tablemodelpart.getRowCount()!=0){
 		for(int i=0;i<tablemodelpart.getRowCount();i++){
 			tablemodelpart.removeRow(i);
 		}
-		
+		}
 		try {
 			if(rs.next()){
 				rs.last();

@@ -75,7 +75,7 @@ public class FrmPrincipal extends JFrame {
 	String seleccionado;
 	boolean animando = true;
 	boolean moviendo = true;
-    Timer timer;                        // for later start/stop actions
+    Timer timer;                      
     int incremento;
 	
 	PnlBienvenida pnlbienvenida = new PnlBienvenida();
@@ -304,8 +304,8 @@ public class FrmPrincipal extends JFrame {
 						jtlbFrmppal.getComponent(i).setLocation(x,y);
 					
 					}else{
-						if(jtlbFrmppal.getComponent(i).getX()>45){
-						int x=jtlbFrmppal.getComponent(i).getX()-45;
+						if(jtlbFrmppal.getComponent(i).getX()>40){
+						int x=jtlbFrmppal.getComponent(i).getX()-60;
 						int y=jtlbFrmppal.getComponent(i).getY();
 						
 						jtlbFrmppal.getComponent(i).setLocation(x,y);
@@ -314,7 +314,7 @@ public class FrmPrincipal extends JFrame {
 						moviendo=false;
 						}
 					}
-					if(jtlbFrmppal.getComponent(i).getY()>60){
+					if(jtlbFrmppal.getComponent(i).getY()>40){
 						animando=false;
 					}
 				
