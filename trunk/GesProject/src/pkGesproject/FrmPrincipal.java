@@ -304,8 +304,8 @@ public class FrmPrincipal extends JFrame {
 						jtlbFrmppal.getComponent(i).setLocation(x,y);
 					
 					}else{
-						if(jtlbFrmppal.getComponent(i).getX()>40){
-						int x=jtlbFrmppal.getComponent(i).getX()-60;
+						if(jtlbFrmppal.getComponent(i).getX()>30){
+						int x=jtlbFrmppal.getComponent(i).getX()-30;
 						int y=jtlbFrmppal.getComponent(i).getY();
 						
 						jtlbFrmppal.getComponent(i).setLocation(x,y);
@@ -314,12 +314,12 @@ public class FrmPrincipal extends JFrame {
 						moviendo=false;
 						}
 					}
-					if(jtlbFrmppal.getComponent(i).getY()>40){
+					if(jtlbFrmppal.getComponent(i).getY()>30){
 						animando=false;
 					}
 				
 					}
-					repaint();
+					//repaint();
 					}
 					else{
 						timer.stop();
