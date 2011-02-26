@@ -292,20 +292,28 @@ public class FrmPrincipal extends JFrame {
 						
 						if(animando || moviendo){
 					for(int i=0;i<jtlbFrmppal.getComponentCount();i++){
+						if(abstractButton.getX()<5){
+							moviendo = false;
+						}else{
+						int x=abstractButton.getX()-4;
+						int y=abstractButton.getY();
+						abstractButton.setLocation(x,y);
+					}
 					if(jtlbFrmppal.getComponent(i)!= abstractButton){
 						if(i%2==0){
-							 incremento = 9;
+							 incremento = 7;
 						}else{
-							 incremento = -9;
+							 incremento = -7;
 						
 						}
-						int x=jtlbFrmppal.getComponent(i).getX();
-						int y=jtlbFrmppal.getComponent(i).getY()+incremento;
+						 int x=jtlbFrmppal.getComponent(i).getX();
+						 int y=jtlbFrmppal.getComponent(i).getY()+incremento;
 						jtlbFrmppal.getComponent(i).setLocation(x,y);
+						
 					
-					}else{
+					}/*else{
 						if(jtlbFrmppal.getComponent(i).getX()>30){
-						int x=jtlbFrmppal.getComponent(i).getX()-30;
+						int x=jtlbFrmppal.getComponent(i).getX()-40;
 						int y=jtlbFrmppal.getComponent(i).getY();
 						
 						jtlbFrmppal.getComponent(i).setLocation(x,y);
@@ -313,9 +321,12 @@ public class FrmPrincipal extends JFrame {
 						}else{
 						moviendo=false;
 						}
-					}
-					if(jtlbFrmppal.getComponent(i).getY()>30){
+					}*/
+					if(jtlbFrmppal.getComponent(i).getY()>70){
 						animando=false;
+					}
+					if(abstractButton.getX()<30){
+						moviendo = false;
 					}
 				
 					}
@@ -478,8 +489,8 @@ public class FrmPrincipal extends JFrame {
 	         if (e.getActionCommand().equals("inicio")){
 	        	 jbtnInicio.setSelected(true);
 	        	 jpnlppal.add(ppal);
-	        	 repaint();
-	        	 validate();
+	        	//repaint();
+	        	validate();
 	        	 
 	         	}
 	         
@@ -493,60 +504,60 @@ public class FrmPrincipal extends JFrame {
 	         if (e.getActionCommand().equals("workpack")){
 	        	 jbtnWorkpack.setSelected(true);
 	        	 jpnlppal.add(spnworkpack, BorderLayout.CENTER);
-	        	 repaint();
-	        	 validate();
+	        	//repaint();
+	        	validate();
 	        	 
 	         	}
 	         
 	         if (e.getActionCommand().equals("tareas")){
 	        	 jbtnTareas.setSelected(true);
 	        	 jpnlppal.add(spntareas, BorderLayout.CENTER);
-	        	 repaint();
-	        	 validate();
+	        	//repaint();
+	        	validate();
 	        	 
 	         	}
 	         
 	         if (e.getActionCommand().equals("tablas")){
 	        	 jbtnTablas.setSelected(true);
 	        	 jpnlppal.add(spntablas, BorderLayout.CENTER);
-	        	 repaint();
-	        	 validate();
+	        	//repaint();
+	        	validate();
 	        	 
 	         	}
 	         
 	         if (e.getActionCommand().equals("agregar")){
 	        	 jbtnAgregar.setSelected(true);
 	        	 add(nueva, BorderLayout.CENTER);
-	        	 repaint();
-	        	 validate();
+	        	//repaint();
+	        	validate();
 	         }
 	         
 	         if (e.getActionCommand().equals("timesheet")){
 	        	 jbtnTimesheet.setSelected(true);
 	        	 jpnlppal.add(spntimesheet, BorderLayout.CENTER);
-	        	 repaint();
-	        	 validate();
+	        	//repaint();
+	        	validate();
 	         }
 	         
 	         if (e.getActionCommand().equals("informes")){
 	        	 jbtnInformes.setSelected(true);
 	        	 jpnlppal.add(spninformes, BorderLayout.CENTER);
-	        	 repaint();
-	        	 validate();
+	        	//repaint();
+	        	validate();
 	         }
 	         
 	         if (e.getActionCommand().equals("preferencias")){
 	        	 jbtnPreferencias.setSelected(true);
 	        	 jpnlppal.add(spnpreferencias, BorderLayout.CENTER);
-	        	 repaint();
-	        	 validate();
+	        	//repaint();
+	        	validate();
 	         }
 	         
 	         if (e.getActionCommand().equals("becas")){
 	        	 jbtnBecas.setSelected(true);
 	        	 jpnlppal.add(spnbecas, BorderLayout.CENTER);
-	        	 repaint();
-	        	 validate();
+	        	//repaint();
+	        	validate();
 	         }
 	         animacion((AbstractButton)e.getSource(),((AbstractButton) e.getSource()).getText());
 	         } }
