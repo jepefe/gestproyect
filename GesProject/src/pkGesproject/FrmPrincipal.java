@@ -242,6 +242,7 @@ public class FrmPrincipal extends JFrame {
 		//this.add(nu,BorderLayout.CENTER);
 		//nu.setVisible(false);
 		this.add(pnlbienvenida,BorderLayout.CENTER);
+		
 				try {
 			UIManager.setLookAndFeel(new SeaGlassLookAndFeel());
 			} catch (UnsupportedLookAndFeelException ex) {
@@ -256,7 +257,7 @@ public class FrmPrincipal extends JFrame {
 	public void inicializar(){		
 			jpnlppal.setLayout(new BorderLayout());
 			add(jpnlppal,BorderLayout.CENTER);
-			
+			jpnlppal.add(new PnlContactos(),BorderLayout.EAST);
 			this.setVisible(true);
 			this.Carga_toolbar();
 			repaint();
@@ -460,8 +461,8 @@ public class FrmPrincipal extends JFrame {
 	        		animacionvolver((Component) e.getSource());
 	        	}else{
 	        		seleccionado = ((AbstractButton) e.getSource()).getActionCommand();
-	        			if(jpnlppal.getComponentCount()>0){
-	        	jpnlppal.remove(0);
+	        			if(jpnlppal.getComponentCount()>1){
+	        	jpnlppal.remove(1);
 	        	 }
 	        	
 	        	 for(i=0;i<jtlbFrmppal.getComponentCount();i++){
