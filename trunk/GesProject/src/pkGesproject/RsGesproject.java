@@ -37,6 +37,7 @@ public class RsGesproject {
 	final String FTPSERVER = "93.189.94.177";
 	final String FTPUSER = "gesproyect";
 	final String FTPPASS = "proyecto2010";
+	final String JABBERSERVR="aprendizdetodo.net";
 	public int progresocarga = 0;
 	public String txtcarga;
 	public FrmLogin instanciafrmlogin;
@@ -87,7 +88,9 @@ public class RsGesproject {
 			new ImageIcon(getClass().getResource("imagenes/becas.png")),
 			};
 	static String SistemaOp = System.getProperty("os.name"); //Nombre del S.O por si necesitamos condicionar codigo 
-	
+	MsgInt instanciamsg;
+	PnlContactos instanciacontactos;
+	private String username;
 	private int idusuario;
 	private int codparter;
 	public Font fuente = new Font(Font.SANS_SERIF, Font.BOLD,13);
@@ -161,6 +164,14 @@ public class RsGesproject {
 
 	public int getCodparter() {
 		return codparter;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getUsername() {
+		return username;
 	}
 
 	/**

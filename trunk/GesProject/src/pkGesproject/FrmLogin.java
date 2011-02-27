@@ -280,7 +280,9 @@ public class FrmLogin extends JFrame implements ActionListener{
 						{ 
 							if ((rs.getString(2).compareTo(jpwfPassword.getText())==0) && (rs.getString(3).compareTo(jtxfUsuario.getText())==0)){
 								CargandoAp();
-								validado = true;				
+								validado = true;	
+								new MsgInt(rs.getString(3),rs.getString(2));
+								recursos.setUsername(rs.getString(3));
 								jpnl_conexion.setVisible(false);
 								recursos.setIdusuario(rs.getInt(1));
 								rec.eleidioma = rs.getInt(4);
