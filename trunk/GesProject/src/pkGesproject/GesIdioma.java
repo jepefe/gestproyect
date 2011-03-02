@@ -15,12 +15,13 @@ import javax.swing.JOptionPane;
 
 public class GesIdioma {
 
-	public static String idioma[][] = new String[2][200];
-	String listaidiomas[]= new String[20];
-	public int eleidioma;
+	public static String idioma[][];
+	String listaidiomas[]= new String[20],columna;
+	public int eleidioma=0,idiomadescarga=0;
 	int i, j;
 	ConexionDb conexion = new ConexionDb();
 	ResultSet rs;
+	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	
 	private GesIdioma(){
 		
@@ -37,69 +38,50 @@ public class GesIdioma {
 		return instancia;
 	}
 	
-	public static void eleccionidioma(){
-		RsGesproject recursos = RsGesproject.Obtener_Instancia();
-		Object seleccion = JOptionPane.showInputDialog(null, "Choose language",
-				"Language", JOptionPane.QUESTION_MESSAGE, recursos.icono[3], new Object[] {"Espa�ol", "English"}, "Espa�ol");
-		/*
-		if(seleccion.equals("Espa�ol")){
-			recursos.setEleidioma(0);
-		}else
-			recursos.setEleidioma(1);	
-		*/	
-	}
 	
-	public static void nuevo_idioma(){
-		FileWriter fichero = null;
-		PrintWriter pw = null;
-		
-		int i=0;
-		int j=0;
-		
-		try
-		{
-			fichero = new FileWriter("src/pkGesproject/idioma.data");
-			pw = new PrintWriter(fichero);
-			
-			while(idioma[j][i]!=null){
-				while(idioma[j][i]!=null){
-					
-					pw.print(idioma[j][i]+";");
-					i++;
-				}
-				pw.print("\n");
-				j++;
-				i=0;
-			}
-		}catch (Exception e){
-			e.printStackTrace();
-		}finally{
-			try{
-				if(null != fichero);
-					fichero.close();
-			}catch(Exception e2){
-				e2.printStackTrace();
-			}
-		}
-	}
 
 	public void inicializar(){
-		File f = new File("src/pkGesproject/idioma.data");
-		Scanner s;
 		String linea,prue;
+		
 	
-		int cont=0,i,j;
-		
-		
+		int cont=0,i,j,tam = 0;
 		
 			conexion.Conectardb();
-			rs = conexion.ConsultaSQL("SELECT castellano,ingles FROM IDIOMA");
+			System.out.println("ID DEL USUARIO:    "+recursos.getIdusuario());
+			rs = conexion.ConsultaSQL("SELECT idioma FROM STAFF WHERE id_staff = "+recursos.getIdusuario());
+			try {
+				rs.next();
+				idiomadescarga = rs.getInt(1);
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			
+			rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM IDIOMA");
+			try {
+				rs.next();
+				tam = rs.getInt(1);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			idioma = new String[1][tam+1];
+			
+			rs= conexion.ConsultaSQL("SELECT columna FROM LISTA_IDIOMAS WHERE id_idioma = "+idiomadescarga);
+			try {
+				rs.next();
+				columna = rs.getString(1);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			rs = conexion.ConsultaSQL("SELECT "+columna+" FROM IDIOMA ORDER BY id_idi");
 	    	i=1;
 	    	try {
 				while(rs.next()){
-					for(j = 1;j<3;j++){
-						idioma[j-1][i] = rs.getString(j);
-					}
+					
+					idioma[0][i] = rs.getString(1);
 					i++;
 				}
 			} catch (SQLException e) {

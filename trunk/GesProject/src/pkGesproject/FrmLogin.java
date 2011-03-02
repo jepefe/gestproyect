@@ -263,7 +263,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 
 
 				ConexionDbUnica.instancia.Conectardb();
-				rec.inicializar();
+				//rec.inicializar();
 				ConexionDb conexdb = new ConexionDb();
 				ResultSet rs;
 
@@ -285,20 +285,21 @@ public class FrmLogin extends JFrame implements ActionListener{
 								recursos.setUsername(rs.getString(3));
 								jpnl_conexion.setVisible(false);
 								recursos.setIdusuario(rs.getInt(1));
-								rec.eleidioma = rs.getInt(4);
 								recursos.permisos = rs.getInt(5);
 								recursos.representante = rs.getInt(6);
 								recursos.setCodparter(rs.getInt(7));
-								System.out.println(recursos.getIdusuario() + "idioma:"+rec.eleidioma);
+								rec.inicializar();
 
 								Runnable rppal = new Runnable() 
 								{
 
 									@Override
 									public void run() {
+										
 										new FrmPrincipal();
 										recursos.getRfrmppal().inicializar();
 										recursos.instanciafrmlogin.dispose();
+										
 
 									}
 
