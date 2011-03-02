@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -18,6 +20,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import org.jivesoftware.smack.packet.Presence;
+
 @SuppressWarnings("serial")
 public class PnlContactos extends JPanel{
 	RsGesproject recursos =  RsGesproject.instancia;
@@ -25,9 +29,11 @@ public class PnlContactos extends JPanel{
 	JTable jtblcontactos;
 	DefaultTableModel tablemodelcont = new DefaultTableModel();
 	JButton jbtnizq = new JButton();
+	GesIdioma rec = GesIdioma.obtener_instancia();
+	ActionListener al;
 	public PnlContactos(){
-		jcbEstado.addItem("Disponible");
-		jcbEstado.addItem("Invisible");
+		jcbEstado.addItem(rec.idioma[rec.eleidioma][184]);
+		jcbEstado.addItem(rec.idioma[rec.eleidioma][185]);
 		
 		recursos.instanciacontactos=this;
 		this.setLayout(new BorderLayout());
@@ -36,14 +42,26 @@ public class PnlContactos extends JPanel{
 		this.setBackground(new Color(0xED,0xED,0xED));
 		this.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.gray));
 		CreaListaContactos();
-		jtblcontactos.setPreferredSize(new Dimension(200,200));
-		jcbEstado.setPreferredSize(new Dimension(200,30));
+		jtblcontactos.setPreferredSize(new Dimension(250,200));
+		jcbEstado.setPreferredSize(new Dimension(250,30));
 		this.add(jcbEstado,BorderLayout.NORTH);
 		this.add(jtblcontactos,BorderLayout.CENTER);
 		//this.add(jbtnizq,BorderLayout.WEST);
 		recursos.instanciamsg.mostrarContactos(this);
-
 		
+		al = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(((JComboBox)e.getSource()).getSelectedIndex()==0){
+					recursos.instanciamsg.connection.sendPacket(new Presence(Presence.Type.available));
+				}else{
+					recursos.instanciamsg.connection.sendPacket(new Presence(Presence.Type.unavailable));
+				}
+				
+			}
+		};
+		jcbEstado.addActionListener(al);
 		jtblcontactos.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 
 			@Override
@@ -55,11 +73,13 @@ public class PnlContactos extends JPanel{
 				}
 				
 						add(recursos.instanciamsg.contactos.get(jtblcontactos.getSelectedRow()).chat,BorderLayout.SOUTH);
-				
+						recursos.instanciamsg.contactos.get(jtblcontactos.getSelectedRow()).avisamsg(true);
+						recursos.instanciamsg.contactos.get(jtblcontactos.getSelectedRow()).jtxamsg.requestFocus();
 				recursos.instancia.getRfrmppal().repaint();
 				validate();
 				}
 			}});
+		recursos.instanciamsg.connection.sendPacket(new Presence(Presence.Type.available));
 		
 
 	}
