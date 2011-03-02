@@ -368,7 +368,7 @@ public class FrmPrincipal extends JFrame {
     	 
     	 );
     	 hilo.start();
-		
+		repaint();
     	 
 	}
 	
@@ -490,7 +490,7 @@ public class FrmPrincipal extends JFrame {
 	         if (e.getActionCommand().equals("inicio")){
 	        	 jbtnInicio.setSelected(true);
 	        	 jpnlppal.add(ppal);
-	        	//repaint();
+	        	repaint();
 	        	validate();
 	        	 
 	         	}
