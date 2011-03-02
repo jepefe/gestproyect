@@ -713,6 +713,10 @@ public class PnlAlta_TimeSheet extends JPanel{
 				}
 	   		};
 	   		
+	   		
+	   		
+	   		
+	   		
 	    /**
 	     * action listener para combo workpaquets
 	     */
@@ -735,6 +739,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 				
 				}
 			};
+			
+			
+			
 			
 			
 		    /**
@@ -810,7 +817,6 @@ public class PnlAlta_TimeSheet extends JPanel{
 						
 						
 						conexion.cerrarConexion();
-						
 				    	/**
 				    	 * Cargamos los array y la tabla con los datos de la bd despues de crear el alta nueva
 				    	 */
@@ -837,8 +843,14 @@ public class PnlAlta_TimeSheet extends JPanel{
 				}
 		    	  
 		      };
+		      
+		      
+		      
+		      
 		     /**
 		      * accion combo staff
+		      * esto carga la tabla timesheet para que solo se muestren
+		      * las tareas relacionadas con el staff seleccionado.
 		      */
 		      ActionListener staffcb = new ActionListener(){
 
@@ -861,8 +873,11 @@ public class PnlAlta_TimeSheet extends JPanel{
 		    	  
 		      };
 		      
+		      
+		      
 			/**
 			 * action listener para boton limpiar
+			 * esto vacia todos los campos del formulario
 			 */
 		      ActionListener accionbl = new ActionListener(){
 
@@ -907,6 +922,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 					try {
 						rs.next();
 						codpart = rs.getInt(1);
+						System.out.println("el codigo de partner es "+codpart);
 					} catch (SQLException e2) {
 						// TODO Auto-generated catch block
 						e2.printStackTrace();
@@ -916,6 +932,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 		   			try {
 						while(rs.next()){
 							CmbStaff.addItem(rs.getString(1));
+							System.out.println(rs.getString(1));
 							
 
 						}
