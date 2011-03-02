@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.ResultSet;
@@ -23,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
 
 import org.jivesoftware.smack.Chat;
@@ -38,6 +41,7 @@ public class Contacto extends JPanel implements MessageListener{
 	JLabel jlbllogo = new JLabel();
 	JLabel jlblnombre = new JLabel();
 	JLabel jlblcontacto =  new JLabel();
+	JLabel jlbchatcon = new JLabel();
 	ResultSet rs;
 	String usuario;
 	String nombre;
@@ -49,11 +53,14 @@ public class Contacto extends JPanel implements MessageListener{
 	JPanel chat = new JPanel();
 	JTextPane jtxachat = new JTextPane();
 	JTextPane jtxamsg = new JTextPane();
+	JPanel jpContacto = new JPanel();
 	Chat nuevoChat;
 	String conversacion="";
 	JScrollPane jsconv;
 	JScrollPane jsmsg;
 	GesIdioma rec = GesIdioma.obtener_instancia();
+	boolean leido;
+	
 	public Contacto(){
 		
 	
@@ -63,7 +70,8 @@ public class Contacto extends JPanel implements MessageListener{
 		jlblnombre.setFont(recursos.fuente);
 		jlblcontacto.setForeground(Color.gray);
 		jlbllogo.setIcon(recursos.icono[1]);
-		
+		jpContacto.setOpaque(true);
+		this.setOpaque(true);
 		this.usuario=usuario;
 		CargaDatos();
 		CargarFoto();
@@ -72,7 +80,8 @@ public class Contacto extends JPanel implements MessageListener{
 		jtxachat.setEditable(false);
 		jtxachat.setAutoscrolls(true);
 		constraints.insets = new Insets(0, 2, 0, 0);
-		this.setLayout(new GridBagLayout());
+		jpContacto.setLayout(new GridBagLayout());
+		jpContacto.setPreferredSize(new Dimension(250,50));
 		
 		constraints.anchor=GridBagConstraints.LINE_START;
 		constraints.fill = GridBagConstraints.WEST;
@@ -82,17 +91,19 @@ public class Contacto extends JPanel implements MessageListener{
 		constraints.gridheight = 2; 
 		constraints.weighty = 1.0; 
 		constraints.weightx = 1.0; 
-		this.add(jlbllogo,constraints);
+		jpContacto.add(jlbllogo,constraints);
 		//constraints.weighty = 0.0;
-		constraints.anchor=GridBagConstraints.CENTER;
+		constraints.anchor=GridBagConstraints.WEST;
+		constraints.fill = GridBagConstraints.WEST;
 		constraints.gridx = 2; 
 		constraints.gridy = 0; 
 		constraints.gridwidth = 1; 
 		constraints.gridheight = 2; 
-		//constraints.weighty = 1.0; 
-		this.add(jlblnombre,constraints);
+		constraints.weighty = 1.0; 
+		constraints.weightx = 1.0;
+		jpContacto.add(jlblnombre,constraints);
+		this.add(jpContacto);
 		
-	
 		
 	}
 	
@@ -118,11 +129,12 @@ public class Contacto extends JPanel implements MessageListener{
 	public void cambiarEstado(String estado){
 		
 		System.out.println(usuario+": "+estado);
-		if(estado.equals("avaiable")){
-			this.setEnabled(false);
+		
+		if(estado.equals("available")){
+			jtxamsg.setEnabled(true);
 			System.out.println(usuario+": disponible");
 		}else{
-			this.setEnabled(true);
+			jtxamsg.setEnabled(false);
 			System.out.println(usuario+": desconectado");
 		}
 			
@@ -154,23 +166,42 @@ public class Contacto extends JPanel implements MessageListener{
 	public void crearChat(){
 		ChatManager chatmanager = recursos.instanciamsg.connection.getChatManager();
 		nuevoChat = chatmanager.createChat(usuario+"@"+recursos.JABBERSERVR,this);
+		jlbchatcon.setBackground(new Color(0x73,0xA6,0xFF));
+		jlbchatcon.setForeground(Color.white);
+		jlbchatcon.setHorizontalTextPosition(SwingConstants.CENTER);
+		jlbchatcon.setText(nombre);
+		jlbchatcon.setPreferredSize(new Dimension(250,30));
+		jlbchatcon.setFont(recursos.fuente);
+		jlbchatcon.setOpaque(true);
+
 		jsconv = new JScrollPane(jtxachat);
 		jsmsg = new JScrollPane(jtxamsg);
-		jsmsg.setPreferredSize(new Dimension(200,100));
-		jsconv.setPreferredSize(new Dimension(200,300));
+		jsmsg.setPreferredSize(new Dimension(250,100));
+		jtxamsg.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				avisamsg(true);
+				
+			}
+		});
+		jsconv.setPreferredSize(new Dimension(250,300));
 		chat.setLayout(new BorderLayout());
+		chat.add(jlbchatcon,BorderLayout.NORTH);
 		chat.add(jsconv,BorderLayout.CENTER);
 		chat.add(jsmsg,BorderLayout.SOUTH);
 		jtxamsg.addKeyListener(new KeyListener(){
 
 			@Override
-			public void keyPressed(KeyEvent arg0) {
+			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
 				jtxamsg.setCaretPosition(jtxamsg.getDocument().getLength());
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 			    	 try {
 						nuevoChat.sendMessage(jtxamsg.getText());
@@ -183,6 +214,11 @@ public class Contacto extends JPanel implements MessageListener{
 					}
 			        jtxamsg.setText("");
 			        }
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+			
 				
 			}
 
@@ -197,13 +233,27 @@ public class Contacto extends JPanel implements MessageListener{
 	@Override
 	public void processMessage(Chat arg0, Message msg) {
 		// TODO Auto-generated method stub
-		conversacion = conversacion +"<b>"+nombre+":</b><br>"+msg.getBody()+"<br>";
+		conversacion = conversacion +"<b>"+nombre+":</b><br BACKGROUND-COLOR:blue>"+msg.getBody()+"<br>";
 		
 		jtxachat.setText(conversacion);
 		jtxachat.setCaretPosition(jtxachat.getDocument().getLength());
 		System.out.println(msg.getBody()+"\n");
+		avisamsg(false);
 	}
-	
+	public void avisamsg(boolean leido){
+		this.leido=leido;
+		if(jtxamsg.isFocusOwner()){
+			leido=true;
+		}
+		if(!leido){
+			jpContacto.setOpaque(true);
+			jpContacto.setBackground(Color.orange);
+			recursos.getRfrmppal().repaint();
+		}else{
+			jpContacto.setOpaque(false);
+			recursos.getRfrmppal().repaint();
+		}
+	}
 	
 
 }

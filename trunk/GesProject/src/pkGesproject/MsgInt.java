@@ -17,9 +17,11 @@ public class MsgInt implements RosterListener{
 	 XMPPConnection connection;
 	 RsGesproject recursos =  RsGesproject.instancia;
 	 Vector<Contacto> contactos = new Vector<Contacto>();
-	 
+	 Roster roster;
+	 String usr;
 	public MsgInt(String usr,String pass){
 		recursos.instanciamsg = this;
+		this.usr = usr;
 		try {
 			this.login(usr,pass);
 		} catch (XMPPException e) {
@@ -31,16 +33,23 @@ public class MsgInt implements RosterListener{
 	
 	public void login(String userName, String password) throws XMPPException {
         ConnectionConfiguration config = new ConnectionConfiguration(recursos.JABBERSERVR, 5222);
+        config.setSendPresence(false);
         connection = new XMPPConnection(config);
-
         connection.connect();
+       
         SASLAuthentication.supportSASLMechanism("SASL", 0);
         connection.login(userName, password);
+      //  connection.sendPacket(new Presence(Presence.Type.unavailable));
+        roster = connection.getRoster();
+        roster.setSubscriptionMode(Roster.SubscriptionMode.accept_all);
+       
+       
     }
 	
 	 public void mostrarContactos(PnlContactos pnlcont) {
-	        Roster roster = connection.getRoster();
+	       
 	        roster.addRosterListener(this);
+	        crearGrupo();
 	        Collection<RosterEntry> entries = roster.getGroup("Gesproject").getEntries();
 
 	        System.out.println("\n\n" + entries.size() + " buddy(ies):");
@@ -74,9 +83,14 @@ public class MsgInt implements RosterListener{
 			String usuario = p.getFrom().substring(0,p.getFrom().indexOf("@")); //Quitamos la parte del servidor
 			
 			if(c.usuario.equals(usuario)){
-				c.cambiarEstado(p.getStatus());
+				c.cambiarEstado(p.getType().name());
 			}
 		}
+		
+	}
+	public void crearGrupo(){
+		roster.createGroup("Grupopopo");
+	
 		
 	}
 	 
