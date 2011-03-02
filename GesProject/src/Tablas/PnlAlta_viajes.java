@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -38,6 +40,7 @@ public class PnlAlta_viajes extends JPanel{
 	Component aviso;
 	int i;
 	boolean OKalta;
+	char caracter;
 	
 	public PnlAlta_viajes(){
 		this.setLayout(new GridBagLayout());
@@ -114,7 +117,7 @@ public class PnlAlta_viajes extends JPanel{
 					e.printStackTrace();
 				}
 				cbproyecto.setPreferredSize(new Dimension(233,30));
-				
+				cbproyecto.removeAllItems();
 			}
 			
 			if(i==2){
@@ -424,6 +427,25 @@ public class PnlAlta_viajes extends JPanel{
 		jbtnaceptar.setActionCommand("aceptar");
 		jbtnlimpiar.setActionCommand("limpiar");
 		this.setVisible(true);
+		//filtro para solo admitir numeros en los costes
+		jtxt[2].addKeyListener(new KeyAdapter(){
+			   public void keyTyped(KeyEvent e){
+			      caracter = e.getKeyChar();
+			      if(((caracter < '0') ||(caracter > '9')) &&
+			         (caracter != KeyEvent.VK_BACK_SPACE)) {
+			         e.consume();  
+			      }
+			   }
+			});
+		jtxt[3].addKeyListener(new KeyAdapter(){
+			   public void keyTyped(KeyEvent e){
+			      caracter = e.getKeyChar();
+			      if((((caracter < '0') ||(caracter > '9')) &&
+			         (caracter != KeyEvent.VK_BACK_SPACE))) {
+			         e.consume();  
+			      }
+			   }
+			});	
 	}
 	//nos aseguramos de que los campos sean validos
 	public void comprobar_campos(){
@@ -436,7 +458,7 @@ public class PnlAlta_viajes extends JPanel{
 			if (jtxt[Y].getText().length() > 0){
 			}else{
 				OKalta = false;				
-			}	
+			}
 		}
 		if((cbpartner.getSelectedItem() != null) && (cbproyecto.getSelectedItem() != null) && (cbpsalida.getSelectedItem() != null)&& (cbcsalida.getSelectedItem() != null)&& (cbpdestino.getSelectedItem() != null)&& (cbcdestino.getSelectedItem() != null)){	
 			
@@ -444,4 +466,5 @@ public class PnlAlta_viajes extends JPanel{
 			OKalta = false;
 		}	
 	}
+	
 }
