@@ -3,12 +3,16 @@ package pkGesproject.Preferencias;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+
+import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
 import pkGesproject.GpComboBox;
 import pkGesproject.RsGesproject;
@@ -17,12 +21,15 @@ public class PnlCuentaUsuario extends JPanel{
 
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
+	ConexionDb conexion= new ConexionDb();
 	JLabel jlbl[];
 	JTextField jtxt[];
 	JButton jbtnaplicar,jbtncancelar;
 	GpComboBox gbidioma;
 	GridBagConstraints gbc;
 	JPanel contraseña;
+	ResultSet rs;
+	String[][] listaidiomas;
 	
 	public PnlCuentaUsuario(){
 		//llamamos al método para crear la interfaz
@@ -47,6 +54,16 @@ public class PnlCuentaUsuario extends JPanel{
 		
 		gbc.gridx = 1; // El área de texto empieza en la columna
 		this.add(gbidioma = new GpComboBox(),gbc);
+		
+		conexion.Conectardb();
+		rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM LISTA_IDIOMAS");
+		try {
+			rs.next();
+			listaidiomas = new String[3][rs.getInt(1)];
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		

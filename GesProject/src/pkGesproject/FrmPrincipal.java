@@ -152,28 +152,28 @@ public class FrmPrincipal extends JFrame {
 		
 		case 0:{
 		recursos.progresocarga =1;
-		recursos.txtcarga = "Loading  Staff";
+		recursos.txtcarga = rec.idioma[rec.eleidioma][186];
 		spnstaff = new SpnStaff();
 		recursos.progresocarga =2;
-		recursos.txtcarga = "Loading  Partners";
+		recursos.txtcarga = rec.idioma[rec.eleidioma][187];
 		spnsocios = new SpnSocios();
 		recursos.progresocarga =4;
-		recursos.txtcarga = "Loading  Projects";
+		recursos.txtcarga = rec.idioma[rec.eleidioma][188];
 		spnproyectos = new SpnProyectos();
 		recursos.progresocarga =5;
-		recursos.txtcarga = "Loading  Work Packages";
+		recursos.txtcarga = rec.idioma[rec.eleidioma][189];
 		spnworkpack = new SpnWorkpack();
 		recursos.progresocarga =6;
-		recursos.txtcarga = "Loading  Tasks";
+		recursos.txtcarga = rec.idioma[rec.eleidioma][190];
 		spntareas = new SpnTareas();
 		recursos.progresocarga =7;
-		recursos.txtcarga = "Loading  Tables";
+		recursos.txtcarga = rec.idioma[rec.eleidioma][191];
 		spntablas = new SpnTablas();
 		recursos.progresocarga =9;
-		recursos.txtcarga = "Loading  Time Sheets";
+		recursos.txtcarga = rec.idioma[rec.eleidioma][192];
 		spntimesheet = new SpnTimesheet();
 		recursos.progresocarga =10;
-		recursos.txtcarga = "Loading  Data";
+		recursos.txtcarga = rec.idioma[rec.eleidioma][193];
 		nueva = new FrmNuevapalabra();
 		
 		
