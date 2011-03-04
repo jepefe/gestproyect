@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -23,29 +24,36 @@ import javax.swing.table.TableCellRenderer;
 import org.jivesoftware.smack.packet.Presence;
 
 @SuppressWarnings("serial")
-public class PnlContactos extends JPanel{
+public class PnlContactos extends JSplitPane{
 	RsGesproject recursos =  RsGesproject.instancia;
 	JComboBox jcbEstado = new JComboBox();
 	JTable jtblcontactos;
 	DefaultTableModel tablemodelcont = new DefaultTableModel();
-	JButton jbtnizq = new JButton();
+	JScrollPane jscptabla;
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	ActionListener al;
+	JPanel jpnlcont = new JPanel();
 	public PnlContactos(){
 		jcbEstado.addItem(rec.idioma[rec.eleidioma][184]);
 		jcbEstado.addItem(rec.idioma[rec.eleidioma][185]);
+		this.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		
 		recursos.instanciacontactos=this;
-		this.setLayout(new BorderLayout());
+		jpnlcont.setLayout(new BorderLayout());
 		this.setOpaque(true);
-		//this.setSize(200,500);
+		this.setOneTouchExpandable(true);
+		//jpnlcont.setMinimumSize(new Dimension(250,90));
+		this.setSize(200,500);
 		this.setBackground(new Color(0xED,0xED,0xED));
 		this.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.gray));
 		CreaListaContactos();
-		jtblcontactos.setPreferredSize(new Dimension(250,200));
-		jcbEstado.setPreferredSize(new Dimension(250,30));
-		this.add(jcbEstado,BorderLayout.NORTH);
-		this.add(jtblcontactos,BorderLayout.CENTER);
+		//jtblcontactos.setPreferredSize(new Dimension(250,200));
+		
+		//jcbEstado.setPreferredSize(new Dimension(250,30));
+		jpnlcont.add(jcbEstado,BorderLayout.NORTH);
+		jpnlcont.add(jscptabla,BorderLayout.CENTER);
+		this.setTopComponent(jpnlcont);
+		this.setBottomComponent(null);
 		//this.add(jbtnizq,BorderLayout.WEST);
 		recursos.instanciamsg.mostrarContactos(this);
 		
@@ -72,7 +80,8 @@ public class PnlContactos extends JPanel{
 					remove(2);
 				}
 				
-						add(recursos.instanciamsg.contactos.get(jtblcontactos.getSelectedRow()).chat,BorderLayout.SOUTH);
+							
+					setBottomComponent(recursos.instanciamsg.contactos.get(jtblcontactos.getSelectedRow()).chat);
 						recursos.instanciamsg.contactos.get(jtblcontactos.getSelectedRow()).avisamsg(true);
 						recursos.instanciamsg.contactos.get(jtblcontactos.getSelectedRow()).jtxamsg.requestFocus();
 				recursos.instancia.getRfrmppal().repaint();
@@ -125,7 +134,7 @@ public class PnlContactos extends JPanel{
 			});
         jtblcontactos.setRowHeight(50);
         jtblcontactos.revalidate();
-		
+		jscptabla = new JScrollPane(jtblcontactos);
 		
 	}
 	public void AnyadirAContactos(String usuario){

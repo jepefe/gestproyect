@@ -151,19 +151,7 @@ public class ConexionDbUnica {
 		return autoid;
 	}
 	
-	public void ejecutaAlter(String consultaSQL){
-	  reseteatimeout();
-
-		try {
-			st.executeUpdate(consultaSQL);
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}
+	
 	
 	
 }

@@ -70,6 +70,8 @@ public class FrmPrincipal extends JFrame {
 	JToggleButton jbtnBecas = new JToggleButton(recursos.icono[35]);
 	JPanel jpnlppal = new JPanel();
 	PnlPrincipal ppal = new PnlPrincipal();
+	JSplitPane jscpprincipal;
+	PnlContactos pnlcontactos;
 	JLabel jlbactual = new JLabel();
 	int posicionxbtn;
 	String seleccionado;
@@ -175,7 +177,7 @@ public class FrmPrincipal extends JFrame {
 		recursos.progresocarga =10;
 		recursos.txtcarga = rec.idioma[rec.eleidioma][193];
 		nueva = new FrmNuevapalabra();
-		
+		pnlcontactos = new PnlContactos();
 		
 		//a falta de progres bar
 		spninformes = new SpnInformes();
@@ -194,7 +196,7 @@ public class FrmPrincipal extends JFrame {
 		jtlbFrmppal.add(jbtnBecas);
 		jtlbFrmppal.add(jbtnPreferencias);
 		jtlbFrmppal.add(jbtnAgregar);
-		add(ppal);
+		
 		
 		}break;
 		case 1:{
@@ -204,6 +206,9 @@ public class FrmPrincipal extends JFrame {
 			jtlbFrmppal.add(jbtnTimesheet);
 			add(ppal);
 			recursos.progresocarga =10;
+			pnlcontactos = new PnlContactos();
+
+
 		}
 		case 2:{
 			jtlbFrmppal.add(jbtnInicio);
@@ -211,6 +216,7 @@ public class FrmPrincipal extends JFrame {
 			spntimesheet = new SpnTimesheet();
 			recursos.progresocarga =10;
 			jtlbFrmppal.add(jbtnTimesheet);
+			pnlcontactos = new PnlContactos();
 
 		}
 		case 3:{
@@ -219,8 +225,11 @@ public class FrmPrincipal extends JFrame {
 			spntimesheet = new SpnTimesheet();
 			recursos.progresocarga =10;
 			jtlbFrmppal.add(jbtnTimesheet);
+			pnlcontactos = new PnlContactos();
 
 		}
+		jscpprincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jpnlppal,pnlcontactos);
+		
 		}
 		for(i=0;i<jtlbFrmppal.getComponentCount();i++){
 	  		  ((AbstractButton) jtlbFrmppal.getComponentAtIndex(i)).setSelected(false);
@@ -256,8 +265,13 @@ public class FrmPrincipal extends JFrame {
 	 */
 	public void inicializar(){		
 			jpnlppal.setLayout(new BorderLayout());
-			add(jpnlppal,BorderLayout.CENTER);
-			jpnlppal.add(new PnlContactos(),BorderLayout.EAST);
+			jscpprincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jpnlppal,pnlcontactos);
+			
+			jscpprincipal.setOneTouchExpandable(true);
+			jscpprincipal.setLeftComponent(ppal);
+			
+			add(jscpprincipal,BorderLayout.CENTER);
+			//jscpprincipal.setLeftComponent(new JSplitPane(PnlContactos(),BorderLayout.EAST);
 			this.setVisible(true);
 			this.Carga_toolbar();
 			repaint();
@@ -474,14 +488,14 @@ public class FrmPrincipal extends JFrame {
 	        	 }
 	         if (e.getActionCommand().equals("socios")){
 	        	jbtnSocios.setSelected(true);
-	        	jpnlppal.add(spnsocios);
+	        	jscpprincipal.setLeftComponent(spnsocios);
 	        	repaint();
 	        	validate();
 	        	}
 	         if (e.getActionCommand().equals("usuarios")){
 		        	jbtnUsuarios.setSelected(true); 
 		        
-		        	jpnlppal.add(spnstaff);
+		        	jscpprincipal.setLeftComponent(spnstaff);
 		        	repaint();
 		        	validate();
 		        
@@ -489,7 +503,7 @@ public class FrmPrincipal extends JFrame {
 		         }
 	         if (e.getActionCommand().equals("inicio")){
 	        	 jbtnInicio.setSelected(true);
-	        	 jpnlppal.add(ppal);
+	        	 jscpprincipal.setLeftComponent(ppal);
 	        	repaint();
 	        	validate();
 	        	 
@@ -497,14 +511,14 @@ public class FrmPrincipal extends JFrame {
 	         
 	         if (e.getActionCommand().equals("proyectos")){
 	        	jbtnProyectos.setSelected(true);
-	        	jpnlppal.add(spnproyectos);
+	        	jscpprincipal.setLeftComponent(spnproyectos);
 	        	repaint();
 	        	validate();
 	         	}
 	         
 	         if (e.getActionCommand().equals("workpack")){
 	        	 jbtnWorkpack.setSelected(true);
-	        	 jpnlppal.add(spnworkpack, BorderLayout.CENTER);
+	        	 jscpprincipal.setLeftComponent(spnworkpack);
 	        	repaint();
 	        	validate();
 	        	 
@@ -512,7 +526,7 @@ public class FrmPrincipal extends JFrame {
 	         
 	         if (e.getActionCommand().equals("tareas")){
 	        	 jbtnTareas.setSelected(true);
-	        	 jpnlppal.add(spntareas, BorderLayout.CENTER);
+	        	 jscpprincipal.setLeftComponent(spntareas);
 	        	repaint();
 	        	validate();
 	        	 
@@ -520,7 +534,7 @@ public class FrmPrincipal extends JFrame {
 	         
 	         if (e.getActionCommand().equals("tablas")){
 	        	 jbtnTablas.setSelected(true);
-	        	 jpnlppal.add(spntablas, BorderLayout.CENTER);
+	        	 jscpprincipal.setLeftComponent(spntablas);
 	        	repaint();
 	        	validate();
 	        	 
@@ -528,35 +542,35 @@ public class FrmPrincipal extends JFrame {
 	         
 	         if (e.getActionCommand().equals("agregar")){
 	        	 jbtnAgregar.setSelected(true);
-	        	 add(nueva, BorderLayout.CENTER);
+	        	 jscpprincipal.setLeftComponent(nueva);
 	        	repaint();
 	        	validate();
 	         }
 	         
 	         if (e.getActionCommand().equals("timesheet")){
 	        	 jbtnTimesheet.setSelected(true);
-	        	 jpnlppal.add(spntimesheet, BorderLayout.CENTER);
+	        	 jscpprincipal.setLeftComponent(spntimesheet);
 	        	repaint();
 	        	validate();
 	         }
 	         
 	         if (e.getActionCommand().equals("informes")){
 	        	 jbtnInformes.setSelected(true);
-	        	 jpnlppal.add(spninformes, BorderLayout.CENTER);
+	        	 jscpprincipal.setLeftComponent(spninformes);
 	        	repaint();
 	        	validate();
 	         }
 	         
 	         if (e.getActionCommand().equals("preferencias")){
 	        	 jbtnPreferencias.setSelected(true);
-	        	 jpnlppal.add(spnpreferencias, BorderLayout.CENTER);
+	        	 jscpprincipal.setLeftComponent(spnpreferencias);
 	        	repaint();
 	        	validate();
 	         }
 	         
 	         if (e.getActionCommand().equals("becas")){
 	        	 jbtnBecas.setSelected(true);
-	        	 jpnlppal.add(spnbecas, BorderLayout.CENTER);
+	        	 jscpprincipal.setLeftComponent(spnbecas);
 	        	repaint();
 	        	validate();
 	         }
