@@ -27,10 +27,6 @@ public class GesIdioma {
 		
 		
 			
-	    	
-	    	
-		
-		
 	}
 	
 	static GesIdioma instancia = new GesIdioma();

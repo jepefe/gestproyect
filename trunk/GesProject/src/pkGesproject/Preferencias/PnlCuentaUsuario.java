@@ -3,6 +3,8 @@ package pkGesproject.Preferencias;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -30,12 +32,25 @@ public class PnlCuentaUsuario extends JPanel{
 	JPanel contraseña;
 	ResultSet rs;
 	String[][] listaidiomas;
+	ActionListener accion;
 	
 	public PnlCuentaUsuario(){
 		//llamamos al método para crear la interfaz
 		crear_interfaz();
 		
+		accion = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				conexion.executeUpdate("UPDATE STAFF SET idioma = '"+listaidiomas[gbidioma.getSelectedIndex()][0]+"' WHERE id_staff = "+recursos.getIdusuario());
+				System.out.println(listaidiomas[gbidioma.getSelectedIndex()][0]);
+			}
+			
+		};
 		
+		jbtnaplicar.addActionListener(accion);
+		//jbtnaplicar.setActionCommand();
 	}
 	
 	
@@ -59,13 +74,30 @@ public class PnlCuentaUsuario extends JPanel{
 		rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM LISTA_IDIOMAS");
 		try {
 			rs.next();
-			listaidiomas = new String[3][rs.getInt(1)];
+			listaidiomas = new String[rs.getInt(1)+1][2];
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		rs = conexion.ConsultaSQL("SELECT id_idioma,titulo FROM LISTA_IDIOMAS");
+		int i = 0;
+		try {
+			while(rs.next()){
+				for(int j = 1;j<3;j++){
+					listaidiomas[i][j-1]=rs.getString(j);
+					
+				}
+				gbidioma.addItem(listaidiomas[i][1]);
+				i++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		gbc.gridy = 1; // El área de texto empieza en la fila
+		this.add(jbtnaplicar = new JButton("Añadir"),gbc);
 		
 		gbc.gridx = 0; // El área de texto empieza en la columna
 		gbc.gridy = 0; // El área de texto empieza en la fila
