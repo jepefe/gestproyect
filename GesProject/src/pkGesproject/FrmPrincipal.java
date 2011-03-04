@@ -505,7 +505,7 @@ public class FrmPrincipal extends JFrame {
 	         if (e.getActionCommand().equals("workpack")){
 	        	 jbtnWorkpack.setSelected(true);
 	        	 jpnlppal.add(spnworkpack, BorderLayout.CENTER);
-	        	//repaint();
+	        	repaint();
 	        	validate();
 	        	 
 	         	}
@@ -513,7 +513,7 @@ public class FrmPrincipal extends JFrame {
 	         if (e.getActionCommand().equals("tareas")){
 	        	 jbtnTareas.setSelected(true);
 	        	 jpnlppal.add(spntareas, BorderLayout.CENTER);
-	        	//repaint();
+	        	repaint();
 	        	validate();
 	        	 
 	         	}
@@ -521,7 +521,7 @@ public class FrmPrincipal extends JFrame {
 	         if (e.getActionCommand().equals("tablas")){
 	        	 jbtnTablas.setSelected(true);
 	        	 jpnlppal.add(spntablas, BorderLayout.CENTER);
-	        	//repaint();
+	        	repaint();
 	        	validate();
 	        	 
 	         	}
@@ -529,35 +529,35 @@ public class FrmPrincipal extends JFrame {
 	         if (e.getActionCommand().equals("agregar")){
 	        	 jbtnAgregar.setSelected(true);
 	        	 add(nueva, BorderLayout.CENTER);
-	        	//repaint();
+	        	repaint();
 	        	validate();
 	         }
 	         
 	         if (e.getActionCommand().equals("timesheet")){
 	        	 jbtnTimesheet.setSelected(true);
 	        	 jpnlppal.add(spntimesheet, BorderLayout.CENTER);
-	        	//repaint();
+	        	repaint();
 	        	validate();
 	         }
 	         
 	         if (e.getActionCommand().equals("informes")){
 	        	 jbtnInformes.setSelected(true);
 	        	 jpnlppal.add(spninformes, BorderLayout.CENTER);
-	        	//repaint();
+	        	repaint();
 	        	validate();
 	         }
 	         
 	         if (e.getActionCommand().equals("preferencias")){
 	        	 jbtnPreferencias.setSelected(true);
 	        	 jpnlppal.add(spnpreferencias, BorderLayout.CENTER);
-	        	//repaint();
+	        	repaint();
 	        	validate();
 	         }
 	         
 	         if (e.getActionCommand().equals("becas")){
 	        	 jbtnBecas.setSelected(true);
 	        	 jpnlppal.add(spnbecas, BorderLayout.CENTER);
-	        	//repaint();
+	        	repaint();
 	        	validate();
 	         }
 	         animacion((AbstractButton)e.getSource(),((AbstractButton) e.getSource()).getText());
