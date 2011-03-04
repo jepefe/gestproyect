@@ -34,6 +34,7 @@ import pkGesproject.Socios.PnlAltasocio;
 import pkGesproject.Socios.PnlModificarsocio;
 
 public class PnlModificar_Proyecto extends JPanel {
+	
 	public static int id_pro  ;
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
@@ -42,7 +43,7 @@ public class PnlModificar_Proyecto extends JPanel {
 	JPanel panel = new JPanel();
 	int cuenta = 0;
 	int columnas;
-	JButton btnActualizar = new JButton("A");
+	JButton btnActualizar = new JButton();
 	String datos[][];
 	String auxdatos[][];
 	String colu[] = {rec.idioma[rec.eleidioma][11],rec.idioma[rec.eleidioma][13],rec.idioma[rec.eleidioma][41],rec.idioma[rec.eleidioma][173],rec.idioma[rec.eleidioma][26]};
@@ -134,7 +135,9 @@ public class PnlModificar_Proyecto extends JPanel {
 				if(e.getActionCommand().equals("modificar")){
 					//llamamos al metodo modificar
 					modificar();
-				}
+				}if(e.getActionCommand().equals("actualizar")){
+					actualizar_tabla();
+					}
 				
 				if(e.getActionCommand().equals("eliminar")){
 					//llamamos al metodo eliminar
@@ -179,11 +182,16 @@ public class PnlModificar_Proyecto extends JPanel {
 			}
         	
         };
+       
+        btnActualizar.setIcon( recursos.icono[36]);
+        btnActualizar.setOpaque(false);
         //agregamos las acciones necesarias
         jbtnmodificar.setActionCommand("modificar");
         jbtnmodificar.addActionListener(event);
         jbtneliminar.setActionCommand("eliminar");
         jbtneliminar.addActionListener(event);
+        btnActualizar.setActionCommand("actualizar");
+        btnActualizar.addActionListener(event);
         jtxt.addKeyListener(accion);
         jtxt.addFocusListener(foco);
         jtblLateral.addMouseListener(mouse);
@@ -207,12 +215,14 @@ public class PnlModificar_Proyecto extends JPanel {
 		
 		GridBagConstraints constraints = new GridBagConstraints();
 		
-		constraints.gridx = 0; // El área de texto empieza en la columna
-        constraints.gridy = 0; // El área de texto empieza en la fila
-        constraints.gridwidth = 1; // El área de texto ocupa x columnas.
+		constraints.gridx = 1; // El área de texto empieza en la columna
+        constraints.gridy = 1; // El área de texto empieza en la fila
+        constraints.gridwidth = 2; // El área de texto ocupa x columnas.
         constraints.gridheight = 1; // El área de texto ocupa x filas.
-        constraints.insets = new Insets(20,30,0,10);
-        this.add(btnActualizar);
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(20,150,0,10);
+        this.add(btnActualizar,constraints);
+        constraints.anchor = GridBagConstraints.CENTER;
         constraints.gridx = 1; // El área de texto empieza en la columna
         constraints.gridy = 1; // El área de texto empieza en la fila
         constraints.gridwidth = 2; // El área de texto ocupa x columnas.
