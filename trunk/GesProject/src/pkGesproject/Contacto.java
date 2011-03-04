@@ -82,6 +82,8 @@ public class Contacto extends JPanel implements MessageListener{
 		constraints.insets = new Insets(0, 2, 0, 0);
 		jpContacto.setLayout(new GridBagLayout());
 		jpContacto.setPreferredSize(new Dimension(250,50));
+		//this.setPreferredSize(new Dimension(250,300));
+		//this.setMinimumSize(new Dimension(250,90));
 		
 		constraints.anchor=GridBagConstraints.LINE_START;
 		constraints.fill = GridBagConstraints.WEST;
@@ -170,13 +172,13 @@ public class Contacto extends JPanel implements MessageListener{
 		jlbchatcon.setForeground(Color.white);
 		jlbchatcon.setHorizontalTextPosition(SwingConstants.CENTER);
 		jlbchatcon.setText(nombre);
-		jlbchatcon.setPreferredSize(new Dimension(250,30));
+		//jlbchatcon.setPreferredSize(new Dimension(250,30));
 		jlbchatcon.setFont(recursos.fuente);
 		jlbchatcon.setOpaque(true);
 
 		jsconv = new JScrollPane(jtxachat);
 		jsmsg = new JScrollPane(jtxamsg);
-		jsmsg.setPreferredSize(new Dimension(250,100));
+		//jsmsg.setPreferredSize(new Dimension(250,100));
 		jtxamsg.addFocusListener(new FocusListener() {
 			
 			@Override
@@ -191,7 +193,7 @@ public class Contacto extends JPanel implements MessageListener{
 				
 			}
 		});
-		jsconv.setPreferredSize(new Dimension(250,300));
+		//jsconv.setPreferredSize(new Dimension(250,300));
 		chat.setLayout(new BorderLayout());
 		chat.add(jlbchatcon,BorderLayout.NORTH);
 		chat.add(jsconv,BorderLayout.CENTER);
