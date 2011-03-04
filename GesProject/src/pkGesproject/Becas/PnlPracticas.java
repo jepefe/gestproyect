@@ -1,3 +1,8 @@
+/** Esta clase se encarga de realizar el alta todos los tipos
+ * de becas. 
+ * 
+ * @author Félix Perona G
+ */
 package pkGesproject.Becas;
 
 import java.awt.Checkbox;
@@ -35,6 +40,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import pkGesproject.ConexionDb;
+import pkGesproject.ConexionFTP;
 import pkGesproject.GesIdioma;
 import pkGesproject.GpComboBox;
 import pkGesproject.JTextFieldLimit;
@@ -66,7 +72,7 @@ public class PnlPracticas extends JScrollPane{
 	JPanel jpnl = new JPanel();
 	String Npartners[] ;	// array con partners
 	int cuenta =0; // cuenta para array dinamica.
-	
+	ConexionFTP coneftp = new ConexionFTP();
 	JCheckBox[] Relleno;
 	JCheckBox Relleno2 = new JCheckBox();
 	JCheckBox Relleno3 = new JCheckBox();
@@ -74,16 +80,24 @@ public class PnlPracticas extends JScrollPane{
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
 	
+	JPanel jpnopae = new JPanel();
+	JPanel jpn = new JPanel();
+	
 	public PnlPracticas (){
 	
 		this.setBorder(empty);
 		panel.setLayout(new GridBagLayout());
 		  
 		String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][13], rec.idioma[rec.eleidioma][55], rec.idioma[rec.eleidioma][82],
-		   rec.idioma[rec.eleidioma][25],rec.idioma[rec.eleidioma][26],rec.idioma[rec.eleidioma][41], rec.idioma[rec.eleidioma][64]
+		   rec.idioma[rec.eleidioma][159],rec.idioma[rec.eleidioma][160], rec.idioma[rec.eleidioma][161], rec.idioma[rec.eleidioma][162],
+		   rec.idioma[rec.eleidioma][162],rec.idioma[rec.eleidioma][163],rec.idioma[rec.eleidioma][164], rec.idioma[rec.eleidioma][165], 
+		   rec.idioma[rec.eleidioma][166], rec.idioma[rec.eleidioma][167], rec.idioma[rec.eleidioma][168], rec.idioma[rec.eleidioma][169],
+		   rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],
+		   rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],
+		   rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],
+		   rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168]
 		   };
-		int[] fieldWidths = {20,9,15,10,10,6,6,6};
+		int[] fieldWidths = {6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6};
 		
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
@@ -128,8 +142,9 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(Relleno[i] = new JCheckBox());
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][i]),gbc);
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 	   			//gbc.gridwidth = GridBagConstraints.REMAINDER;
 	   			break;
 		   case (1)://presupuesto
@@ -138,8 +153,9 @@ public class PnlPracticas extends JScrollPane{
 		   		panel.add(Relleno[i] = new JCheckBox(""));
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i+20] = new JCheckBox(""));
+		   		Relleno[i+20].setEnabled(false);
 		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		   		panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][i]),gbc);
+		   		panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (2)://combo de proyectos
@@ -148,8 +164,9 @@ public class PnlPracticas extends JScrollPane{
 		   		panel.add(Relleno[i] = new JCheckBox(""));
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][i]),gbc);
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   	break;
 		   case (3):
@@ -158,8 +175,9 @@ public class PnlPracticas extends JScrollPane{
 		   		panel.add(Relleno[i] = new JCheckBox(""));
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][i]),gbc);
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 	   			//gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   	break;
 		   case (4)://fecha de inicio
@@ -168,8 +186,9 @@ public class PnlPracticas extends JScrollPane{
 		   		panel.add(Relleno[i] = new JCheckBox(""));
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i+20] = new JCheckBox(""));
+		   		Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][i]),gbc);
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (5)://fecha de fin
@@ -178,8 +197,9 @@ public class PnlPracticas extends JScrollPane{
 		   		panel.add(Relleno[i] = new JCheckBox(""));
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][i]),gbc);
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (6)://descripcion
@@ -188,8 +208,9 @@ public class PnlPracticas extends JScrollPane{
 		   		panel.add(Relleno[i] = new JCheckBox(""));
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][i]),gbc);
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   	break;
 		   case (7)://observaciones
@@ -198,8 +219,207 @@ public class PnlPracticas extends JScrollPane{
 		   		panel.add(Relleno[i] = new JCheckBox(""));
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][i]),gbc);
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (8)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (9)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (10)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (11)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (12)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (13)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (14)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (15)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (16)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (17)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (18)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (19)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (20)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (21)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (22)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (23)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (24)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		break;
+		   case (25)://observaciones
+			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		panel.add(Relleno[i] = new JCheckBox(""));
+	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			Relleno[i+20].setEnabled(false);
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
+	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   		
