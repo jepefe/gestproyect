@@ -35,7 +35,7 @@ public class SpnProyectos extends JSplitPane{
 	JPanel panel = new JPanel();
 	JTable jtblLateral;
 	Border empty = new EmptyBorder(0,0,0,0);
-    PnlModificarProyecto modpro = PnlModificarProyecto.Obtener_Instancia();
+    PnlModificar_Proyecto modpro = PnlModificar_Proyecto.Obtener_Instancia();
 	JScrollPane modificar,informes;
 	Component[] panlsStaff = {
 			new PnlNuevoProyecto(),

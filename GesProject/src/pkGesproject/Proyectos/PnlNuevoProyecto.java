@@ -228,7 +228,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 		gbc.gridwidth = GridBagConstraints.REMAINDER;   
 
 		// JTextArea con Scrolls 
-		LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
+		LimiteDocumento lpd = new LimiteDocumento(180); // Limite JTextArea
 		textarea = (new JTextArea(3,13));
 		textarea.setLineWrap(true);
 		textarea.setDocument(lpd);
