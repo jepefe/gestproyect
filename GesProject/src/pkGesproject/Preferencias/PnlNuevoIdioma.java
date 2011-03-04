@@ -2,9 +2,12 @@ package pkGesproject.Preferencias;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -18,6 +21,7 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import pkGesproject.ConexionDb;
+import pkGesproject.ConexionDbUnica;
 import pkGesproject.GesIdioma;
 import pkGesproject.RsGesproject;
 
@@ -30,20 +34,42 @@ public class PnlNuevoIdioma extends JPanel{
 	ResultSet rs;
 	JLabel jlbl[],lblidioma;
 	JTextField jtxt[],txtidioma;
-	JPanel pnlmensaje,pnllista, pnlcabecera;
-	JButton jbtnadd;
+	JPanel pnlmensaje,pnllista, pnlcabecera,pnlbotones;
+	JButton jbtnadd,jbtnlimpiar;
 	JScrollPane lista, cabecera;
 	GridBagConstraints gbc = new GridBagConstraints();
 	Border blackline;
 	boolean vacio = false;
+	ActionListener accion;
 	
 	public PnlNuevoIdioma(){
 		crear_interfaz();
 		
+		accion = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getActionCommand().equals("anadir")){
+					introducir_idioma();
+				}
+				
+				if(e.getActionCommand().equals("limpiar")){
+					
+				}
+			}
+			
+		};
+	
+		
+		jbtnadd.addActionListener(accion);
+		jbtnadd.setActionCommand("anadir");
+		jbtnlimpiar.addActionListener(accion);
+		jbtnlimpiar.setActionCommand("limpiar");
 	}
 	
 	public void crear_interfaz(){
-		//this.setLayout(new GridBagLayout());
+		this.setLayout(new BorderLayout());
 		
 		blackline = BorderFactory.createLineBorder(Color.black);
 		
@@ -54,14 +80,11 @@ public class PnlNuevoIdioma extends JPanel{
 		title = BorderFactory.createTitledBorder("Idioma");
 		pnlcabecera.setBorder(title);
 		pnlcabecera.setLayout(new GridBagLayout());
-		//pnlcabecera.setSize(300, 300);
 		pnllista.setLayout(new GridBagLayout());
 		lista = new JScrollPane(pnllista);
 		lista.setBorder(blackline);
 		title = BorderFactory.createTitledBorder("Idioma");
 		lista.setBorder(title);
-		//lista.setSize(600, 600);
-		//pnllista.setSize(600, 600);
 		
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		gbc.insets = new Insets(0,10,3,0);
@@ -109,11 +132,19 @@ public class PnlNuevoIdioma extends JPanel{
 			
 		}
 		
+		pnlbotones = new JPanel();
+		pnlbotones.setLayout(new FlowLayout());
+		pnlbotones.add(jbtnadd = new JButton("Añadir"));
+		pnlbotones.add(jbtnlimpiar = new JButton(rec.idioma[rec.eleidioma][74]));
+		
+		
+		
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.insets = new Insets(0,10,3,0);
 		gbc.anchor = GridBagConstraints.CENTER;
-		this.add(pnlcabecera);
-		this.add(lista);
+		this.add(pnlcabecera,BorderLayout.NORTH);
+		this.add(lista,BorderLayout.CENTER);
+		this.add(pnlbotones,BorderLayout.SOUTH);
 		
 		this.setVisible(true);
 	}
@@ -123,20 +154,21 @@ public class PnlNuevoIdioma extends JPanel{
 		//comprobar campos vacios
 		for(int i =0; i< reg;i++){
 			if(jtxt[i].getText().equals("")){
+				System.out.println("VACIO: "+i);
 				vacio = true;
 			}
 		}
 		
-		if(vacio == true){
-			System.out.print("Los campos deben estar llenos");
-		}else{
-			conexion.executeUpdate("ALTER TABLE IDIOMA ADD "+txtidioma+" VARCHAR(200)");
+		//if(vacio == true){
+			//System.out.print("Los campos deben estar llenos");
+		//}else{
+			conexion.executeUpdate("ALTER TABLE IDIOMA ADD "+txtidioma.getText()+" VARCHAR(200)");
 			
 			for(int i = 1; i<=reg;i++){
-				conexion.executeUpdate("UPDATE IDIOMA SET "+txtidioma+" = '"+jtxt[i-1]+"' WHERE id_idi = '"+i+"'");
+				conexion.executeUpdate("UPDATE IDIOMA SET "+txtidioma.getText()+" = '"+jtxt[i-1].getText()+"' WHERE id_idi = '"+i+"'");
 			}
 			
-			conexion.executeUpdate("INSERT INTO LISTA_IDIOMAS (columna,titulo) VALUES ('"+txtidioma+"','"+txtidioma+"')");
-		}
+			conexion.executeUpdate("INSERT INTO LISTA_IDIOMAS (columna,titulo) VALUES ('"+txtidioma.getText()+"','"+txtidioma.getText()+"')");
+		//}
 	}
 }

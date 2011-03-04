@@ -41,7 +41,7 @@ public class SpnStaff extends JSplitPane{
 	Border empty = new EmptyBorder(0,0,0,0);
 	Component[] panlsStaff = {
 	 new pnlAlta_staff(),
-	 miscroll=new JScrollPane(new PnlBusquedastaff()),
+	 miscroll=new JScrollPane(new PnlModificacion_Staff()),
 	 new JPanel()};
 	
 	public SpnStaff(){
