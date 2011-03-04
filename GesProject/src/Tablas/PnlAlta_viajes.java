@@ -1,7 +1,10 @@
 package Tablas;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -16,16 +19,21 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
 
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
 import pkGesproject.GpComboBox;
+import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
 
-public class PnlAlta_viajes extends JPanel{
+public class PnlAlta_viajes extends JScrollPane{
 
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
@@ -42,8 +50,16 @@ public class PnlAlta_viajes extends JPanel{
 	boolean OKalta;
 	char caracter;
 	
+	JPanel contenedor = new JPanel();
+	JPanel mensage = new JPanel();
+	JPanel panel = new JPanel();
+	JTextArea textarea = new JTextArea();
+	JLabel alerta;
+	Border empty = new EmptyBorder(0,0,0,0);
+	
 	public PnlAlta_viajes(){
-		this.setLayout(new GridBagLayout());
+		this.setBorder(empty);
+		panel.setLayout(new GridBagLayout());
 		
 		/**
 		 * Creamos un array de Strings que utilizaremos para los nombres de los Labels
@@ -66,7 +82,31 @@ public class PnlAlta_viajes extends JPanel{
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
+		gbc.gridwidth = GridBagConstraints.REMAINDER;//
+		gbc.anchor = GridBagConstraints.CENTER;//
+		gbc.insets = new Insets(20,0,15,0);//
+		
+		gbc.anchor = GridBagConstraints.WEST;//
 		gbc.insets = new Insets(5,10,5,5);
+		
+		//cuadro con scroll para las observaciones//
+
+    	LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
+    	textarea = (new JTextArea(3,18));
+    	textarea.setDocument(lpd);
+    	textarea.setLineWrap(true);
+    	JScrollPane sp = new JScrollPane(textarea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+    	JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    	
+    	
+    	//Pongo el panel de las alertas//
+    	alerta=new JLabel();
+		alerta.setFont(new Font(Font.SANS_SERIF,Font.BOLD,11));
+    	mensage.add(alerta);
+		mensage.setBackground(Color.decode("#D0E495"));
+		mensage.setVisible(false);
+		
+		
 		
 		 // Campos Calendario y formato
 	      jdc1 = new JDateChooser();
@@ -83,11 +123,11 @@ public class PnlAlta_viajes extends JPanel{
 			if(i==0){
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlblpartner=new JLabel(rec.idioma[rec.eleidioma][57]),gbc);//Partner
+				panel.add(jlblpartner=new JLabel(rec.idioma[rec.eleidioma][57]),gbc);//Partner
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				rs=conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER p");
-				this.add(cbpartner = new GpComboBox(),gbc);
+				panel.add(cbpartner = new GpComboBox(),gbc);
 				try {
 					while(rs.next()){
 						cbpartner.addItem(rs.getString(1));
@@ -102,11 +142,11 @@ public class PnlAlta_viajes extends JPanel{
 				//proyecto cmbbox
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlblproyecto=new JLabel(rec.idioma[rec.eleidioma][55]),gbc);//Proyecto
+				panel.add(jlblproyecto=new JLabel(rec.idioma[rec.eleidioma][55]),gbc);//Proyecto
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				rs2=conexion.ConsultaSQL("SELECT nombre FROM PROYECTOS");
-				this.add(cbproyecto = new GpComboBox(),gbc);
+				panel.add(cbproyecto = new GpComboBox(),gbc);
 				try {
 					while(rs2.next()){
 						cbproyecto.addItem(rs2.getString(1));
@@ -123,11 +163,11 @@ public class PnlAlta_viajes extends JPanel{
 			if(i==2){
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlblsalida=new JLabel(rec.idioma[rec.eleidioma][91]),gbc);//Ciudad y Pais de salida
+				panel.add(jlblsalida=new JLabel(rec.idioma[rec.eleidioma][91]),gbc);//Ciudad y Pais de salida
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				rs=conexion.ConsultaSQL("SELECT p.pais FROM PAIS p");
-				this.add(cbpsalida = new GpComboBox(),gbc);
+				panel.add(cbpsalida = new GpComboBox(),gbc);
 				try {
 					while(rs.next()){
 						cbpsalida.addItem(rs.getString(1));
@@ -143,20 +183,20 @@ public class PnlAlta_viajes extends JPanel{
 				
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlblsalida=new JLabel(),gbc);
+				panel.add(jlblsalida=new JLabel(),gbc);
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				rs=conexion.ConsultaSQL("SELECT p.pais FROM PAIS p");
-				this.add(cbcsalida = new GpComboBox(),gbc);
+				panel.add(cbcsalida = new GpComboBox(),gbc);
 				
 				
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlbldestino=new JLabel(rec.idioma[rec.eleidioma][92]),gbc);//Ciudad y Pais de destino
+				panel.add(jlbldestino=new JLabel(rec.idioma[rec.eleidioma][92]),gbc);//Ciudad y Pais de destino
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				rs=conexion.ConsultaSQL("SELECT p.pais FROM PAIS p");
-				this.add(cbpdestino = new GpComboBox(),gbc);
+				panel.add(cbpdestino = new GpComboBox(),gbc);
 				try {
 					while(rs.next()){
 						cbpdestino.addItem(rs.getString(1));
@@ -170,25 +210,25 @@ public class PnlAlta_viajes extends JPanel{
 				
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlbldestino=new JLabel(),gbc);
+				panel.add(jlbldestino=new JLabel(),gbc);
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
 				rs=conexion.ConsultaSQL("SELECT p.pais FROM PAIS p");
-				this.add(cbcdestino = new GpComboBox(),gbc);
+				panel.add(cbcdestino = new GpComboBox(),gbc);
 				
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlblf_ini=new JLabel(rec.idioma[rec.eleidioma][25]+"*"),gbc);//Fecha inicio
+				panel.add(jlblf_ini=new JLabel(rec.idioma[rec.eleidioma][25]+"*"),gbc);//Fecha inicio
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
-				this.add(jdc1,gbc);
+				panel.add(jdc1,gbc);
 				
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.EAST;
-				this.add(jlblf_ini=new JLabel(rec.idioma[rec.eleidioma][26]+"*"),gbc);//Fecha fin
+				panel.add(jlblf_ini=new JLabel(rec.idioma[rec.eleidioma][26]+"*"),gbc);//Fecha fin
 				gbc.anchor = GridBagConstraints.WEST;
 				gbc.gridwidth = GridBagConstraints.REMAINDER;
-				this.add(jdc2,gbc);
+				panel.add(jdc2,gbc);
 				
 				cbcsalida.setPreferredSize(new Dimension(233,30));
 				cbpsalida.setPreferredSize(new Dimension(233,30));
@@ -198,19 +238,19 @@ public class PnlAlta_viajes extends JPanel{
 			
 			gbc.gridwidth = GridBagConstraints.RELATIVE;
 			gbc.anchor = GridBagConstraints.EAST;
-			this.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 			gbc.anchor = GridBagConstraints.WEST;
 			gbc.gridwidth = GridBagConstraints.REMAINDER;
-			this.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
+			panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
 		}
 		
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.insets = new Insets(30,10,5,5);
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		this.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);//Aceptar
+		panel.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);//Aceptar
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		this.add(jbtnlimpiar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);//Limpiar campos
+		panel.add(jbtnlimpiar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);//Limpiar campos
 	
 		ActionListener accion = new ActionListener(){
 
@@ -320,6 +360,8 @@ public class PnlAlta_viajes extends JPanel{
 					cbpartner.setSelectedItem(null);
 					cbpdestino.setSelectedItem(null);
 					cbpsalida.setSelectedItem(null);
+				//quitamos cualquier mensage mostrado en el panel superior
+					mensage.setVisible(false);
 				}
 				//realizamos el alta
 				if(e.getActionCommand().equals("aceptar")){
@@ -408,8 +450,12 @@ public class PnlAlta_viajes extends JPanel{
 						//realizamos el alta
 						conexion.executeUpdate("INSERT INTO TRAVEL_SUBSISTENCE (partner,nombrepersona,motivoviaje,paissalida,ciudad_salida,paisdestino,ciudad_destino,fecha_ini,fecha_fin,coste_viaje,coste_subsistencia,id_pro) VALUES ('"
 							+partner+"','"+jtxt[0].getText()+"','"+jtxt[1].getText()+"','"+paissalida+"','"+prosalida+"','"+paisdestino+"','"+prodestino+"','"+sqlDate1+"','"+sqlDate2+"','"+viaje+"','"+otros+"','"+proyecto+"')");
-							//JOptionPane.showMessageDialog(aviso,"Subido");
-				
+							
+						//mensage de confirmacion del alta realizada
+						
+							alerta.setText(rec.idioma[rec.eleidioma][60]);
+							mensage.setBackground(Color.decode("#D0E495"));
+							mensage.setVisible(true);
 						
 					}
 				}
@@ -426,6 +472,13 @@ public class PnlAlta_viajes extends JPanel{
 		cbpdestino.setActionCommand("cbdestino");
 		jbtnaceptar.setActionCommand("aceptar");
 		jbtnlimpiar.setActionCommand("limpiar");
+		
+		contenedor.setLayout(new BorderLayout());
+		contenedor.setOpaque(true);
+		contenedor.add(mensage,BorderLayout.NORTH);
+		contenedor.add(panel,BorderLayout.CENTER);
+		this.setViewportView(contenedor);
+		
 		this.setVisible(true);
 		//filtro para solo admitir numeros en los costes
 		jtxt[2].addKeyListener(new KeyAdapter(){
@@ -457,13 +510,19 @@ public class PnlAlta_viajes extends JPanel{
 		for(int Y=0;Y<4;++Y) {
 			if (jtxt[Y].getText().length() > 0){
 			}else{
-				OKalta = false;				
+				OKalta = false;
+				//informamos del mal alta
+				mensage.setBackground(Color.decode("#ec8989"));
+				mensage.setVisible(true);
 			}
 		}
 		if((cbpartner.getSelectedItem() != null) && (cbproyecto.getSelectedItem() != null) && (cbpsalida.getSelectedItem() != null)&& (cbcsalida.getSelectedItem() != null)&& (cbpdestino.getSelectedItem() != null)&& (cbcdestino.getSelectedItem() != null)){	
 			
 		}else{
 			OKalta = false;
+			alerta.setText(rec.idioma[rec.eleidioma][79]);
+			mensage.setBackground(Color.decode("#ec8989"));
+			mensage.setVisible(true);
 		}	
 	}
 	
