@@ -147,7 +147,6 @@ public class PnlMod_Sub extends JPanel{
         	
         };
        
-            
         event = new ActionListener(){
 
 			@Override
@@ -165,14 +164,10 @@ public class PnlMod_Sub extends JPanel{
 				if(e.getActionCommand().equals("actualizar")){
 					//llamamos al metodo eliminar
 					actualizar();
-					
-					//conexion.executeUpdate("UPDATE SUBCONTRATA SET nombre = '"+mod.jtxt[0].getText()+"', sector = '"+idsector+"', pais = '"+idpais+"', provincia = '"+idprovincia+"', direccion = '"+jtxt[1].getText()+"',	cod_postal = '"+jtxt[2].getText()+"', telf = '"+jtxt[3].getText()+"', observaciones = '"+textarea.getText()+"' WHERE SUBCONTRATA.cod_sub =1 ");
-					
 				}
 				if(e.getActionCommand().equals("cerrar")){
 					modificar.dispose();
 				}
-				
 			}
         	
         };
@@ -215,10 +210,7 @@ public class PnlMod_Sub extends JPanel{
         jbtnmodificar.addActionListener(event);
         jbtneliminar.setActionCommand("eliminar");
         jbtneliminar.addActionListener(event);
-        /*mod.jbtnaceptar.setActionCommand("actualizar");
-        mod.jbtnaceptar.addActionListener(event);
-        mod.jbtncancelar.setActionCommand("cerrar");
-        mod.jbtncancelar.addActionListener(event);*/
+        
         jtxt.addKeyListener(accion);
         jtxt.addFocusListener(foco);
         jtblLateral.addMouseListener(mouse);
@@ -436,7 +428,10 @@ public class PnlMod_Sub extends JPanel{
 		mod.jbtnaceptar.removeActionListener(mod.accion);
 		mod.jbtncancelar.removeActionListener(mod.accion);
 		mod.jbtncancelar.setText(rec.idioma[rec.eleidioma][99]);
-		
+		mod.jbtnaceptar.addActionListener(event);
+        mod.jbtnaceptar.setActionCommand("actualizar");
+        mod.jbtncancelar.addActionListener(event);
+        mod.jbtncancelar.setActionCommand("cerrar");
 		conexion.Conectardb();
     	rs = conexion.ConsultaSQL("SELECT nombre,direccion,cod_postal,telf,observaciones FROM SUBCONTRATA WHERE cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
     	int i=1;
@@ -499,7 +494,6 @@ public class PnlMod_Sub extends JPanel{
     	String sector = null;
     	String pais = null;
     	String provincia = null;
-    	
     	conexion.Conectardb();
     	rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+mod.CmbSector.getSelectedItem().toString()+"'");
 		try {
@@ -525,7 +519,7 @@ public class PnlMod_Sub extends JPanel{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		conexion.executeUpdate("UPDATE SUBCONTRATA SET nombre = '"+mod.jtxt[0].getText()+"', sector = '"+sector+"', pais = '"+pais+"', provincia = '"+provincia+"', direccion = '"+mod.jtxt[1].getText()+"', cod_postal = '"+mod.jtxt[2].getText()+"', telf = '"+mod.jtxt[3].getText()+"', observaciones = '"+mod.textarea.getText()+"' WHERE SUBCONTRATA.cod_sub =1 ");
+		conexion.executeUpdate("UPDATE SUBCONTRATA SET nombre = '"+mod.jtxt[0].getText()+"', sector = '"+sector+"', pais = '"+pais+"', provincia = '"+provincia+"', direccion = '"+mod.jtxt[1].getText()+"', cod_postal = '"+mod.jtxt[2].getText()+"', telf = '"+mod.jtxt[3].getText()+"', observaciones = '"+mod.textarea.getText()+"' WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"' ");
 
     }
     /**
