@@ -1,4 +1,5 @@
-/** Esta clase se encarga de realizar el alta de nuevas tareas 
+/** Esta clase se encarga de realizar el alta de nuevas tareas dentro 
+ * de los TimeSheet 
  * 
  * @author Félix Perona G
  */
@@ -912,13 +913,14 @@ public class PnlAlta_TimeSheet extends JPanel{
 		       */
 		      ActionListener partner = new ActionListener(){
 
+				@SuppressWarnings("null")
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					int codpart = 0;
 					CmbStaff.removeAllItems();
 					conexion.Conectardb();
-					rs = conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre='"+CmbPart.getSelectedItem()+"'");
+					rs = conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre LIKE '"+CmbPart.getSelectedItem()+"'");
 					try {
 						rs.next();
 						codpart = rs.getInt(1);
@@ -928,13 +930,31 @@ public class PnlAlta_TimeSheet extends JPanel{
 						e2.printStackTrace();
 					}
 					
-					rs = conexion.ConsultaSQL("SELECT nombre FROM  STAFF WHERE cod_part = '"+codpart+"' ");
+					rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM  STAFF WHERE cod_part = "+codpart+" ");
+					int cant = 0;
+					
+					try {
+						rs.next();
+						cant = rs.getInt(1);
+					} catch (SQLException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+					String vector[] = new String[cant];
+					rs = conexion.ConsultaSQL("SELECT nombre FROM  STAFF WHERE cod_part = "+codpart+" ");
+					
+					int p = 0;
 		   			try {
 						while(rs.next()){
-							CmbStaff.addItem(rs.getString(1));
-							System.out.println(rs.getString(1));
-							
-
+							vector[p] = rs.getString(1);
+							//System.out.println(rs.getString(1));
+							//String manolo = rs.getString(1);
+							//CmbStaff.addItem(rs.getString(1));
+							//System.out.println(rs.getString(1));
+							p++;
+						}
+						for (int i=0; i< vector.length; i++){
+							CmbStaff.addItem(vector[i]);
 						}
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
