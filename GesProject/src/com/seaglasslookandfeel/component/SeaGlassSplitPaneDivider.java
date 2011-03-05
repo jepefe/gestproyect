@@ -57,7 +57,7 @@ public class SeaGlassSplitPaneDivider extends BasicSplitPaneDivider {
      * Width or height of the divider based on orientation BasicSplitPaneUI adds
      * two to this.
      */
-    protected static final int ONE_TOUCH_SIZE = 6;
+    protected static final int ONE_TOUCH_SIZE = 8;
 
     /** The offset for the one-touch buttons. */
     protected static final int ONE_TOUCH_OFFSET = 2;

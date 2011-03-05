@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -108,11 +109,11 @@ public class LstPartner extends JPanel{
 				ConexionFTP cftp = new ConexionFTP();
 				jlbllogo.setPreferredSize(new Dimension(110,50));
 				
-				jlbllogo.setIcon(new ImageIcon(cftp.ObtenerImagen("logo"+codigo).getScaledInstance(110, 50, 0)));
+				jlbllogo.setIcon(new ImageIcon(cftp.ObtenerImagen("logo"+codigo).getScaledInstance(110, 50, Image.SCALE_SMOOTH)));
 				
 				System.out.println("LOGO OBTENIDO");
 				
-				jlbllogo.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
+				jlbllogo.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
 				
 			
 				recursos.getRfrmppal().repaint();

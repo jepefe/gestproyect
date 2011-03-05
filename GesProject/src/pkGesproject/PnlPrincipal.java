@@ -9,9 +9,11 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.ImageObserver;
 import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -131,13 +133,24 @@ public class PnlPrincipal extends JPanel {
 			@Override
 			public void run()  {
 				ConexionFTP cftp = new ConexionFTP();
-				jlbFoto.setPreferredSize(new Dimension(130,130));
 				
-				jlbFoto.setIcon(new ImageIcon(cftp.ObtenerImagen("fto"+Integer.toString(recursos.getIdusuario())).getScaledInstance(130, 130, 0)));
+				Image imgfoto = cftp.ObtenerImagen("fto"+Integer.toString(recursos.getIdusuario()));
+				float ancho =130;
+				float alto = 130;
+				if((imgfoto.getHeight(null)<ancho)){
+				
+				alto = imgfoto.getHeight(null)*(ancho/(imgfoto.getWidth(null)));
+				}else{
+				 alto = imgfoto.getHeight(null)/(imgfoto.getWidth(null)/ancho);
+				}
+				jlbFoto.setPreferredSize(new Dimension((int)ancho,(int)alto));
+				jlbFoto.setAlignmentX(TOP_ALIGNMENT);
+				jlbFoto.setIcon(new ImageIcon(imgfoto.getScaledInstance((int)ancho, (int)alto, Image.SCALE_SMOOTH)));
 				
 				System.out.println("FOTO OBTENIDA");
 				
-				jlbFoto.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
+				jlbFoto.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+				
 				
 			
 				
@@ -150,13 +163,22 @@ public class PnlPrincipal extends JPanel {
 			@Override
 			public void run()  {
 				ConexionFTP cftp = new ConexionFTP();
-				jlbLogo.setPreferredSize(new Dimension(190,50));
+				Image imglogo = cftp.ObtenerImagen("logo"+Integer.toString(recursos.getCodparter()));
+				float ancho =130;
+				float alto = 130;
+				if((imglogo.getHeight(null)<ancho)){
 				
-				jlbLogo.setIcon(new ImageIcon(cftp.ObtenerImagen("logo"+Integer.toString(recursos.getCodparter())).getScaledInstance(190, 50, 0)));
+				 alto = imglogo.getHeight(null)*(ancho/(imglogo.getWidth(null)));
+				}else{
+					 alto = imglogo.getHeight(null)/(imglogo.getWidth(null)/ancho);
+				}
+				jlbLogo.setPreferredSize(new Dimension((int)ancho,(int)alto));
+				
+				jlbLogo.setIcon(new ImageIcon(imglogo.getScaledInstance((int)ancho, (int)alto,Image.SCALE_SMOOTH )));
 				
 				System.out.println("LOGO OBTENIDO");
 				
-				jlbLogo.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
+				jlbLogo.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 				
 			
 				
@@ -172,7 +194,7 @@ public class PnlPrincipal extends JPanel {
 				jlbciudad.setText(" "+rec.idioma[rec.eleidioma][48]+": " +  rs.getString(3));
 				jlbregion.setText(" "+rec.idioma[rec.eleidioma][47]+": " +  rs.getString(4));
 				jlbtelefono.setText(" "+rec.idioma[rec.eleidioma][69]+": " +  rs.getString(5));
-				jlbemail.setText(" "+rec.idioma[rec.eleidioma][9]+": " +  rs.getString(6));
+				jlbemail.setText("<html> "+rec.idioma[rec.eleidioma][9]+":<br>  " +  rs.getString(6)+"  </html>");
 			}
 		} catch (SQLException e) {
 		

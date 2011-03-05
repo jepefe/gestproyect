@@ -264,17 +264,25 @@ public class FrmPrincipal extends JFrame {
 	 * Este metodo se encarga de inicializar todas las propiedades de la ventana principal que sean necesarias
 	 */
 	public void inicializar(){		
+		
 			jpnlppal.setLayout(new BorderLayout());
 			jscpprincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jpnlppal,pnlcontactos);
+			jscpprincipal.setDividerLocation(0.8);
 			
 			jscpprincipal.setOneTouchExpandable(true);
 			jscpprincipal.setLeftComponent(ppal);
+			getContentPane().add(jscpprincipal,BorderLayout.CENTER);
+		
 			
-			add(jscpprincipal,BorderLayout.CENTER);
+			
+			
 			//jscpprincipal.setLeftComponent(new JSplitPane(PnlContactos(),BorderLayout.EAST);
-			this.setVisible(true);
+			
+		
 			this.Carga_toolbar();
-			repaint();
+			jscpprincipal.setDividerLocation(0.8);
+			jscpprincipal.setResizeWeight(0.8);
+			this.setVisible(true);
 	}
 	/*
 	 * Metodo de carga de la barra de herramientas
@@ -469,7 +477,7 @@ public class FrmPrincipal extends JFrame {
 	         public void actionPerformed(ActionEvent e) {
 	        	 
 	        	 int i;
-	        	
+	        	 int tam_split = jscpprincipal.getDividerLocation();
 	        	if(((AbstractButton) e.getSource()).getActionCommand() == seleccionado){
 	        		System.out.println("ya estaba pulsado");
 	        		animacionvolver((Component) e.getSource());
@@ -575,7 +583,10 @@ public class FrmPrincipal extends JFrame {
 	        	validate();
 	         }
 	         animacion((AbstractButton)e.getSource(),((AbstractButton) e.getSource()).getText());
-	         } }
+	         jscpprincipal.setDividerLocation(tam_split);
+	         } 
+	        	
+	        	}
 		};
 		jtlbFrmppal.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
 		jbtnUsuarios.addActionListener(jtlbAcListener);
