@@ -89,7 +89,7 @@ public class MsgInt implements RosterListener{
 		
 	}
 	public void crearGrupo(){
-		roster.createGroup("Grupopopo");
+	
 	
 		
 	}

@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -71,7 +72,8 @@ public class Contacto extends JPanel implements MessageListener{
 		jlblcontacto.setForeground(Color.gray);
 		jlbllogo.setIcon(recursos.icono[1]);
 		jpContacto.setOpaque(true);
-		this.setOpaque(true);
+		this.setOpaque(false);
+		jpContacto.setOpaque(false);
 		this.usuario=usuario;
 		CargaDatos();
 		CargarFoto();
@@ -81,7 +83,8 @@ public class Contacto extends JPanel implements MessageListener{
 		jtxachat.setAutoscrolls(true);
 		constraints.insets = new Insets(0, 2, 0, 0);
 		jpContacto.setLayout(new GridBagLayout());
-		jpContacto.setPreferredSize(new Dimension(250,50));
+		this.setAlignmentX(LEFT_ALIGNMENT);
+		//jpContacto.setPreferredSize(new Dimension(250,50));
 		//this.setPreferredSize(new Dimension(250,300));
 		//this.setMinimumSize(new Dimension(250,90));
 		
@@ -91,8 +94,8 @@ public class Contacto extends JPanel implements MessageListener{
 		constraints.gridy = 0;
 		constraints.gridwidth = 2;
 		constraints.gridheight = 2; 
-		constraints.weighty = 1.0; 
-		constraints.weightx = 1.0; 
+		constraints.weighty = 0.0; 
+		constraints.weightx = 0.0; 
 		jpContacto.add(jlbllogo,constraints);
 		//constraints.weighty = 0.0;
 		constraints.anchor=GridBagConstraints.WEST;
@@ -150,8 +153,10 @@ public class Contacto extends JPanel implements MessageListener{
 			public void run()  {
 				ConexionFTP cftp = new ConexionFTP();
 				jlbllogo.setPreferredSize(new Dimension(40,40));
+				jlbllogo.setSize(40,40);
+				jlbllogo.setMinimumSize(new Dimension(40,40));
 				
-				jlbllogo.setIcon(new ImageIcon(cftp.ObtenerImagen("fto"+id_staff).getScaledInstance(40, 40, 0)));
+				jlbllogo.setIcon(new ImageIcon(cftp.ObtenerImagen("fto"+id_staff).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
 				
 				System.out.println("AFOTO OBTENIDO");
 				
@@ -248,6 +253,7 @@ public class Contacto extends JPanel implements MessageListener{
 			leido=true;
 		}
 		if(!leido){
+			
 			jpContacto.setOpaque(true);
 			jpContacto.setBackground(Color.orange);
 			recursos.getRfrmppal().repaint();

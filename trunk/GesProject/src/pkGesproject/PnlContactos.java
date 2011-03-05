@@ -42,18 +42,20 @@ public class PnlContactos extends JSplitPane{
 		jpnlcont.setLayout(new BorderLayout());
 		this.setOpaque(true);
 		this.setOneTouchExpandable(true);
+		
 		//jpnlcont.setMinimumSize(new Dimension(250,90));
-		this.setSize(200,500);
+		//this.setSize(200,500);
 		this.setBackground(new Color(0xED,0xED,0xED));
 		this.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.gray));
 		CreaListaContactos();
 		//jtblcontactos.setPreferredSize(new Dimension(250,200));
-		
+		//this.setMaximumSize(new Dimension(200,200));
 		//jcbEstado.setPreferredSize(new Dimension(250,30));
 		jpnlcont.add(jcbEstado,BorderLayout.NORTH);
 		jpnlcont.add(jscptabla,BorderLayout.CENTER);
 		this.setTopComponent(jpnlcont);
 		this.setBottomComponent(null);
+		
 		//this.add(jbtnizq,BorderLayout.WEST);
 		recursos.instanciamsg.mostrarContactos(this);
 		
@@ -122,17 +124,27 @@ public class PnlContactos extends JSplitPane{
 				        boolean isSelected, boolean hasFocus, int row, int column) {
 				 
 				    Contacto panel = (Contacto) value;
+				    
+
+				    panel.setPreferredSize(new Dimension(jtblcontactos.getWidth(),jtblcontactos.getRowHeight()));
+				    panel.jpContacto.setPreferredSize(new Dimension(jtblcontactos.getWidth(),jtblcontactos.getRowHeight()));
+				    
 
 				    if (isSelected) {
 				      panel.setBackground(table.getSelectionBackground());
+				      panel.setOpaque(true);
 				    }else{
 				      panel.setBackground(table.getSelectionForeground());
+				      panel.setOpaque(false);
+				      
 				    }
 				    return panel;
 				  }
 			
 			});
         jtblcontactos.setRowHeight(50);
+        jtblcontactos.setAutoResizeMode(jtblcontactos.AUTO_RESIZE_ALL_COLUMNS);
+        jtblcontactos.setAlignmentX(LEFT_ALIGNMENT);
         jtblcontactos.revalidate();
 		jscptabla = new JScrollPane(jtblcontactos);
 		
