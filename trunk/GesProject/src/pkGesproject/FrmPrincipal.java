@@ -99,6 +99,7 @@ public class FrmPrincipal extends JFrame {
 	private Rectangle maxBounds;
 	
 	public FrmPrincipal(){
+		recursos.setRfrmppal(this);	
 		jtlbFrmppal.setLayout(new BoxLayout(jtlbFrmppal,BoxLayout.X_AXIS));
 		int i;
 		jbtnInicio.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -244,7 +245,7 @@ public class FrmPrincipal extends JFrame {
 		super.setBounds(0, 0, recursos.getFrmppalWidth(), recursos.getFrmppalHeight());
 		this.setTitle(recursos.APNAME);
 		this.setLocationRelativeTo(null);
-		recursos.setRfrmppal(this);	
+		
 		this.setLayout(new BorderLayout());
 		this.getRootPane().putClientProperty(SeaGlassRootPaneUI.UNIFIED_TOOLBAR_LOOK, Boolean.TRUE);//Esta linea es necesaria para que la barra de titulo y el jtoolbar sean homogeneos
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
