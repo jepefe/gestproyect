@@ -91,7 +91,7 @@ public class PnlContactos extends JSplitPane{
 				}
 			}});
 		recursos.instanciamsg.connection.sendPacket(new Presence(Presence.Type.available));
-		
+		recursos.instanciamsg.consultarEstado();
 
 	}
 	

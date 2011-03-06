@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -41,7 +42,7 @@ public class Contacto extends JPanel implements MessageListener{
 	ConexionFTP cftp = new ConexionFTP();
 	JLabel jlbllogo = new JLabel();
 	JLabel jlblnombre = new JLabel();
-	JLabel jlblcontacto =  new JLabel();
+	JLabel jlblestado =  new JLabel();
 	JLabel jlbchatcon = new JLabel();
 	ResultSet rs;
 	String usuario;
@@ -61,15 +62,15 @@ public class Contacto extends JPanel implements MessageListener{
 	JScrollPane jsmsg;
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	boolean leido;
-	
+
 	public Contacto(){
-		
-	
+
+
 	}
 	public Contacto(String usuario){
 		recursos.instanciamsg.contactos.add(this);
 		jlblnombre.setFont(recursos.fuente);
-		jlblcontacto.setForeground(Color.gray);
+		jlblestado.setFont(new Font(Font.SANS_SERIF, Font.BOLD,10));
 		jlbllogo.setIcon(recursos.icono[1]);
 		jpContacto.setOpaque(true);
 		this.setOpaque(false);
@@ -87,88 +88,104 @@ public class Contacto extends JPanel implements MessageListener{
 		//jpContacto.setPreferredSize(new Dimension(250,50));
 		//this.setPreferredSize(new Dimension(250,300));
 		//this.setMinimumSize(new Dimension(250,90));
-		
+
 		constraints.anchor=GridBagConstraints.LINE_START;
 		constraints.fill = GridBagConstraints.WEST;
 		constraints.gridx = 0; 
 		constraints.gridy = 0;
-		constraints.gridwidth = 2;
+		constraints.gridwidth = 1;
 		constraints.gridheight = 2; 
 		constraints.weighty = 0.0; 
 		constraints.weightx = 0.0; 
 		jpContacto.add(jlbllogo,constraints);
 		//constraints.weighty = 0.0;
+
 		constraints.anchor=GridBagConstraints.WEST;
 		constraints.fill = GridBagConstraints.WEST;
-		constraints.gridx = 2; 
+		constraints.gridx = 1; 
 		constraints.gridy = 0; 
 		constraints.gridwidth = 1; 
-		constraints.gridheight = 2; 
+		constraints.gridheight = 1; 
 		constraints.weighty = 1.0; 
 		constraints.weightx = 1.0;
 		jpContacto.add(jlblnombre,constraints);
+
+
+		constraints.anchor=GridBagConstraints.WEST;
+		constraints.fill = GridBagConstraints.WEST;
+		constraints.gridx = 1; 
+		constraints.gridy = 1; 
+		constraints.gridwidth = 1; 
+		constraints.gridheight = 1; 
+		constraints.weighty = 1.0; 
+		constraints.weightx = 1.0;
+		jpContacto.add(jlblestado,constraints);
 		this.add(jpContacto);
-		
-		
+		//constraints.weighty = 0.0;
+
+
 	}
-	
-	
-	
+
+
+
 	public void CargaDatos(){
 		rs = cdb.ConsultaSQL("SELECT nombre,apellidos,id_staff FROM STAFF WHERE nick_usuario='"+usuario+"'");
 		try {
 			if(rs.next()){
-					nombre = rs.getString(1) +" "+ rs.getString(2);
-					jlblnombre.setText(nombre);
-					id_staff=rs.getString(3);
-					
-					
+				nombre = rs.getString(1) +" "+ rs.getString(2);
+				jlblnombre.setText(nombre);
+				id_staff=rs.getString(3);
+
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public void cambiarEstado(String estado){
-		
+
 		System.out.println(usuario+": "+estado);
-		
+
 		if(estado.equals("available")){
-			jtxamsg.setEnabled(true);
+			jlblestado.setText("Disponible");
 			System.out.println(usuario+": disponible");
 		}else{
-			jtxamsg.setEnabled(false);
+			jlblestado.setText("Desconectado");
 			System.out.println(usuario+": desconectado");
 		}
-			
-		
+		if(recursos.getRfrmppal().isVisible()){
+			recursos.getRfrmppal().repaint();
+		}
+
+
 	}
-	
+
 	public void CargarFoto(){
-	Thread hilologo = new Thread(new Runnable() {
-			
+		Thread hilologo = new Thread(new Runnable() {
+
 			@Override
 			public void run()  {
 				ConexionFTP cftp = new ConexionFTP();
 				jlbllogo.setPreferredSize(new Dimension(40,40));
 				jlbllogo.setSize(40,40);
 				jlbllogo.setMinimumSize(new Dimension(40,40));
-				
+
 				jlbllogo.setIcon(new ImageIcon(cftp.ObtenerImagen("fto"+id_staff).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
-				
+
 				System.out.println("AFOTO OBTENIDO");
-				
+
 				jlbllogo.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
-				
-			
+
+
 				recursos.getRfrmppal().repaint();
 			}
 		});
 		hilologo.start();
-		
-		
+
+
 	}
 	public void crearChat(){
 		ChatManager chatmanager = recursos.instanciamsg.connection.getChatManager();
@@ -185,17 +202,17 @@ public class Contacto extends JPanel implements MessageListener{
 		jsmsg = new JScrollPane(jtxamsg);
 		//jsmsg.setPreferredSize(new Dimension(250,100));
 		jtxamsg.addFocusListener(new FocusListener() {
-			
+
 			@Override
 			public void focusLost(FocusEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void focusGained(FocusEvent e) {
 				avisamsg(true);
-				
+
 			}
 		});
 		//jsconv.setPreferredSize(new Dimension(250,300));
@@ -210,38 +227,38 @@ public class Contacto extends JPanel implements MessageListener{
 				// TODO Auto-generated method stub
 				jtxamsg.setCaretPosition(jtxamsg.getDocument().getLength());
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-			    	 try {
+					try {
 						nuevoChat.sendMessage(jtxamsg.getText());
 						conversacion = conversacion +"<b>"+rec.idioma[rec.eleidioma][183]+":</b><br>"+jtxamsg.getText()+"<br>";
 						jtxachat.setText(conversacion);
-						
+
 					} catch (XMPPException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-			        jtxamsg.setText("");
-			        }
+					jtxamsg.setText("");
+				}
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-			
-				
+
+
 			}
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				
-				
+
+
 			}
-			
+
 		});
 	}
 	@Override
 	public void processMessage(Chat arg0, Message msg) {
 		// TODO Auto-generated method stub
 		conversacion = conversacion +"<b>"+nombre+":</b><br BACKGROUND-COLOR:blue>"+msg.getBody()+"<br>";
-		
+
 		jtxachat.setText(conversacion);
 		jtxachat.setCaretPosition(jtxachat.getDocument().getLength());
 		System.out.println(msg.getBody()+"\n");
@@ -253,7 +270,7 @@ public class Contacto extends JPanel implements MessageListener{
 			leido=true;
 		}
 		if(!leido){
-			
+
 			jpContacto.setOpaque(true);
 			jpContacto.setBackground(Color.orange);
 			recursos.getRfrmppal().repaint();
@@ -262,6 +279,6 @@ public class Contacto extends JPanel implements MessageListener{
 			recursos.getRfrmppal().repaint();
 		}
 	}
-	
+
 
 }

@@ -49,7 +49,7 @@ public class MsgInt implements RosterListener{
 	 public void mostrarContactos(PnlContactos pnlcont) {
 	       
 	        roster.addRosterListener(this);
-	        crearGrupo();
+	       
 	        Collection<RosterEntry> entries = roster.getGroup("Gesproject").getEntries();
 
 	        System.out.println("\n\n" + entries.size() + " buddy(ies):");
@@ -88,8 +88,14 @@ public class MsgInt implements RosterListener{
 		}
 		
 	}
-	public void crearGrupo(){
+	public void consultarEstado(){
+		
+		for(Contacto c:contactos){
+			c.cambiarEstado(roster.getPresence(c.usuario).getType().name());
 	
+		}
+		
+		}
 	
 		
 	}
@@ -98,4 +104,4 @@ public class MsgInt implements RosterListener{
 	 
 	
 	
-}
+
