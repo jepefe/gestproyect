@@ -39,8 +39,7 @@ public class SpnSocios extends JSplitPane{
 	PnlModificarsocio mods = PnlModificarsocio.Obtener_Instancia();
 	Component[] panlsStaff = {
 			new PnlAltasocio(),
-			modificar = new JScrollPane(mods),
-			new JPanel()};
+			modificar = new JScrollPane(mods)};
 
 	public SpnSocios(){
 		this.setOneTouchExpandable(true);
@@ -48,8 +47,7 @@ public class SpnSocios extends JSplitPane{
 		modificar.setBorder(empty);
 		
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[13],rec.idioma[rec.eleidioma][19]},
-				{recursos.icono[14],rec.idioma[rec.eleidioma][20]},
-				{recursos.icono[15],rec.idioma[rec.eleidioma][21]}};
+				{recursos.icono[14],rec.idioma[rec.eleidioma][20]}};
 		
 		
 		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {
@@ -86,21 +84,9 @@ public class SpnSocios extends JSplitPane{
 				}
 			}});
         
-
-		pnllateral.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = GridBagConstraints.REMAINDER; //para que despues del label pase a la linea de abajo
-        JLabel titulo = new JLabel("Titulo");
         
-        JLabel socio;
-		pnllateral.add(socio = new JLabel("PARTNER"),gbc);
-        Font auxFont = titulo.getFont();
-        socio.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),20));
-        gbc.weighty = 1.0;	//que la fila de la tabla se estire en vertical, de este modo el label se queda en la parte norte
-        gbc.fill = GridBagConstraints.BOTH;	//Para estirar la barra lateral
-    	pnllateral.add(jtblLateral,gbc);
 		
-    	this.setLeftComponent(pnllateral);
+    	this.setLeftComponent(jtblLateral);
     	this.setRightComponent(panel);
 	}
 }
