@@ -494,33 +494,36 @@ public class PnlMod_Sub extends JPanel{
     	String sector = null;
     	String pais = null;
     	String provincia = null;
-    	conexion.Conectardb();
-    	rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+mod.CmbSector.getSelectedItem().toString()+"'");
-		try {
-			rs.next();
-			sector = rs.getString(1);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+    	Component aviso = null;
+		int s = JOptionPane.showConfirmDialog(aviso, "Esta seguro??");
+		if(s==0){
+	    	conexion.Conectardb();
+	    	rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+mod.CmbSector.getSelectedItem().toString()+"'");
+			try {
+				rs.next();
+				sector = rs.getString(1);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+mod.CmbPais.getSelectedItem().toString()+"'");
+			try {
+				rs.next();
+				pais = rs.getString(1);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			rs=conexion.ConsultaSQL("SELECT id_provincias FROM PROVINCIAS WHERE estado like '"+mod.CmbProvincia.getSelectedItem().toString()+"'");
+			try {
+				rs.next();
+				provincia = rs.getString(1);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			conexion.executeUpdate("UPDATE SUBCONTRATA SET nombre = '"+mod.jtxt[0].getText()+"', sector = '"+sector+"', pais = '"+pais+"', provincia = '"+provincia+"', direccion = '"+mod.jtxt[1].getText()+"', cod_postal = '"+mod.jtxt[2].getText()+"', telf = '"+mod.jtxt[3].getText()+"', observaciones = '"+mod.textarea.getText()+"' WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"' ");
 		}
-		rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+mod.CmbPais.getSelectedItem().toString()+"'");
-		try {
-			rs.next();
-			pais = rs.getString(1);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		rs=conexion.ConsultaSQL("SELECT id_provincias FROM PROVINCIAS WHERE estado like '"+mod.CmbProvincia.getSelectedItem().toString()+"'");
-		try {
-			rs.next();
-			provincia = rs.getString(1);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		conexion.executeUpdate("UPDATE SUBCONTRATA SET nombre = '"+mod.jtxt[0].getText()+"', sector = '"+sector+"', pais = '"+pais+"', provincia = '"+provincia+"', direccion = '"+mod.jtxt[1].getText()+"', cod_postal = '"+mod.jtxt[2].getText()+"', telf = '"+mod.jtxt[3].getText()+"', observaciones = '"+mod.textarea.getText()+"' WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"' ");
-
     }
     /**
      * con este método podemos actualizar la tabla siempre que lo llamemos
