@@ -210,7 +210,7 @@ public class FrmPrincipal extends JFrame {
 			pnlcontactos = new PnlContactos();
 
 
-		}
+		}break;
 		case 2:{
 			jtlbFrmppal.add(jbtnInicio);
 			recursos.txtcarga = "Loading  Time Sheets";
@@ -219,7 +219,7 @@ public class FrmPrincipal extends JFrame {
 			jtlbFrmppal.add(jbtnTimesheet);
 			pnlcontactos = new PnlContactos();
 
-		}
+		}break;
 		case 3:{
 			jtlbFrmppal.add(jbtnInicio);
 			recursos.txtcarga = "Loading  Time Sheets";
@@ -228,10 +228,11 @@ public class FrmPrincipal extends JFrame {
 			jtlbFrmppal.add(jbtnTimesheet);
 			pnlcontactos = new PnlContactos();
 
+		}break;
 		}
 		jscpprincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jpnlppal,pnlcontactos);
 		
-		}
+		
 		for(i=0;i<jtlbFrmppal.getComponentCount();i++){
 	  		  ((AbstractButton) jtlbFrmppal.getComponentAtIndex(i)).setSelected(false);
 	  		  ((AbstractButton) jtlbFrmppal.getComponentAtIndex(i)).setFont(new Font(Font.SANS_SERIF, Font.BOLD,11));

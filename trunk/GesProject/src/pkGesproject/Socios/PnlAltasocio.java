@@ -366,6 +366,12 @@ public class PnlAltasocio extends JScrollPane{
 								}
 
 								conexion.executeUpdate("INSERT INTO PARTNER (nombre, sector, pais, direccion, codpostal, email, email2, telefono, telefono2, fax, observaciones) VALUES ('"+ jtxt[0].getText()+"','"+sector+"','"+pais+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+jtxt[4].getText()+"','"+jtxt[5].getText()+"','"+jtxt[6].getText()+"','"+jtxt[7].getText()+"','"+textarea.getText()+"')");
+								conexion.executeUpdate("INSERT INTO ofGroup( groupName) values ('"+ jtxt[0].getText()+"')");
+								conexion.executeUpdate("INSERT INTO ofGroupProp(groupName,name,propValue)values('"+jtxt[0].getText()+"','sharedRoster.showInRoster','onlyGroup')");
+								conexion.executeUpdate("INSERT INTO ofGroupProp(groupName,name,propValue)values('"+jtxt[0].getText()+"','sharedRoster.displayName','"+jtxt[0].getText()+"')");
+								conexion.executeUpdate("INSERT INTO ofGroupProp(groupName,name,propValue)values('"+jtxt[0].getText()+"','sharedRoster.groupList',' ')");
+
+
 								for(int i=0;i<fieldNames.length;i++){
 									jtxt[i].setText("");
 								}
