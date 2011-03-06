@@ -71,6 +71,7 @@ public class PnlCuentaUsuario extends JPanel{
 		this.add(gbidioma = new GpComboBox(),gbc);
 		
 		conexion.Conectardb();
+		
 		rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM LISTA_IDIOMAS");
 		try {
 			rs.next();
@@ -94,6 +95,16 @@ public class PnlCuentaUsuario extends JPanel{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		rs = conexion.ConsultaSQL("SELECT idioma FROM STAFF WHERE id_staff = "+recursos.getIdusuario());
+		try {
+			if(rs.next()){
+				gbidioma.setSelectedIndex(rs.getInt(1)-1);
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		
 		gbc.gridy = 1; // El área de texto empieza en la fila
