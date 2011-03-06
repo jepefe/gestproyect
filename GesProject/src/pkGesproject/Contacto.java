@@ -147,7 +147,7 @@ public class Contacto extends JPanel implements MessageListener{
 
 	public void cambiarEstado(String estado){
 
-		System.out.println(usuario+": "+estado);
+	
 
 		if(estado.equals("available")){
 			jlblestado.setText("Disponible");
@@ -258,12 +258,12 @@ public class Contacto extends JPanel implements MessageListener{
 	public void processMessage(Chat arg0, Message msg) {
 		// TODO Auto-generated method stub
 		conversacion = conversacion +"<b>"+nombre+":</b><br BACKGROUND-COLOR:blue>"+msg.getBody()+"<br>";
-
 		jtxachat.setText(conversacion);
 		jtxachat.setCaretPosition(jtxachat.getDocument().getLength());
 		System.out.println(msg.getBody()+"\n");
 		avisamsg(false);
 	}
+	
 	public void avisamsg(boolean leido){
 		this.leido=leido;
 		if(jtxamsg.isFocusOwner()){

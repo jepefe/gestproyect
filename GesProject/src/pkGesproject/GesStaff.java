@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.jivesoftware.smack.AccountManager;
+import org.jivesoftware.smack.XMPPException;
+
 /**
  * 
  * @author Jesus Perez
@@ -27,6 +30,7 @@ public class GesStaff {
 	private String password;
 	private String permisos;
 	private int cod_part;
+	private String nom_part;
 	static RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	
 	/**
@@ -87,20 +91,48 @@ public class GesStaff {
 		}
 		
 		rs = conex.ConsultaSQL("Select nick_usuario,id_staff FROM STAFF WHERE nick_usuario='" + nick + "'");
+
 		try {
 			rs.next();
 			if (rs.getString(1).contentEquals(nick)){
 				id_staff = rs.getInt(2);
+				
 			}
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		//CREAMOS USUARIO EN SERVIDOR JABBER
+		
+		
+		rs = conex.ConsultaSQL("Select nombre FROM PARTNER WHERE cod_part='" + cod_part+ "'");
+		try {
+			if (rs.next()){
+				nom_part = rs.getString(1);
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		AccountManager am =recursos.instanciamsg.connection.getAccountManager();
+		try {
+			am.createAccount(nick, password);
+			
+		} catch (XMPPException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		conex.executeUpdate("INSERT INTO ofGroupUser(groupName,username,administrator)values('"+nom_part+"','"+nick+"','0')");
+
+		
+		
 		if (creado == 0){ //Solo subimos la imagen si el staff es creado
 		subido = SubirFoto(foto,id_staff);
 		if (subido){
 			conex.executeUpdate("INSERT INTO FICHEROS (id_propietario,nombre,ambito,descripcion) VALUES('"
 					+ Integer.toString(id_staff) + "','" + "fto"+Integer.toString(id_staff)+ ".jpg" + "','0','Foto Usuario')");
+		
 		}
 		}
 		

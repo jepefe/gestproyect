@@ -11,6 +11,7 @@ import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.packet.RosterPacket;
 
 public class MsgInt implements RosterListener{
 	
@@ -42,6 +43,9 @@ public class MsgInt implements RosterListener{
       //  connection.sendPacket(new Presence(Presence.Type.unavailable));
         roster = connection.getRoster();
         roster.setSubscriptionMode(Roster.SubscriptionMode.accept_all);
+        roster.setDefaultSubscriptionMode(Roster.SubscriptionMode.accept_all);
+        
+        
        
        
     }
@@ -49,14 +53,15 @@ public class MsgInt implements RosterListener{
 	 public void mostrarContactos(PnlContactos pnlcont) {
 	       
 	        roster.addRosterListener(this);
-	       
-	        Collection<RosterEntry> entries = roster.getGroup("Gesproject").getEntries();
+	       if(roster.getGroup("Florida")!=null){
+	        Collection<RosterEntry> entries = roster.getGroup("Florida").getEntries();
 
 	        System.out.println("\n\n" + entries.size() + " buddy(ies):");
 	        for (RosterEntry r : entries) {
 	        	String usuario = r.getUser().substring(0,r.getUser().indexOf("@")); //Quitamos la parte del servidor
 	            recursos.instanciacontactos.AnyadirAContactos(usuario);
 	        }
+	       }
 	    }
 
 	@Override
@@ -88,6 +93,7 @@ public class MsgInt implements RosterListener{
 		}
 		
 	}
+	
 	public void consultarEstado(){
 		
 		for(Contacto c:contactos){
