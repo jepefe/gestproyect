@@ -159,9 +159,9 @@ public class PnlNuevoIdioma extends JPanel{
 			}
 		}
 		
-		//if(vacio == true){
-			//System.out.print("Los campos deben estar llenos");
-		//}else{
+		if(vacio == true){
+			System.out.print("Los campos deben estar llenos");
+		}else{
 			conexion.executeUpdate("ALTER TABLE IDIOMA ADD "+txtidioma.getText()+" VARCHAR(200)");
 			
 			for(int i = 1; i<=reg;i++){
@@ -169,6 +169,6 @@ public class PnlNuevoIdioma extends JPanel{
 			}
 			
 			conexion.executeUpdate("INSERT INTO LISTA_IDIOMAS (columna,titulo) VALUES ('"+txtidioma.getText()+"','"+txtidioma.getText()+"')");
-		//}
+		}
 	}
 }
