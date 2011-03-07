@@ -23,6 +23,7 @@ import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -35,8 +36,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.ScrollPaneLayout;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
 import pkGesproject.ConexionDb;
@@ -77,30 +81,43 @@ public class PnlPracticas extends JScrollPane{
 	JCheckBox Relleno2 = new JCheckBox();
 	JCheckBox Relleno3 = new JCheckBox();
 	
+	JPanel uspanel = new JPanel();
 	JPanel panel = new JPanel();
 	JFrame aviso = new JFrame();
-	
+	JPanel total = new JPanel();
 	JPanel jpnopae = new JPanel();
 	JPanel jpn = new JPanel();
+	Border blackline;
 	
 	public PnlPracticas (){
+		
+		blackline = BorderFactory.createLineBorder(Color.black);
+		uspanel.setBorder(blackline);
+		TitledBorder title;
+		title = BorderFactory.createTitledBorder("Datos Personales");
+		uspanel.setBorder(title);
+		
 	
 		this.setBorder(empty);
 		panel.setLayout(new GridBagLayout());
+		total.setLayout(new GridBagLayout());
 		  
 		String[] fieldNames = {
-		   rec.idioma[rec.eleidioma][159],rec.idioma[rec.eleidioma][160], rec.idioma[rec.eleidioma][161], rec.idioma[rec.eleidioma][162],
-		   rec.idioma[rec.eleidioma][162],rec.idioma[rec.eleidioma][163],rec.idioma[rec.eleidioma][164], rec.idioma[rec.eleidioma][165], 
-		   rec.idioma[rec.eleidioma][166], rec.idioma[rec.eleidioma][167], rec.idioma[rec.eleidioma][168], rec.idioma[rec.eleidioma][169],
+				rec.idioma[rec.eleidioma][159],rec.idioma[rec.eleidioma][160],rec.idioma[rec.eleidioma][159],rec.idioma[rec.eleidioma][160],
+				rec.idioma[rec.eleidioma][159],rec.idioma[rec.eleidioma][160],
+		   rec.idioma[rec.eleidioma][159],rec.idioma[rec.eleidioma][160],rec.idioma[rec.eleidioma][161],rec.idioma[rec.eleidioma][162],
+		   rec.idioma[rec.eleidioma][162],rec.idioma[rec.eleidioma][163],rec.idioma[rec.eleidioma][164],rec.idioma[rec.eleidioma][165], 
+		   rec.idioma[rec.eleidioma][166], rec.idioma[rec.eleidioma][167],rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][169],
 		   rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],
 		   rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],
 		   rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168],
 		   rec.idioma[rec.eleidioma][168],rec.idioma[rec.eleidioma][168]
 		   };
-		int[] fieldWidths = {6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6};
+		int[] fieldWidths = {20,30,20,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6};
 		
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
+		
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -132,8 +149,30 @@ public class PnlPracticas extends JScrollPane{
 
 		   
 		   switch(i){
-		   
-		   case (0)://nombre
+		   case (0):
+			   uspanel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+  			gbc.gridwidth = GridBagConstraints.REMAINDER;
+  			uspanel.add(jtxt[i] = new JTextField(20),gbc); 
+  			//gbc.gridwidth = GridBagConstraints.REMAINDER;
+			 //panel.add(uspanel); 
+			   break;
+		   case (1):
+			   uspanel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+ 			gbc.gridwidth = GridBagConstraints.REMAINDER;
+ 			uspanel.add(jtxt[i] = new JTextField(30),gbc);  
+ 			
+ 			//gbc.gridwidth = GridBagConstraints.REMAINDER;
+			 //panel.add(uspanel); 
+			   break;
+		   case (2):
+			   uspanel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+ 			gbc.gridwidth = GridBagConstraints.REMAINDER;
+ 			uspanel.add(jtxt[i] = new JTextField(30),gbc);  
+ 			
+ 			//gbc.gridwidth = GridBagConstraints.REMAINDER;
+			 //panel.add(uspanel); 
+			   break;
+		   case (3):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			//panel.add(Relleno2,gbc);
@@ -147,7 +186,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 	   			//gbc.gridwidth = GridBagConstraints.REMAINDER;
 	   			break;
-		   case (1)://presupuesto
+		   case (4):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -158,7 +197,7 @@ public class PnlPracticas extends JScrollPane{
 		   		panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (2)://combo de proyectos
+		   case (5):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -169,7 +208,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   	break;
-		   case (3):
+		   case (6):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -180,7 +219,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 	   			//gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   	break;
-		   case (4)://fecha de inicio
+		   case (7):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -191,7 +230,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (5)://fecha de fin
+		   case (8):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -202,7 +241,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (6)://descripcion
+		   case (9):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -213,7 +252,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   	break;
-		   case (7)://observaciones
+		   case (10):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -224,7 +263,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (8)://observaciones
+		   case (11):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -235,7 +274,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (9)://observaciones
+		   case (12):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -246,7 +285,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (10)://observaciones
+		   case (13):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -257,7 +296,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (11)://observaciones
+		   case (14):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -268,7 +307,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (12)://observaciones
+		   case (15):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -279,7 +318,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (13)://observaciones
+		   case (16):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -290,7 +329,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (14)://observaciones
+		   case (17):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -301,7 +340,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (15)://observaciones
+		   case (18):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -312,7 +351,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (16)://observaciones
+		   case (19):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -323,7 +362,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (17)://observaciones
+		   case (20):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -334,7 +373,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (18)://observaciones
+		   case (21):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -345,7 +384,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (19)://observaciones
+		   case (22):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -356,7 +395,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (20)://observaciones
+		   case (23):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -367,7 +406,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (21)://observaciones
+		   case (24):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -378,7 +417,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (22)://observaciones
+		   case (25):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -389,7 +428,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (23)://observaciones
+		   case (26):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -400,7 +439,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (24)://observaciones
+		   case (27):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -411,7 +450,7 @@ public class PnlPracticas extends JScrollPane{
 	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (25)://observaciones
+		   case (28):
 			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		panel.add(Relleno[i] = new JCheckBox(""));
@@ -444,9 +483,13 @@ public class PnlPracticas extends JScrollPane{
 		
 
 		
-		
+		uspanel.setVisible(true);
 		panel.setVisible(true);
-		this.setViewportView(panel);
+		total.add(uspanel,gbc);
+		total.add(panel,gbc);
+		total.setVisible(true);
+		this.setViewportView(total);
+		//this.setViewportView(panel);
 		
 	}
 	
