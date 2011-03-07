@@ -46,16 +46,18 @@ public class Splash extends JWindow{
 		jpbcargando.setMaximum(10);
 		jlbmsgcargando.setFont(new Font(Font.SANS_SERIF, Font.BOLD,13));
 		panel.setLayout(null);
-		panel.add(jpbcargando);
+		
+		
 		panel.add(jlbmsgcargando);
-
+		panel.add(jpbcargando);
 		/**
 		 * jpbcargando.setBounds(200, 170, 180, 130);
 		 *	jlbmsgcargando.setBounds(210, 180, 180, 50);
 		 */
-		jpbcargando.setBounds(40, 222, 170, 130);
+		jpbcargando.setBounds(40, 220, 170, 130);
 		jlbmsgcargando.setBounds(45, 190, 180, 50);
 		jlbmsgcargando.setForeground(Color.white);
+		
 		AWTUtilities.setWindowOpaque(this, false);
 		panel.setDoubleBuffered(true);
 		
