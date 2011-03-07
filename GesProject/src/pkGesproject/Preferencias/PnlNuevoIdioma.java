@@ -20,6 +20,9 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import com.google.api.translate.Language;
+import com.google.api.translate.Translate;
+
 import pkGesproject.ConexionDb;
 import pkGesproject.ConexionDbUnica;
 import pkGesproject.GesIdioma;
@@ -41,7 +44,7 @@ public class PnlNuevoIdioma extends JPanel{
 	Border blackline;
 	boolean vacio = false;
 	ActionListener accion;
-	
+	String[] nuevo;
 	public PnlNuevoIdioma(){
 		crear_interfaz();
 		
@@ -51,7 +54,8 @@ public class PnlNuevoIdioma extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("anadir")){
-					introducir_idioma();
+					//introducir_idioma();
+					traducir();
 				}
 				
 				if(e.getActionCommand().equals("limpiar")){
@@ -170,5 +174,48 @@ public class PnlNuevoIdioma extends JPanel{
 			
 			conexion.executeUpdate("INSERT INTO LISTA_IDIOMAS (columna,titulo) VALUES ('"+txtidioma.getText()+"','"+txtidioma.getText()+"')");
 		}
+	}
+	
+	public void traducir(){
+		String translatedText = null;
+		rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM IDIOMA");
+		try {
+			rs.next();
+			reg = rs.getInt(1);
+			nuevo = new String[reg];
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		rs = conexion.ConsultaSQL("SELECT ingles FROM IDIOMA");
+		for(int i = 1;i<reg+1;i++){
+			
+			try {
+				rs.next();
+				translatedText = rs.getString(1);
+				try {
+					Translate.setHttpReferrer("http://code.google.com/p/google-api-translate-java/");
+					nuevo[i-1] = Translate.execute(translatedText,Language.ENGLISH, Language.ITALIAN);
+					System.out.println(nuevo[i-1]);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
+		for(int i = 1; i<=reg;i++){
+			conexion.executeUpdate("UPDATE IDIOMA SET Frances = '"+nuevo[i-1]+"' WHERE id_idi = "+i);
+			System.out.println(nuevo[i-1]);
+		}
+		
 	}
 }

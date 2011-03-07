@@ -29,5 +29,7 @@
 	<classpathentry kind="lib" path="src/pkGesproject/Avisos/dsn.jar"/>
 	<classpathentry kind="lib" path="lib/smack.jar"/>
 	<classpathentry kind="lib" path="lib/smackx.jar"/>
+	<classpathentry kind="lib" path="lib/json-20090211.jar"/>
+	<classpathentry kind="lib" path="lib/google-api-translate-java-0.94.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
