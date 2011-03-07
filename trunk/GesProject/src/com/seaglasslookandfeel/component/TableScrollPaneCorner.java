@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Id: TableScrollPaneCorner.java 1102 2010-02-06 16:31:26Z kathryn@kathrynhuxtable.org $
+ * $Id: TableScrollPaneCorner.java 1574 2011-02-14 19:50:18Z rosstauscher@gmx.de $
  */
 package com.seaglasslookandfeel.component;
 
@@ -35,7 +35,6 @@ import com.seaglasslookandfeel.painter.Painter;
  *
  * <p>Based on Nimbus's TableScrollPaneCorner by Jasper Potts</p>
  *
- * @see com.sun.java.swing.plaf.nimbus.TableScrollPaneCorner
  */
 public class TableScrollPaneCorner extends JComponent implements UIResource {
     private static final long serialVersionUID = -904714225885809898L;

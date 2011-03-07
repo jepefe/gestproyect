@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Id: SeaGlassComboPopup.java 1115 2010-02-09 21:26:16Z kathryn@kathrynhuxtable.org $
+ * $Id: SeaGlassComboPopup.java 1574 2011-02-14 19:50:18Z rosstauscher@gmx.de $
  */
 package com.seaglasslookandfeel.component;
 
@@ -60,6 +60,19 @@ public class SeaGlassComboPopup extends BasicComboPopup {
     public SeaGlassComboPopup(JComboBox combo) {
         super(combo);
     }
+    
+    
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateUI() {
+        // TODO Auto-generated method stub
+        super.updateUI();
+    }
+
+
 
     /**
      * Is the combo box popup a "drop down" popup, or does it overlay the box?
@@ -98,7 +111,7 @@ public class SeaGlassComboPopup extends BasicComboPopup {
     @Override
     protected void configureList() {
         list.setFont(comboBox.getFont());
-
+        list.setBorder(null);
         list.setCellRenderer(comboBox.getRenderer());
         list.setFocusable(false);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -119,12 +132,12 @@ public class SeaGlassComboPopup extends BasicComboPopup {
      * the UI class is created.
      */
     protected void configurePopup() {
-       setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorderPainted(true);
         setBorder(LIST_BORDER);
-       // setOpaque(false);
+        setOpaque(false);
         add(scroller);
-      setDoubleBuffered(true);
+        setDoubleBuffered(true);
         setFocusable(false);
     }
 
@@ -243,7 +256,7 @@ public class SeaGlassComboPopup extends BasicComboPopup {
      * @return the maximum row count to display.
      */
     private int getMaximumRowCount() {
-        return isEditable() ? comboBox.getMaximumRowCount() : 10;
+        return isEditable() ? comboBox.getMaximumRowCount() : 100;
     }
 
     /**
