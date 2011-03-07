@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Id: SeaGlassIcon.java 1115 2010-02-09 21:26:16Z kathryn@kathrynhuxtable.org $
+ * $Id: SeaGlassIcon.java 1574 2011-02-14 19:50:18Z rosstauscher@gmx.de $
  */
 package com.seaglasslookandfeel.component;
 
@@ -43,7 +43,6 @@ import sun.swing.plaf.synth.SynthIcon;
  * <p>Based on NimbusIcon by Richard Bair. Reimplemented because too much is
  * package local.</p>
  *
- * @see com.sun.java.swing.plaf.nimbus.NimbusIcon
  */
 public class SeaGlassIcon extends SynthIcon {
     private int    width;
@@ -283,10 +282,8 @@ public class SeaGlassIcon extends SynthIcon {
         }
 
         // The key "JComponent.sizeVariant" is used to match Apple's LAF
-        String scaleKey = (String) context.getComponent().getClientProperty("JComponent.sizeVariant");
-
+        String scaleKey = SeaGlassStyle.getSizeVariant(context.getComponent());
         if (scaleKey != null) {
-
             if (SeaGlassStyle.LARGE_KEY.equals(scaleKey)) {
                 size *= SeaGlassStyle.LARGE_SCALE;
             } else if (SeaGlassStyle.SMALL_KEY.equals(scaleKey)) {

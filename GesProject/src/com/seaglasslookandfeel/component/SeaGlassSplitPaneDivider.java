@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Id: SeaGlassSplitPaneDivider.java 1115 2010-02-09 21:26:16Z kathryn@kathrynhuxtable.org $
+ * $Id: SeaGlassSplitPaneDivider.java 1574 2011-02-14 19:50:18Z rosstauscher@gmx.de $
  */
 package com.seaglasslookandfeel.component;
 
@@ -57,7 +57,7 @@ public class SeaGlassSplitPaneDivider extends BasicSplitPaneDivider {
      * Width or height of the divider based on orientation BasicSplitPaneUI adds
      * two to this.
      */
-    protected static final int ONE_TOUCH_SIZE = 8;
+    protected static final int ONE_TOUCH_SIZE = 6;
 
     /** The offset for the one-touch buttons. */
     protected static final int ONE_TOUCH_OFFSET = 2;
@@ -183,7 +183,10 @@ public class SeaGlassSplitPaneDivider extends BasicSplitPaneDivider {
 
         b.setName("SplitPaneDivider.leftOneTouchButton");
         b.setMinimumSize(new Dimension(oneTouchSize, oneTouchSize));
-        b.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        b.setCursor(Cursor.getPredefinedCursor(
+            splitPane.getOrientation() == 
+                JSplitPane.HORIZONTAL_SPLIT ? 
+                        Cursor.W_RESIZE_CURSOR:Cursor.N_RESIZE_CURSOR));
         b.setFocusPainted(false);
         b.setBorderPainted(false);
         b.setRequestFocusEnabled(false);
@@ -213,7 +216,11 @@ public class SeaGlassSplitPaneDivider extends BasicSplitPaneDivider {
 
         b.setName("SplitPaneDivider.rightOneTouchButton");
         b.setMinimumSize(new Dimension(oneTouchSize, oneTouchSize));
-        b.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        // Rossi: Change cursors on "one touch" buttons. Better would be an mouse over effect
+        b.setCursor(Cursor.getPredefinedCursor(
+            splitPane.getOrientation() == 
+                JSplitPane.HORIZONTAL_SPLIT ? 
+                        Cursor.E_RESIZE_CURSOR:Cursor.S_RESIZE_CURSOR));
         b.setFocusPainted(false);
         b.setBorderPainted(false);
         b.setRequestFocusEnabled(false);
