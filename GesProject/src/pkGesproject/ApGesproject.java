@@ -2,9 +2,8 @@ package pkGesproject;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-
-
 import com.seaglasslookandfeel.SeaGlassLookAndFeel;
+
 
 public class ApGesproject {
 	
