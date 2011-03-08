@@ -54,8 +54,8 @@ public class PnlNuevoIdioma extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("anadir")){
-					//introducir_idioma();
-					traducir();
+					introducir_idioma();
+					//traducir();
 				}
 				
 				if(e.getActionCommand().equals("limpiar")){
@@ -196,7 +196,8 @@ public class PnlNuevoIdioma extends JPanel{
 				translatedText = rs.getString(1);
 				try {
 					Translate.setHttpReferrer("http://code.google.com/p/google-api-translate-java/");
-					nuevo[i-1] = Translate.execute(translatedText,Language.ENGLISH, Language.ITALIAN);
+					nuevo[i-1] = Translate.execute(translatedText,Language.ENGLISH, Language.PORTUGUESE);
+					nuevo[i-1] = nuevo[i-1].replace("'", "\'");
 					System.out.println(nuevo[i-1]);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -213,7 +214,7 @@ public class PnlNuevoIdioma extends JPanel{
 			
 		}
 		for(int i = 1; i<=reg;i++){
-			conexion.executeUpdate("UPDATE IDIOMA SET Frances = '"+nuevo[i-1]+"' WHERE id_idi = "+i);
+			conexion.executeUpdate("UPDATE IDIOMA SET Esperanto = '"+nuevo[i-1].replace("'", "\\'")+"' WHERE id_idi = "+i);
 			System.out.println(nuevo[i-1]);
 		}
 		
