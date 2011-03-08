@@ -78,110 +78,135 @@ import javax.swing.*;
  */
 
 
-	
-	public class PnlAsignacionStaff extends JPanel{
-		
-		GpComboBox cmbProyectoyecto,cmbWp,cmbTasks,cmbStaff;
-	
-			GesIdioma rec = GesIdioma.obtener_instancia();
-		//9637
 
-			String ruta;
-			JLabel[] jlbl,jlblWp,jlblTasks;
-			String id_p = null;
-			ResultSet rp;
-			String[] projects = new String[200];
-			ActionListener asignacion;
-			ActionListener importar;
-			JFileChooser filechooser;
-			ConexionFTP cftp=new ConexionFTP();
-			ConexionDb conexion= new ConexionDb();
-			HSSFWorkbook tuWorkBook = new HSSFWorkbook();
-			JButton btnAsignar = new JButton("Asignar");
-			GpComboBox cmbProyecto = new GpComboBox();
-			
-			
-			
-			public PnlAsignacionStaff(){
-				
-				CrearInterfaz();
-			
-				asignacion = new ActionListener(){
-				@Override
-					public void actionPerformed(ActionEvent arg0) {
-					
-					}
-				
-				};//fin event
-				
-				
-				
-				
-				
-				
-				   
-					/**
-					 *Creacion del JComboBox y a�adir los items.
-					 *Se conecta a la BD para realizar la consulta
-					 **/
-				   
-					conexion.Conectardb();
-					rp = conexion.ConsultaSQL("SELECT nombre,id_pro FROM PROYECTOS ORDER BY nombre");
-					
-					int j=0;
-					try {
-						
-					while(rp.next()){
-						
-						projects[j]= Integer.toString(rp.getInt(2));
-						
-						cmbProyecto.addItem(rp.getString(1));
-						j++;
-						cmbProyecto.setSelectedItem(null);
-						
-					}
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-							}
-						
-		//--------------------------------------------------------
-						this.setLayout(new GridBagLayout());
-						this.add(btnAsignar);
-				
-						btnAsignar.setActionCommand("Asignar");
-						
-				//gbc.gridwidth = GridBagConstraints.REMAINDER;
-				btnAsignar.addActionListener(asignacion);
-				this.setVisible(true);
-			}
-			
-			public void CrearInterfaz(){
-				
-				GridBagConstraints gbc = new GridBagConstraints();
-				
-				String[] fieldNames = {rec.idioma[rec.eleidioma][178]};
-				jlbl = new JLabel[fieldNames.length];
-				
-				int i=0;
-				this.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-				this.add(cmbProyecto,gbc);
-				cmbProyecto.setPreferredSize(new Dimension(140,30));
-				
-				
-				jlblWp = new JLabel[fieldNames.length];
-				this.add(jlblWp[i]=new JLabel("Work Packages"),gbc);
-				this.add(cmbStaff= new GpComboBox(),gbc);
-				cmbStaff.setPreferredSize(new Dimension(140,30));
-				
-				jlblTasks = new JLabel[fieldNames.length];
-				this.add(jlblTasks[i]=new JLabel("Tareas"),gbc);
-				this.add(cmbTasks= new GpComboBox(),gbc);
-				cmbTasks.setPreferredSize(new Dimension(140,30));
-				
-				
-			}
+public class PnlAsignacionStaff extends JPanel{
+
+	GpComboBox cmbProyectoyecto,cmbWp,cmbTasks,cmbStaff;
+
+	GesIdioma rec = GesIdioma.obtener_instancia();
+	//9637
+
+	String ruta;
+	JLabel[] jlbl,jlblWp,jlblTasks;
+	String id_p = null;
+	ResultSet rp;
+	String[] projects = new String[200];
+	ActionListener asignacion;
+	ActionListener importar;
+	JFileChooser filechooser;
+	ConexionFTP cftp=new ConexionFTP();
+	ConexionDb conexion= new ConexionDb();
+	HSSFWorkbook tuWorkBook = new HSSFWorkbook();
+	JButton btnAsignar;
+	GpComboBox cmbProyecto = new GpComboBox();
+	GridBagConstraints gbc;
+	String[] columnstaff = {"Staff","Apellidos"},columnrolstaff = {"Staff","Categoria"};
+	String[][] staff,rolstaff;
+	JTable jtblstaff = new JTable(),jtblrolstaff= new JTable();
+	DefaultTableModel modelstaff = new DefaultTableModel(null,columnstaff);
+	DefaultTableModel modelcate = new DefaultTableModel(null,columnrolstaff);
 	
+	public PnlAsignacionStaff(){
+
+		CrearInterfaz();
+
+		asignacion = new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+
+			}
+
+		};
+
+		
+		btnAsignar.setActionCommand("Asignar");
+		btnAsignar.addActionListener(asignacion);
+		this.setVisible(true);
+	}
+
+	public void CrearInterfaz(){
+		this.setLayout(new GridBagLayout());
+		
+		gbc = new GridBagConstraints();
+
+		String[] fieldNames = {rec.idioma[rec.eleidioma][178]};
+		jlbl = new JLabel[fieldNames.length];
+
+		gbc.gridx = 0; // El área de texto empieza en la columna
+		gbc.gridy = 0; // El área de texto empieza en la fila
+		gbc.gridwidth = 1; // El área de texto ocupa x columnas.
+		gbc.gridheight = 1; // El área de texto ocupa x filas.
+		//gbc.insets = new Insets(20,30,0,10);
+		int i=0;
+		this.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		gbc.gridx = 1; // El área de texto empieza en la columna
+		this.add(cmbProyecto,gbc);
+		cmbProyecto.setPreferredSize(new Dimension(140,30));
+
+		
+		gbc.gridx = 2; // El área de texto empieza en la columna
+		jlblWp = new JLabel[fieldNames.length];
+		this.add(jlblWp[i]=new JLabel("Work Packages"),gbc);
+		gbc.gridx = 3; // El área de texto empieza en la columna
+		this.add(cmbStaff= new GpComboBox(),gbc);
+		cmbStaff.setPreferredSize(new Dimension(140,30));
+
+		gbc.gridx = 4; // El área de texto empieza en la columna
+		jlblTasks = new JLabel[fieldNames.length];
+		this.add(jlblTasks[i]=new JLabel("Tareas"),gbc);
+		gbc.gridx = 5; // El área de texto empieza en la columna
+		this.add(cmbTasks= new GpComboBox(),gbc);
+		cmbTasks.setPreferredSize(new Dimension(140,30));
+		
+		gbc.gridx = 6; // El área de texto empieza en la columna
+		this.add(btnAsignar = new JButton("Asignar"),gbc);
+		
+		
+		gbc.gridx = 0; // El área de texto empieza en la columna
+		gbc.gridy = 1; // El área de texto empieza en la fila
+		gbc.gridwidth = 2; // El área de texto ocupa x columnas.
+		gbc.gridheight = 1; // El área de texto ocupa x filas.
+		this.add(jtblstaff,gbc);
+		
+		conexion.Conectardb();
+		rp = conexion.ConsultaSQL("SELECT nombre,id_pro FROM PROYECTOS ORDER BY nombre");
+
+		int j=0;
+		try {
+
+			while(rp.next()){
+
+				projects[j]= Integer.toString(rp.getInt(2));
+
+				cmbProyecto.addItem(rp.getString(1));
+				j++;
+				cmbProyecto.setSelectedItem(null);
+
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+	}
+	
+	public void crear_tabla(){
+		conexion.Conectardb();
+		rp = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF ORDER BY nombre");
+		try {
+			rp.next();
+			
+			staff = new String[columnstaff.length][];
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		rp = conexion.ConsultaSQL("SELECT nombre,apellidos FROM STAFF ORDER BY nombre");
+		for(int i =0;i<)
+		
+		//jtblstaff
+	}
+
 }
 
-	
