@@ -95,10 +95,7 @@ public class SpnStaff extends JSplitPane{
         gbc.gridwidth = GridBagConstraints.REMAINDER; //para que despues del label pase a la linea de abajo
         JLabel titulo = new JLabel("Titulo");
         
-        JLabel staff;
-		pnllateral.add(staff = new JLabel("STAFF"),gbc);
-        Font auxFont = titulo.getFont();
-        staff.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),20));
+      
         gbc.weighty = 1.0;	//que la fila de la tabla se estire en vertical, de este modo el label se queda en la parte norte
         gbc.fill = GridBagConstraints.BOTH;	//Para estirar la barra lateral
     	pnllateral.add(jtblLateral,gbc);
