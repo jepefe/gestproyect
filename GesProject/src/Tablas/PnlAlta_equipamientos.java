@@ -66,6 +66,8 @@ public class PnlAlta_equipamientos extends JPanel{
 	JPanel panel = new JPanel();
 	JPanel contenedor = new JPanel();
 	JPanel mesage = new JPanel();
+	int IDwp;
+	ActionListener accion;
 	
 	int permetir_alta = 0;
 	char caracter;
@@ -74,7 +76,7 @@ public class PnlAlta_equipamientos extends JPanel{
 		//Llamamos al medoto de la interfaz
 		crear_interfaz();
 		
-		ActionListener accion = new ActionListener(){
+		accion = new ActionListener(){
 
 		public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -83,11 +85,21 @@ public class PnlAlta_equipamientos extends JPanel{
 					ConexionDb conexdb = new ConexionDb();
 					conexdb.Conectardb();
 					
+					//Cogemos el nombre de wp elegido y guardamos su ID en una variable
+					rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS WHERE nombre like'"+Cmbwp.getSelectedItem()+"'" );
+					try {
+						rs.next();
+						IDwp = rs.getInt(1);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+							
 					// cambiar fecha a sql
 					java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
 
 					conexdb.executeUpdate("INSERT INTO EQUIPAMIENTOS (partner,descripcion,justificacion,wp,coste_total,fecha,compra_alquiler,grado_depreciacion,meses_usara,grado_utilizacion ) VALUES ('"
-							+ Integer.toString(CmbPar.getSelectedIndex()+1)+"','"+textdescripcion.getText()+"','"+textjustificacion.getText()+"','"+Integer.toString(Cmbwp.getSelectedIndex()+1)+"','"+jtxt[0].getText()+"','"+sqlDate1+"','"+Integer.toString(CmbComp.getSelectedIndex())+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"')");
+							+ Integer.toString(CmbPar.getSelectedIndex()+1)+"','"+textdescripcion.getText()+"','"+textjustificacion.getText()+"','"+IDwp+"','"+jtxt[0].getText()+"','"+sqlDate1+"','"+Integer.toString(CmbComp.getSelectedIndex())+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"')");
 					//para ver la id del workpaquets recien creado
 					rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS WHERE nombre like'"+ jtxt[0].getText()+"'" );
 					try {
