@@ -58,32 +58,32 @@ import java.awt.event.KeyEvent;
 public class PnlMod_Sub extends JPanel{
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
-	ConexionDb conexion = new ConexionDb();
-	ResultSet rs,rs2;
+	static ConexionDb conexion = new ConexionDb();
+	static ResultSet rs;
+	ResultSet rs2;
 	JPanel panel = new JPanel();
-	int cuenta = 0;
-	int columnas;
-	String datos[][];
-	String auxdatos[][];
-	String colu[] = {"Nombre","Direccion","Telefono"};
-	String consulta = "SELECT nombre,direccion,telf,cod_sub FROM SUBCONTRATA ORDER BY nombre"; //Esta consulta cargara los datos en la tabla
+	static int cuenta = 0;
+	static int columnas;
+	static String datos[][];
+	static String auxdatos[][];
+	static String colu[] = {"Nombre","Direccion","Telefono"};
+	static String consulta = "SELECT nombre,direccion,telf,cod_sub FROM SUBCONTRATA ORDER BY nombre"; //Esta consulta cargara los datos en la tabla
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
 			{recursos.icono[7],rec.idioma[rec.eleidioma][33]}};
 	JLabel jlbl;
-	PnlAltaSub pnlaltasub = new PnlAltaSub();
 	JTextField jtxt;
 	JButton jbtn,jbtnmodificar,jbtneliminar,jbtnaceptar,jbtncancelar,jbtnactualizar;
-	Boolean llena = new Boolean(false);
+	static Boolean llena = new Boolean(false);
 	Boolean existe= new Boolean(false);
-	String[] fila;
-	JTable jtblLateral;
+	static String[] fila;
+	static JTable jtblLateral;
 	JScrollPane jspntabla;
 	PnlAltaSub mod;
 	FocusListener comp;
 	public static JDialog modificar;
 	static PnlMod_Sub instancia = new PnlMod_Sub(); 
-	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
+	static DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     FocusListener foco;
     KeyListener accion,suprimir;
     ActionListener event;
@@ -98,6 +98,7 @@ public class PnlMod_Sub extends JPanel{
     	
     	//creamos la interfaz
 		crear_interfaz();
+		
         	
     	//evento para borrar el texto del textfield buscar
 		foco = new FocusListener(){
@@ -467,8 +468,7 @@ public class PnlMod_Sub extends JPanel{
 			
 		
     	conexion.cerrarConexion();
-		
-		modificar.setVisible(true);
+    	modificar.setVisible(true);
     	
     }
     
@@ -531,7 +531,7 @@ public class PnlMod_Sub extends JPanel{
     /**
      * con este método podemos actualizar la tabla siempre que lo llamemos
      */
-    public void actualizar_tabla(){
+    public static void actualizar_tabla(){
     	conexion.Conectardb();
     	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
     	rs = conexion.ConsultaSQL(consulta);
