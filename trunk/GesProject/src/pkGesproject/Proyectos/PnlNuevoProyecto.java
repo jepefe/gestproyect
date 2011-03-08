@@ -75,7 +75,6 @@ public class PnlNuevoProyecto extends JScrollPane{
 	int estado = 1;
 	Runnable servdisp;
 	MouseListener mouseListener;
-	PnlModificarProyecto modpro = PnlModificarProyecto.Obtener_Instancia();
 	JTextField txtprecio;
 	Border empty = new EmptyBorder(0,0,0,0);
 	/*
@@ -394,7 +393,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 			e.printStackTrace();
 		}
 
-		modelo2.removeAllElements();
+		//modelo2.removeAllElements();
 		
 		// JLIST
 		modelo = new DefaultListModel(); // modelos JLIST
@@ -616,13 +615,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 					PnlModificarProyecto.modificar.dispose();
 				}
 
-				modpro.cuenta=modpro.contar_reg();
-				modpro.datos = new String[modpro.cuenta][modpro.columnas];
-				modpro.auxdatos = new String[modpro.cuenta][modpro.columnas];
-				modpro.tablemodel = modpro.cargar_tabla(modpro.datos,modpro.columnas);
-				modpro.jtblLateral.setModel(modpro.tablemodel);
-				modpro.jtblLateral.repaint();
-				modpro.llena = false;
+				PnlModificar_Proyecto.actualizar_tabla();
 			}
 		};
 		jbtnaceptar.setActionCommand("aceptar");
