@@ -523,6 +523,9 @@ public class PnlMod_Sub extends JPanel{
 				e1.printStackTrace();
 			}
 			conexion.executeUpdate("UPDATE SUBCONTRATA SET nombre = '"+mod.jtxt[0].getText()+"', sector = '"+sector+"', pais = '"+pais+"', provincia = '"+provincia+"', direccion = '"+mod.jtxt[1].getText()+"', cod_postal = '"+mod.jtxt[2].getText()+"', telf = '"+mod.jtxt[3].getText()+"', observaciones = '"+mod.textarea.getText()+"' WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"' ");
+			actualizar_tabla();
+			JOptionPane.showMessageDialog(aviso,"Subcontrata Actualizada Correctamente");
+			modificar.dispose();
 		}
     }
     /**
