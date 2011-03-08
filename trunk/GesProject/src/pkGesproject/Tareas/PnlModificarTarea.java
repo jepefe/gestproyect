@@ -11,6 +11,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -60,6 +63,7 @@ public class PnlModificarTarea extends JPanel{
 	JTable jtblLateral;
 	JScrollPane jspntabla;
 	public static JDialog modta;
+	MouseListener mouse;
 	
 	//PnlModificarTarea tableOther = new PnlModificarTarea();
     
@@ -272,58 +276,8 @@ public class PnlModificarTarea extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					if(e.getActionCommand().equals("modificar")){
+						modificar();
 						
-						if(jtblLateral.getSelectedRow()==-1){
-							Component aviso = null;
-							JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][103]);
-							
-						}else{
-						
-						modta = new JDialog();
-						
-						modta.add(mod);
-						modta.setBounds(0, 0, 600, 650);
-						modta.setLocationRelativeTo(null);
-						modta.setModal(true);
-						mod.jbtncancelar.setVisible(false);
-						mod.jbtnaceptar.setVisible(false);
-						mod.jbtnaceptarM.setVisible(true);
-						mod.jbtncancelarM.setVisible(true);
-						mod.jtxt[0].removeFocusListener(mod.foco);
-						conexion.Conectardb();
-				    	
-						/**
-						 * Con esto cojes los datos que necesitas mostrar d la tarea que esta seleccionada, osea cuando nombre es eso
-						 **/
-						rs = conexion.ConsultaSQL("SELECT t.nombre,t.presupuesto,t.f_ini, t.f_fin, t.descripcion, t.observaciones"+
-				    	" FROM TAREAS t WHERE t.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
-						int i=1;
-				    	
-							try {
-									
-								//aki lo que te dixo antes, cojes el 1 y el 2 y los metes en el txt 0 y 1
-								rs.next();
-								for(i=1;i<2;i++){
-									mod.jtxt[i-1].setText(rs.getString(i));
-								}
-								mod.jdc1.setDate(rs.getDate(3));
-								mod.jdc2.setDate(rs.getDate(4));
-								mod.textarea.setText(rs.getString(5));
-								mod.textarea2.setText(rs.getString(6));
-								
-								rs=conexion.ConsultaSQL("SELECT w.nombre FROM WORKPAQUETS w INNER JOIN TAREAS t ON w.id_wp = t.id_wp WHERE t.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
-								rs.next();
-								mod.CmbWp.setSelectedItem(rs.getString(1));
-								
-									} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						
-				    	conexion.cerrarConexion();
-						
-						modta.setVisible(true);
-						}
 					}
 					
 					if(e.getActionCommand().equals("eliminar")){
@@ -355,12 +309,23 @@ public class PnlModificarTarea extends JPanel{
             	
             };
             
+            mouse = new MouseAdapter() {
+
+    			public void mouseClicked(MouseEvent e) {
+    				if (e.getClickCount() == 2) {
+    					modificar();
+    					System.out.println("clic");
+    				}
+    			}
+            	
+            };
+            
+            
             jbtnmodificar.setActionCommand("modificar");
             jbtnmodificar.addActionListener(event);
-            
-            
             jbtneliminar.setActionCommand("eliminar");
             jbtneliminar.addActionListener(event);
+            jtblLateral.addMouseListener(mouse);
             
             /*
             jtblLateral.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
@@ -441,6 +406,62 @@ public class PnlModificarTarea extends JPanel{
     	return cuenta;
     	
     }
+    
+    //metodo modificar
+    public void modificar(){
+    	if(jtblLateral.getSelectedRow()==-1){
+			Component aviso = null;
+			JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][103]);
+			
+		}else{
+		
+		modta = new JDialog();
+		
+		modta.add(mod);
+		modta.setBounds(0, 0, 600, 650);
+		modta.setLocationRelativeTo(null);
+		modta.setModal(true);
+		mod.jbtncancelar.setVisible(false);
+		mod.jbtnaceptar.setVisible(false);
+		mod.jbtnaceptarM.setVisible(true);
+		mod.jbtncancelarM.setVisible(true);
+		mod.jtxt[0].removeFocusListener(mod.foco);
+		conexion.Conectardb();
+    	
+		/**
+		 * Con esto cojes los datos que necesitas mostrar d la tarea que esta seleccionada, osea cuando nombre es eso
+		 **/
+		rs = conexion.ConsultaSQL("SELECT t.nombre,t.presupuesto,t.f_ini, t.f_fin, t.descripcion, t.observaciones"+
+    	" FROM TAREAS t WHERE t.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+		int i=1;
+    	
+			try {
+					
+				//aki lo que te dixo antes, cojes el 1 y el 2 y los metes en el txt 0 y 1
+				rs.next();
+				for(i=1;i<2;i++){
+					mod.jtxt[i-1].setText(rs.getString(i));
+				}
+				mod.jdc1.setDate(rs.getDate(3));
+				mod.jdc2.setDate(rs.getDate(4));
+				mod.textarea.setText(rs.getString(5));
+				mod.textarea2.setText(rs.getString(6));
+				
+				rs=conexion.ConsultaSQL("SELECT w.nombre FROM WORKPAQUETS w INNER JOIN TAREAS t ON w.id_wp = t.id_wp WHERE t.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"'");
+				rs.next();
+				mod.CmbWp.setSelectedItem(rs.getString(1));
+				
+					} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
+    	conexion.cerrarConexion();
+		
+		modta.setVisible(true);
+		}
+    }
+    
     
     /**
      * Este metodo devuelve true o false dependiendo si el registro actual de auxdatos indicado por la variable i existe o no 
