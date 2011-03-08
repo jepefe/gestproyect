@@ -37,16 +37,17 @@ public class PnlModificar_Proyecto extends JPanel {
 	
 	public static int id_pro  ;
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
-	GesIdioma rec = GesIdioma.obtener_instancia();
-	ConexionDb conexion = new ConexionDb();
-	ResultSet rs,rs2;
+	static GesIdioma rec = GesIdioma.obtener_instancia();
+	static ConexionDb conexion = new ConexionDb();
+	static ResultSet rs;
+	ResultSet rs2;
 	JPanel panel = new JPanel();
-	int cuenta = 0;
-	int columnas;
-	String datos[][];
-	String auxdatos[][];
-	String colu[] = {rec.idioma[rec.eleidioma][11],rec.idioma[rec.eleidioma][13],rec.idioma[rec.eleidioma][41],rec.idioma[rec.eleidioma][173],rec.idioma[rec.eleidioma][26]};
-	String consulta = "SELECT nombre,presupuesto,descripcion,f_ini,f_fin FROM PROYECTOS ORDER BY nombre"; //Esta consulta cargara los datos en la tabla
+	static int cuenta = 0;
+	static int columnas;
+	static String datos[][];
+	static String auxdatos[][];
+	static String colu[] = {rec.idioma[rec.eleidioma][11],rec.idioma[rec.eleidioma][13],rec.idioma[rec.eleidioma][41],rec.idioma[rec.eleidioma][173],rec.idioma[rec.eleidioma][26]};
+	static String consulta = "SELECT nombre,presupuesto,descripcion,f_ini,f_fin FROM PROYECTOS ORDER BY nombre"; //Esta consulta cargara los datos en la tabla
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
 			{recursos.icono[7],rec.idioma[rec.eleidioma][33]}};
@@ -54,16 +55,16 @@ public class PnlModificar_Proyecto extends JPanel {
 	PnlAltasocio pnlaltasocio = new PnlAltasocio();
 	JTextField jtxt;
 	JButton jbtn,jbtnmodificar,jbtneliminar,jbtnaceptar,jbtncancelar,jbtnactualizar;
-	Boolean llena = new Boolean(false);
+	static Boolean llena = new Boolean(false);
 	Boolean existe= new Boolean(false);
-	String[] fila;
-	JTable jtblLateral;
+	static String[] fila;
+	static JTable jtblLateral;
 	JScrollPane jspntabla;
 	PnlAltasocio mod;
 	FocusListener comp;
 	public static JDialog modificar;
 	static PnlModificar_Proyecto instancia = new PnlModificar_Proyecto(); 
-	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
+	static DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     FocusListener foco;
     KeyListener accion,suprimir;
     ActionListener event;
@@ -515,7 +516,7 @@ public class PnlModificar_Proyecto extends JPanel {
     /**
      * con este método podemos actualizar la tabla siempre que lo llamemos
      */
-    public void actualizar_tabla(){
+    public static void actualizar_tabla(){
     	conexion.Conectardb();
     	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
     	rs = conexion.ConsultaSQL(consulta);
