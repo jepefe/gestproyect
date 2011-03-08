@@ -88,10 +88,7 @@ public class SpnTimesheet extends JSplitPane{
         JLabel titulo = new JLabel("Titulo");
         
         JLabel socio;
-		pnllateral.add(socio = new JLabel("TIMESHEET"),gbc);
-        Font auxFont = titulo.getFont();
-        socio.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),20));
-        gbc.weighty = 1.0;	//que la fila de la tabla se estire en vertical, de este modo el label se queda en la parte norte
+	    gbc.weighty = 1.0;	//que la fila de la tabla se estire en vertical, de este modo el label se queda en la parte norte
         gbc.fill = GridBagConstraints.BOTH;	//Para estirar la barra lateral
     	pnllateral.add(jtblLateral,gbc);
 		
