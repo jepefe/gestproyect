@@ -237,43 +237,8 @@ public class PnlNuevoProyecto extends JScrollPane{
 		jpnl.add((sp),gbc);
 
 		// Conexion 1 BBDD
-		conexion.Conectardb();
-		rs = conexion.ConsultaSQL("SELECT nombre FROM PARTNER");
-		//	rs2 = conexion.ConsultaSQL("Select count(nombre) From PARTNER");
-		// Cuenta para hacer la matriz dinamica
-		try {
-			while(rs.next()){cuenta = cuenta +1;}
-		} catch (SQLException e) {
-			e.printStackTrace();}
-
-		Npartners = new String [cuenta] ;
-
-		//Conexion 2 BBDD
-		rs = conexion.ConsultaSQL("SELECT  nombre FROM PARTNER");
-
-		// Cuenta para hacer la matriz dinamica
-		int i = 0;
-		try {
-			while(rs.next()){
-				Npartners[i] = (rs.getString(1));
-				i++;
-
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-		// JLIST
-		modelo = new DefaultListModel(); // modelos JLIST
-		modelo2 = new DefaultListModel(); 
-
-		listaP = new JList(modelo2); 
-		// for para pasar los datos al modelo
-		for(int j=0; j<cuenta ; j++){
-			modelo2.addElement(Npartners[j]);  
-		}
+		//-------------------------------------------------
+		actualiza_lista();
 
 		// Primer JLIST
 		JScrollPane sp1 = new JScrollPane(listaP);
@@ -397,6 +362,49 @@ public class PnlNuevoProyecto extends JScrollPane{
 			}
 		};
 		listaP2.addMouseListener(mouseListener2);
+	}
+	/**
+	 *  Metodo de actualizar  los JLIST
+	 */
+	public void actualiza_lista(){
+		conexion.Conectardb();
+		rs = conexion.ConsultaSQL("SELECT nombre FROM PARTNER");
+		//	rs2 = conexion.ConsultaSQL("Select count(nombre) From PARTNER");
+		// Cuenta para hacer la matriz dinamica
+		try {
+			while(rs.next()){cuenta = cuenta +1;}
+		} catch (SQLException e) {
+			e.printStackTrace();}
+
+		Npartners = new String [cuenta] ;
+
+		//Conexion 2 BBDD
+		rs = conexion.ConsultaSQL("SELECT  nombre FROM PARTNER");
+
+		// Cuenta para hacer la matriz dinamica
+		int i = 0;
+		try {
+			while(rs.next()){
+				Npartners[i] = (rs.getString(1));
+				i++;
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		modelo2.removeAllElements();
+		
+		// JLIST
+		modelo = new DefaultListModel(); // modelos JLIST
+		modelo2 = new DefaultListModel(); 
+
+		listaP = new JList(modelo2); 
+		// for para pasar los datos al modelo
+		for(int j=0; j<cuenta ; j++){
+			modelo2.addElement(Npartners[j]);  
+		}
 	}
 	/**
 	 *  Metodo donde contiene todas las acciones del panel.
@@ -537,7 +545,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 					}
 				}// Borrar cuando damos al boton borrar datos
 				if( e.getActionCommand().equals("cancelar")){
-
+					
 					System.out.println(jtxt[0].getText());	
 					jtxt[0].setText("");
 					jtxt[1].setText("");
