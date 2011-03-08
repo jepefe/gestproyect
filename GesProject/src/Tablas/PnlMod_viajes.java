@@ -412,9 +412,9 @@ public Boolean buscar_reg(String datos[][],String auxdatos[][],int i,int cuenta,
 		modificar.setBounds(0, 0, 600, 650);
 		modificar.setLocationRelativeTo(null);
 		modificar.setModal(true);
-		mod.jbtnaceptar.removeActionListener(mod.accion);
-		mod.jbtncancelar.removeActionListener(mod.accion);
-		mod.jbtncancelar.setText(rec.idioma[rec.eleidioma][99]);
+		//mod.jbtnaceptar.removeActionListener(mod.accion);
+		//mod.jbtncancelar.removeActionListener(mod.accion);
+		//mod.jbtncancelar.setText(rec.idioma[rec.eleidioma][99]);
 		
 		conexion.Conectardb();
     	rs = conexion.ConsultaSQL("SELECT nombre,direccion,cod_postal,telf,observaciones FROM SUBCONTRATA WHERE cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
@@ -430,15 +430,15 @@ public Boolean buscar_reg(String datos[][],String auxdatos[][],int i,int cuenta,
 				
 				rs=conexion.ConsultaSQL("SELECT SECTORES.sector FROM SECTORES INNER JOIN SUBCONTRATA ON SECTORES.id_sector = SUBCONTRATA.sector WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				rs.next();
-				mod.CmbSector.setSelectedItem(rs.getString(1));
+				//mod.CmbSector.setSelectedItem(rs.getString(1));
 				
 				rs=conexion.ConsultaSQL("SELECT PAIS.pais FROM PAIS INNER JOIN SUBCONTRATA ON PAIS.id_pais = SUBCONTRATA.pais WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				rs.next();
-				mod.CmbPais.setSelectedItem(rs.getString(1));
+				//mod.CmbPais.setSelectedItem(rs.getString(1));
 				
 				rs=conexion.ConsultaSQL("SELECT estado FROM PROVINCIAS INNER JOIN SUBCONTRATA ON PROVINCIAS.id_provincias = SUBCONTRATA.provincia WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				rs.next();
-				mod.CmbProvincia.setSelectedItem(rs.getString(1));
+				//mod.CmbProvincia.setSelectedItem(rs.getString(1));
 			    
 				
 			
@@ -522,7 +522,7 @@ public Boolean buscar_reg(String datos[][],String auxdatos[][],int i,int cuenta,
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		conexion.executeUpdate("UPDATE SUBCONTRATA SET nombre = '"+mod.jtxt[0].getText()+"', sector = '"+sector+"', pais = '"+pais+"', provincia = '"+provincia+"', direccion = '"+mod.jtxt[1].getText()+"', cod_postal = '"+mod.jtxt[2].getText()+"', telf = '"+mod.jtxt[3].getText()+"', observaciones = '"+mod.textarea.getText()+"' WHERE SUBCONTRATA.cod_sub =1 ");
+	//	conexion.executeUpdate("UPDATE SUBCONTRATA SET nombre = '"+mod.jtxt[0].getText()+"', sector = '"+sector+"', pais = '"+pais+"', provincia = '"+provincia+"', direccion = '"+mod.jtxt[1].getText()+"', cod_postal = '"+mod.jtxt[2].getText()+"', telf = '"+mod.jtxt[3].getText()+"', observaciones = '"+mod.textarea.getText()+"' WHERE SUBCONTRATA.cod_sub =1 ");
 
     }
     /**
