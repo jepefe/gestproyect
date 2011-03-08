@@ -61,8 +61,8 @@ public class PnlAltaSub extends JScrollPane{
 	GpComboBox CmbProvincia = new GpComboBox();
 	ConexionDb conexion = new ConexionDb();
 	JTextArea textarea = new JTextArea();
-	ResultSet rs;
-
+	ResultSet rs;	
+	
 	int pais = 0;
 	String idsector;
 	String idpais;
@@ -328,13 +328,15 @@ public class PnlAltaSub extends JScrollPane{
 					conexion.executeUpdate("INSERT INTO SUBCONTRATA (nombre,sector,pais,provincia,direccion,cod_postal,telf,observaciones) VALUES ('"+ 
 							jtxt[0].getText()+"','"+idsector+"','"+idpais+"','"+idprovincia+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+textarea.getText()+"')");
 					JOptionPane.showMessageDialog(mesage,"Subcontrata dada de alta");
-				
+					
+					
 				for(int i=0;i<4;++i) {	
 					jtxt[i].setText("");
 				}
 				CmbProvincia.removeAllItems();
 				textarea.setText(null);
 				mesage.setVisible(false);
+				PnlMod_Sub.actualizar_tabla();
 			
 			}else{
 				alerta.setText(rec.idioma[rec.eleidioma][79]);
