@@ -5,6 +5,7 @@
  */
 package pkGesproject.Becas;
 
+import java.awt.BorderLayout;
 import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -87,9 +88,22 @@ public class PnlPracticas extends JScrollPane{
 	JPanel total = new JPanel();
 	JPanel jpnopae = new JPanel();
 	JPanel jpn = new JPanel();
+	
+	JPanel jpsoloapee = new JPanel();
+	JPanel jpsolalumnos = new JPanel();
+	JPanel jpbecario = new JPanel();
+	JPanel jpinfinter = new JPanel();
+	JPanel jpinffinal = new JPanel();
+	
 	Border blackline;
 	
 	public PnlPracticas (){
+		panel.setSize(new Dimension(300,400));
+		//jpsoloapee.setSize(new Dimension(250,70));
+		jpsolalumnos.setSize(new Dimension(250,200));
+		jpbecario.setSize(new Dimension(100,200));
+		jpinfinter.setSize(new Dimension(250,200));
+		jpinffinal.setSize(new Dimension(250,200));
 		
 		blackline = BorderFactory.createLineBorder(Color.black);
 		uspanel.setBorder(blackline);
@@ -102,11 +116,43 @@ public class PnlPracticas extends JScrollPane{
 		title2 = BorderFactory.createTitledBorder("Datos Becas");
 		panel.setBorder(title2);
 		
+		TitledBorder title3;
+		jpsoloapee.setBorder(blackline);
+		title3 = BorderFactory.createTitledBorder("SOLICITUD AL OAPEE");
+		jpsoloapee.setBorder(title3);
+		
+		TitledBorder title4;
+		jpsolalumnos.setBorder(blackline);
+		title4 = BorderFactory.createTitledBorder("SOLICITUD ALUMNOS");
+		jpsolalumnos.setBorder(title4);
+		
+		TitledBorder title5;
+		jpbecario.setBorder(blackline);
+		title5 = BorderFactory.createTitledBorder("BECARIO");
+		jpbecario.setBorder(title5);
+		
+		TitledBorder title6;
+		jpinfinter.setBorder(blackline);
+		title6 = BorderFactory.createTitledBorder("INFORME INTERMEDIO AL OAPEE");
+		jpinfinter.setBorder(title6);
+		
+		TitledBorder title7;
+		jpinffinal.setBorder(blackline);
+		title7 = BorderFactory.createTitledBorder("INFORME FINAL AL OAPEE");
+		jpinffinal.setBorder(title7);
+		
+		 
+	 
 	
 		this.setBorder(empty);
 		panel.setLayout(new GridBagLayout());
 		uspanel.setLayout(new GridBagLayout());
-		total.setLayout(new GridBagLayout());
+		total.setLayout(new BorderLayout());
+		jpsoloapee.setLayout(new GridBagLayout());
+		jpsolalumnos.setLayout(new GridBagLayout());
+		jpbecario.setLayout(new GridBagLayout());
+		jpinfinter.setLayout(new GridBagLayout());
+		jpinffinal.setLayout(new GridBagLayout());
 		  
 		String[] fieldNames = {
 				rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][28],rec.idioma[rec.eleidioma][197],
@@ -128,8 +174,8 @@ public class PnlPracticas extends JScrollPane{
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.insets = new Insets(20,0,15,0);
+		//gbc.anchor = GridBagConstraints.CENTER;
+		//gbc.insets = new Insets(20,0,15,0);
 		
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(5,10,5,5);
@@ -151,7 +197,9 @@ public class PnlPracticas extends JScrollPane{
 			//System.out.println("Fieldnames = " + fieldNames.length + " / i = " + i);
 			
 		   gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   
+		  if (i>2){
+			   gbc.gridwidth = 5;
+		   }
 
 		   
 		   switch(i){
@@ -178,317 +226,318 @@ public class PnlPracticas extends JScrollPane{
  			//gbc.gridwidth = GridBagConstraints.REMAINDER;
 			 //panel.add(uspanel); 
 			   break;
-		   case (3)://pago recivido
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			//panel.add(Relleno2,gbc);
-	   			//gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			//panel.add(Relleno3,gbc);
-	   			panel.add(Relleno[i] = new JCheckBox());
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+		   case (3)://pago recibido
+			   //gbc.gridwidth = 5;
+			   jpsoloapee.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			jpsoloapee.add(Relleno[i] = new JCheckBox(),gbc);
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			jpsoloapee.add(Relleno[i+20] = new JCheckBox(),gbc);
 	   			Relleno[i+20].setEnabled(false);
-	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			jpsoloapee.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 	   			//gbc.gridwidth = GridBagConstraints.REMAINDER;
 	   			break;
 		   case (4)://documento de solicitud
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   //gbc.gridwidth = 5;
+			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i+20] = new JCheckBox(""));
+		   		jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
 		   		Relleno[i+20].setEnabled(false);
 		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		   		panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+		   		jpsolalumnos.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (5)://registrar nota examen idioma
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   //gbc.gridwidth = 5;
+			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		   		panel.add(jtxt[i] = new JTextField(2),gbc);
+		   		jpsolalumnos.add(jtxt[i] = new JTextField(2),gbc);
 		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   	break;
 		   case (6)://entrega D.N.I
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   //gbc.gridwidth = 5;
+			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpsolalumnos.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 	   			//gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   	break;
 		   case (7)://entrega listado preferencias universidad
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i+20] = new JCheckBox(""));
+		   		jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
 		   		Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpsolalumnos.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (8)://nota proceso de seleccion
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		   		panel.add(jtxt[i] = new JTextField(2),gbc);
+		   		jpsolalumnos.add(jtxt[i] = new JTextField(2),gbc);
 		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (9)://es becario
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   	break;
 		   case (10)://recibe financiaion
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (11)://becario carta aceptacion beca
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpbecario.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (12)://becario entrega DNI
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpbecario.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (13)://becario entrega fotoopia libreeta bancria
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpbecario.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (14)://becario copia tarjeta sanitaria europea
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpbecario.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (15)://becario entrega expediente academico
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpbecario.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (16)://becario datos universidad
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpbecario.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (17)://becario convenio
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpbecario.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (18)://becario acuerdo de formacion
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpbecario.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (19)://becario contratacion seguro
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpbecario.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (20)://becario justificacion
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpbecario.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (21)://pagos realizados al alumno
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   case (21)://becario pagos realizados al alumno
+			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpbecario.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (22)://informe intermedio al oapee
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpinfinter.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpinfinter.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpinfinter.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpinfinter.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (23)://informe cualitatvo
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpinffinal.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpinffinal.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpinffinal.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpinffinal.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (24)://informe cumplimiento de la CUE
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpinffinal.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpinffinal.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpinffinal.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpinffinal.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (25)://excel
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpinffinal.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpinffinal.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpinffinal.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpinffinal.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (26)://entrega curriculum
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpsolalumnos.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (27)://carta de motivacion
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpsolalumnos.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (28)://listado de empresas
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpsolalumnos.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (29)://expediente academico
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpsolalumnos.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
-		   case (30)://carta aceptacion empresa
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+		   case (30)://becario carta aceptacion empresa
+			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpbecario.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (31)://datos empresa
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpbecario.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (32)://acuerdo de practicas
-			   panel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
+			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		panel.add(Relleno[i] = new JCheckBox(""));
+		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			panel.add(Relleno[i+20] = new JCheckBox(""));
+	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
-	   			panel.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
+	   			jpbecario.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   		
@@ -497,7 +546,17 @@ public class PnlPracticas extends JScrollPane{
 
 		}//fin for
 
-
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		
+		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.insets = new Insets(30,10,5,5);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		
+		panel.add(jpsoloapee,gbc);
+		panel.add(jpsolalumnos,gbc);
+		jpsolalumnos.add(jpbecario,gbc);
+		panel.add(jpinfinter,gbc);
+		panel.add(jpinffinal,gbc);
 	  /*  
 		**
 		 * Creamos los cuatro botones para este panel 
@@ -511,14 +570,21 @@ public class PnlPracticas extends JScrollPane{
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
 		
-
 		
-		uspanel.setVisible(true);
-		panel.setVisible(true);
-		total.add(uspanel,gbc);
-		total.add(panel,gbc);
+		
 		total.setVisible(true);
 		this.setViewportView(total);
+		jpsolalumnos.setVisible(true);
+		jpbecario.setVisible(true);
+		jpinfinter.setVisible(true);
+		jpinffinal.setVisible(true);
+		total.add(uspanel,BorderLayout.NORTH);
+		total.add(panel,BorderLayout.CENTER);
+		uspanel.setVisible(true);
+		panel.setVisible(true);
+		jpsoloapee.setVisible(true);
+		
+		
 		//this.setViewportView(panel);
 		
 	}
