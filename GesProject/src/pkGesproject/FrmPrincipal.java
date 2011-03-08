@@ -369,7 +369,7 @@ public class FrmPrincipal extends JFrame {
 							}
 							}
 						jlbactual.setVisible(true);
-						jlbactual.setFont(new Font(Font.SANS_SERIF, Font.BOLD,48));
+						jlbactual.setFont(new Font(Font.SANS_SERIF, Font.BOLD,34));
 						jlbactual.setText(cadena);
 						jlbactual.setLocation(abstractButton.getX()+100,abstractButton.getY() );
 						abstractButton.setLocation(40,abstractButton.getY());
