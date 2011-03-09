@@ -35,7 +35,6 @@ public class SpnTareas extends JSplitPane{
 	Component[] panlsStaff = {
 			new PnlAltatarea(),
 			 miscroll=new JScrollPane(modificar),
-			 new PnlImportarExportar(),
 			new PnlSendMail(),
 			new PnlAsignacionStaff()};
 
@@ -45,7 +44,6 @@ public class SpnTareas extends JSplitPane{
 		miscroll.setBorder(empty);
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[22],rec.idioma[rec.eleidioma][32]},
 				{recursos.icono[23],rec.idioma[rec.eleidioma][33]},
-				{recursos.icono[24],rec.idioma[rec.eleidioma][34]},
 				{recursos.icono[24],"Mail"},
 				{recursos.icono[24],rec.idioma[rec.eleidioma][177]}};
 		

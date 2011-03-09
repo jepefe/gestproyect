@@ -41,8 +41,7 @@ public class SpnStaff extends JSplitPane{
 	Border empty = new EmptyBorder(0,0,0,0);
 	Component[] panlsStaff = {
 	 new pnlAlta_staff(),
-	 miscroll=new JScrollPane(new PnlModificacion_Staff()),
-	 new JPanel()};
+	 miscroll=new JScrollPane(new PnlModificacion_Staff())};
 	
 	public SpnStaff(){
 		this.setOneTouchExpandable(true);
@@ -50,8 +49,7 @@ public class SpnStaff extends JSplitPane{
 		
 		miscroll.setBorder(empty);
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][14]},
-				{recursos.icono[6],rec.idioma[rec.eleidioma][15]},
-				{recursos.icono[7],rec.idioma[rec.eleidioma][16]}};
+				{recursos.icono[6],rec.idioma[rec.eleidioma][15]}};
 		/*
 		 * Ponemos propiedades adecuadas al toolbar
 		 */

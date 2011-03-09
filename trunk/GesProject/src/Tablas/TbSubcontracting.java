@@ -22,7 +22,6 @@ public class TbSubcontracting extends JTabbedPane{
 		
 		this.add(rec.idioma[rec.eleidioma][38],modificar = new JScrollPane(new PnlMod_Sub()));
 		modificar.setBorder(empty);
-		this.add(rec.idioma[rec.eleidioma][88],new JPanel());
 		
 		
 	}
