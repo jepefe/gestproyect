@@ -234,35 +234,35 @@ public class PnlPracticas extends JScrollPane{
 	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpsoloapee.add(Relleno[i+20] = new JCheckBox(),gbc);
 	   			Relleno[i+20].setEnabled(false);
-	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
 	   			jpsoloapee.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 	   			//gbc.gridwidth = GridBagConstraints.REMAINDER;
 	   			break;
 		   case (4)://documento de solicitud
 			   //gbc.gridwidth = 5;
 			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
 		   		Relleno[i+20].setEnabled(false);
 		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		jpsolalumnos.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (5)://registrar nota examen idioma
 			   //gbc.gridwidth = 5;
 			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		jpsolalumnos.add(jtxt[i] = new JTextField(2),gbc);
-		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   	break;
 		   case (6)://entrega D.N.I
 			   //gbc.gridwidth = 5;
 			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -271,9 +271,9 @@ public class PnlPracticas extends JScrollPane{
 			   	break;
 		   case (7)://entrega listado preferencias universidad
 			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
 		   		Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -284,7 +284,7 @@ public class PnlPracticas extends JScrollPane{
 			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		jpsolalumnos.add(jtxt[i] = new JTextField(2),gbc);
-		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		break;
 		   case (9)://es becario
 			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
@@ -300,9 +300,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (11)://becario carta aceptacion beca
 			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -311,9 +311,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (12)://becario entrega DNI
 			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -322,9 +322,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (13)://becario entrega fotoopia libreeta bancria
 			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -333,9 +333,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (14)://becario copia tarjeta sanitaria europea
 			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -344,9 +344,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (15)://becario entrega expediente academico
 			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -355,9 +355,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (16)://becario datos universidad
 			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -366,9 +366,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (17)://becario convenio
 			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -377,9 +377,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (18)://becario acuerdo de formacion
 			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -388,9 +388,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (19)://becario contratacion seguro
 			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -399,9 +399,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (20)://becario justificacion
 			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -410,9 +410,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (21)://becario pagos realizados al alumno
 			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -421,9 +421,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (22)://informe intermedio al oapee
 			   jpinfinter.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpinfinter.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpinfinter.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -432,9 +432,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (23)://informe cualitatvo
 			   jpinffinal.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpinffinal.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpinffinal.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -443,9 +443,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (24)://informe cumplimiento de la CUE
 			   jpinffinal.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpinffinal.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpinffinal.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -454,9 +454,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (25)://excel
 			   jpinffinal.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpinffinal.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpinffinal.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -465,9 +465,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (26)://entrega curriculum
 			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -476,9 +476,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (27)://carta de motivacion
 			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -487,9 +487,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (28)://listado de empresas
 			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -498,9 +498,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (29)://expediente academico
 			   jpsolalumnos.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -509,9 +509,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (30)://becario carta aceptacion empresa
 			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -520,9 +520,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (31)://datos empresa
 			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -531,9 +531,9 @@ public class PnlPracticas extends JScrollPane{
 		   		break;
 		   case (32)://acuerdo de practicas
 			   jpbecario.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
-		   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
-	   			gbc.gridwidth = GridBagConstraints.RELATIVE;
+	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
 	   			Relleno[i+20].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
