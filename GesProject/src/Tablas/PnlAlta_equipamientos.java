@@ -52,8 +52,8 @@ public class PnlAlta_equipamientos extends JPanel{
 	GpComboBox Cmbwp = new GpComboBox();
 	GpComboBox CmbComp = new GpComboBox();
 	ConexionDb conexion = new ConexionDb();
-	JTextArea textdescripcion = new JTextArea();
-	JTextArea textjustificacion = new JTextArea();
+	JTextArea textdescripcion = (new JTextArea(3,13));
+	JTextArea textjustificacion = (new JTextArea(3,13));
 	ResultSet rs;
 	Border empty = new EmptyBorder(0,0,0,0);
 	String[] fieldNames = {
@@ -246,6 +246,7 @@ public class PnlAlta_equipamientos extends JPanel{
 		    	LimiteDocumento lpd2 = new LimiteDocumento(200); // Limite JTextArea
 		    	textjustificacion.setDocument(lpd2);
 		    	textjustificacion.setLineWrap(true);
+		    	
 		    	JScrollPane sp2 = new JScrollPane(textjustificacion,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 		    	JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		    	panel.add((sp2),gbc);
