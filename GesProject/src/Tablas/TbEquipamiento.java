@@ -16,7 +16,7 @@ public class TbEquipamiento extends JTabbedPane{
 	public TbEquipamiento(){
 		this.add(rec.idioma[rec.eleidioma][87],Alta=new JScrollPane(new PnlAlta_equipamientos()));
 		this.add(rec.idioma[rec.eleidioma][38],modificacion=new JScrollPane(new PnlMod_equipamientos()));
-		this.add(rec.idioma[rec.eleidioma][88],new JPanel());
+
 		
 		Alta.setBorder(empty);
 	}

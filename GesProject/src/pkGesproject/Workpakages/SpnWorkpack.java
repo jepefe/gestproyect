@@ -35,16 +35,14 @@ public class SpnWorkpack extends JSplitPane{
 	JScrollPane scroll;
 	Component[] panlsStaff = {
 			altawp,
-			scroll = new JScrollPane(modwp),
-			new JScrollPane(new JPanel())};
+			scroll = new JScrollPane(modwp)};
 
 	public SpnWorkpack(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
 		scroll.setBorder(empty);
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[19],rec.idioma[rec.eleidioma][29]},
-				{recursos.icono[20],rec.idioma[rec.eleidioma][30]},
-				{recursos.icono[21],rec.idioma[rec.eleidioma][31]}};
+				{recursos.icono[20],rec.idioma[rec.eleidioma][30]}};
 		
 		
 		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {
