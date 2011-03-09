@@ -20,7 +20,6 @@ import javax.swing.table.DefaultTableModel;
 import pkGesproject.GesIdioma;
 import pkGesproject.RsGesproject;
 import pkGesproject.Avisos.PnlSendMail;
-import pkGesproject.Proyectos.PnlModificarProyecto;
 
 public class SpnTareas extends JSplitPane{
 //berna es un cabron
