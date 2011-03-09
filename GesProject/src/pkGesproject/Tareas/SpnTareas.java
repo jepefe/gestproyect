@@ -30,12 +30,12 @@ public class SpnTareas extends JSplitPane{
 	JTable jtblLateral;
 	Border empty = new EmptyBorder(0,0,0,0);
 	PnlModificarTarea modificar = PnlModificarTarea.Obtener_Instancia();
-	JScrollPane miscroll;
+	JScrollPane miscroll,pnlasignacion;
 	Component[] panlsStaff = {
 			new PnlAltatarea(),
 			 miscroll=new JScrollPane(modificar),
 			new PnlSendMail(),
-			new PnlAsignacionStaff()};
+			pnlasignacion = new JScrollPane(new PnlAsignacionStaff())};
 
 	public SpnTareas(){
 		this.setOneTouchExpandable(true);
