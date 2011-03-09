@@ -1,4 +1,5 @@
 package pkGesproject;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -19,7 +20,13 @@ public class ApGesproject {
 			//GesIdioma nidioma = new GesIdioma();
 		
 			//nidioma.eleccionidioma();
-			new FrmLogin("Login - Gesproject", 300,200);
+			Runnable doCreateAndShowGUI = new Runnable() {
+			    public void run() {
+			    	new FrmLogin("Login - Gesproject", 300,200);
+			    }
+			};
+			SwingUtilities.invokeLater(doCreateAndShowGUI);
+			
 			
 			//FrmPrincipal vppal = new FrmPrincipal();
 		
