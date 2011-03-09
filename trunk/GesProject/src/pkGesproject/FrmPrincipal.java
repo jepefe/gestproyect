@@ -39,6 +39,7 @@ import pkGesproject.Proyectos.SpnProyectos;
 import pkGesproject.Socios.SpnSocios;
 import pkGesproject.Staff.SpnStaff;
 import pkGesproject.Tareas.SpnTareas;
+import pkGesproject.TimeSheet.PnlAlta_TimeSheet;
 import pkGesproject.TimeSheet.SpnTimesheet;
 import pkGesproject.Workpakages.SpnWorkpack;
 import pkGesproject.informes.SpnInformes;
@@ -88,7 +89,8 @@ public class FrmPrincipal extends JFrame {
 	SpnWorkpack spnworkpack;
 	SpnTareas spntareas;
 	SpnTablas spntablas;
-	SpnTimesheet spntimesheet;
+	//SpnTimesheet spntimesheet;
+	JScrollPane pnltimesheet;
 	SpnInformes spninformes;
 	FrmNuevapalabra nueva;
 	SpnPreferencias spnpreferencias;
@@ -120,8 +122,7 @@ public class FrmPrincipal extends JFrame {
 		jbtnProyectos.setHorizontalTextPosition(SwingConstants.CENTER);
 		jbtnProyectos.setText(rec.idioma[rec.eleidioma][55]);
 		
-		jbtnWorkpack.setVerticalTextPosition(SwingConstants.BOTTOM);
-		jbtnWorkpack.setHorizontalTextPosition(SwingConstants.CENTER);
+		
 		
 		jbtnTareas.setVerticalTextPosition(SwingConstants.BOTTOM);
 		jbtnTareas.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -154,6 +155,7 @@ public class FrmPrincipal extends JFrame {
 		switch(recursos.permisos){
 		
 		case 0:{
+			
 		recursos.progresocarga =1;
 		recursos.txtcarga = rec.idioma[rec.eleidioma][186];
 		spnstaff = new SpnStaff();
@@ -174,16 +176,16 @@ public class FrmPrincipal extends JFrame {
 		spntablas = new SpnTablas();
 		recursos.progresocarga =9;
 		recursos.txtcarga = rec.idioma[rec.eleidioma][192];
-		spntimesheet = new SpnTimesheet();
+		pnltimesheet = new JScrollPane(new PnlAlta_TimeSheet());
+		pnltimesheet = new JScrollPane(new PnlAlta_TimeSheet());
 		recursos.progresocarga =10;
 		recursos.txtcarga = rec.idioma[rec.eleidioma][193];
-		nueva = new FrmNuevapalabra();
+	//	nueva = new FrmNuevapalabra();
 		pnlcontactos = new PnlContactos();
-		
-		//a falta de progres bar
 		spninformes = new SpnInformes();
 		spnpreferencias = new SpnPreferencias();
 		spnbecas = new SpnBecas();
+		
 		jtlbFrmppal.add(jbtnInicio);
 		jbtnInicio.setSelected(true);
 		jtlbFrmppal.add(jbtnUsuarios);
@@ -196,14 +198,14 @@ public class FrmPrincipal extends JFrame {
 		jtlbFrmppal.add(jbtnInformes);
 		jtlbFrmppal.add(jbtnBecas);
 		jtlbFrmppal.add(jbtnPreferencias);
-		jtlbFrmppal.add(jbtnAgregar);
-		
+		//jtlbFrmppal.add(jbtnAgregar);
+		repaint();
 		
 		}break;
 		case 1:{
 			jtlbFrmppal.add(jbtnInicio);
 			recursos.txtcarga = "Loading  Time Sheets";
-			spntimesheet = new SpnTimesheet();
+			pnltimesheet = new JScrollPane(new PnlAlta_TimeSheet());
 			jtlbFrmppal.add(jbtnTimesheet);
 			add(ppal);
 			recursos.progresocarga =10;
@@ -214,7 +216,7 @@ public class FrmPrincipal extends JFrame {
 		case 2:{
 			jtlbFrmppal.add(jbtnInicio);
 			recursos.txtcarga = "Loading  Time Sheets";
-			spntimesheet = new SpnTimesheet();
+			pnltimesheet = new JScrollPane(new PnlAlta_TimeSheet());
 			recursos.progresocarga =10;
 			jtlbFrmppal.add(jbtnTimesheet);
 			pnlcontactos = new PnlContactos();
@@ -223,7 +225,7 @@ public class FrmPrincipal extends JFrame {
 		case 3:{
 			jtlbFrmppal.add(jbtnInicio);
 			recursos.txtcarga = "Loading  Time Sheets";
-			spntimesheet = new SpnTimesheet();
+			pnltimesheet = new JScrollPane(new PnlAlta_TimeSheet());
 			recursos.progresocarga =10;
 			jtlbFrmppal.add(jbtnTimesheet);
 			pnlcontactos = new PnlContactos();
@@ -242,7 +244,7 @@ public class FrmPrincipal extends JFrame {
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		jbtnAgregar.setVisible(true);
-		jbtnPreferencias.setVisible(false);
+		jbtnPreferencias.setVisible(true);
 		super.setBounds(0, 0, recursos.getFrmppalWidth(), recursos.getFrmppalHeight());
 		this.setTitle(recursos.APNAME);
 		this.setLocationRelativeTo(null);
@@ -414,7 +416,7 @@ public class FrmPrincipal extends JFrame {
 						
 					if(boton.getX()<posicionxbtn && ((boton.getX()+1)<posicionxbtn)){
 					
-						boton.setLocation(boton.getX()+45,boton.getY());
+						boton.setLocation(boton.getX()+60,boton.getY());
 										
 					}else{
 						timer.stop();
@@ -559,7 +561,7 @@ public class FrmPrincipal extends JFrame {
 	         
 	         if (e.getActionCommand().equals("timesheet")){
 	        	 jbtnTimesheet.setSelected(true);
-	        	 jscpprincipal.setLeftComponent(spntimesheet);
+	        	 jscpprincipal.setLeftComponent(pnltimesheet);
 	        	repaint();
 	        	validate();
 	         }
