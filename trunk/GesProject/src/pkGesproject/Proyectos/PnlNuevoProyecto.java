@@ -572,7 +572,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 					java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 
 					if (sqlDate1.getTime()< sqlDate2.getTime()){
-						conexdb.executeUpdate("UPDATE PROYECTOS SET nombre='"+ jtxt[0].getText()+"', descripcion='"+textarea.getText()+"',estado='"+(CbEstado.getSelectedIndex()+1)+"',presupuesto='"+txtprecio.getText()+"',f_ini='"+sqlDate1+"',f_fin='"+sqlDate2+"',num_contrato='"+ jtxt[1].getText()+"',action='"+(CbAccion.getSelectedIndex()+1)+ "'WHERE id_pro ="+PnlModificarProyecto.id_pro+"");			
+						conexdb.executeUpdate("UPDATE PROYECTOS SET nombre='"+ jtxt[0].getText()+"', descripcion='"+textarea.getText()+"',estado='"+(CbEstado.getSelectedIndex()+1)+"',presupuesto='"+txtprecio.getText()+"',f_ini='"+sqlDate1+"',f_fin='"+sqlDate2+"',num_contrato='"+ jtxt[1].getText()+"',action='"+(CbAccion.getSelectedIndex()+1)+ "'WHERE id_pro ="+PnlModificar_Proyecto.id_pro+"");			
 					}
 					for (int i = 0 ; i<listaP.getModel().getSize(); i++){
 
@@ -584,7 +584,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 						} catch (SQLException d) {
 							// TODO Auto-generated catch block
 							d.printStackTrace();}
-						conexdb.executeUpdate("DELETE FROM PARTNER_PROYECTOS WHERE cod_part = "+id_partner2+" AND id_pro="+PnlModificarProyecto.id_pro+"");
+						conexdb.executeUpdate("DELETE FROM PARTNER_PROYECTOS WHERE cod_part = "+id_partner2+" AND id_pro="+PnlModificar_Proyecto.id_pro+"");
 
 					}//fin for
 					for (int i = 0 ; i<listaP2.getModel().getSize(); i++){

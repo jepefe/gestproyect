@@ -41,7 +41,6 @@ import pkGesproject.GesIdioma;
 import pkGesproject.GpComboBox;
 import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
-import pkGesproject.Proyectos.PnlModificarProyecto;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

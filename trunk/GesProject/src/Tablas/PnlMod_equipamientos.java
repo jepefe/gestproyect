@@ -31,7 +31,6 @@ import javax.swing.table.DefaultTableModel;
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
 import pkGesproject.RsGesproject;
-import pkGesproject.Proyectos.PnlModificarProyecto;
 import pkGesproject.Proyectos.PnlNuevoProyecto;
 
 public class PnlMod_equipamientos extends JPanel {
