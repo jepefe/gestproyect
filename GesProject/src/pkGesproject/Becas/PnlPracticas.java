@@ -125,42 +125,42 @@ public class PnlPracticas extends JScrollPane{
 		blackline = BorderFactory.createLineBorder(Color.black);
 		uspanel.setBorder(blackline);
 		TitledBorder title;
-		title = BorderFactory.createTitledBorder("Datos Personales");
+		title = BorderFactory.createTitledBorder(rec.idioma[rec.eleidioma][227]);
 		uspanel.setBorder(title);
 		
 		panel.setBorder(blackline);
 		TitledBorder title2;
-		title2 = BorderFactory.createTitledBorder("Datos Becas");
+		title2 = BorderFactory.createTitledBorder(rec.idioma[rec.eleidioma][222]);
 		panel.setBorder(title2);
 		
 		TitledBorder title3;
 		jpsoloapee.setBorder(blackline);
-		title3 = BorderFactory.createTitledBorder("SOLICITUD AL OAPEE");
+		title3 = BorderFactory.createTitledBorder(rec.idioma[rec.eleidioma][223]);
 		jpsoloapee.setBorder(title3);
 		
 		TitledBorder title4;
 		jpsolalumnos.setBorder(blackline);
-		title4 = BorderFactory.createTitledBorder("SOLICITUD ALUMNOS");
+		title4 = BorderFactory.createTitledBorder(rec.idioma[rec.eleidioma][224]);
 		jpsolalumnos.setBorder(title4);
 		
 		TitledBorder title5;
 		jpbecario.setBorder(blackline);
-		title5 = BorderFactory.createTitledBorder("BECARIO");
+		title5 = BorderFactory.createTitledBorder(rec.idioma[rec.eleidioma][163]);
 		jpbecario.setBorder(title5);
 		
 		TitledBorder title6;
 		jpinfinter.setBorder(blackline);
-		title6 = BorderFactory.createTitledBorder("INFORME INTERMEDIO AL OAPEE");
+		title6 = BorderFactory.createTitledBorder(rec.idioma[rec.eleidioma][225]);
 		jpinfinter.setBorder(title6);
 		
 		TitledBorder title7;
 		jpinffinal.setBorder(blackline);
-		title7 = BorderFactory.createTitledBorder("INFORME FINAL AL OAPEE");
+		title7 = BorderFactory.createTitledBorder(rec.idioma[rec.eleidioma][226]);
 		jpinffinal.setBorder(title7);
 		
 		TitledBorder title8;
 		jpradio.setBorder(blackline);
-		title8 = BorderFactory.createTitledBorder("TIPO DE BECA");
+		title8 = BorderFactory.createTitledBorder(rec.idioma[rec.eleidioma][221]);
 		jpradio.setBorder(title8);
 		
 		/**
@@ -222,21 +222,21 @@ public class PnlPracticas extends JScrollPane{
 		jtxtra = new JLabel[8];
 		
 		jpradio.add(rbeeres);
-		jpradio.add(jtxtra[0]=new JLabel("Erasmus Estudios"));
+		jpradio.add(jtxtra[0]=new JLabel(rec.idioma[rec.eleidioma][152]));
 	    jpradio.add(rbeerpr);
-	    jpradio.add(jtxtra[1]=new JLabel("Erasmus Prácticas"));
+	    jpradio.add(jtxtra[1]=new JLabel(rec.idioma[rec.eleidioma][153]));
 	    jpradio.add(rbeermodo);
-	    jpradio.add(jtxtra[2]=new JLabel("Erasmus Movilidad Docente"));
+	    jpradio.add(jtxtra[2]=new JLabel(rec.idioma[rec.eleidioma][153]));
 	    jpradio.add(rbeermonodo);
-	    jpradio.add(jtxtra[3]=new JLabel("Erasmus Movilidad no Docente"));
+	    jpradio.add(jtxtra[3]=new JLabel(rec.idioma[rec.eleidioma][154]));
 	    jpradio.add(rbeerco);
-	    jpradio.add(jtxtra[4]=new JLabel("Erasmus Conselleria"));
+	    jpradio.add(jtxtra[4]=new JLabel(rec.idioma[rec.eleidioma][158]));
 	    jpradio.add(rbemi);
-	    jpradio.add(jtxtra[5]=new JLabel("Ministerio"));
+	    jpradio.add(jtxtra[5]=new JLabel(rec.idioma[rec.eleidioma][155]));
 	    jpradio.add(rbecofc);
-	    jpradio.add(jtxtra[6]=new JLabel("Conselleria"));
+	    jpradio.add(jtxtra[6]=new JLabel(rec.idioma[rec.eleidioma][156]));
 	    jpradio.add(rotmo);
-	    jpradio.add(jtxtra[7]=new JLabel("Otra Movilidad"));
+	    jpradio.add(jtxtra[7]=new JLabel(rec.idioma[rec.eleidioma][157]));
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		//gbc.anchor = GridBagConstraints.CENTER;

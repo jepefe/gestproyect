@@ -118,9 +118,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 		Jproyecto.setBorder(blackline);
 		Jtarea.setBorder(blackline);
 		TitledBorder title;
-		title = BorderFactory.createTitledBorder("Proyecto");
+		title = BorderFactory.createTitledBorder(rec.idioma[rec.eleidioma][55]);
 		Jproyecto.setBorder(title);
-		title = BorderFactory.createTitledBorder("Tarea");
+		title = BorderFactory.createTitledBorder(rec.idioma[rec.eleidioma][136]);
 		Jtarea.setBorder(title);
 		
 		
@@ -181,9 +181,9 @@ public class PnlAlta_TimeSheet extends JPanel{
 		
 		
 		for (int cont=0; cont < 3; cont++){
-		System.out.println(colu[cont]);
+		//System.out.println(colu[cont]);
 		}
-		System.out.println("HOLAAAAAAAAA");
+		
 		this.setLayout(new GridBagLayout());
 		Jproyecto.setLayout(new GridBagLayout());
 		Jtarea.setLayout(new GridBagLayout());
@@ -279,7 +279,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 					gbt.gridy = 0; // El área de texto empieza en la fila
 				   Jproyecto.add(jlblpro[i]=new JLabel(fieldNamesproyecto[i]),gbt);
 				   //gbc.gridwidth = GridBagConstraints.REMAINDER;
-				   System.out.println("Entra contract numbre");
+				   //System.out.println("Entra contract numbre");
 				   gbt.insets = new Insets(10,0,10,0);
 				   gbt.gridx = 3; // El área de texto empieza en la fila
 				   Jproyecto.add(jtxtpro[i]=new JTextField(fieldWidths[i]),gbt);
@@ -291,7 +291,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 					gbt.gridy = 1; // El área de texto empieza en la fila
 				   Jproyecto.add(jlblpro[i]=new JLabel(fieldNamesproyecto[i]),gbt);
 				   //gbc.gridwidth = GridBagConstraints.REMAINDER;
-				   System.out.println("Entra combo institucion");
+				   //System.out.println("Entra combo institucion");
 				   gbt.insets = new Insets(10,0,10,0);
 				   gbt.gridx = 1; // El área de texto empieza en la columna
 				   Jproyecto.add(CmbPart,gbt);
@@ -319,7 +319,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 				gbt.gridy = 1; // El área de texto empieza en la fila
 				Jproyecto.add(jlblpro[i]=new JLabel(fieldNamesproyecto[i]),gbt);
 				//gbc.gridwidth = GridBagConstraints.REMAINDER;
-				System.out.println("Entra combo staff");
+				//System.out.println("Entra combo staff");
 				gbt.insets = new Insets(10,0,10,0);
 				gbt.gridx = 3; // El área de texto empieza en la columna
 			   	Jproyecto.add(CmbStaff,gbt);
@@ -437,7 +437,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 					gbt.gridy = 1; // El área de texto empieza en la fila
 					//gbc.gridwidth = GridBagConstraints.RELATIVE;
 					Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbt);
-					System.out.println("Entra combo nombre tareas");
+					//System.out.println("Entra combo nombre tareas");
 					//gbc.gridwidth = GridBagConstraints.REMAINDER;
 					gbt.insets = new Insets(10,0,10,0);
 					gbt.gridx = 1; // El área de texto empieza en la columna
@@ -451,7 +451,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   		gbt.gridx = 3; // El área de texto empieza en la columna
 			   		gbt.insets = new Insets(0,0,0,0);
 			   		gbt.anchor = GridBagConstraints.WEST;
-			   		Jtarea.add(jlblta[i]=new JLabel("Automático"),gbt);
+			   		Jtarea.add(jlblta[i]=new JLabel(rec.idioma[rec.eleidioma][219]),gbt);
 			   		
 			   		gbt.gridx = 4; // El área de texto empieza en la columna
 			   		gbt.anchor = GridBagConstraints.EAST;
@@ -459,7 +459,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   		
 			   		gbt.gridx = 5; // El área de texto empieza en la columna
 			   		gbt.anchor = GridBagConstraints.WEST;
-			   		Jtarea.add(jlblta[i]=new JLabel("Manual"),gbt);
+			   		Jtarea.add(jlblta[i]=new JLabel(rec.idioma[rec.eleidioma][220]),gbt);
 			   		jtxtta[i].setVisible(false);
 					JTextFieldLimit ljtxtta= new JTextFieldLimit(40);
 					jtxtta[i].setDocument(ljtxtta);
@@ -484,7 +484,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 				gbt.gridy = 1; // El área de texto empieza en la fila
 			   	//gbc.gridwidth = GridBagConstraints.RELATIVE;
 			   	Jtarea.add(jlblta[i]=new JLabel(fieldNamestarea[i]),gbt);
-				System.out.println("Entra combo nombre workpaquets");
+				//System.out.println("Entra combo nombre workpaquets");
 				//gbc.gridwidth = GridBagConstraints.REMAINDER;
 				gbt.insets = new Insets(10,0,10,0);
 				gbt.gridx =3; // El área de texto empieza en la columna
@@ -601,7 +601,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					System.out.println(nombrepro);
+					//System.out.println(nombrepro);
 					jtxtpro[1].setText(nombrepro);
 					conexion.cerrarConexion();
 					
@@ -726,14 +726,14 @@ public class PnlAlta_TimeSheet extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO metodo acction para combo wp
-				System.out.println("compruebo campo nulo");
+				//System.out.println("compruebo campo nulo");
 				if (CmbTareas.getSelectedItem()!= null){
-					System.out.println("el campo no es nulo");
+					//System.out.println("el campo no es nulo");
 					if (vacio == 1){
-						System.out.println("pongo tares a null");
+						//System.out.println("pongo tares a null");
 						CmbTareas.setSelectedItem(null);
 					}else{
-						System.out.println("pongo el campo a cero");
+						//System.out.println("pongo el campo a cero");
 						vacio = 1;
 					}
 				}
@@ -924,7 +924,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 					try {
 						rs.next();
 						codpart = rs.getInt(1);
-						System.out.println("el codigo de partner es "+codpart);
+						//System.out.println("el codigo de partner es "+codpart);
 					} catch (SQLException e2) {
 						// TODO Auto-generated catch block
 						e2.printStackTrace();
