@@ -160,11 +160,11 @@ public class PnlAltasocio extends JScrollPane{
 			jtxt[0].setDocument(ljtxt0);
 			break;
 			case (1):
-				LimitadorDeDocumento ljtxt1 = new LimitadorDeDocumento(30);
+				LimitadorDeDocumento ljtxt1 = new LimitadorDeDocumento(50);
 			jtxt[1].setDocument(ljtxt1);
 			break;
 			case (2):
-				LimitadorDeDocumento ljtxt2 = new LimitadorDeDocumento(11);
+				LimitadorDeDocumento ljtxt2 = new LimitadorDeDocumento(7);
 			jtxt[2].setDocument(ljtxt2);
 			break;
 			case (3):
@@ -220,7 +220,7 @@ public class PnlAltasocio extends JScrollPane{
 						if(((caracter < 'a') ||(caracter > 'z')) && 
 								((caracter < 'A') ||(caracter > 'Z')) &&
 								(caracter != KeyEvent.VK_BACK_SPACE) &&
-								(caracter != '+') && (caracter != '(') && (caracter != ')')) {
+								(caracter != KeyEvent.VK_SPACE) && ((caracter < '0') ||(caracter > '9'))) {
 							e.consume();  
 						}
 					}

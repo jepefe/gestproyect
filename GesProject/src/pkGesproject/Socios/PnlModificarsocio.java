@@ -449,7 +449,8 @@ public class PnlModificarsocio extends JPanel{
      */
     public void eliminar(){
     	Component aviso = null;
-		int s = JOptionPane.showConfirmDialog(aviso, "Esta seguro??");
+		int s = JOptionPane.showOptionDialog(aviso, "Esta seguro??",null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+		
 		
 		if(s==0){
 			conexion.Conectardb();
