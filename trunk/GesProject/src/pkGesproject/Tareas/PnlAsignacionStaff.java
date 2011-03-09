@@ -105,11 +105,15 @@ public class PnlAsignacionStaff extends JPanel{
 	JTable jtblstaff = new JTable(),jtblrolstaff= new JTable();
 	DefaultTableModel modelstaff = new DefaultTableModel(null,columnstaff);
 	DefaultTableModel modelcate = new DefaultTableModel(null,columnrolstaff);
-	
+	JScrollPane tablastaff,tabla;
+	int regstaff=0;
 	public PnlAsignacionStaff(){
 
+		crear_tabla();
+		
 		CrearInterfaz();
 
+		
 		asignacion = new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -166,7 +170,7 @@ public class PnlAsignacionStaff extends JPanel{
 		gbc.gridy = 1; // El área de texto empieza en la fila
 		gbc.gridwidth = 2; // El área de texto ocupa x columnas.
 		gbc.gridheight = 1; // El área de texto ocupa x filas.
-		this.add(jtblstaff,gbc);
+		this.add(tablastaff = new JScrollPane(jtblstaff),gbc);
 		
 		conexion.Conectardb();
 		rp = conexion.ConsultaSQL("SELECT nombre,id_pro FROM PROYECTOS ORDER BY nombre");
@@ -195,17 +199,32 @@ public class PnlAsignacionStaff extends JPanel{
 		rp = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF ORDER BY nombre");
 		try {
 			rp.next();
-			
-			staff = new String[columnstaff.length][];
+			regstaff = rp.getInt(1);
+			staff = new String[regstaff][columnstaff.length];
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		rp = conexion.ConsultaSQL("SELECT nombre,apellidos FROM STAFF ORDER BY nombre");
-		for(int i =0;i<)
+		for(int i =0;i< regstaff;i++){
+			try {
+				rp.next();
+				for(int j =0;j<columnstaff.length;j++){
+					staff[i][j] = rp.getString(j+1);
+					System.out.print(staff[i][j]+";");
+				}
+				System.out.println();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
-		//jtblstaff
+		modelstaff = new DefaultTableModel(staff,columnstaff);
+		jtblstaff.setModel(modelstaff);
+		
+		
 	}
 
 }

@@ -23,7 +23,7 @@ import pkGesproject.Avisos.PnlSendMail;
 import pkGesproject.Proyectos.PnlModificarProyecto;
 
 public class SpnTareas extends JSplitPane{
-
+//berna es un cabron
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	JSplitPane jsplpane;
@@ -81,6 +81,8 @@ public class SpnTareas extends JSplitPane{
 					setRightComponent(panlsStaff[jtblLateral.getSelectedRow()]);
 				}
 			}});
+        
+        //y frey tambien
         
         JPanel pnllateral = new JPanel();
 		pnllateral .setLayout(new GridBagLayout());
