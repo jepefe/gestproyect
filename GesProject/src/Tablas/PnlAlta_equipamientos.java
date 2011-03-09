@@ -33,10 +33,12 @@ import com.toedter.calendar.JDateChooser;
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
 import pkGesproject.GpComboBox;
+import pkGesproject.LimitadorDeDocumento;
 import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
 import pkGesproject.Workpakages.PnlAltawp;
 import pkGesproject.Workpakages.PnlBusquedawp;
+import pkGesproject.LimitadorDeDocumento;
 
 
 public class PnlAlta_equipamientos extends JPanel{
@@ -202,7 +204,7 @@ public class PnlAlta_equipamientos extends JPanel{
 		mesage.setVisible(false);
 	      
 	  	for(int i=0;i<fieldNames.length;++i) {
-			
+	  		
 			if(i==0){//Creo el combo del partner
 				
 				conexion.Conectardb();
@@ -231,7 +233,7 @@ public class PnlAlta_equipamientos extends JPanel{
 		    	panel.add(descripcion=new JLabel(rec.idioma[rec.eleidioma][41]+"*"),gbc); 
 		    	gbc.gridwidth = GridBagConstraints.REMAINDER;
 		    	//cuadro con scroll para las descripciones
-		    	LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
+		    	LimiteDocumento lpd = new LimiteDocumento(300); // Limite JTextArea
 		    	textdescripcion.setDocument(lpd);
 		    	textdescripcion.setLineWrap(true);
 		    	JScrollPane sp = new JScrollPane(textdescripcion,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -243,7 +245,7 @@ public class PnlAlta_equipamientos extends JPanel{
 		    	panel.add(justificacion=new JLabel(rec.idioma[rec.eleidioma][123]+"*"),gbc); 
 		    	gbc.gridwidth = GridBagConstraints.REMAINDER;
 		    	//cuadro con scroll para las justificacion
-		    	LimiteDocumento lpd2 = new LimiteDocumento(200); // Limite JTextArea
+		    	LimiteDocumento lpd2 = new LimiteDocumento(300); // Limite JTextArea
 		    	textjustificacion.setDocument(lpd2);
 		    	textjustificacion.setLineWrap(true);
 		    	
@@ -333,6 +335,28 @@ public class PnlAlta_equipamientos extends JPanel{
 				   }
 				});
 			}
+			
+			//limitar los campos de texto
+			switch (i){
+			case (0):
+				LimiteDocumento size0 = new LimiteDocumento(10); 
+	    	jtxt[0].setDocument(size0);
+			break;
+			case (1):
+				LimitadorDeDocumento ljtxt1 = new LimitadorDeDocumento(10);
+			jtxt[1].setDocument(ljtxt1);
+			break;
+			case (2):
+				LimitadorDeDocumento ljtxt2 = new LimitadorDeDocumento(4);
+			jtxt[2].setDocument(ljtxt2);
+			break;
+			case (3):
+				LimitadorDeDocumento ljtxt3 = new LimitadorDeDocumento(10);
+			jtxt[3].setDocument(ljtxt3);
+			break;
+
+			}
+			
 			
 			//ocultar los elementos que sobran
 			if(i==4){
