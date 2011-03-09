@@ -59,6 +59,7 @@ public class PnlAltaSub extends JScrollPane{
 	GpComboBox CmbSector = new GpComboBox();
 	GpComboBox CmbPais = new GpComboBox();
 	GpComboBox CmbProvincia = new GpComboBox();
+	GpComboBox CmbWP = new GpComboBox();
 	ConexionDb conexion = new ConexionDb();
 	JTextArea textarea = new JTextArea();
 	ResultSet rs;	
@@ -67,6 +68,7 @@ public class PnlAltaSub extends JScrollPane{
 	String idsector;
 	String idpais;
 	String idprovincia;
+	String wp;
 	char caracter;
 	int permetir_alta = 0;
 	Border empty = new EmptyBorder(0,0,0,0);
@@ -85,11 +87,12 @@ public class PnlAltaSub extends JScrollPane{
 		   rec.idioma[rec.eleidioma][3]+"*",rec.idioma[rec.eleidioma][4]+"*",
 		   rec.idioma[rec.eleidioma][46]+"*",rec.idioma[rec.eleidioma][48]+"*",
 		   rec.idioma[rec.eleidioma][7]+"*", rec.idioma[rec.eleidioma][8]+"*",
-		   rec.idioma[rec.eleidioma][69]+"*", rec.idioma[rec.eleidioma][64]+"*"
+		   rec.idioma[rec.eleidioma][69]+"*", rec.idioma[rec.eleidioma][64]+"*",
+		   rec.idioma[rec.eleidioma][40]+"*", rec.idioma[rec.eleidioma][109]+"*",
 		   };
-		int[] fieldWidths = {11,10,10,10,20,11,11,40};
+		int[] fieldWidths = {11,10,10,10,20,11,11,40,10,11};
 		
-		jtxt = new JTextField[4];
+		jtxt = new JTextField[5];
 		jlbl = new JLabel[fieldNames.length];
 				
 			
@@ -240,7 +243,40 @@ public class PnlAltaSub extends JScrollPane{
 			   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 			   		panel.add(jlbl[7]=new JLabel(fieldNames[7]),gbc);
 			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
-			   		gbc.gridwidth = GridBagConstraints.REMAINDER;panel.add((sp),gbc);	   		
+			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
+			   		panel.add((sp),gbc);
+			   		
+			   		
+			   		gbc.gridwidth = GridBagConstraints.RELATIVE;
+				   	panel.add(jlbl[8]=new JLabel(fieldNames[8]),gbc);
+				   	gbc.gridwidth = GridBagConstraints.REMAINDER;
+				   	
+			   			
+					panel.add(CmbWP,gbc);
+					CmbWP.setPreferredSize(new Dimension(140,30));
+					   
+					
+						conexion.Conectardb();
+						rs = conexion.ConsultaSQL("SELECT nombre FROM WORKPAQUETS");
+						try {
+							while(rs.next()){
+							CmbWP.addItem(rs.getString(1));	
+							
+						}
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+								}
+							
+							conexion.cerrarConexion();
+					
+							
+					gbc.gridwidth = GridBagConstraints.RELATIVE;
+					panel.add(jlbl[9]=new JLabel(fieldNames[9]),gbc);
+					gbc.gridwidth = GridBagConstraints.REMAINDER;
+					panel.add(jtxt[4]=new JTextField(fieldWidths[9]),gbc);
+			   		
+			   				   		
 
 			   	//filtro para numeros normales naturales del campo cod_postal
 
@@ -264,9 +300,22 @@ public class PnlAltaSub extends JScrollPane{
 					      }
 					   }
 					});
+					
+				//filtro para numeros con decimales del campo gastos	
+					jtxt[4].addKeyListener(new KeyAdapter(){
+						   public void keyTyped(KeyEvent e){
+						      caracter = e.getKeyChar();
+						      if(((caracter < '0') ||(caracter > '9')) &&
+						         (caracter != KeyEvent.VK_BACK_SPACE) &&
+						         (caracter != '.'))
+						         {
+						         e.consume();  
+						      }
+						   }
+						});
 					  		
 		/*  
-		**
+		 *
 		 * Creamos los dos botones para este panel 
 		 */
 		
@@ -324,13 +373,25 @@ public class PnlAltaSub extends JScrollPane{
 						}
 					}
 					
+					
+					rs = conexdb.ConsultaSQL("Select id_wp FROM WORKPAQUETS WHERE nombre='" + CmbWP.getSelectedItem().toString()+"'");
+					if (rs!= null){
+						try {
+							rs.next();
+							wp = Integer.toString(rs.getInt(1));
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+					
 										
-					conexion.executeUpdate("INSERT INTO SUBCONTRATA (nombre,sector,pais,provincia,direccion,cod_postal,telf,observaciones) VALUES ('"+ 
-							jtxt[0].getText()+"','"+idsector+"','"+idpais+"','"+idprovincia+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+textarea.getText()+"')");
+					conexion.executeUpdate("INSERT INTO SUBCONTRATA (nombre,sector,pais,provincia,direccion,cod_postal,telf,observaciones,wp,coste) VALUES ('"+ 
+							jtxt[0].getText()+"','"+idsector+"','"+idpais+"','"+idprovincia+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+textarea.getText()+"','"+wp+"','"+jtxt[4].getText()+"')");
 					JOptionPane.showMessageDialog(mesage,"Subcontrata dada de alta");
 					
 					
-				for(int i=0;i<4;++i) {	
+				for(int i=0;i<5;++i) {	
 					jtxt[i].setText("");
 				}
 				CmbProvincia.removeAllItems();
@@ -348,12 +409,11 @@ public class PnlAltaSub extends JScrollPane{
 			
 			// Borrar cuando damos al boton cancelar
 			if( e.getActionCommand().equals("cancelar")){
-				for(int i=0;i<4;++i) {	
+				for(int i=0;i<5;++i) {	
 					jtxt[i].setText("");
 				}
 				CmbProvincia.removeAllItems();
 				textarea.setText(null);
-				alerta.setText("");
 				mesage.setVisible(false);
 			}
 		}
@@ -382,13 +442,13 @@ public class PnlAltaSub extends JScrollPane{
 		
 		
 		permetir_alta = 0;
-		for(int i=0;i<4;++i) {
+		for(int i=0;i<5;++i) {
 			if (jtxt[i].getText().length() > 0){
 			}else{
 				permetir_alta = 1;				
 			}	
 		}
-		if((CmbSector.getSelectedItem() != null) && (CmbPais.getSelectedItem() != null) && (CmbProvincia.getSelectedItem() != null) &&  (textarea.getText().length() > 1)){	
+		if((CmbSector.getSelectedItem() != null) && (CmbPais.getSelectedItem() != null) && (CmbProvincia.getSelectedItem() != null) && (CmbWP.getSelectedItem() != null) &&  (textarea.getText().length() > 1)){	
 			
 		}else{
 			permetir_alta = 1;

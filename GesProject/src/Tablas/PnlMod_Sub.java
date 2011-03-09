@@ -434,17 +434,18 @@ public class PnlMod_Sub extends JPanel{
         mod.jbtncancelar.addActionListener(event);
         mod.jbtncancelar.setActionCommand("cerrar");
 		conexion.Conectardb();
-    	rs = conexion.ConsultaSQL("SELECT nombre,direccion,cod_postal,telf,observaciones FROM SUBCONTRATA WHERE cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
+    	rs = conexion.ConsultaSQL("SELECT nombre,direccion,cod_postal,telf,coste,observaciones FROM SUBCONTRATA WHERE cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
     	int i=1;
     	
 			try {
 					
 				rs.next();
-				for(i=1;i<5;i++){
+				for(i=1;i<6;i++){
 					mod.jtxt[i-1].setText(rs.getString(i));
+					
 				}
 				mod.textarea.setText(rs.getString(i));
-				
+								
 				rs=conexion.ConsultaSQL("SELECT SECTORES.sector FROM SECTORES INNER JOIN SUBCONTRATA ON SECTORES.id_sector = SUBCONTRATA.sector WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				rs.next();
 				mod.CmbSector.setSelectedItem(rs.getString(1));
@@ -456,6 +457,10 @@ public class PnlMod_Sub extends JPanel{
 				rs=conexion.ConsultaSQL("SELECT estado FROM PROVINCIAS INNER JOIN SUBCONTRATA ON PROVINCIAS.id_provincias = SUBCONTRATA.provincia WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				rs.next();
 				mod.CmbProvincia.setSelectedItem(rs.getString(1));
+				
+				rs=conexion.ConsultaSQL("SELECT WORKPAQUETS.nombre FROM WORKPAQUETS INNER JOIN SUBCONTRATA ON WORKPAQUETS.id_wp = SUBCONTRATA.wp WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
+				rs.next();
+				mod.CmbWP.setSelectedItem(rs.getString(1));
 			    
 				
 			
@@ -494,6 +499,7 @@ public class PnlMod_Sub extends JPanel{
     	String sector = null;
     	String pais = null;
     	String provincia = null;
+    	String wp = null;
     	Component aviso = null;
 		int s = JOptionPane.showConfirmDialog(aviso, "Esta seguro??");
 		if(s==0){
@@ -522,7 +528,15 @@ public class PnlMod_Sub extends JPanel{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			conexion.executeUpdate("UPDATE SUBCONTRATA SET nombre = '"+mod.jtxt[0].getText()+"', sector = '"+sector+"', pais = '"+pais+"', provincia = '"+provincia+"', direccion = '"+mod.jtxt[1].getText()+"', cod_postal = '"+mod.jtxt[2].getText()+"', telf = '"+mod.jtxt[3].getText()+"', observaciones = '"+mod.textarea.getText()+"' WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"' ");
+			rs=conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS WHERE nombre like '"+mod.CmbWP.getSelectedItem().toString()+"'");
+			try {
+				rs.next();
+				wp = rs.getString(1);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			conexion.executeUpdate("UPDATE SUBCONTRATA SET nombre = '"+mod.jtxt[0].getText()+"', sector = '"+sector+"', pais = '"+pais+"', provincia = '"+provincia+"', direccion = '"+mod.jtxt[1].getText()+"', cod_postal = '"+mod.jtxt[2].getText()+"', telf = '"+mod.jtxt[3].getText()+"', observaciones = '"+mod.textarea.getText()+"', wp = '"+wp+"', coste = '"+mod.jtxt[4].getText()+"' WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"' ");
 			actualizar_tabla();
 			JOptionPane.showMessageDialog(aviso,"Subcontrata Actualizada Correctamente");
 			modificar.dispose();
