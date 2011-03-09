@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -25,6 +26,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -34,6 +36,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -59,6 +62,7 @@ public class PnlPracticas extends JScrollPane{
 	
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	JTextField[] jtxt;
+	JLabel[] jtxtra;
 	JLabel[] jlbl;
 	JButton jbtnaceptar, jbtncancelar, jbtnlimpiar;
 	JButton[] jbtnsubir;
@@ -89,21 +93,34 @@ public class PnlPracticas extends JScrollPane{
 	JPanel jpnopae = new JPanel();
 	JPanel jpn = new JPanel();
 	
+	JPanel jpradio = new JPanel();
+	JPanel jpbotones = new JPanel();
 	JPanel jpsoloapee = new JPanel();
 	JPanel jpsolalumnos = new JPanel();
 	JPanel jpbecario = new JPanel();
 	JPanel jpinfinter = new JPanel();
 	JPanel jpinffinal = new JPanel();
 	
+	
 	Border blackline;
+	
+	JRadioButton rbeeres = new JRadioButton();
+	JRadioButton rbeerpr = new JRadioButton();
+	JRadioButton rbeermodo = new JRadioButton();
+	JRadioButton rbeermonodo = new JRadioButton();
+	JRadioButton rbeerco = new JRadioButton();
+	JRadioButton rbemi = new JRadioButton();
+	JRadioButton rbecofc = new JRadioButton();
+	JRadioButton rotmo = new JRadioButton();
+	ButtonGroup group = new ButtonGroup();
 	
 	public PnlPracticas (){
 		panel.setSize(new Dimension(300,400));
-		//jpsoloapee.setSize(new Dimension(250,70));
-		jpsolalumnos.setSize(new Dimension(250,200));
+		jpsoloapee.setSize(new Dimension(300,70));
+		jpsolalumnos.setSize(new Dimension(300,200));
 		jpbecario.setSize(new Dimension(100,200));
-		jpinfinter.setSize(new Dimension(250,200));
-		jpinffinal.setSize(new Dimension(250,200));
+		jpinfinter.setSize(new Dimension(300,200));
+		jpinffinal.setSize(new Dimension(300,200));
 		
 		blackline = BorderFactory.createLineBorder(Color.black);
 		uspanel.setBorder(blackline);
@@ -141,10 +158,42 @@ public class PnlPracticas extends JScrollPane{
 		title7 = BorderFactory.createTitledBorder("INFORME FINAL AL OAPEE");
 		jpinffinal.setBorder(title7);
 		
-		 
-	 
+		TitledBorder title8;
+		jpradio.setBorder(blackline);
+		title8 = BorderFactory.createTitledBorder("TIPO DE BECA");
+		jpradio.setBorder(title8);
+		
+		/**
+		 * se ponen las propiedades a los radio button
+		 */
+		
+		rbeeres.setMnemonic('a');
+		rbeerpr.setMnemonic('b');
+		rbeermodo.setMnemonic('c');
+		rbeermonodo.setMnemonic('d');
+		rbeerco.setMnemonic('e');
+		rbemi.setMnemonic('f');
+		rbecofc.setMnemonic('g');
+		rotmo.setMnemonic('h');
+		rbeeres.setSelected(true);
+		
+		/**
+		 * se añaden los radio button a un grupo 
+		 */
+	    group.add(rbeeres);
+	    group.add(rbeerpr);
+	    group.add(rbeermodo);
+	    group.add(rbeermonodo);
+	    group.add(rbeerco);
+	    group.add(rbemi);
+	    group.add(rbecofc);
+	    group.add(rotmo);
+	    	 
 	
 		this.setBorder(empty);
+		
+		jpradio.setLayout(new FlowLayout());
+		jpbotones.setLayout(new GridBagLayout());
 		panel.setLayout(new GridBagLayout());
 		uspanel.setLayout(new GridBagLayout());
 		total.setLayout(new BorderLayout());
@@ -170,8 +219,29 @@ public class PnlPracticas extends JScrollPane{
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
 		
+		jtxtra = new JLabel[8];
+		
+		jpradio.add(rbeeres);
+		jpradio.add(jtxtra[0]=new JLabel("Erasmus Estudios"));
+	    jpradio.add(rbeerpr);
+	    jpradio.add(jtxtra[1]=new JLabel("Erasmus Prácticas"));
+	    jpradio.add(rbeermodo);
+	    jpradio.add(jtxtra[2]=new JLabel("Erasmus Movilidad Docente"));
+	    jpradio.add(rbeermonodo);
+	    jpradio.add(jtxtra[3]=new JLabel("Erasmus Movilidad no Docente"));
+	    jpradio.add(rbeerco);
+	    jpradio.add(jtxtra[4]=new JLabel("Erasmus Conselleria"));
+	    jpradio.add(rbemi);
+	    jpradio.add(jtxtra[5]=new JLabel("Ministerio"));
+	    jpradio.add(rbecofc);
+	    jpradio.add(jtxtra[6]=new JLabel("Conselleria"));
+	    jpradio.add(rotmo);
+	    jpradio.add(jtxtra[7]=new JLabel("Otra Movilidad"));
 		
 		GridBagConstraints gbc = new GridBagConstraints();
+		//gbc.anchor = GridBagConstraints.CENTER;
+		//gbc.gridwidth = GridBagConstraints.RELATIVE;
+		
 		
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		//gbc.anchor = GridBagConstraints.CENTER;
@@ -557,18 +627,17 @@ public class PnlPracticas extends JScrollPane{
 		jpsolalumnos.add(jpbecario,gbc);
 		panel.add(jpinfinter,gbc);
 		panel.add(jpinffinal,gbc);
-	  /*  
-		**
+	  /**
 		 * Creamos los cuatro botones para este panel 
 		 */
 		//primeros dos botones del panel
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.insets = new Insets(30,10,5,5);
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
-		panel.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
+		jpbotones.add(jbtnaceptar=new JButton(rec.idioma[rec.eleidioma][1]),gbc);
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		panel.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
+		jpbotones.add(jbtncancelar=new JButton(rec.idioma[rec.eleidioma][74]),gbc);
 		
 		
 		
@@ -578,8 +647,11 @@ public class PnlPracticas extends JScrollPane{
 		jpbecario.setVisible(true);
 		jpinfinter.setVisible(true);
 		jpinffinal.setVisible(true);
+		
+		total.add(jpradio,BorderLayout.PAGE_START);
 		total.add(uspanel,BorderLayout.NORTH);
 		total.add(panel,BorderLayout.CENTER);
+		total.add(jpbotones,BorderLayout.SOUTH);
 		uspanel.setVisible(true);
 		panel.setVisible(true);
 		jpsoloapee.setVisible(true);

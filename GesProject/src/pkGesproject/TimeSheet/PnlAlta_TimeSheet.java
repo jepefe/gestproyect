@@ -461,7 +461,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   		gbt.anchor = GridBagConstraints.WEST;
 			   		Jtarea.add(jlblta[i]=new JLabel("Manual"),gbt);
 			   		jtxtta[i].setVisible(false);
-					JTextFieldLimit ljtxtta= new JTextFieldLimit(20);
+					JTextFieldLimit ljtxtta= new JTextFieldLimit(40);
 					jtxtta[i].setDocument(ljtxtta);
 					
 			   		conexion.Conectardb();
