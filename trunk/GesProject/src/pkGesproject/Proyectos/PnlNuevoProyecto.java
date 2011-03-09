@@ -603,16 +603,28 @@ public class PnlNuevoProyecto extends JScrollPane{
 						}else{
 							cord = 0;
 						}
-						conexdb.executeUpdate("UPDATE PARTNER_PROYECTOS SET coordinador="+cord+" WHERE cod_part="+id_partner2+" AND  id_pro ="+PnlModificarProyecto.id_pro+"");			
+						rs = conexion.ConsultaSQL("SELECT p.cod_part From PARTNER_PROYECTOS as p  WHERE cod_part="+id_partner2+" AND  id_pro ="+PnlModificar_Proyecto.id_pro+"");
+						try {
+							if(rs.next()){
+							}else{
+								conexdb.executeUpdate("INSERT INTO PARTNER_PROYECTOS(cod_part, id_pro,coordinador) VALUES ('"+id_partner2+"','"+PnlModificar_Proyecto.id_pro+"','"+cord+"')" );	
+							}
+
+						} catch (SQLException d) {
+							// TODO Auto-generated catch block
+							d.printStackTrace();}
+						
+						
+						//conexdb.executeUpdate("UPDATE PARTNER_PROYECTOS SET coordinador="+cord+" WHERE cod_part="+id_partner2+" AND  id_pro ="+PnlModificar_Proyecto.id_pro+"");			
 					}
 					conexion.cerrarConexion();
 					conexdb.cerrarConexion();
 					JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][100]);
-					PnlModificarProyecto.modificar.dispose();
+					PnlModificar_Proyecto.modificar.dispose();
 
 				}
 				if(e.getActionCommand().equals("cancelar2")){
-					PnlModificarProyecto.modificar.dispose();
+					PnlModificar_Proyecto.modificar.dispose();
 				}
 
 				PnlModificar_Proyecto.actualizar_tabla();

@@ -35,7 +35,7 @@ import pkGesproject.Socios.PnlModificarsocio;
 
 public class PnlModificar_Proyecto extends JPanel {
 	
-	public static int id_pro  ;
+	public static int id_pro;
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	static GesIdioma rec = GesIdioma.obtener_instancia();
 	static ConexionDb conexion = new ConexionDb();
@@ -237,8 +237,8 @@ public class PnlModificar_Proyecto extends JPanel {
         this.add(jbtnmodificar,constraints);
         
         jbtneliminar = new JButton(rec.idioma[rec.eleidioma][39]);
-        constraints.gridx = 1; // El área de texto empieza en la columna
-        //constraints.anchor = GridBagConstraints.EAST;
+        constraints.gridx = 2; // El área de texto empieza en la columna
+       // constraints.anchor = GridBagConstraints.EAST;
         this.add(jbtneliminar,constraints);
     }
     
@@ -405,7 +405,8 @@ public class PnlModificar_Proyecto extends JPanel {
 			PnlNuevoProyecto mod;
 			modificar = new JDialog();
 			modificar.add(mod = new PnlNuevoProyecto());
-			modificar.setBounds(0, 0, 500, 680);
+			modificar.setBounds(0, 0, 500, 480);
+		//	modificar.setBounds(0, 0, 500, 680);
 			mod.jbtnaceptar.setVisible(false); mod.jbtncancelar.setVisible(false);
 			mod.jbtnaceptar2.setVisible(true); mod.jbtncancelar2.setVisible(true);
 			mod.CbEstado.setVisible(true); 
@@ -437,9 +438,9 @@ public class PnlModificar_Proyecto extends JPanel {
 					e1.printStackTrace();
 				}
 				/*
-				 * Consulta y añadre a los JLIST los datos.
+				 *  añade a los JLIST los datos.
 				 */
-				rs = conexion.ConsultaSQL("SELECT p.nombre,coordinador FROM PARTNER as p inner join PARTNER_PROYECTOS as pp on p.cod_part = pp.cod_part WHERE pp.id_pro = '"+id_pro+"'");
+				rs = conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER as p inner join PARTNER_PROYECTOS as pp on p.cod_part = pp.cod_part WHERE pp.id_pro = '"+id_pro+"'");
 				try {									
 					while(rs.next()){	
 						mod.modelo.addElement(rs.getString(1));
