@@ -36,6 +36,7 @@ import javax.swing.text.MaskFormatter;
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
 import pkGesproject.GpComboBox;
+import pkGesproject.JTextFieldLimit;
 import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
 
@@ -131,7 +132,8 @@ public class PnlAltaSub extends JScrollPane{
 		   		panel.add(jlbl[0]=new JLabel(fieldNames[0]),gbc);
 		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   	   	panel.add(jtxt[0]=new JTextField(fieldWidths[0]),gbc);
-
+		   	   	JTextFieldLimit a= new JTextFieldLimit(40);
+		   	   	jtxt[0].setDocument(a);
 		   	   	
 			   gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   	   panel.add(jlbl[1]=new JLabel(fieldNames[1]),gbc);
@@ -226,18 +228,24 @@ public class PnlAltaSub extends JScrollPane{
 			   		panel.add(jlbl[4]=new JLabel(fieldNames[4]),gbc);
 			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   		panel.add(jtxt[1]=new JTextField(fieldWidths[4]),gbc);
-			   		
+			   		JTextFieldLimit f= new JTextFieldLimit(40);
+			   	   	jtxt[1].setDocument(f);
+			   	   	
 			   		
 			   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 			   		panel.add(jlbl[5]=new JLabel(fieldNames[5]),gbc);
 			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   		panel.add(jtxt[2]=new JTextField(fieldWidths[5]),gbc);
+			   		JTextFieldLimit b= new JTextFieldLimit(11);
+			   	   	jtxt[2].setDocument(b);
 			   		
 			   	
 			   		gbc.gridwidth = GridBagConstraints.RELATIVE;
 			   		panel.add(jlbl[6]=new JLabel(fieldNames[6]),gbc);
 			   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 			   		panel.add(jtxt[3]=new JTextField(fieldWidths[6]),gbc);
+			   		JTextFieldLimit c= new JTextFieldLimit(20);
+			   	   	jtxt[3].setDocument(c);
 
 		   			
 			   		gbc.gridwidth = GridBagConstraints.RELATIVE;
@@ -275,7 +283,8 @@ public class PnlAltaSub extends JScrollPane{
 					panel.add(jlbl[9]=new JLabel(fieldNames[9]),gbc);
 					gbc.gridwidth = GridBagConstraints.REMAINDER;
 					panel.add(jtxt[4]=new JTextField(fieldWidths[9]),gbc);
-			   		
+					JTextFieldLimit d= new JTextFieldLimit(10);
+			   	   	jtxt[4].setDocument(d);
 			   				   		
 
 			   	//filtro para numeros normales naturales del campo cod_postal
@@ -455,6 +464,21 @@ public class PnlAltaSub extends JScrollPane{
 		}
 		
 	}
-	
+	public void actulizar_subcontrata(){
+		conexion.Conectardb();
+		rs = conexion.ConsultaSQL("SELECT nombre FROM WORKPAQUETS");
+		try {
+			CmbWP.removeAllItems();
+			while(rs.next()){
+			CmbWP.addItem(rs.getString(1));	
+			
+		}
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				}
+			
+			conexion.cerrarConexion();
+	}
 }
 
