@@ -155,18 +155,22 @@ public class PnlMod_Sub extends JPanel{
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("modificar")){
 					//llamamos al metodo modificar
+					System.out.println("modificar");
 					modificar();
 				}
 				
 				if(e.getActionCommand().equals("eliminar")){
 					//llamamos al metodo eliminar
+					System.out.println("eliminar");
 					eliminar();
 				}
 				if(e.getActionCommand().equals("actualizar")){
 					//llamamos al metodo eliminar
+					System.out.println("actualizar");
 					actualizar();
 				}
 				if(e.getActionCommand().equals("cerrar")){
+					System.out.println("cerrar");
 					modificar.dispose();
 				}
 			}
@@ -440,7 +444,7 @@ public class PnlMod_Sub extends JPanel{
 			try {
 					
 				rs.next();
-				for(i=1;i<6;i++){
+				for(i=1;i<5;i++){
 					mod.jtxt[i-1].setText(rs.getString(i));
 					
 				}

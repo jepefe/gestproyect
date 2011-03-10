@@ -429,6 +429,7 @@ public class PnlMod_viajes extends JPanel{
 	    int i=1;
 	    referencia = 0;
 	    referencia = Integer.parseInt(datos[jtblLateral.getSelectedRow()][3]);
+	    System.out.println(referencia);
 			try {
 						
 				rs.next();
@@ -492,7 +493,7 @@ public class PnlMod_viajes extends JPanel{
 	     */
 	    public void eliminar(){
 	    	Component aviso = null;
-			int s = JOptionPane.showConfirmDialog(aviso, "Esta seguro??");
+			int s = JOptionPane.showConfirmDialog(aviso, rec.idioma[rec.eleidioma][218]);
 			
 			if(s==0){
 				conexion.Conectardb();
@@ -500,7 +501,7 @@ public class PnlMod_viajes extends JPanel{
 				
 				actualizar_tabla();
 				
-				JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][182]);
+				JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][228]);
 			
 				conexion.cerrarConexion();
 			}
@@ -512,6 +513,7 @@ public class PnlMod_viajes extends JPanel{
 	    
 	    public void actualizar(){
 	    	System.out.println("acceso a actualizacion");
+	    	
 	    	String partner = null;
 	    	String proyecto = null;
 	    	String paissalida = null;
@@ -592,7 +594,7 @@ public class PnlMod_viajes extends JPanel{
 				
 				conexion.executeUpdate("UPDATE TRAVEL_SUBSISTENE SET partner = '"+referencia+"',motivoviaje = '"+mod.jtxt[1].getText()+"', paissalida = '"+paissalida+"', ciudad_salida = '"+provinciasalida+"', ciudad_destino = '"+provinciadestino+"', motivoviaje = '"+mod.jtxt[1].getText()+"', fecha_ini = '"+sqlDate1+"', fecha_fin = '"+sqlDate2+"', coste_viaje = '"+Float.valueOf(mod.jtxt[2].getText())+"', telf = '"+Float.valueOf(mod.jtxt[3].getText())+"' WHERE TRAVEL_SUBSISTENCE.ref = '"+referencia+"' ");
 				actualizar_tabla();
-				JOptionPane.showMessageDialog(aviso,"viaje Actualizada Correctamente");
+				JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][231]);
 				modificar.dispose();
 			}
 	    }
