@@ -204,17 +204,16 @@ public class PnlPracticas extends JScrollPane{
 		jpinffinal.setLayout(new GridBagLayout());
 		  
 		String[] fieldNames = {
-				rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][28],rec.idioma[rec.eleidioma][197],
-				rec.idioma[rec.eleidioma][159],rec.idioma[rec.eleidioma][160],rec.idioma[rec.eleidioma][161],
-		   rec.idioma[rec.eleidioma][208],rec.idioma[rec.eleidioma][216],rec.idioma[rec.eleidioma][215],rec.idioma[rec.eleidioma][163],rec.idioma[rec.eleidioma][214],
-		   rec.idioma[rec.eleidioma][164],
+			rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][28],rec.idioma[rec.eleidioma][197],rec.idioma[rec.eleidioma][159],
+			rec.idioma[rec.eleidioma][160],rec.idioma[rec.eleidioma][161],rec.idioma[rec.eleidioma][208],rec.idioma[rec.eleidioma][216],
+			rec.idioma[rec.eleidioma][215],rec.idioma[rec.eleidioma][163],rec.idioma[rec.eleidioma][214],rec.idioma[rec.eleidioma][164],
 		   rec.idioma[rec.eleidioma][165],rec.idioma[rec.eleidioma][166],rec.idioma[rec.eleidioma][167],rec.idioma[rec.eleidioma][198], 
 		   rec.idioma[rec.eleidioma][198], rec.idioma[rec.eleidioma][199],rec.idioma[rec.eleidioma][200],rec.idioma[rec.eleidioma][201],
 		   rec.idioma[rec.eleidioma][202],rec.idioma[rec.eleidioma][203],rec.idioma[rec.eleidioma][204],rec.idioma[rec.eleidioma][205],
 		   rec.idioma[rec.eleidioma][206],rec.idioma[rec.eleidioma][207],rec.idioma[rec.eleidioma][209],rec.idioma[rec.eleidioma][210],
 		   rec.idioma[rec.eleidioma][211],rec.idioma[rec.eleidioma][167],rec.idioma[rec.eleidioma][212],rec.idioma[rec.eleidioma][213]
 		   };
-		int[] fieldWidths = {20,30,20,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6};
+		int[] fieldWidths = {20,30,20,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6};
 		
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
@@ -258,7 +257,7 @@ public class PnlPracticas extends JScrollPane{
 		 */
 	      
 		jbtnsubir=new JButton[fieldNames.length];
-		Relleno = new JCheckBox[(fieldNames.length)+20];      
+		Relleno = new JCheckBox[(fieldNames.length)+60];      
 	    	
 	     
 		
@@ -302,8 +301,8 @@ public class PnlPracticas extends JScrollPane{
 	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
 	   			jpsoloapee.add(Relleno[i] = new JCheckBox(),gbc);
 	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			jpsoloapee.add(Relleno[i+20] = new JCheckBox(),gbc);
-	   			Relleno[i+20].setEnabled(false);
+	   			jpsoloapee.add(Relleno[i+60] = new JCheckBox(),gbc);
+	   			Relleno[i+60].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
 	   			jpsoloapee.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 	   			//gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -314,8 +313,8 @@ public class PnlPracticas extends JScrollPane{
 		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
-		   		Relleno[i+20].setEnabled(false);
+		   		jpsolalumnos.add(Relleno[i+60] = new JCheckBox(""),gbc);
+		   		Relleno[i+60].setEnabled(false);
 		   		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		   		jpsolalumnos.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -333,8 +332,8 @@ public class PnlPracticas extends JScrollPane{
 		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
-	   			Relleno[i+20].setEnabled(false);
+	   			jpsolalumnos.add(Relleno[i+60] = new JCheckBox(""),gbc);
+	   			Relleno[i+60].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
 	   			jpsolalumnos.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 	   			//gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -344,8 +343,8 @@ public class PnlPracticas extends JScrollPane{
 		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpsolalumnos.add(Relleno[i] = new JCheckBox(""),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
-		   		jpsolalumnos.add(Relleno[i+20] = new JCheckBox(""),gbc);
-		   		Relleno[i+20].setEnabled(false);
+		   		jpsolalumnos.add(Relleno[i+60] = new JCheckBox(""),gbc);
+		   		Relleno[i+60].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
 	   			jpsolalumnos.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -373,8 +372,8 @@ public class PnlPracticas extends JScrollPane{
 		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
-	   			Relleno[i+20].setEnabled(false);
+	   			jpbecario.add(Relleno[i+60] = new JCheckBox(""),gbc);
+	   			Relleno[i+60].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
 	   			jpbecario.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -384,8 +383,8 @@ public class PnlPracticas extends JScrollPane{
 		   		//gbc.gridwidth = GridBagConstraints.RELATIVE;
 		   		jpbecario.add(Relleno[i] = new JCheckBox(""),gbc);
 	   			//gbc.gridwidth = GridBagConstraints.RELATIVE;
-	   			jpbecario.add(Relleno[i+20] = new JCheckBox(""),gbc);
-	   			Relleno[i+20].setEnabled(false);
+	   			jpbecario.add(Relleno[i+60] = new JCheckBox(""),gbc);
+	   			Relleno[i+60].setEnabled(false);
 	   			gbc.gridwidth = GridBagConstraints.REMAINDER;
 	   			jpbecario.add(jbtnsubir[i]=new JButton(rec.idioma[rec.eleidioma][195]),gbc);
 		   		//gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -615,6 +614,659 @@ public class PnlPracticas extends JScrollPane{
 
 
 		}//fin for
+		
+		/**
+		 * se crean los action listener para los radio button
+		 * se selecciona el tipo de beca  introducir
+		 */
+		ActionListener acradio = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+				//erasmus estudios
+				if (rbeeres.isSelected() == false){
+										
+					jlbl[3].setVisible(true);
+					Relleno[3].setVisible(true);
+					Relleno[63].setVisible(true);
+					jbtnsubir[3].setVisible(true);
+					
+					jlbl[4].setVisible(true);
+					Relleno[4].setVisible(true);
+					Relleno[64].setVisible(true);
+					jbtnsubir[4].setVisible(true);
+					
+					jlbl[5].setVisible(true);
+					jtxt[5].setVisible(true);
+					
+					
+					jlbl[6].setVisible(true);
+					Relleno[6].setVisible(true);
+					Relleno[66].setVisible(true);
+					jbtnsubir[6].setVisible(true);
+					
+					jlbl[7].setVisible(true);
+					Relleno[7].setVisible(true);
+					Relleno[67].setVisible(true);
+					jbtnsubir[7].setVisible(true);
+					
+					jlbl[8].setVisible(true);
+					jtxt[8].setVisible(true);
+					
+					jlbl[9].setVisible(true);
+					Relleno[9].setVisible(true);
+					
+					jlbl[10].setVisible(true);
+					Relleno[10].setVisible(true);
+				
+					jlbl[11].setVisible(true);
+					Relleno[11].setVisible(true);
+					Relleno[71].setVisible(true);
+					jbtnsubir[11].setVisible(true);
+					
+					jlbl[12].setVisible(true);
+					Relleno[12].setVisible(true);
+					Relleno[72].setVisible(true);
+					jbtnsubir[12].setVisible(true);
+					
+					jlbl[13].setVisible(true);
+					Relleno[13].setVisible(true);
+					Relleno[33].setVisible(true);
+					jbtnsubir[13].setVisible(true);
+					
+					jlbl[14].setVisible(true);
+					Relleno[14].setVisible(true);
+					Relleno[34].setVisible(true);
+					jbtnsubir[14].setVisible(true);
+					
+					jlbl[15].setVisible(true);
+					Relleno[15].setVisible(true);
+					Relleno[35].setVisible(true);
+					jbtnsubir[15].setVisible(true);
+					
+					jlbl[16].setVisible(true);
+					Relleno[16].setVisible(true);
+					Relleno[36].setVisible(true);
+					jbtnsubir[16].setVisible(true);
+					
+					jlbl[17].setVisible(true);
+					Relleno[17].setVisible(true);
+					Relleno[37].setVisible(true);
+					jbtnsubir[17].setVisible(true);
+					
+					jlbl[18].setVisible(true);
+					Relleno[18].setVisible(true);
+					Relleno[38].setVisible(true);
+					jbtnsubir[18].setVisible(true);
+					
+					jlbl[19].setVisible(true);
+					Relleno[19].setVisible(true);
+					Relleno[39].setVisible(true);
+					jbtnsubir[19].setVisible(true);
+					
+					jlbl[20].setVisible(true);
+					Relleno[20].setVisible(true);
+					Relleno[40].setVisible(true);
+					jbtnsubir[20].setVisible(true);
+					
+					jlbl[21].setVisible(true);
+					Relleno[21].setVisible(true);
+					Relleno[41].setVisible(true);
+					jbtnsubir[21].setVisible(true);
+					
+					jlbl[22].setVisible(true);
+					Relleno[22].setVisible(true);
+					Relleno[42].setVisible(true);
+					jbtnsubir[22].setVisible(true);
+					
+					jlbl[23].setVisible(true);
+					Relleno[23].setVisible(true);
+					Relleno[43].setVisible(true);
+					jbtnsubir[23].setVisible(true);
+					
+					jlbl[24].setVisible(true);
+					Relleno[24].setVisible(true);
+					Relleno[44].setVisible(true);
+					jbtnsubir[24].setVisible(true);
+					
+					jlbl[25].setVisible(true);
+					Relleno[25].setVisible(true);
+					Relleno[45].setVisible(true);
+					jbtnsubir[25].setVisible(true);
+					
+					jlbl[26].setVisible(false);
+					Relleno[26].setVisible(false);
+					Relleno[46].setVisible(false);
+					jbtnsubir[26].setVisible(false);
+					
+					jlbl[27].setVisible(false);
+					Relleno[27].setVisible(false);
+					Relleno[47].setVisible(false);
+					jbtnsubir[27].setVisible(false);
+					
+					jlbl[28].setVisible(false);
+					Relleno[28].setVisible(false);
+					Relleno[48].setVisible(false);
+					jbtnsubir[28].setVisible(false);
+					
+					jlbl[29].setVisible(false);
+					Relleno[29].setVisible(false);
+					Relleno[49].setVisible(false);
+					jbtnsubir[29].setVisible(false);
+					
+					jlbl[30].setVisible(false);
+					Relleno[30].setVisible(false);
+					Relleno[50].setVisible(false);
+					jbtnsubir[30].setVisible(false);
+					
+					jlbl[31].setVisible(false);
+					Relleno[31].setVisible(false);
+					Relleno[51].setVisible(false);
+					jbtnsubir[31].setVisible(false);
+					
+					jlbl[32].setVisible(false);
+					Relleno[32].setVisible(false);
+					Relleno[52].setVisible(false);
+					jbtnsubir[32].setVisible(false);
+				}
+				//erasmus practicas
+				if (rbeerpr.isSelected() == false){
+					jlbl[3].setVisible(true);
+					Relleno[3].setVisible(true);
+					Relleno[63].setVisible(true);
+					jbtnsubir[3].setVisible(true);
+					
+					jlbl[4].setVisible(true);
+					Relleno[4].setVisible(true);
+					Relleno[64].setVisible(true);
+					jbtnsubir[4].setVisible(true);
+					
+					jlbl[5].setVisible(true);
+					jtxt[5].setVisible(true);
+					
+					jlbl[6].setVisible(false);
+					Relleno[6].setVisible(false);
+					Relleno[66].setVisible(false);
+					jbtnsubir[6].setVisible(false);
+					
+					jlbl[7].setVisible(false);
+					Relleno[7].setVisible(false);
+					Relleno[67].setVisible(false);
+					jbtnsubir[7].setVisible(false);
+					
+					jlbl[8].setVisible(true);
+					jtxt[8].setVisible(true);
+					
+					jlbl[9].setVisible(true);
+					Relleno[9].setVisible(true);
+					
+					jlbl[10].setVisible(true);
+					Relleno[10].setVisible(true);
+				
+					jlbl[11].setVisible(true);
+					Relleno[11].setVisible(true);
+					Relleno[71].setVisible(true);
+					jbtnsubir[11].setVisible(true);
+					
+					jlbl[12].setVisible(true);
+					Relleno[12].setVisible(true);
+					Relleno[72].setVisible(true);
+					jbtnsubir[12].setVisible(true);
+					
+					jlbl[13].setVisible(true);
+					Relleno[13].setVisible(true);
+					Relleno[33].setVisible(true);
+					jbtnsubir[13].setVisible(true);
+					
+					jlbl[14].setVisible(true);
+					Relleno[14].setVisible(true);
+					Relleno[34].setVisible(true);
+					jbtnsubir[14].setVisible(true);
+					
+					jlbl[15].setVisible(false);
+					Relleno[15].setVisible(false);
+					Relleno[35].setVisible(false);
+					jbtnsubir[15].setVisible(false);
+					
+					jlbl[16].setVisible(false);
+					Relleno[16].setVisible(false);
+					Relleno[36].setVisible(false);
+					jbtnsubir[16].setVisible(false);
+					
+					jlbl[17].setVisible(false);
+					Relleno[17].setVisible(false);
+					Relleno[37].setVisible(false);
+					jbtnsubir[17].setVisible(false);
+					
+					jlbl[18].setVisible(false);
+					Relleno[18].setVisible(false);
+					Relleno[38].setVisible(false);
+					jbtnsubir[18].setVisible(false);
+					
+					jlbl[19].setVisible(true);
+					Relleno[19].setVisible(true);
+					Relleno[39].setVisible(true);
+					jbtnsubir[19].setVisible(true);
+					
+					jlbl[20].setVisible(true);
+					Relleno[20].setVisible(true);
+					Relleno[40].setVisible(true);
+					jbtnsubir[20].setVisible(true);
+					
+					jlbl[21].setVisible(true);
+					Relleno[21].setVisible(true);
+					Relleno[41].setVisible(true);
+					jbtnsubir[21].setVisible(true);
+					
+					jlbl[22].setVisible(true);
+					Relleno[22].setVisible(true);
+					Relleno[42].setVisible(true);
+					jbtnsubir[22].setVisible(true);
+					
+					jlbl[23].setVisible(true);
+					Relleno[23].setVisible(true);
+					Relleno[43].setVisible(true);
+					jbtnsubir[23].setVisible(true);
+					
+					jlbl[24].setVisible(true);
+					Relleno[24].setVisible(true);
+					Relleno[44].setVisible(true);
+					jbtnsubir[24].setVisible(true);
+					
+					jlbl[25].setVisible(true);
+					Relleno[25].setVisible(true);
+					Relleno[45].setVisible(true);
+					jbtnsubir[25].setVisible(true);
+					
+					jlbl[26].setVisible(true);
+					Relleno[26].setVisible(true);
+					Relleno[46].setVisible(true);
+					jbtnsubir[26].setVisible(true);
+					
+					jlbl[27].setVisible(true);
+					Relleno[27].setVisible(true);
+					Relleno[47].setVisible(true);
+					jbtnsubir[27].setVisible(true);
+					
+					jlbl[28].setVisible(true);
+					Relleno[28].setVisible(true);
+					Relleno[48].setVisible(true);
+					jbtnsubir[28].setVisible(true);
+					
+					jlbl[29].setVisible(true);
+					Relleno[29].setVisible(true);
+					Relleno[49].setVisible(true);
+					jbtnsubir[29].setVisible(true);
+					
+					jlbl[30].setVisible(true);
+					Relleno[30].setVisible(true);
+					Relleno[50].setVisible(true);
+					jbtnsubir[30].setVisible(true);
+					
+					jlbl[31].setVisible(true);
+					Relleno[31].setVisible(true);
+					Relleno[51].setVisible(true);
+					jbtnsubir[31].setVisible(true);
+					
+					jlbl[32].setVisible(true);
+					Relleno[32].setVisible(true);
+					Relleno[52].setVisible(true);
+					jbtnsubir[32].setVisible(true);
+				}
+				
+				//erasmus mobvilidad docente
+				if (rbeermodo.isSelected() == false){
+					jlbl[3].setVisible(true);
+					Relleno[3].setVisible(true);
+					Relleno[63].setVisible(true);
+					jbtnsubir[3].setVisible(true);
+					
+					jlbl[4].setVisible(true);
+					Relleno[4].setVisible(true);
+					Relleno[64].setVisible(true);
+					jbtnsubir[4].setVisible(true);
+					
+					jlbl[5].setVisible(false);
+					jtxt[5].setVisible(false);
+					
+					
+					jlbl[6].setVisible(false);
+					Relleno[6].setVisible(false);
+					Relleno[66].setVisible(false);
+					jbtnsubir[6].setVisible(false);
+					
+					jlbl[7].setVisible(false);
+					Relleno[7].setVisible(false);
+					Relleno[67].setVisible(false);
+					jbtnsubir[7].setVisible(false);
+					
+					jlbl[8].setVisible(false);
+					jtxt[8].setVisible(false);
+					
+					jlbl[9].setVisible(false);
+					Relleno[9].setVisible(false);
+					
+					jlbl[10].setVisible(false);
+					Relleno[10].setVisible(false);
+				
+					jlbl[11].setVisible(true);
+					Relleno[11].setVisible(true);
+					Relleno[71].setVisible(true);
+					jbtnsubir[11].setVisible(true);
+					
+					jlbl[12].setVisible(false);
+					Relleno[12].setVisible(false);
+					Relleno[72].setVisible(false);
+					jbtnsubir[12].setVisible(false);
+					
+					jlbl[13].setVisible(false);
+					Relleno[13].setVisible(false);
+					Relleno[33].setVisible(false);
+					jbtnsubir[13].setVisible(false);
+					
+					jlbl[14].setVisible(true);
+					Relleno[14].setVisible(true);
+					Relleno[34].setVisible(true);
+					jbtnsubir[14].setVisible(true);
+					
+					jlbl[15].setVisible(false);
+					Relleno[15].setVisible(false);
+					Relleno[35].setVisible(false);
+					jbtnsubir[15].setVisible(false);
+					
+					jlbl[16].setVisible(true);
+					Relleno[16].setVisible(true);
+					Relleno[36].setVisible(true);
+					jbtnsubir[16].setVisible(true);
+					
+					jlbl[17].setVisible(true);
+					Relleno[17].setVisible(true);
+					Relleno[37].setVisible(true);
+					jbtnsubir[17].setVisible(true);
+					
+					jlbl[18].setVisible(false);
+					Relleno[18].setVisible(false);
+					Relleno[38].setVisible(false);
+					jbtnsubir[18].setVisible(false);
+					
+					jlbl[19].setVisible(true);
+					Relleno[19].setVisible(true);
+					Relleno[39].setVisible(true);
+					jbtnsubir[19].setVisible(true);
+					
+					jlbl[20].setVisible(true);
+					Relleno[20].setVisible(true);
+					Relleno[40].setVisible(true);
+					jbtnsubir[20].setVisible(true);
+					
+					jlbl[21].setVisible(true);
+					Relleno[21].setVisible(true);
+					Relleno[41].setVisible(true);
+					jbtnsubir[21].setVisible(true);
+					
+					jlbl[22].setVisible(true);
+					Relleno[22].setVisible(true);
+					Relleno[42].setVisible(true);
+					jbtnsubir[22].setVisible(true);
+					
+					jlbl[23].setVisible(true);
+					Relleno[23].setVisible(true);
+					Relleno[43].setVisible(true);
+					jbtnsubir[23].setVisible(true);
+					
+					jlbl[24].setVisible(true);
+					Relleno[24].setVisible(true);
+					Relleno[44].setVisible(true);
+					jbtnsubir[24].setVisible(true);
+					
+					jlbl[25].setVisible(true);
+					Relleno[25].setVisible(true);
+					Relleno[45].setVisible(true);
+					jbtnsubir[25].setVisible(true);
+					
+					jlbl[26].setVisible(true);
+					Relleno[26].setVisible(true);
+					Relleno[46].setVisible(true);
+					jbtnsubir[26].setVisible(true);
+					
+					jlbl[27].setVisible(true);
+					Relleno[27].setVisible(true);
+					Relleno[47].setVisible(true);
+					jbtnsubir[27].setVisible(true);
+					
+					jlbl[28].setVisible(true);
+					Relleno[28].setVisible(true);
+					Relleno[48].setVisible(true);
+					jbtnsubir[28].setVisible(true);
+					
+					jlbl[29].setVisible(false);
+					Relleno[29].setVisible(false);
+					Relleno[49].setVisible(false);
+					jbtnsubir[29].setVisible(false);
+					
+					jlbl[30].setVisible(true);
+					Relleno[30].setVisible(true);
+					Relleno[50].setVisible(true);
+					jbtnsubir[30].setVisible(true);
+					
+					jlbl[31].setVisible(false);
+					Relleno[31].setVisible(false);
+					Relleno[51].setVisible(false);
+					jbtnsubir[31].setVisible(false);
+					
+					jlbl[32].setVisible(false);
+					Relleno[32].setVisible(false);
+					Relleno[52].setVisible(false);
+					jbtnsubir[32].setVisible(false);
+				}
+				
+				//erasmus movilidad no docente
+				if (rbeermonodo.isSelected() == false){
+					jlbl[3].setVisible(true);
+					Relleno[3].setVisible(true);
+					Relleno[63].setVisible(true);
+					jbtnsubir[3].setVisible(true);
+					
+					jlbl[4].setVisible(true);
+					Relleno[4].setVisible(true);
+					Relleno[64].setVisible(true);
+					jbtnsubir[4].setVisible(true);
+					
+					jlbl[5].setVisible(false);
+					jtxt[5].setVisible(false);
+					
+					
+					jlbl[6].setVisible(false);
+					Relleno[6].setVisible(false);
+					Relleno[66].setVisible(false);
+					jbtnsubir[6].setVisible(false);
+					
+					jlbl[7].setVisible(false);
+					Relleno[7].setVisible(false);
+					Relleno[67].setVisible(false);
+					jbtnsubir[7].setVisible(false);
+					
+					jlbl[8].setVisible(false);
+					jtxt[8].setVisible(false);
+					
+					jlbl[9].setVisible(false);
+					Relleno[9].setVisible(false);
+					
+					jlbl[10].setVisible(false);
+					Relleno[10].setVisible(false);
+				
+					jlbl[11].setVisible(true);
+					Relleno[11].setVisible(true);
+					Relleno[71].setVisible(true);
+					jbtnsubir[11].setVisible(true);
+					
+					jlbl[12].setVisible(false);
+					Relleno[12].setVisible(false);
+					Relleno[72].setVisible(false);
+					jbtnsubir[12].setVisible(false);
+					
+					jlbl[13].setVisible(false);
+					Relleno[13].setVisible(false);
+					Relleno[33].setVisible(false);
+					jbtnsubir[13].setVisible(false);
+					
+					jlbl[14].setVisible(true);
+					Relleno[14].setVisible(true);
+					Relleno[34].setVisible(true);
+					jbtnsubir[14].setVisible(true);
+					
+					jlbl[15].setVisible(false);
+					Relleno[15].setVisible(false);
+					Relleno[35].setVisible(false);
+					jbtnsubir[15].setVisible(false);
+					
+					jlbl[16].setVisible(false);
+					Relleno[16].setVisible(false);
+					Relleno[36].setVisible(false);
+					jbtnsubir[16].setVisible(false);
+					
+					jlbl[17].setVisible(true);
+					Relleno[17].setVisible(true);
+					Relleno[37].setVisible(true);
+					jbtnsubir[17].setVisible(true);
+					
+					jlbl[18].setVisible(false);
+					Relleno[18].setVisible(false);
+					Relleno[38].setVisible(false);
+					jbtnsubir[18].setVisible(false);
+					
+					jlbl[19].setVisible(true);
+					Relleno[19].setVisible(true);
+					Relleno[39].setVisible(true);
+					jbtnsubir[19].setVisible(true);
+					
+					jlbl[20].setVisible(true);
+					Relleno[20].setVisible(true);
+					Relleno[40].setVisible(true);
+					jbtnsubir[20].setVisible(true);
+					
+					jlbl[21].setVisible(true);
+					Relleno[21].setVisible(true);
+					Relleno[41].setVisible(true);
+					jbtnsubir[21].setVisible(true);
+					
+					jlbl[22].setVisible(true);
+					Relleno[22].setVisible(true);
+					Relleno[42].setVisible(true);
+					jbtnsubir[22].setVisible(true);
+					
+					jlbl[23].setVisible(true);
+					Relleno[23].setVisible(true);
+					Relleno[43].setVisible(true);
+					jbtnsubir[23].setVisible(true);
+					
+					jlbl[24].setVisible(true);
+					Relleno[24].setVisible(true);
+					Relleno[44].setVisible(true);
+					jbtnsubir[24].setVisible(true);
+					
+					jlbl[25].setVisible(true);
+					Relleno[25].setVisible(true);
+					Relleno[45].setVisible(true);
+					jbtnsubir[25].setVisible(true);
+					
+					jlbl[26].setVisible(true);
+					Relleno[26].setVisible(true);
+					Relleno[46].setVisible(true);
+					jbtnsubir[26].setVisible(true);
+					
+					jlbl[27].setVisible(true);
+					Relleno[27].setVisible(true);
+					Relleno[47].setVisible(true);
+					jbtnsubir[27].setVisible(true);
+					
+					jlbl[28].setVisible(true);
+					Relleno[28].setVisible(true);
+					Relleno[48].setVisible(true);
+					jbtnsubir[28].setVisible(true);
+					
+					jlbl[29].setVisible(false);
+					Relleno[29].setVisible(false);
+					Relleno[49].setVisible(false);
+					jbtnsubir[29].setVisible(false);
+					
+					jlbl[30].setVisible(true);
+					Relleno[30].setVisible(true);
+					Relleno[50].setVisible(true);
+					jbtnsubir[30].setVisible(true);
+					
+					jlbl[31].setVisible(true);
+					Relleno[31].setVisible(true);
+					Relleno[51].setVisible(true);
+					jbtnsubir[31].setVisible(true);
+					
+					jlbl[32].setVisible(false);
+					Relleno[32].setVisible(false);
+					Relleno[52].setVisible(false);
+					jbtnsubir[32].setVisible(false);
+				}
+				if (rbeerco.isSelected() == false){
+					
+				}
+				if (rbemi.isSelected() == false){
+					
+				}
+				if (rbecofc.isSelected() == false){
+					
+				}
+				if (rotmo.isSelected() == false){
+					
+				}
+				
+			}
+			
+		};
+		
+		/**
+		 * se crean los action listener para los botones subir
+		 * se sube  el archivo
+		 */
+		ActionListener acsubir = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		};
+		
+		/**
+		 * se crean los action el check becario
+		 */
+		ActionListener acbecario = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				if (Relleno[9].isSelected()){
+					jpbecario.setVisible(true);
+				}else{
+					jpbecario.setVisible(false);
+				}
+			}
+			
+		};
+		
+		/**
+		 * se crean los action para los botnoes aceptar y limpiar campos
+		 */
+		ActionListener acfinal = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		};
 
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		
@@ -644,7 +1296,7 @@ public class PnlPracticas extends JScrollPane{
 		total.setVisible(true);
 		this.setViewportView(total);
 		jpsolalumnos.setVisible(true);
-		jpbecario.setVisible(true);
+		jpbecario.setVisible(false);
 		jpinfinter.setVisible(true);
 		jpinffinal.setVisible(true);
 		
@@ -656,8 +1308,19 @@ public class PnlPracticas extends JScrollPane{
 		panel.setVisible(true);
 		jpsoloapee.setVisible(true);
 		
+		/**
+		 * añadimos los actionlistener a los objetos
+		 */
+		Relleno[9].addActionListener(acbecario);
+		rbeeres.addActionListener(acradio);
+		rbeerpr.addActionListener(acradio);
+		rbeermodo.addActionListener(acradio);
+		rbeermonodo.addActionListener(acradio);
+		rbeerco.addActionListener(acradio);
+		rbemi.addActionListener(acradio);
+		rbecofc.addActionListener(acradio);
+		rotmo.addActionListener(acradio);
 		
-		//this.setViewportView(panel);
 		
 	}
 	
