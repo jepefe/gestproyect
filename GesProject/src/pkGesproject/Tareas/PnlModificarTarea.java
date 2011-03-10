@@ -368,7 +368,7 @@ public class PnlModificarTarea extends JPanel{
 				for(int j = 1;j<columnas+1;j++){
 					datos[i][j-1] = rs.getString(j);
 					fila[j-1]=datos[i][j-1];
-					//System.out.print(fila[j-1]+";");
+			
 				}
 				//System.out.print("\n");
 				i++;
