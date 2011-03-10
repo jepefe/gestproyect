@@ -110,6 +110,7 @@ public class PnlAlta_equipamientos extends JPanel{
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+					PnlMod_equipamientos.actualizar_tabla();
 					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
 					
 					//limpiamos los campos despues de dar de alta
@@ -176,7 +177,7 @@ public class PnlAlta_equipamientos extends JPanel{
 		  
 		
 		//Tamaños de los textfields
-		int[] fieldWidths = {10,10,2,10,10};
+		int[] fieldWidths = {10,10,5,10,10};
 		
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
@@ -347,7 +348,7 @@ public class PnlAlta_equipamientos extends JPanel{
 			jtxt[1].setDocument(ljtxt1);
 			break;
 			case (2):
-				LimitadorDeDocumento ljtxt2 = new LimitadorDeDocumento(4);
+				LimitadorDeDocumento ljtxt2 = new LimitadorDeDocumento(3);
 			jtxt[2].setDocument(ljtxt2);
 			break;
 			case (3):
@@ -386,7 +387,7 @@ public class PnlAlta_equipamientos extends JPanel{
 		/*
 		 * Revisamos si estan rellenados todos los camps obligatorios
 		 */
-		for(int i=0;i<fieldNames.length;++i) {
+		for(int i=0;i<fieldNames.length-1;++i) {
 			if (jtxt[i].getText().length() > 0){
 			}else{
 				permetir_alta = 1;
