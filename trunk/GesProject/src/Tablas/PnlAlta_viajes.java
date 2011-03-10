@@ -49,6 +49,7 @@ public class PnlAlta_viajes extends JScrollPane{
 	int i;
 	boolean OKalta;
 	char caracter;
+	String cantidad1,cantidad2;
 	
 	JPanel contenedor = new JPanel();
 	JPanel mensage = new JPanel();
@@ -56,6 +57,8 @@ public class PnlAlta_viajes extends JScrollPane{
 	JTextArea textarea = new JTextArea();
 	JLabel alerta;
 	Border empty = new EmptyBorder(0,0,0,0);
+	
+	ActionListener accion;
 	
 	public PnlAlta_viajes(){
 		this.setBorder(empty);
@@ -405,6 +408,7 @@ public class PnlAlta_viajes extends JScrollPane{
 
 						//guardamos el id de la provincia de salida
 						rs = null;
+						
 						rs = conexion.ConsultaSQL("SELECT id_provincias FROM PROVINCIAS WHERE estado like '"+cbcsalida.getSelectedItem().toString()+"'");
 						int prosalida = 0;
 						try {
@@ -479,26 +483,167 @@ public class PnlAlta_viajes extends JScrollPane{
 		contenedor.add(panel,BorderLayout.CENTER);
 		this.setViewportView(contenedor);
 		
+		
+	/*	
+		accion = new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+				comprobar_campos();
+				if(e.getActionCommand().equals("aceptar") && OKalta == true){
+					
+						ConexionDb conexdb = new ConexionDb();
+						conexdb.Conectardb();
+						
+						
+						rs = conexdb.ConsultaSQL("Select cod_part FROM PARTNER WHERE nombre ='" + cbpartner.getSelectedItem().toString()+"'");
+						if (rs!= null){
+							try {
+								rs.next();
+								String partner = Integer.toString(rs.getInt(1));
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+						
+						rs = conexdb.ConsultaSQL("Select id_pro FROM PROYECTO WHERE nombre ='" + cbproyecto.getSelectedItem().toString()+"'");
+						if (rs!= null){
+							try {
+								rs.next();
+								String proyecto = Integer.toString(rs.getInt(1));
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+						
+						String paissalida;
+						rs = conexdb.ConsultaSQL("Select id_pais FROM PAIS WHERE pais='" + cbpsalida.getSelectedItem().toString()+"'");
+						if (rs!= null){
+							try {
+								rs.next();
+								paissalida = Integer.toString(rs.getInt(1));
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+						
+						
+						rs = conexdb.ConsultaSQL("Select id_provincias FROM PROVINCIAS WHERE estado='" + cbcsalida.getSelectedItem().toString() + "'" + "AND id_pais='" + paissalida + "'");
+						if (rs!= null){
+							try {
+								rs.next();
+								String provinciasalida = Integer.toString(rs.getInt(1));
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+						
+						String paisdestino;
+						rs = conexdb.ConsultaSQL("Select id_pais FROM PAIS WHERE pais='" + cbpdestino.getSelectedItem().toString()+"'");
+						if (rs!= null){
+							try {
+								rs.next();
+								paisdestino = Integer.toString(rs.getInt(1));
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+						
+						
+						rs = conexdb.ConsultaSQL("Select id_provincias FROM PROVINCIAS WHERE estado='" + cbcdestino.getSelectedItem().toString() + "'" + "AND id_pais='" + paisdestino + "'");
+						if (rs!= null){
+							try {
+								rs.next();
+								String provinciadestino = Integer.toString(rs.getInt(1));
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+											
+						conexion.executeUpdate("INSERT INTO SUBCONTRATA (nombre,sector,pais,provincia,direccion,cod_postal,telf,observaciones) VALUES ('"+ 
+								jtxt[0].getText()+"','"+idsector+"','"+idpais+"','"+idprovincia+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+textarea.getText()+"')");
+						JOptionPane.showMessageDialog(mensage,"Subcontrata dada de alta");
+						
+						
+					for(int i=0;i<4;++i) {	
+						jtxt[i].setText("");
+					}
+					cbcsalida.removeAllItems();
+					textarea.setText(null);
+					mensage.setVisible(false);
+					PnlMod_Sub.actualizar_tabla();
+				
+					cbcdestino.removeAllItems();
+					textarea.setText(null);
+					mensage.setVisible(false);
+					PnlMod_Sub.actualizar_tabla();
+				
+				}else{
+					alerta.setText(rec.idioma[rec.eleidioma][79]);
+					mensage.setBackground(Color.decode("#ec8989"));
+					mensage.setVisible(true);
+					OKalta = false;
+				}
+				
+				
+				// Borrar cuando damos al boton cancelar
+				if( e.getActionCommand().equals("cancelar")){
+					for(int i=0;i<4;++i) {	
+						jtxt[i].setText("");
+					}
+					cbcdestino.removeAllItems();
+					cbcsalida.removeAllItems();
+					textarea.setText(null);
+					alerta.setText("");
+					mensage.setVisible(false);
+				}
+			}
+				
+			};
+*/
+		
 		this.setVisible(true);
 		//filtro para solo admitir numeros en los costes
 		jtxt[2].addKeyListener(new KeyAdapter(){
 			   public void keyTyped(KeyEvent e){
-			      caracter = e.getKeyChar();
-			      if(((caracter < '0') ||(caracter > '9')) &&
-			         (caracter != KeyEvent.VK_BACK_SPACE)) {
-			         e.consume();  
-			      }
-			   }
+				      caracter = e.getKeyChar();
+				      if(((((caracter < '0') && (caracter != '.')) || ((caracter > '9') && (caracter != '.'))) &&
+				         (caracter != KeyEvent.VK_BACK_SPACE))) {
+				    	  //nos aseguramos que no existan mas puntos con anterioridad, si lo es no nos dejara añadir el recienpusado
+				    	  e.consume();
+				    	  
+				      }
+				      if(caracter == '.'){
+				    		 cantidad2 = String.valueOf(jtxt[3].getText());
+				    		if(cantidad2.indexOf('.')>0){
+				    			 e.consume();
+				    		} 
+				      }
+				   }
 			});
 		jtxt[3].addKeyListener(new KeyAdapter(){
 			   public void keyTyped(KeyEvent e){
 			      caracter = e.getKeyChar();
-			      if((((caracter < '0') ||(caracter > '9')) &&
+			      if(((((caracter < '0') && (caracter != '.')) || ((caracter > '9') && (caracter != '.'))) &&
 			         (caracter != KeyEvent.VK_BACK_SPACE))) {
-			         e.consume();  
+			    	  //nos aseguramos que no existan mas puntos con anterioridad, si lo es no nos dejara añadir el recienpusado
+			    	  e.consume();
+			    	  
+			      }
+			      if(caracter == '.'){
+			    		 cantidad2 = String.valueOf(jtxt[3].getText());
+			    		if(cantidad2.indexOf('.')>0){
+			    			 e.consume();
+			    		} 
 			      }
 			   }
-			});	
+		});	
 	}
 	//nos aseguramos de que los campos sean validos
 	public void comprobar_campos(){

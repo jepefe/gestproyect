@@ -86,6 +86,10 @@ public class PnlMod_viajes extends JPanel{
 	ActionListener event;
 	MouseListener mouse;
 	Object[] dat;
+	JDateChooser jdc1,jdc2;
+	
+	int referencia;
+	
 	
 	public PnlMod_viajes(){
 	    	
@@ -117,20 +121,20 @@ public class PnlMod_viajes extends JPanel{
 	    // keylistener para cuando escribe en el campo texto busqueda que buque en la tabla
 	    accion = new KeyListener(){
 
-		@Override
+	    	@Override
 			public void keyPressed(KeyEvent arg0) {
 			// TODO Auto-generated method stub
 			//System.out.println("Has pulsado una tecla");			
 			}
 
-		@Override
+	    	@Override
 			public void keyReleased(KeyEvent act) {
 			// TODO Auto-generated method stub
 			//llamamos al método para buscar coincidencias dentrod e la tabla
 			algoritmo_busqueda();
 			}
 
-		@Override
+	    	@Override
 			public void keyTyped(KeyEvent arg0) {
 			// TODO Auto-generated method stub
 			}
@@ -139,7 +143,7 @@ public class PnlMod_viajes extends JPanel{
 	       
 	    event = new ActionListener(){
 
-		@Override
+	    	@Override
 			public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("modificar")){
@@ -151,10 +155,11 @@ public class PnlMod_viajes extends JPanel{
 				//llamamos al metodo eliminar
 					eliminar();
 				}
-				if(e.getActionCommand().equals("actualizar")){
-					//llamamos al metodo eliminar
+				/*if(e.getActionCommand().equals("actualizar")){
+					//llamamos al metodo actualizar
 					actualizar();
 				}
+			*/
 				if(e.getActionCommand().equals("cerrar")){
 					modificar.dispose();
 				}
@@ -402,23 +407,28 @@ public class PnlMod_viajes extends JPanel{
      * Sirve para la modificación de los datos al presional el boton
 	 */
 	public void modificar(){
+		
 	  	modificar = new JDialog();
 		mod = new PnlAlta_viajes();
 		modificar.add(mod);
 		modificar.setBounds(0, 0, 600, 650);
 		modificar.setLocationRelativeTo(null);
 		modificar.setModal(true);
-		//mod.jbtnaceptar.removeActionListener(mod.accion);
-		//mod.jbtncancelar.removeActionListener(mod.accion);
-		//mod.jbtncancelar.setText(rec.idioma[rec.eleidioma][99]);
-		//mod.jbtnaceptar.addActionListener(event);
-	    //mod.jbtnaceptar.setActionCommand("actualizar");
-	    //mod.jbtncancelar.addActionListener(event);
-	    //mod.jbtncancelar.setActionCommand("cerrar");
+		mod.jbtnaceptar.removeActionListener(mod.accion);
+		mod.jbtnlimpiar.removeActionListener(mod.accion);
+		mod.jbtnlimpiar.setText(rec.idioma[rec.eleidioma][99]);
+		mod.jbtnaceptar.addActionListener(event);
+	    mod.jbtnaceptar.setActionCommand("actualizar");
+	    mod.jbtnlimpiar.addActionListener(event);
+	    mod.jbtnlimpiar.setActionCommand("cerrar");
+	    
+	    
 	    conexion.Conectardb();
-	    rs = conexion.ConsultaSQL("SELECT nombrepersona ,motivoviaje , coste_viaje, coste_subsistencia FROM TRAVEL_SUBSISTENCE  WHERE ref = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
+	    	    
+	    rs = conexion.ConsultaSQL("SELECT nombrepersona ,motivoviaje , coste_viaje, coste_subsistencia,fecha_ini,fecha_fin FROM TRAVEL_SUBSISTENCE  WHERE ref = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 	    int i=1;
-	    	
+	    referencia = 0;
+	    referencia = Integer.parseInt(datos[jtblLateral.getSelectedRow()][3]);
 			try {
 						
 				rs.next();
@@ -426,6 +436,8 @@ public class PnlMod_viajes extends JPanel{
 				for(i=1;i<5;i++){
 					mod.jtxt[i-1].setText(rs.getString(i));
 				}
+				mod.jdc1.setDate(rs.getDate(5));
+				mod.jdc2.setDate(rs.getDate(6));
 				mod.textarea.setText(rs.getString(1));
 				
 				//cargamos el partner
@@ -456,18 +468,14 @@ public class PnlMod_viajes extends JPanel{
 				rs=conexion.ConsultaSQL("SELECT PAIS.pais FROM PAIS INNER JOIN TRAVEL_SUBSISTENCE ON PAIS.id_pais = TRAVEL_SUBSISTENCE.paisdestino WHERE TRAVEL_SUBSISTENCE.ref = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				rs.next();
 				mod.cbpdestino.setSelectedItem(rs.getString(1));
-				mod.textarea.setText(rs.getString(1));
+				//mod.textarea.setText(rs.getString(1));
 				
 				//cargamos la provincia o region de destino
-				rs=conexion.ConsultaSQL("SELECT PROVINCIAS.estado FROM PROVINCIAS INNER JOIN TRAVEL_SUBSISTENCE ON PROVINCIAS.id_provincias = TRAVEL_SUBSISTENCE.paisdestino WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
+				rs=conexion.ConsultaSQL("SELECT PROVINCIAS.estado FROM PROVINCIAS INNER JOIN TRAVEL_SUBSISTENCE ON PROVINCIAS.id_provincias = TRAVEL_SUBSISTENCE.ciudad_destino WHERE TRAVEL_SUBSISTENCE.ref = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				rs.next();
 				mod.cbcdestino.setSelectedItem(rs.getString(1));
 				mod.textarea.setText(rs.getString(1));
-				    
-				//cargamos la fecha de inicio	
-/*				rs.next();
-				mod.jdc1.setSelectableDateRange(arg0, arg1)
-			*/				
+				
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -488,7 +496,7 @@ public class PnlMod_viajes extends JPanel{
 			
 			if(s==0){
 				conexion.Conectardb();
-				conexion.executeUpdate("DELETE FROM SUBCONTRATA WHERE cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
+				conexion.executeUpdate("DELETE FROM TRAVEL_SUBSISTENCE WHERE  ref = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				
 				actualizar_tabla();
 				
@@ -497,44 +505,98 @@ public class PnlMod_viajes extends JPanel{
 				conexion.cerrarConexion();
 			}
 	    }
+	    
+	    /*
+	     * este método cambia los datos del gasto seleccionado
+	     */
+	    
 	    public void actualizar(){
-	    	String sector = null;
-	    	String pais = null;
-	    	String provincia = null;
+	    	System.out.println("acceso a actualizacion");
+	    	String partner = null;
+	    	String proyecto = null;
+	    	String paissalida = null;
+	    	String paisdestino = null;
+	    	String provinciasalida = null;
+	    	String provinciadestino = null;
 	    	Component aviso = null;
-			int s = JOptionPane.showConfirmDialog(aviso, "Esta seguro??");
+			int s = JOptionPane.showConfirmDialog(aviso, rec.idioma[rec.eleidioma][218]);
 			if(s==0){
 		    	conexion.Conectardb();
-		    	rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+mod.CmbSector.getSelectedItem().toString()+"'");
+		    	//partner
+		    	rs=conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like '"+mod.cbpartner.getSelectedItem().toString()+"'");
+		    	try{
+		    		rs.next();
+		    		partner = rs.getString(1);
+		    	}catch(SQLException e1){
+		    		e1.printStackTrace();
+		    	}
+		    	System.out.println(partner);
+		    	//proyecto
+		    	rs=conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE proyecto like '"+mod.cbproyecto.getSelectedItem().toString()+"'");
+		    	try{
+		    		rs.next();
+		    		proyecto = rs.getString(1);
+		    	}catch(SQLException e1){
+		    		e1.printStackTrace();
+		    	}
+		    	System.out.println(proyecto);
+				//pais de salida
+				rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+mod.cbpsalida.getSelectedItem().toString()+"'");
 				try {
 					rs.next();
-					sector = rs.getString(1);
+					paissalida = rs.getString(1);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+mod.CmbPais.getSelectedItem().toString()+"'");
+				System.out.println(paissalida);
+				
+				//pais de origen
+				rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+mod.cbpdestino.getSelectedItem().toString()+"'");
 				try {
 					rs.next();
-					pais = rs.getString(1);
+					paisdestino = rs.getString(1);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				rs=conexion.ConsultaSQL("SELECT id_provincias FROM PROVINCIAS WHERE estado like '"+mod.CmbProvincia.getSelectedItem().toString()+"'");
+				System.out.println(paisdestino);
+				
+				//provincia origen o salida
+				rs=conexion.ConsultaSQL("SELECT id_provincias FROM PROVINCIAS WHERE estado like '"+mod.cbcsalida.getSelectedItem().toString()+"'");
 				try {
 					rs.next();
-					provincia = rs.getString(1);
+					provinciasalida = rs.getString(1);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				conexion.executeUpdate("UPDATE TRAVEL_SUBSISTENE SET nombrepersona = '"+mod.jtxt[0].getText()+"',motivoviaje = '"+mod.jtxt[1].getText()+"', paissalida = '"+paissalida+"', provincia = '"+provincia+"', direccion = '"+mod.jtxt[1].getText()+"', cod_postal = '"+mod.jtxt[2].getText()+"', telf = '"+mod.jtxt[3].getText()+"', observaciones = '"+mod.textarea.getText()+"' WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"' ");
+				System.out.println(provinciasalida);
+				
+				//provincia de destino
+				rs=conexion.ConsultaSQL("SELECT id_provincias FROM PROVINCIAS WHERE estado like '"+mod.cbcdestino.getSelectedItem().toString()+"'");
+				try {
+					rs.next();
+					provinciadestino = rs.getString(1);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				System.out.println(provinciadestino);
+				
+				java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
+				java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
+				System.out.println(sqlDate1);
+				System.out.println(sqlDate2);
+				
+				
+				conexion.executeUpdate("UPDATE TRAVEL_SUBSISTENE SET partner = '"+referencia+"',motivoviaje = '"+mod.jtxt[1].getText()+"', paissalida = '"+paissalida+"', ciudad_salida = '"+provinciasalida+"', ciudad_destino = '"+provinciadestino+"', motivoviaje = '"+mod.jtxt[1].getText()+"', fecha_ini = '"+sqlDate1+"', fecha_fin = '"+sqlDate2+"', coste_viaje = '"+Float.valueOf(mod.jtxt[2].getText())+"', telf = '"+Float.valueOf(mod.jtxt[3].getText())+"' WHERE TRAVEL_SUBSISTENCE.ref = '"+referencia+"' ");
 				actualizar_tabla();
-				JOptionPane.showMessageDialog(aviso,"Subcontrata Actualizada Correctamente");
+				JOptionPane.showMessageDialog(aviso,"viaje Actualizada Correctamente");
 				modificar.dispose();
 			}
 	    }
+		
 	    /**
 	     * con este método podemos actualizar la tabla siempre que lo llamemos
 	     */
@@ -580,6 +642,7 @@ public class PnlMod_viajes extends JPanel{
 			llena = false;
 	    }
 	    
+
 	    
 	    /**
 	     *Este metodo sirve para instanciar esta clase y poder llamar a sus objetos desde otra clase. 
@@ -588,4 +651,6 @@ public class PnlMod_viajes extends JPanel{
 	    public static PnlMod_Sub Obtener_Instancia(){
 			return instancia;
 		}
+	    
+	    
 	}
