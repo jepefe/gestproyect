@@ -760,7 +760,8 @@ public class PnlAlta_TimeSheet extends JPanel{
 						if (CmbTareas.getSelectedItem()!= null){
 						conexion.executeUpdate("INSERT INTO TIMESHEET (id_pro, id_part, id_staff, rol, fecha, id_tarea, tarea_des, id_wp, horas) VALUES ('"+idpro+"','"+idpart+"','"+idstaff+"','"+CmbRol.getSelectedItem()+"','"+sqlDate1+"','"+idtar+"','"+CmbTareas.getSelectedItem()+"','"+idwpp+"','"+jtxtta[3].getText()+"')");
 						}else{
-						conexion.executeUpdate("INSERT INTO TIMESHEET (id_pro, id_part, id_staff, rol, fecha, id_tarea, tarea_des, id_wp, horas) VALUES ('"+idpro+"','"+idpart+"','"+idstaff+"','"+CmbRol.getSelectedItem()+"','"+sqlDate1+"','"+idtar+"','"+jtxtta[1].getText()+"','"+idwpp+"','"+jtxtta[3].getText()+"')");
+							idtar = 999999999;
+						conexion.executeUpdate("INSERT INTO TIMESHEET (id_pro, id_part, id_staff, rol, fecha, id_tarea, tarea_des, id_wp, horas) VALUES ('"+idpro+"','"+idpart+"','"+idstaff+"','"+CmbRol.getSelectedItem()+"','"+sqlDate1+"','"+idtar+"','"+jtxtta[1].getText().trim()+"','"+idwpp+"','"+jtxtta[3].getText()+"')");
 	
 						}
 						
