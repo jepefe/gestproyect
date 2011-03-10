@@ -137,7 +137,9 @@ public class PnlAlta_equipamientos extends JPanel{
 			
 			// Borrar cuando damos al boton cancelar
 			if( e.getActionCommand().equals("cancelar")){
-				for(int i=0;i<2;++i) {	
+				
+				actualizar_equipamientos();
+				/*for(int i=0;i<2;++i) {	
 					jtxt[i].setText("");
 					}	
 				jdc1.setDate(null);
@@ -151,7 +153,7 @@ public class PnlAlta_equipamientos extends JPanel{
 				CmbPar.setSelectedItem(null);
 				Cmbwp.setSelectedItem(null);
 				CmbComp.setSelectedItem(null);
-				mesage.setVisible(false);
+				mesage.setVisible(false);*/
 			}
 		}
 			
@@ -207,19 +209,11 @@ public class PnlAlta_equipamientos extends JPanel{
 	  	for(int i=0;i<fieldNames.length;++i) {
 	  		
 			if(i==0){//Creo el combo del partner
-				
-				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT nombre FROM PARTNER");
-			    	try {
-						while(rs.next()){	
-							CmbPar.addItem(rs.getString(1));
-						}
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		    	conexion.cerrarConexion();
-				
+				/*
+				 * llamada cargar combo
+				 */
+		    	actualizar_equipamientos();
+		    	
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.WEST;
 				panel.add(partner=new JLabel(rec.idioma[rec.eleidioma][57]+"*"),gbc);
@@ -254,18 +248,11 @@ public class PnlAlta_equipamientos extends JPanel{
 		    	JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		    	panel.add((sp2),gbc);
 		    	
-		    	//Combo de WP
-		    	conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT nombre FROM WORKPAQUETS");
-			    	try {
-						while(rs.next()){	
-							Cmbwp.addItem(rs.getString(1));
-						}
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		    	conexion.cerrarConexion();
+		    	/*
+		    	 * Combo de WP
+		    	 */		    	
+		    	actualizar_equipamientos();
+		    	
 				
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.WEST;
@@ -289,8 +276,8 @@ public class PnlAlta_equipamientos extends JPanel{
 				panel.add(jdc1,gbc);
 				
 				//combo de compra/alquiler
-				CmbComp.addItem("Compra"); //se sube un "0" a la BD
-				CmbComp.addItem("Alquiler"); // se sube un "1" a la BD
+				CmbComp.addItem(rec.idioma[rec.eleidioma][229]); //se sube un "0" a la BD
+				CmbComp.addItem(rec.idioma[rec.eleidioma][230]); // se sube un "1" a la BD
 				
 				gbc.gridwidth = GridBagConstraints.RELATIVE;
 				gbc.anchor = GridBagConstraints.WEST;
@@ -399,6 +386,38 @@ public class PnlAlta_equipamientos extends JPanel{
 			permetir_alta = 1;
 		}
 		
+	}
+	
+	public void actualizar_equipamientos(){
+		// comobo WP
+		conexion.Conectardb();
+		rs = conexion.ConsultaSQL("SELECT nombre FROM WORKPAQUETS");
+		Cmbwp.removeAllItems();
+	    	try {
+				while(rs.next()){	
+					Cmbwp.addItem(rs.getString(1));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		Cmbwp.setSelectedItem(null);	
+    	conexion.cerrarConexion();
+    	// como Partner------------------------------
+    	conexion.Conectardb();
+		rs = conexion.ConsultaSQL("SELECT nombre FROM PARTNER");
+		CmbPar.removeAllItems();
+	    	try {
+				while(rs.next()){	
+					CmbPar.addItem(rs.getString(1));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		CmbPar.setSelectedItem(null);
+    	conexion.cerrarConexion();
+    	
 	}
 	
 	

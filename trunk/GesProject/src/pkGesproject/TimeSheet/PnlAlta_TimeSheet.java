@@ -259,19 +259,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 			   	Jproyecto.add(CmbProyecto,gbt);
 			   CmbProyecto.setPreferredSize(new Dimension(140,30));
 			   
-				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM PROYECTOS ORDER BY nombre");
-				try {
-				while(rs.next()){
-					CmbProyecto.addItem(rs.getString(1));	
-					
-				}
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						}
-				CmbProyecto.setSelectedItem(null);
-				conexion.cerrarConexion();
+			   actualizar_combos();
 				break;
 			   case (1)://contract number
 				   gbt.insets = new Insets(10,17,10,5);
@@ -324,55 +312,15 @@ public class PnlAlta_TimeSheet extends JPanel{
 				gbt.gridx = 3; // El área de texto empieza en la columna
 			   	Jproyecto.add(CmbStaff,gbt);
 			   	CmbStaff.setPreferredSize(new Dimension(230,30));
-			   
-				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT nombre,id_staff FROM STAFF ORDER BY nombre");
-				try {
-				while(rs.next()){
-					CmbStaff.addItem(rs.getString(1));	
-					
-				}
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						//e1.printStackTrace();
-						}
-					CmbStaff.setSelectedItem(null);
-					if (!GesStaff.esRepresentante()){
-						
-					rs = conexion.ConsultaSQL("SELECT nombre FROM STAFF WHERE id_staff='"+Integer.toString(recursos.getIdusuario())+"'");
-					try {
-						rs.next();
-						nomsta = rs.getString(1);
-						
-						
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					CmbStaff.setSelectedItem(nomsta);
-					CmbStaff.setEnabled(false);
-					}
-					rs = conexion.ConsultaSQL("SELECT nombre FROM STAFF WHERE id_staff='"+Integer.toString(recursos.getIdusuario())+"'");
-					try {
-						rs.next();
-						nomsta = rs.getString(1);
-						
-						
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						//e1.printStackTrace();
-					}
-					CmbStaff.setSelectedItem(nomsta);
-					rs = conexion.ConsultaSQL("SELECT p.nombre FROM STAFF s INNER JOIN PARTNER p ON s.cod_part = p.cod_part WHERE s.nombre= '"+nomsta+"'");
-					
-				try {
-					rs.next();
-					CmbPart.setSelectedItem(rs.getString(1));
-				} catch (SQLException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
-				conexion.cerrarConexion();
+			
+			   	/*
+			   	 * 
+			   	 * Actualiza los combos.
+			   	 * 
+			   	 */
+			   		actualizar_combos();
+			   	
+			   	
 				/**
 		    	 * Cargamos los array y la tabla con los datos de la bd despues de crear el alta nueva
 		    	 */
@@ -1082,6 +1030,81 @@ public class PnlAlta_TimeSheet extends JPanel{
 		conexion.cerrarConexion();
     	return cuenta;
     	
+    }
+    /**
+     * Metodo para actualizar los combos.
+     */
+    public void actualizar_combos(){
+    	// rellenar combo CMBPROYECTO-----------------------
+    	conexion.Conectardb();
+		rs = conexion.ConsultaSQL("SELECT nombre,id_pro FROM PROYECTOS ORDER BY nombre");
+		CmbProyecto.removeAllItems();
+		try {
+		while(rs.next()){
+			CmbProyecto.addItem(rs.getString(1));	
+			
+		}
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				}
+		CmbProyecto.setSelectedItem(null);
+		conexion.cerrarConexion();	
+		
+		
+		// rellena comobo staff y partner--------------
+		conexion.Conectardb();
+		rs = conexion.ConsultaSQL("SELECT nombre,id_staff FROM STAFF ORDER BY nombre");
+		try {
+		while(rs.next()){
+			CmbStaff.addItem(rs.getString(1));	
+			
+		}
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				//e1.printStackTrace();
+				}
+			CmbStaff.setSelectedItem(null);
+			if (!GesStaff.esRepresentante()){
+				
+			rs = conexion.ConsultaSQL("SELECT nombre FROM STAFF WHERE id_staff='"+Integer.toString(recursos.getIdusuario())+"'");
+			try {
+				rs.next();
+				nomsta = rs.getString(1);
+				
+				
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			CmbStaff.setSelectedItem(nomsta);
+			CmbStaff.setEnabled(false);
+			CmbStaff.removeAllItems();
+			}
+			rs = conexion.ConsultaSQL("SELECT nombre FROM STAFF WHERE id_staff='"+Integer.toString(recursos.getIdusuario())+"'");
+			try {
+				rs.next();
+				nomsta = rs.getString(1);
+				
+				
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				//e1.printStackTrace();
+			}
+			CmbStaff.setSelectedItem(nomsta);
+			rs = conexion.ConsultaSQL("SELECT p.nombre FROM STAFF s INNER JOIN PARTNER p ON s.cod_part = p.cod_part WHERE s.nombre= '"+nomsta+"'");
+			
+		try {
+			rs.next();
+			CmbPart.setSelectedItem(rs.getString(1));
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		conexion.cerrarConexion();
+		
+		
+		
     }
 		
 	}//fin clase

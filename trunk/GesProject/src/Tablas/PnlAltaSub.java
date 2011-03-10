@@ -464,6 +464,9 @@ public class PnlAltaSub extends JScrollPane{
 		}
 		
 	}
+	/**
+	 * Metodo para actualizar subcontrata.
+	 */
 	public void actulizar_subcontrata(){
 		conexion.Conectardb();
 		rs = conexion.ConsultaSQL("SELECT nombre FROM WORKPAQUETS");
