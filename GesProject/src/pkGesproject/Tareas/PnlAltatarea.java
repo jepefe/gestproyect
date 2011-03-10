@@ -174,18 +174,7 @@ public class PnlAltatarea extends JScrollPane{
 				 * Creacion del JComboBox y a�adir los items.
 				 *Se conecta a la BD para realizar la consulta
 				 **/
-				conexion.Conectardb();
-				rs = conexion.ConsultaSQL("SELECT nombre,id_wp FROM WORKPAQUETS");
-				try {
-				while(rs.next()){
-					CmbWp.addItem(rs.getString(1));	
-					CmbWp.setSelectedItem(null);
-					
-				}
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						}
+			   rellena_combo_Tarea();
 			   	break;
 		   case (2):
 		   		{gbc.gridwidth = GridBagConstraints.REMAINDER; panel.add(jdc1,gbc);}
@@ -401,6 +390,8 @@ public class PnlAltatarea extends JScrollPane{
 					textarea2.setText(null);
 					CmbWp.setSelectedItem(null);
 					mesage.setVisible(false);
+					
+					
 					// Borrar cuando termine de añadir
 					/*for(int i=0;i<5;++i) {	
 						System.out.println("aquiii");
@@ -438,5 +429,24 @@ public class PnlAltatarea extends JScrollPane{
 		
 		this.setViewportView(contenedor);
 		
+	}
+	/**
+	 * metodo para actualizar el combo de tareas.
+	 */
+	
+	public void rellena_combo_Tarea(){
+		conexion.Conectardb();
+		rs = conexion.ConsultaSQL("SELECT nombre,id_wp FROM WORKPAQUETS");
+		CmbWp.removeAllItems();
+		try {
+		while(rs.next()){
+			CmbWp.addItem(rs.getString(1));	
+			CmbWp.setSelectedItem(null);
+			
+		}
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				}
 	}
 }
