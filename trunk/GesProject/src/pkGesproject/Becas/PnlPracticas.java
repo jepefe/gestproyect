@@ -211,9 +211,10 @@ public class PnlPracticas extends JScrollPane{
 		   rec.idioma[rec.eleidioma][198], rec.idioma[rec.eleidioma][199],rec.idioma[rec.eleidioma][200],rec.idioma[rec.eleidioma][201],
 		   rec.idioma[rec.eleidioma][202],rec.idioma[rec.eleidioma][203],rec.idioma[rec.eleidioma][204],rec.idioma[rec.eleidioma][205],
 		   rec.idioma[rec.eleidioma][206],rec.idioma[rec.eleidioma][207],rec.idioma[rec.eleidioma][209],rec.idioma[rec.eleidioma][210],
-		   rec.idioma[rec.eleidioma][211],rec.idioma[rec.eleidioma][167],rec.idioma[rec.eleidioma][212],rec.idioma[rec.eleidioma][213]
+		   rec.idioma[rec.eleidioma][211],rec.idioma[rec.eleidioma][167],rec.idioma[rec.eleidioma][212],rec.idioma[rec.eleidioma][213],
+		   rec.idioma[rec.eleidioma][213]
 		   };
-		int[] fieldWidths = {20,30,20,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6};
+		int[] fieldWidths = {20,30,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20};
 		
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
@@ -223,7 +224,7 @@ public class PnlPracticas extends JScrollPane{
 		jpradio.add(rbeeres);
 		jpradio.add(jtxtra[0]=new JLabel(rec.idioma[rec.eleidioma][152]));
 	    jpradio.add(rbeerpr);
-	    jpradio.add(jtxtra[1]=new JLabel(rec.idioma[rec.eleidioma][153]));
+	    jpradio.add(jtxtra[1]=new JLabel(rec.idioma[rec.eleidioma][150]));
 	    jpradio.add(rbeermodo);
 	    jpradio.add(jtxtra[2]=new JLabel(rec.idioma[rec.eleidioma][153]));
 	    jpradio.add(rbeermonodo);
