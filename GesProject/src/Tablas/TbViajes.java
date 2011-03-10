@@ -17,7 +17,7 @@ public class TbViajes extends JTabbedPane{
 	JScrollPane miscroll;
 	public TbViajes(){
 		this.add(rec.idioma[rec.eleidioma][87],miscroll=new JScrollPane(new PnlAlta_viajes()));
-		this.add(rec.idioma[rec.eleidioma][38],new JPanel());
+		this.add(rec.idioma[rec.eleidioma][38],miscroll=new JScrollPane(new PnlMod_viajes()));
 		
 		miscroll.setBorder(empty);
 	}
