@@ -234,7 +234,7 @@ public class PnlAlta_equipamientos extends JPanel{
 		    	panel.add(descripcion=new JLabel(rec.idioma[rec.eleidioma][41]+"*"),gbc); 
 		    	gbc.gridwidth = GridBagConstraints.REMAINDER;
 		    	//cuadro con scroll para las descripciones
-		    	LimiteDocumento lpd = new LimiteDocumento(300); // Limite JTextArea
+		    	LimiteDocumento lpd = new LimiteDocumento(200); // Limite JTextArea
 		    	textdescripcion.setDocument(lpd);
 		    	textdescripcion.setLineWrap(true);
 		    	JScrollPane sp = new JScrollPane(textdescripcion,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -246,7 +246,7 @@ public class PnlAlta_equipamientos extends JPanel{
 		    	panel.add(justificacion=new JLabel(rec.idioma[rec.eleidioma][123]+"*"),gbc); 
 		    	gbc.gridwidth = GridBagConstraints.REMAINDER;
 		    	//cuadro con scroll para las justificacion
-		    	LimiteDocumento lpd2 = new LimiteDocumento(300); // Limite JTextArea
+		    	LimiteDocumento lpd2 = new LimiteDocumento(200); // Limite JTextArea
 		    	textjustificacion.setDocument(lpd2);
 		    	textjustificacion.setLineWrap(true);
 		    	
