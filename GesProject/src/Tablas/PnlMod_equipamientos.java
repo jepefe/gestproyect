@@ -36,28 +36,28 @@ import pkGesproject.Proyectos.PnlNuevoProyecto;
 public class PnlMod_equipamientos extends JPanel {
 	
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
-	GesIdioma rec = GesIdioma.obtener_instancia();
-	ConexionDb conexion = new ConexionDb();
-	ResultSet rs;
+	static GesIdioma rec = GesIdioma.obtener_instancia();
+	static ConexionDb conexion = new ConexionDb();
+	static ResultSet rs;
 	JPanel panel = new JPanel();
 	java.util.Date fecha;
-	String datos [][];		
-	String auxdatos[][];
-	String consulta = "SELECT p.partner,p.descripcion,p.justificacion,p.wp,p.fecha,p.ref FROM EQUIPAMIENTOS p ORDER BY p.ref"; //Esta consulta cargara los datos en la tabla
-	String colu[] = {rec.idioma[rec.eleidioma][57],rec.idioma[rec.eleidioma][41],rec.idioma[rec.eleidioma][123],rec.idioma[rec.eleidioma][40],rec.idioma[rec.eleidioma][95]};
+	static String datos [][];		
+	static String auxdatos[][];
+	static String consulta = "SELECT p.partner,p.descripcion,p.justificacion,p.wp,p.fecha,p.ref FROM EQUIPAMIENTOS p ORDER BY p.ref"; //Esta consulta cargara los datos en la tabla
+	static String colu[] = {rec.idioma[rec.eleidioma][57],rec.idioma[rec.eleidioma][41],rec.idioma[rec.eleidioma][123],rec.idioma[rec.eleidioma][40],rec.idioma[rec.eleidioma][95]};
 	JLabel jlbl;
 	PnlAlta_equipamientos pnlAltaEquipamientoso = new PnlAlta_equipamientos();
 	JTextField jtext;
 	JButton jbtn,jbtnmodificar,jbtneliminar, jbtnactualizar;
-	Boolean llena = new Boolean(false);
-	String[] fila = new String[6];
-	JTable jtblLateral;
+	static Boolean llena = new Boolean(false);
+	static String[] fila = new String[6];
+	static JTable jtblLateral;
 	JScrollPane jspntabla;
 	public static int id_pro,ref  ;
 	public static JDialog modificar;
 	static PnlMod_equipamientos instancia = new PnlMod_equipamientos();
-	int cuenta;
-	int columnas;
+	static int cuenta;
+	static int columnas;
 	PnlAlta_equipamientos mod;
 	ActionListener evento;
 	KeyListener accion,suprimir;
@@ -66,7 +66,7 @@ public class PnlMod_equipamientos extends JPanel {
 	JFrame aviso = new JFrame();
 	MouseListener mouse;
 	
-	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
+	static DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     
 	void cerrarpanel(){
 		modificar.dispose();
@@ -76,21 +76,6 @@ public class PnlMod_equipamientos extends JPanel {
 		
 		//creamos la tabla y la llenamos con datos
 		crear_tabla();
-		/**
-    	 * Cargamos los array y la tabla con los datos de la bd
-    	 
-    	cuenta=contar_reg();
-    	columnas =colu.length+1;
-    	datos = new String[cuenta][columnas];
-		auxdatos = new String[cuenta][columnas];
-    	tablemodel=cargar_tabla(datos,columnas);
-    	jtblLateral  = new JTable(tablemodel){
-   		 public boolean isCellEditable(int rowIndex, int mColIndex) {
-             return false;
-           }
-    	};
-    	
-    	jtblLateral.setPreferredScrollableViewportSize(new Dimension(700,160));*/
 		
     	//creamos la interfaz
     	crear_interfaz();
@@ -105,6 +90,10 @@ public class PnlMod_equipamientos extends JPanel {
 				if(e.getActionCommand().equals("actualizar")){
 					//llamamos al metodo aceptar para actualizar los datos
 					actualizar();
+				}
+				if(e.getActionCommand().equals("cerrar")){
+					//cerramos la ventana de modificaciones
+					modificar.dispose();
 				}
 				
 			}
@@ -261,7 +250,7 @@ public class PnlMod_equipamientos extends JPanel {
     	
     }
 	
-	//el metodo de actualizar con el boton aceptar
+	//el metodo que sube las modificaciones realizadas 
 	
 	public void actualizar(){
 		String partner = null;
@@ -304,6 +293,7 @@ public class PnlMod_equipamientos extends JPanel {
 		
 		conexion.executeUpdate("UPDATE EQUIPAMIENTOS SET partner ='"+partner+"',descripcion='"+mod.textdescripcion.getText()+"',justificacion='"+mod.textjustificacion.getText()+"',wp='"+WP+"',coste_total='"+mod.jtxt[0].getText()+"',fecha='"+sqlDate1+"',compra_alquiler='"+ComAl+"',grado_depreciacion='"+mod.jtxt[1].getText()+"',meses_usara='"+mod.jtxt[2].getText()+"',grado_utilizacion='"+mod.jtxt[3].getText()+"' WHERE ref = '"+datos[jtblLateral.getSelectedRow()][5]+"'");
 		JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][100]);
+		actualizar_tabla();
 		modificar.dispose();
 		
 	}
@@ -346,6 +336,10 @@ public class PnlMod_equipamientos extends JPanel {
 								mod.jbtnaceptar.removeActionListener(mod.accion);
 								mod.jbtnaceptar.setActionCommand("actualizar");
 								mod.jbtnaceptar.addActionListener(evento);
+								mod.jbtncancelar.removeActionListener(mod.accion);
+								mod.jbtncancelar.setActionCommand("cerrar");
+								mod.jbtncancelar.setText(rec.idioma[rec.eleidioma][99]);
+								mod.jbtncancelar.addActionListener(evento);
 								
 								
 		
@@ -460,16 +454,7 @@ public class PnlMod_equipamientos extends JPanel {
 			conexion.executeUpdate("DELETE FROM EQUIPAMIENTOS WHERE ref LIKE '"+datos[jtblLateral.getSelectedRow()][5]+"'");
 			Component aviso = null;
 			JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][176]);
-			
-			cuenta=contar_reg();
-			datos = new String[cuenta][columnas];
-			auxdatos = new String[cuenta][columnas];
-			tablemodel = cargar_tabla(datos,columnas);
-			jtblLateral.setModel(tablemodel);
-			jtblLateral.repaint();
-			llena = false;
-			conexion.cerrarConexion();
-		
+			actualizar_tabla();
 		
 	}
 	
@@ -597,6 +582,56 @@ public class PnlMod_equipamientos extends JPanel {
 	    jtblLateral.setPreferredScrollableViewportSize(new Dimension(700,160));
 		
 	}
+	
+	
+	/**
+	 * este metodo refresca los datos en la tabla 
+	 */
+	
+	
+	public static void actualizar_tabla(){
+    	conexion.Conectardb();
+    	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
+    	rs = conexion.ConsultaSQL(consulta);
+    	cuenta = 0;
+    	try {
+			while(rs.next()){
+				cuenta++;
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		//ponemos nuevos tamaños a las matrices
+		datos = new String[cuenta][columnas];
+		auxdatos = new String[cuenta][columnas];
+		
+		
+		//obtenemos los datos de la base de datos y cargamos el table model
+    	rs = conexion.ConsultaSQL(consulta);
+    	int i=0;
+    	try {
+			while(rs.next()){
+				for(int j = 1;j<columnas+1;j++){
+					datos[i][j-1] = rs.getString(j);
+					fila[j-1]=datos[i][j-1];
+				}
+				i++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	tablemodel= new DefaultTableModel(datos,colu);
+    	
+    	//le añadimos el modelo a nuestro JTable
+		jtblLateral.setModel(tablemodel);
+		llena = false;
+    }
+	
+	
 	
 	/**
      * Este metodo devuelve true o false dependiendo si el registro actual de auxdatos indicado por la variable i existe o no 
