@@ -1,7 +1,7 @@
 /** Esta clase se encarga de realizar el alta todos los tipos
  * de becas. 
  * 
- * @author Félix Perona G
+ * @author FÃ©lix Perona G
  */
 package pkGesproject.Becas;
 
@@ -22,6 +22,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -30,6 +31,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,6 +47,7 @@ import javax.swing.ScrollPaneLayout;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.MaskFormatter;
 
 import pkGesproject.ConexionDb;
@@ -85,6 +88,10 @@ public class PnlPracticas extends JScrollPane{
 	JCheckBox[] Relleno;
 	JCheckBox Relleno2 = new JCheckBox();
 	JCheckBox Relleno3 = new JCheckBox();
+	
+	String ruta,extension;
+	int tam;
+	String jtxtFoto;
 	
 	JPanel uspanel = new JPanel();
 	JPanel panel = new JPanel();
@@ -178,7 +185,7 @@ public class PnlPracticas extends JScrollPane{
 		rbeeres.setSelected(true);
 		
 		/**
-		 * se añaden los radio button a un grupo 
+		 * se aÃ±aden los radio button a un grupo 
 		 */
 	    group.add(rbeeres);
 	    group.add(rbeerpr);
@@ -211,10 +218,9 @@ public class PnlPracticas extends JScrollPane{
 		   rec.idioma[rec.eleidioma][198], rec.idioma[rec.eleidioma][199],rec.idioma[rec.eleidioma][200],rec.idioma[rec.eleidioma][201],
 		   rec.idioma[rec.eleidioma][202],rec.idioma[rec.eleidioma][203],rec.idioma[rec.eleidioma][204],rec.idioma[rec.eleidioma][205],
 		   rec.idioma[rec.eleidioma][206],rec.idioma[rec.eleidioma][207],rec.idioma[rec.eleidioma][209],rec.idioma[rec.eleidioma][210],
-		   rec.idioma[rec.eleidioma][211],rec.idioma[rec.eleidioma][167],rec.idioma[rec.eleidioma][212],rec.idioma[rec.eleidioma][213],
-		   rec.idioma[rec.eleidioma][213]
+		   rec.idioma[rec.eleidioma][211],rec.idioma[rec.eleidioma][167],rec.idioma[rec.eleidioma][212],rec.idioma[rec.eleidioma][213]
 		   };
-		int[] fieldWidths = {20,30,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20};
+		int[] fieldWidths = {6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6};
 		
 		jtxt = new JTextField[fieldNames.length];
 		jlbl = new JLabel[fieldNames.length];
@@ -222,9 +228,9 @@ public class PnlPracticas extends JScrollPane{
 		jtxtra = new JLabel[8];
 		
 		jpradio.add(rbeeres);
-		jpradio.add(jtxtra[0]=new JLabel(rec.idioma[rec.eleidioma][152]));
+		jpradio.add(jtxtra[0]=new JLabel(rec.idioma[rec.eleidioma][150]));
 	    jpradio.add(rbeerpr);
-	    jpradio.add(jtxtra[1]=new JLabel(rec.idioma[rec.eleidioma][150]));
+	    jpradio.add(jtxtra[1]=new JLabel(rec.idioma[rec.eleidioma][152]));
 	    jpradio.add(rbeermodo);
 	    jpradio.add(jtxtra[2]=new JLabel(rec.idioma[rec.eleidioma][153]));
 	    jpradio.add(rbeermonodo);
@@ -1234,6 +1240,26 @@ public class PnlPracticas extends JScrollPane{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
+
+				// TODO Auto-generated method stub
+				JFileChooser filechooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG, GIF, PNG", "jpg", "jpeg", "gif", "png");//Añadimos el filtro para que nos muestre sólo las extensiones que queremos
+				filechooser.setFileFilter(filter);
+				
+				int returnVal = filechooser.showOpenDialog(null);
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						File file = filechooser.getSelectedFile();
+						/*
+						 * sacamos la ruta del archivo y su extension
+						 */
+						ruta = file.getPath();
+						tam = ruta.length();
+						extension = ruta.substring(tam-3,tam);
+						if(extension.equalsIgnoreCase ("jpg") || extension.equalsIgnoreCase ("jpeg") || extension.equalsIgnoreCase ("gif") || extension.equalsIgnoreCase ("png")){
+							jtxtFoto = ruta.toString();
+						}
+						
+				    } 		
 				
 			}
 			
@@ -1310,7 +1336,7 @@ public class PnlPracticas extends JScrollPane{
 		jpsoloapee.setVisible(true);
 		
 		/**
-		 * añadimos los actionlistener a los objetos
+		 * aÃ±adimos los actionlistener a los objetos
 		 */
 		Relleno[9].addActionListener(acbecario);
 		rbeeres.addActionListener(acradio);
