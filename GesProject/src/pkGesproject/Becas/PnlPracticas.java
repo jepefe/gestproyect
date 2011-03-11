@@ -23,6 +23,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -48,6 +49,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.FileChooserUI;
 import javax.swing.text.MaskFormatter;
 
 import pkGesproject.ConexionDb;
@@ -91,7 +93,7 @@ public class PnlPracticas extends JScrollPane{
 	
 	String ruta,extension;
 	int tam;
-	String jtxtFoto;
+	String rutfich = "";
 	
 	JPanel uspanel = new JPanel();
 	JPanel panel = new JPanel();
@@ -120,6 +122,8 @@ public class PnlPracticas extends JScrollPane{
 	JRadioButton rbecofc = new JRadioButton();
 	JRadioButton rotmo = new JRadioButton();
 	ButtonGroup group = new ButtonGroup();
+	
+	ConexionFTP subfich = new ConexionFTP();
 	
 	public PnlPracticas (){
 		panel.setSize(new Dimension(300,400));
@@ -747,8 +751,8 @@ public class PnlPracticas extends JScrollPane{
 				// TODO Auto-generated method stub
 				panel.setVisible(true);
 				//erasmus estudios
-				if (rbeeres.isSelected() == false){
-										
+				if (rbeeres.isSelected() == true){
+					System.out.println("action era estudios");
 					jlbl[3].setVisible(true);
 					Relleno[3].setVisible(true);
 					Relleno[63].setVisible(true);
@@ -892,10 +896,11 @@ public class PnlPracticas extends JScrollPane{
 					Relleno[52].setVisible(false);
 					jbtnsubir[32].setVisible(false);
 					
-					repaint();
+					panel.repaint();
 				}
 				//erasmus practicas
-				if (rbeerpr.isSelected() == false){
+				if (rbeerpr.isSelected() == true){
+					System.out.println("action era practicas");
 					jlbl[3].setVisible(true);
 					Relleno[3].setVisible(true);
 					Relleno[63].setVisible(true);
@@ -1038,11 +1043,12 @@ public class PnlPracticas extends JScrollPane{
 					Relleno[52].setVisible(true);
 					jbtnsubir[32].setVisible(true);
 					
-					repaint();
+					panel.repaint();
 				}
 				
 				//erasmus mobvilidad docente
-				if (rbeermodo.isSelected() == false){
+				if (rbeermodo.isSelected() == true){
+					System.out.println("action era movilidad docente");
 					jlbl[3].setVisible(true);
 					Relleno[3].setVisible(true);
 					Relleno[63].setVisible(true);
@@ -1070,8 +1076,8 @@ public class PnlPracticas extends JScrollPane{
 					jlbl[8].setVisible(false);
 					jtxt[8].setVisible(false);
 					
-					jlbl[9].setVisible(false);
-					Relleno[9].setVisible(false);
+					jlbl[9].setVisible(true);
+					Relleno[9].setVisible(true);
 					
 					jlbl[10].setVisible(false);
 					Relleno[10].setVisible(false);
@@ -1186,11 +1192,13 @@ public class PnlPracticas extends JScrollPane{
 					Relleno[52].setVisible(false);
 					jbtnsubir[32].setVisible(false);
 					
-					repaint();
+					panel.repaint();
 				}
 				
 				//erasmus movilidad no docente
-				if (rbeermonodo.isSelected() == false){
+				
+				if (rbeermonodo.isSelected() == true){
+					System.out.println("action era movilidad no docente");
 					jlbl[3].setVisible(true);
 					Relleno[3].setVisible(true);
 					Relleno[63].setVisible(true);
@@ -1218,8 +1226,8 @@ public class PnlPracticas extends JScrollPane{
 					jlbl[8].setVisible(false);
 					jtxt[8].setVisible(false);
 					
-					jlbl[9].setVisible(false);
-					Relleno[9].setVisible(false);
+					jlbl[9].setVisible(true);
+					Relleno[9].setVisible(true);
 					
 					jlbl[10].setVisible(false);
 					Relleno[10].setVisible(false);
@@ -1334,18 +1342,18 @@ public class PnlPracticas extends JScrollPane{
 					Relleno[52].setVisible(false);
 					jbtnsubir[32].setVisible(false);
 					
+					panel.repaint();
+				}
+				if (rbeerco.isSelected() == true){
 					repaint();
 				}
-				if (rbeerco.isSelected() == false){
+				if (rbemi.isSelected() == true){
 					repaint();
 				}
-				if (rbemi.isSelected() == false){
+				if (rbecofc.isSelected() == true){
 					repaint();
 				}
-				if (rbecofc.isSelected() == false){
-					repaint();
-				}
-				if (rotmo.isSelected() == false){
+				if (rotmo.isSelected() == true){
 					repaint();
 				}
 				
@@ -1360,30 +1368,340 @@ public class PnlPracticas extends JScrollPane{
 		ActionListener acsubir = new ActionListener(){
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-
-				// TODO Auto-generated method stub
+			public void actionPerformed(ActionEvent e) {
 				JFileChooser filechooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG, GIF, PNG, PDF", "jpg", "jpeg", "gif", "png", "pdf");//Añadimos el filtro para que nos muestre sólo las extensiones que queremos
 				filechooser.setFileFilter(filter);
-				
 				int returnVal = filechooser.showOpenDialog(null);
-					if (returnVal == JFileChooser.APPROVE_OPTION) {
-						File file = filechooser.getSelectedFile();
-						/*
-						 * sacamos la ruta del archivo y su extension
-						 */
-						ruta = file.getPath();
-						tam = ruta.length();
-						extension = ruta.substring(tam-3,tam);
-						if(extension.equalsIgnoreCase ("jpg") || extension.equalsIgnoreCase ("jpeg") || extension.equalsIgnoreCase ("gif") || extension.equalsIgnoreCase ("png") || extension.equalsIgnoreCase ("pdf")){
-							jtxtFoto = ruta.toString();
-						}
-						
-				    } 		
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = filechooser.getSelectedFile();
+					/*
+					 * sacamos la ruta del archivo y su extension
+					 */
+					ruta = file.getPath();
+					System.out.println(ruta);
+					tam = ruta.length();
+					extension = ruta.substring(tam-3,tam);
+					if(extension.equalsIgnoreCase ("jpg") || extension.equalsIgnoreCase ("jpeg") || extension.equalsIgnoreCase ("gif") || extension.equalsIgnoreCase ("png")|| extension.equalsIgnoreCase ("pdf")){
+						rutfich = ruta;
+					}
+					
+			    }
 				
-			}
+				if (e.getActionCommand().equals("3")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[63].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("4")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[64].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("6")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[66].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("7")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[67].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("11")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[71].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("12")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[72].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("13")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[33].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("14")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[34].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("15")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[35].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("16")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[36].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("17")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[37].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("18")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[38].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("19")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[39].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("20")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[40].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("21")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[41].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("22")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[42].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("23")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[43].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("24")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[44].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("25")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[45].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("26")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[46].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("27")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[47].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("28")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[48].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("29")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[49].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("30")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[50].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("31")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[51].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				if (e.getActionCommand().equals("32")){
+					try {
+						subfich.connectar();
+						subfich.SubirFichero(rutfich, Integer.toString(recursos.getIdusuario()), null, "becas", 0);
+						Relleno[52].setSelected(true);
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+				
+			} 		
 			
 		};
 		
@@ -1397,8 +1715,10 @@ public class PnlPracticas extends JScrollPane{
 				// TODO Auto-generated method stub
 				if (Relleno[9].isSelected()){
 					jpbecario.setVisible(true);
+					panel.repaint();
 				}else{
 					jpbecario.setVisible(false);
+					panel.repaint();
 				}
 			}
 			
@@ -1410,9 +1730,101 @@ public class PnlPracticas extends JScrollPane{
 		ActionListener acfinal = new ActionListener(){
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e4) {
 				// TODO Auto-generated method stub
+				if (e4.getActionCommand().equals("aceptar")){
+					
+				}
+				if (e4.getActionCommand().equals("limpiar")){
+					Relleno[3].setSelected(false);
+					Relleno[63].setSelected(false);
+
+					Relleno[4].setSelected(false);
+					Relleno[64].setSelected(false);
+
+					jtxt[5].setText("");
+					
+					Relleno[6].setSelected(false);
+					Relleno[66].setSelected(false);
+					
+					Relleno[7].setSelected(false);
+					Relleno[67].setSelected(false);
+					
+					jtxt[8].setText("");
+					
+					Relleno[9].setSelected(false);
+					
+					Relleno[10].setSelected(false);
 				
+					Relleno[11].setSelected(false);
+					Relleno[71].setSelected(false);
+					
+					Relleno[12].setSelected(false);
+					Relleno[72].setSelected(false);
+					
+					Relleno[13].setSelected(false);
+					Relleno[33].setSelected(false);
+					
+					Relleno[14].setSelected(false);
+					Relleno[34].setSelected(false);
+					
+					Relleno[15].setSelected(false);
+					Relleno[35].setSelected(false);
+					
+					Relleno[16].setSelected(false);
+					Relleno[36].setSelected(false);
+					
+					Relleno[17].setSelected(false);
+					Relleno[37].setSelected(false);
+					
+					Relleno[18].setSelected(false);
+					Relleno[38].setSelected(false);
+					
+					Relleno[19].setSelected(false);
+					Relleno[39].setSelected(false);
+					
+					Relleno[20].setSelected(false);
+					Relleno[40].setSelected(false);
+					
+					Relleno[21].setSelected(false);
+					Relleno[41].setSelected(false);
+					
+					Relleno[22].setSelected(false);
+					Relleno[42].setSelected(false);
+					
+					Relleno[23].setSelected(false);
+					Relleno[43].setSelected(false);
+					
+					Relleno[24].setSelected(false);
+					Relleno[44].setSelected(false);
+					
+					Relleno[25].setSelected(false);
+					Relleno[45].setSelected(false);
+					
+					Relleno[26].setSelected(false);
+					Relleno[46].setSelected(false);
+					
+					Relleno[27].setSelected(false);
+					Relleno[47].setSelected(false);
+					
+					Relleno[28].setSelected(false);
+					Relleno[48].setSelected(false);
+					
+					Relleno[29].setSelected(false);
+					Relleno[49].setSelected(false);
+					
+					Relleno[30].setSelected(false);
+					Relleno[50].setSelected(false);
+					
+					Relleno[31].setSelected(false);
+					Relleno[51].setSelected(false);
+					
+					Relleno[32].setSelected(false);
+					Relleno[52].setSelected(false);
+					
+					jpbecario.setVisible(false);
+					jpbecario.repaint();
+				}
 			}
 			
 		};
@@ -1461,6 +1873,11 @@ public class PnlPracticas extends JScrollPane{
 		/**
 		 * aÃ±adimos los actionlistener a los objetos
 		 */
+		jbtncancelar.setActionCommand("limpiar");
+		jbtncancelar.addActionListener(acfinal);
+		jbtnaceptar.addActionListener(acfinal);
+		jbtnaceptar.setActionCommand("aceptar");
+		
 		Relleno[9].addActionListener(acbecario);
 		rbeeres.addActionListener(acradio);
 		rbeerpr.addActionListener(acradio);
@@ -1470,6 +1887,84 @@ public class PnlPracticas extends JScrollPane{
 		rbemi.addActionListener(acradio);
 		rbecofc.addActionListener(acradio);
 		rotmo.addActionListener(acradio);
+		
+		jbtnsubir[3].setActionCommand("3");
+		jbtnsubir[3].addActionListener(acsubir);
+		
+		jbtnsubir[4].setActionCommand("4");
+		jbtnsubir[4].addActionListener(acsubir);
+		
+		jbtnsubir[6].setActionCommand("6");
+		jbtnsubir[6].addActionListener(acsubir);
+		
+		jbtnsubir[7].setActionCommand("7");
+		jbtnsubir[7].addActionListener(acsubir);
+		
+		jbtnsubir[11].setActionCommand("11");
+		jbtnsubir[11].addActionListener(acsubir);
+		
+		jbtnsubir[12].setActionCommand("12");
+		jbtnsubir[12].addActionListener(acsubir);
+		
+		jbtnsubir[13].setActionCommand("13");
+		jbtnsubir[13].addActionListener(acsubir);
+		
+		jbtnsubir[14].setActionCommand("14");
+		jbtnsubir[14].addActionListener(acsubir);
+		
+		jbtnsubir[15].setActionCommand("15");
+		jbtnsubir[15].addActionListener(acsubir);
+		
+		jbtnsubir[16].setActionCommand("16");
+		jbtnsubir[16].addActionListener(acsubir);
+		
+		jbtnsubir[17].setActionCommand("17");
+		jbtnsubir[17].addActionListener(acsubir);
+		
+		jbtnsubir[18].setActionCommand("18");
+		jbtnsubir[18].addActionListener(acsubir);
+		
+		jbtnsubir[19].setActionCommand("19");
+		jbtnsubir[19].addActionListener(acsubir);
+		
+		jbtnsubir[20].setActionCommand("20");
+		jbtnsubir[20].addActionListener(acsubir);
+		
+		jbtnsubir[21].setActionCommand("21");
+		jbtnsubir[21].addActionListener(acsubir);
+		
+		jbtnsubir[22].setActionCommand("22");
+		jbtnsubir[22].addActionListener(acsubir);
+		
+		jbtnsubir[23].setActionCommand("23");
+		jbtnsubir[23].addActionListener(acsubir);
+		
+		jbtnsubir[24].setActionCommand("24");
+		jbtnsubir[24].addActionListener(acsubir);
+		
+		jbtnsubir[25].setActionCommand("25");
+		jbtnsubir[25].addActionListener(acsubir);
+		
+		jbtnsubir[26].setActionCommand("26");
+		jbtnsubir[26].addActionListener(acsubir);
+		
+		jbtnsubir[27].setActionCommand("27");
+		jbtnsubir[27].addActionListener(acsubir);
+		
+		jbtnsubir[28].setActionCommand("28");
+		jbtnsubir[28].addActionListener(acsubir);
+		
+		jbtnsubir[29].setActionCommand("29");
+		jbtnsubir[29].addActionListener(acsubir);
+		
+		jbtnsubir[30].setActionCommand("30");
+		jbtnsubir[30].addActionListener(acsubir);
+		
+		jbtnsubir[31].setActionCommand("31");
+		jbtnsubir[31].addActionListener(acsubir);
+		
+		jbtnsubir[32].setActionCommand("32");
+		jbtnsubir[32].addActionListener(acsubir);
 		
 		
 	}
