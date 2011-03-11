@@ -50,7 +50,7 @@ public class PnlModificarTarea extends JPanel{
 	Boolean existe = new Boolean(false);
 	String auxdatos[][];
 	static PnlModificarTarea instancia = new PnlModificarTarea(); 
-	String colu[] = {"Nombre","Presupuesto","Worpackages","Proyecto"};
+	String colu[] = {rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][13],rec.idioma[rec.eleidioma][40],rec.idioma[rec.eleidioma][55]};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
 			{recursos.icono[7],rec.idioma[rec.eleidioma][33]}};
@@ -142,7 +142,7 @@ public class PnlModificarTarea extends JPanel{
 				public void focusLost(FocusEvent arg0) {
 					// TODO Auto-generated method stub
 					if(jtxt.getText().equals("")){
-						jtxt.setText("Buscar...");
+						jtxt.setText(rec.idioma[rec.eleidioma][235]);
 					}
 					
 				}
@@ -282,7 +282,7 @@ public class PnlModificarTarea extends JPanel{
 					
 					if(e.getActionCommand().equals("eliminar")){
 						
-							JOptionPane.showConfirmDialog(aviso,"Va a borrar un registro, ¿Desea continuar?");
+							JOptionPane.showConfirmDialog(aviso,rec.idioma[rec.eleidioma][194]);
 							for(int i=0;i<2;i++){
 								//jtxt[i].setText("");
 							}
