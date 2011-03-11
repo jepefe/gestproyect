@@ -368,9 +368,9 @@ public class PnlAlta_viajes extends JScrollPane{
 				}
 				//realizamos el alta
 				if(e.getActionCommand().equals("aceptar")){
-					System.out.println("entra");
 					comprobar_campos();//comprobamos la validez de los datos introducidos
-					if(OKalta = true){
+					if(OKalta == true){
+						mensage.setVisible(false);
 						//guardamos el codigo del partner
 						rs= conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like '"+cbpartner.getSelectedItem().toString()+"'");
 						int partner = 0;
@@ -533,13 +533,16 @@ public class PnlAlta_viajes extends JScrollPane{
 			}else{
 				OKalta = false;
 				//informamos del mal alta
+				alerta.setText(rec.idioma[rec.eleidioma][79]);
 				mensage.setBackground(Color.decode("#ec8989"));
 				mensage.setVisible(true);
 			}
 		}
-		if((cbpartner.getSelectedItem() != null) && (cbproyecto.getSelectedItem() != null) && (cbpsalida.getSelectedItem() != null)&& (cbcsalida.getSelectedItem() != null)&& (cbpdestino.getSelectedItem() != null)&& (cbcdestino.getSelectedItem() != null)){	
+		if((cbpartner.getSelectedItem() != null) && (cbproyecto.getSelectedItem() != null) && (cbpsalida.getSelectedItem() != null)&& (cbcsalida.getSelectedItem() != null)&& (cbpdestino.getSelectedItem() != null)&& (cbcdestino.getSelectedItem() != null) && (jdc1.getDate() != null) && (jdc2.getDate() !=null) ){	
+			java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
+			java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
 			
-			if(jdc2.getDate().getTime()<jdc1.getDate().getTime()){
+			if(sqlDate1.getTime() > sqlDate2.getTime()){
 				OKalta = false;
 				alerta.setText(rec.idioma[rec.eleidioma][72]);
 				mensage.setBackground(Color.decode("#ec8989"));
