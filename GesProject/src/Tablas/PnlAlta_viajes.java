@@ -30,6 +30,7 @@ import com.toedter.calendar.JDateChooser;
 import pkGesproject.ConexionDb;
 import pkGesproject.GesIdioma;
 import pkGesproject.GpComboBox;
+import pkGesproject.JTextFieldLimit;
 import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
 
@@ -245,8 +246,20 @@ public class PnlAlta_viajes extends JScrollPane{
 			gbc.anchor = GridBagConstraints.WEST;
 			gbc.gridwidth = GridBagConstraints.REMAINDER;
 			panel.add(jtxt[i]=new JTextField(fieldWidths[i]),gbc);
+			
 		}
-		
+		JTextFieldLimit a= new JTextFieldLimit(20);
+   	   	jtxt[0].setDocument(a);
+   	   	
+   	   	JTextFieldLimit b= new JTextFieldLimit(50);
+	   	jtxt[1].setDocument(b);
+	   	
+	   	JTextFieldLimit c= new JTextFieldLimit(10);
+   	   	jtxt[2].setDocument(c);
+   	   	
+   	   	JTextFieldLimit d= new JTextFieldLimit(10);
+	   	jtxt[3].setDocument(d);
+	   	
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.insets = new Insets(30,10,5,5);
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
@@ -460,7 +473,26 @@ public class PnlAlta_viajes extends JScrollPane{
 							alerta.setText(rec.idioma[rec.eleidioma][60]);
 							mensage.setBackground(Color.decode("#D0E495"));
 							mensage.setVisible(true);
-						
+							PnlMod_viajes.actualizar_tabla();
+							
+						//vaciamos campos
+							//vaciamos todos los txtboxs
+							jtxt[0].setText(null);
+							jtxt[1].setText(null);
+							jtxt[2].setText(null);
+							jtxt[3].setText(null);
+						//vaciamos fechas
+							jdc1.setDate(null);
+							jdc2.setDate(null);
+						//vaciamos comboboxs relacionados
+							cbcdestino.removeAllItems(); 
+							cbcsalida.removeAllItems();
+							cbproyecto.removeAllItems(); 
+						//ponemos a null los comboboxs principales
+							cbpartner.setSelectedItem(null);
+							cbpdestino.setSelectedItem(null);
+							cbpsalida.setSelectedItem(null);
+							
 					}
 				}
 			}
