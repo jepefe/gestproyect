@@ -87,6 +87,7 @@ public class RsGesproject {
 			new ImageIcon(getClass().getResource("imagenes/iconoidiomas.png")),
 			new ImageIcon(getClass().getResource("imagenes/becas.png")),
 			new ImageIcon(getClass().getResource("imagenes/actualizar.png")),
+			new ImageIcon(getClass().getResource("imagenes/icono.png"))
 			};
 	static String SistemaOp = System.getProperty("os.name"); //Nombre del S.O por si necesitamos condicionar codigo 
 	MsgInt instanciamsg;
