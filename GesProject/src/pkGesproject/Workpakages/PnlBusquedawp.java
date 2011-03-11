@@ -315,7 +315,7 @@ public class PnlBusquedawp extends JPanel{
 						
 				    	//rs = conexion.ConsultaSQL("SELECT w.nombre, w.presupuesto FROM WORKPAQUETS");
 						
-				    	rs = conexion.ConsultaSQL("SELECT w.nombre, w.presupuesto, w.id_pro, w.id_wp, w.f_ini, w.f_fin, w.descripcion, w.observaciones, p.cod_part " +
+				    	rs = conexion.ConsultaSQL("SELECT  w.nombre, w.presupuesto, w.id_pro, w.id_wp, w.f_ini, w.f_fin, w.descripcion, w.observaciones, p.cod_part " +
 				    			"FROM WORKPAQUETS w LEFT JOIN PARTNER_WORKPAQUETS p ON w.id_wp = p.id_wp WHERE nombre = '"+datos[jtblLateral.getSelectedRow()][0]+"'");
 				    	int i=1;
 				    	int id_pro = 0;
@@ -428,7 +428,7 @@ public class PnlBusquedawp extends JPanel{
 		//auxdatos = new String[cuenta][3];
 		
     	
-    	rs = conexion.ConsultaSQL("SELECT w.nombre, p.nombre, po.nombre FROM WORKPAQUETS w LEFT JOIN PARTNER_WORKPAQUETS pa ON w.id_wp = pa.id_wp LEFT JOIN PROYECTOS po ON w.id_pro = po.id_pro LEFT JOIN PARTNER p ON pa.cod_part = p.cod_part ORDER BY w.nombre");
+    	rs = conexion.ConsultaSQL("SELECT DISTINCT w.nombre, p.nombre, po.nombre FROM WORKPAQUETS w LEFT JOIN PARTNER_WORKPAQUETS pa ON w.id_wp = pa.id_wp LEFT JOIN PROYECTOS po ON w.id_pro = po.id_pro LEFT JOIN PARTNER p ON pa.cod_part = p.cod_part ORDER BY w.nombre");
     	int i=0;
     	try {
 			while(rs.next()){
