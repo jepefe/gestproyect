@@ -463,7 +463,7 @@ public class PnlMod_equipamientos extends JPanel {
 		this.setLayout(new GridBagLayout()); //Ponemos el Layout al panel
     	
     	jtext=new JTextField(20);
-		jtext.setText("Buscar...");
+		jtext.setText(rec.idioma[rec.eleidioma][235]);
 		jtext.putClientProperty("JTextField.variant", "search");
 		jtext.putClientProperty("JTextField.Search.PlaceholderText", Boolean.TRUE);
 		jtext.addFocusListener(new FocusListener(){
@@ -478,7 +478,7 @@ public class PnlMod_equipamientos extends JPanel {
 			public void focusLost(FocusEvent arg0) {
 				// TODO Auto-generated method stub
 				if(jtext.getText().equals("")){
-					jtext.setText("Buscar...");
+					jtext.setText(rec.idioma[rec.eleidioma][235]);
 				}
 				
 			}
