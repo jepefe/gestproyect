@@ -93,7 +93,7 @@ public class PnlModificar_Proyecto extends JPanel {
 			public void focusLost(FocusEvent arg0) {
 				// TODO Auto-generated method stub
 				if(jtxt.getText().equals("")){
-					jtxt.setText("Buscar...");
+					jtxt.setText(rec.idioma[rec.eleidioma][235]);
 				}
 				
 			}
@@ -504,7 +504,7 @@ public class PnlModificar_Proyecto extends JPanel {
     public void eliminar(){
     		
     	Component aviso = null;
-		int s = JOptionPane.showConfirmDialog(aviso, "Esta seguro?");
+		int s = JOptionPane.showConfirmDialog(aviso,rec.idioma[rec.eleidioma][218]);
 		
 		if(s==0){
 			conexion.Conectardb();
