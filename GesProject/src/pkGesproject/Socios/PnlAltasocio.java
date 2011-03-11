@@ -437,7 +437,7 @@ public class PnlAltasocio extends JScrollPane{
 				}
 
 				if(e.getActionCommand().equals("cancelar")){
-					int s=JOptionPane.showConfirmDialog(aviso,"Esta seguro de borrar los datos?");
+					int s=JOptionPane.showConfirmDialog(aviso,rec.idioma[rec.eleidioma][194]);
 
 					if(s==0){
 						for(int i=0;i<fieldNames.length;i++){
