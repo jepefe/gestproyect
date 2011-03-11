@@ -76,8 +76,8 @@ public class FrmPrincipal extends JFrame {
 	JLabel jlbactual = new JLabel();
 	int posicionxbtn;
 	String seleccionado;
-	boolean animando = true;
-	boolean moviendo = true;
+	boolean animando = false;
+	boolean moviendo = false;
     Timer timer;                      
     int incremento;
 	
@@ -102,6 +102,7 @@ public class FrmPrincipal extends JFrame {
 	
 	public FrmPrincipal(){
 		recursos.setRfrmppal(this);	
+		this.setIconImage(recursos.icono[37].getImage());
 		jtlbFrmppal.setLayout(new BoxLayout(jtlbFrmppal,BoxLayout.X_AXIS));
 		int i;
 		jbtnInicio.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -375,7 +376,8 @@ public class FrmPrincipal extends JFrame {
 						jlbactual.setText(cadena);
 						jlbactual.setLocation(abstractButton.getX()+100,abstractButton.getY() );
 						abstractButton.setLocation(40,abstractButton.getY());
-						
+						 animando = false;
+							moviendo = false;
 						
 					}
 					}
@@ -394,6 +396,7 @@ public class FrmPrincipal extends JFrame {
     	 
     	 );
     	 hilo.start();
+    	
 		repaint();
     	 
 	}
@@ -406,7 +409,7 @@ public class FrmPrincipal extends JFrame {
 				@Override
 				public void run() {
 					int y,x,a=0;
-					boolean animando = true;
+					 animando = true;
 					animando = true;
 					moviendo = true;
 					
@@ -425,6 +428,8 @@ public class FrmPrincipal extends JFrame {
 							jtlbFrmppal.getComponentAtIndex(i).setVisible(true);
 						}
 						jtlbFrmppal.repaint();
+						animando = false;
+						moviendo = false;
 					}
 						}
 					}
@@ -479,7 +484,7 @@ public class FrmPrincipal extends JFrame {
 		
 		ActionListener jtlbAcListener = new ActionListener() {
 	         public void actionPerformed(ActionEvent e) {
-	        	 
+	        	 if(((!animando)&&(!moviendo))){
 	        	 int i;
 	        	 int tam_split = jscpprincipal.getDividerLocation();
 	        	if(((AbstractButton) e.getSource()).getActionCommand() == seleccionado){
@@ -589,7 +594,7 @@ public class FrmPrincipal extends JFrame {
 	         animacion((AbstractButton)e.getSource(),((AbstractButton) e.getSource()).getText());
 	         jscpprincipal.setDividerLocation(tam_split);
 	         } 
-	        	
+	        	 }
 	        	}
 		};
 		jtlbFrmppal.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
