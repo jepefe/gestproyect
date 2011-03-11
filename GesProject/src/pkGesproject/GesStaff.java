@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import org.jivesoftware.smack.AccountManager;
 import org.jivesoftware.smack.XMPPException;
 
+import pkGesproject.Staff.PnlModificacion_Staff;
+
 /**
  * 
  * @author Jesus Perez
@@ -56,7 +58,7 @@ public class GesStaff {
 	
 	
 	
-	public int CrearStaff(String nombre, String apellidos, String categoria, String representante, String f_nac,
+	public int CrearStaff(String nombre, String apellidos, String idioma, String representante, String f_nac,
 			String pais, String provincia, String region, String ciudad, String direccion, String codpostal, String telefono, String telefono2,
 			String fax, String email,String foto, String nick, String password, String permisos, String cod_part, String observaciones){
 		
@@ -82,9 +84,9 @@ public class GesStaff {
 			}
 			}
 		if (creado==0){		
-		conex.executeUpdate("INSERT INTO STAFF (nombre,apellidos,categoria,representante,f_nac,pais, provincia" +
+		conex.executeUpdate("INSERT INTO STAFF (nombre,apellidos,idioma,representante,f_nac,pais, provincia" +
 				",region,ciudad,direccion,codpostal,telefono,telefono2,fax,nick_usuario,password,email,permisos,cod_part,observaciones) " +
-				"VALUES ('" + nombre + "','"+ apellidos + "','" + categoria + "','"
+				"VALUES ('" + nombre + "','"+ apellidos + "','" + idioma + "','"
 				+ representante+ "','" + f_nac + "','" + pais + "','" + provincia + "','" + region + "','" + ciudad + "','"
 				+ direccion + "','" + codpostal + "','" + telefono + "','" + telefono2 + "','" + fax + "','" + nick + 
 				"','" + password  + "','" + email + "','" + permisos + "','" + cod_part + "','" + observaciones +"')");
@@ -142,6 +144,86 @@ public class GesStaff {
 		
 		
 	}
+	
+	
+	
+	
+	public int ModificarStaff(String nombre, String apellidos, String idioma, String representante, String f_nac,
+			String pais, String provincia, String region, String ciudad, String direccion, String codpostal, String telefono, String telefono2,
+			String fax, String email,String foto,String password, String permisos, String cod_part, String observaciones, int ids){
+		
+		int creado = 0;
+		boolean subido=false;
+		ConexionDb conex = new ConexionDb();
+		ResultSet rs;
+		conex.Conectardb();
+		
+		//Comprobamos que no exista ya el nick para evitar problemas con la FTP
+		//La variable "creado" tendra los siguientes valores:
+		//0: Usuario creado, 1:Error sin determinar 2:el nick ya existe
+		System.out.println("UPDATE STAFF SET nombre='"+nombre+"', apellidos = '"+apellidos+"',idioma ='"+idioma+"', representante = "+
+				representante+", f_nac ='"+f_nac+"', pais = '"+pais+"', provincia = '"+provincia+"', region ='"+
+				region+"', ciudad = '"+ciudad+"', direccion = '"+direccion+"', codpostal = '"+codpostal+"', telefono = '"+
+				telefono+"', telefono2 = '"+telefono2+"', fax = '"+fax+"', password ='"+password+"', email = '"+email+
+				"', permisos='"+permisos+"', cod_part = ' "+cod_part+"', observaciones = '"+observaciones+"' WHERE id_staff ="+Integer.toString(ids));
+		
+		conex.executeUpdate("UPDATE STAFF SET nombre='"+nombre+"', apellidos = '"+apellidos+"',idioma ='"+idioma+"', representante = "+
+				representante+", f_nac ='"+f_nac+"', pais = '"+pais+"', provincia = '"+provincia+"', region ='"+
+				region+"', ciudad = '"+ciudad+"', direccion = '"+direccion+"', codpostal = '"+codpostal+"', telefono = '"+
+				telefono+"', telefono2 = '"+telefono2+"', fax = '"+fax+"', password ='"+password+"', email = '"+email+
+				"', permisos='"+permisos+"', cod_part = ' "+cod_part+"', observaciones = '"+observaciones+"' WHERE id_staff ="+Integer.toString(ids));
+		
+		
+		
+				
+		
+		
+		rs = conex.ConsultaSQL("Select nick_usuario,id_staff FROM STAFF WHERE nick_usuario='" + nick + "'");
+
+		try {
+			rs.next();
+			if (rs.getString(1).contentEquals(nick)){
+				id_staff = rs.getInt(2);
+				
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		//CREAMOS USUARIO EN SERVIDOR JABBER
+		
+		
+		rs = conex.ConsultaSQL("Select nombre FROM PARTNER WHERE cod_part='" + cod_part+ "'");
+		try {
+			if (rs.next()){
+				nom_part = rs.getString(1);
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	
+		
+
+				
+		if (!foto.equals("")){ //Solo subimos la imagen si el staff es creado
+		subido = SubirFoto(foto,id_staff);
+		
+		}
+		
+		conex.cerrarConexion();
+		conex = null;
+		PnlModificacion_Staff.actualizar_tabla();
+		return creado;
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	public boolean SubirFoto(String foto,int id){
