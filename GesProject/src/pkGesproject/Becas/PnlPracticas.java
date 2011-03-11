@@ -121,6 +121,7 @@ public class PnlPracticas extends JScrollPane{
 	JRadioButton rbemi = new JRadioButton();
 	JRadioButton rbecofc = new JRadioButton();
 	JRadioButton rotmo = new JRadioButton();
+	JRadioButton rbnada = new JRadioButton();
 	ButtonGroup group = new ButtonGroup();
 	
 	ConexionFTP subfich = new ConexionFTP();
@@ -186,11 +187,13 @@ public class PnlPracticas extends JScrollPane{
 		rbemi.setMnemonic('f');
 		rbecofc.setMnemonic('g');
 		rotmo.setMnemonic('h');
-		rbeeres.setSelected(true);
+		rbnada.setMnemonic('i');
+		rbnada.setSelected(true);
 		
 		/**
 		 * se aÃ±aden los radio button a un grupo 
 		 */
+		group.add(rbnada);
 	    group.add(rbeeres);
 	    group.add(rbeerpr);
 	    group.add(rbeermodo);
@@ -232,6 +235,8 @@ public class PnlPracticas extends JScrollPane{
 		
 		jtxtra = new JLabel[8];
 		
+		jpradio.add(rbnada);
+		jpradio.add(jtxtra[4]=new JLabel(rec.idioma[rec.eleidioma][233]));
 		jpradio.add(rbeeres);
 		jpradio.add(jtxtra[0]=new JLabel(rec.idioma[rec.eleidioma][152]));
 	    jpradio.add(rbeerpr);
@@ -1356,6 +1361,10 @@ public class PnlPracticas extends JScrollPane{
 				if (rotmo.isSelected() == true){
 					repaint();
 				}
+				if (rbnada.isSelected() == true){
+					panel.setVisible(false);
+				}
+				
 				
 			}
 			
@@ -1824,6 +1833,7 @@ public class PnlPracticas extends JScrollPane{
 					
 					jpbecario.setVisible(false);
 					jpbecario.repaint();
+					panel.repaint();
 				}
 			}
 			
@@ -1887,6 +1897,7 @@ public class PnlPracticas extends JScrollPane{
 		rbemi.addActionListener(acradio);
 		rbecofc.addActionListener(acradio);
 		rotmo.addActionListener(acradio);
+		rbnada.addActionListener(acradio);
 		
 		jbtnsubir[3].setActionCommand("3");
 		jbtnsubir[3].addActionListener(acsubir);
