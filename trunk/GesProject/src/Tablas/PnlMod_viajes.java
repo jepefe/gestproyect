@@ -54,7 +54,7 @@ import java.awt.event.KeyEvent;
 public class PnlMod_viajes extends JPanel{
 
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
-	GesIdioma rec = GesIdioma.obtener_instancia();
+	static GesIdioma rec = GesIdioma.obtener_instancia();
 	static ConexionDb conexion = new ConexionDb();
 	static ResultSet rs;
 	ResultSet rs2;
@@ -63,7 +63,7 @@ public class PnlMod_viajes extends JPanel{
 	static int columnas;
 	static String datos[][];
 	static String auxdatos[][];
-	static String colu[] = {"Proyecto","Persona","Gastos Totales"};//Proyecto, Persona, Gastos Totales
+	static String colu[] = {rec.idioma[rec.eleidioma][55],rec.idioma[rec.eleidioma][233],rec.idioma[rec.eleidioma][234]};//Proyecto, Persona, Gastos Totales
 	static String consulta = "SELECT PROYECTOS.nombre,TRAVEL_SUBSISTENCE.nombrepersona,(TRAVEL_SUBSISTENCE.coste_viaje+TRAVEL_SUBSISTENCE.coste_subsistencia)AS gastos ,ref FROM TRAVEL_SUBSISTENCE INNER JOIN PROYECTOS ON TRAVEL_SUBSISTENCE.id_pro = PROYECTOS.id_pro ORDER BY nombrepersona"; //Esta consulta cargara los datos en la tabla
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
@@ -112,7 +112,7 @@ public class PnlMod_viajes extends JPanel{
 			public void focusLost(FocusEvent arg0) {
 			// TODO Auto-generated method stub
 				if(jtxt.getText().equals("")){
-					jtxt.setText("Buscar...");
+					jtxt.setText(rec.idioma[rec.eleidioma][235]);
 				}		
 			}
 				
@@ -593,7 +593,7 @@ public class PnlMod_viajes extends JPanel{
 				System.out.println(sqlDate2);
 				
 				
-				conexion.executeUpdate("UPDATE TRAVEL_SUBSISTENCE SET partner = '"+referencia+"',motivoviaje = '"+mod.jtxt[1].getText()+"', paissalida = '"+paissalida+"', ciudad_salida = '"+provinciasalida+"', ciudad_destino = '"+provinciadestino+"', motivoviaje = '"+mod.jtxt[1].getText()+"', fecha_ini = '"+sqlDate1+"', fecha_fin = '"+sqlDate2+"', coste_viaje = '"+Float.valueOf(mod.jtxt[2].getText())+"', coste_subsistencia = '"+Float.valueOf(mod.jtxt[3].getText())+"' WHERE TRAVEL_SUBSISTENCE.ref = '"+referencia+"' ");
+				conexion.executeUpdate("UPDATE TRAVEL_SUBSISTENCE SET nombrepersona = '"+mod.jtxt[0].getText()+"', partner = '"+partner+"', id_pro = '"+proyecto+"',motivoviaje = '"+mod.jtxt[1].getText()+"', paissalida = '"+paissalida+"', ciudad_salida = '"+provinciasalida+"', paisdestino = '"+paisdestino+"', ciudad_destino = '"+provinciadestino+"', fecha_ini = '"+sqlDate1+"', fecha_fin = '"+sqlDate2+"', coste_viaje = '"+Float.valueOf(mod.jtxt[2].getText())+"', coste_subsistencia = '"+Float.valueOf(mod.jtxt[3].getText())+"' WHERE TRAVEL_SUBSISTENCE.ref = '"+referencia+"' ");
 				actualizar_tabla();
 				JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][231]);
 				modificar.dispose();
