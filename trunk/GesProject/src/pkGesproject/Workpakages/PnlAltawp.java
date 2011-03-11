@@ -499,8 +499,8 @@ public class PnlAltawp extends JScrollPane{
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						rs = conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like'"+CmbPar.getSelectedItem().toString()+"'" );
-						int id_par = 0;
+						rs = conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like'"+CmbPar.getSelectedItem()+"'" );
+						
 						try {
 							rs.next();
 							id_par = rs.getInt(1);
