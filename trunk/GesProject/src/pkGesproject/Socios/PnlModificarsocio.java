@@ -97,7 +97,7 @@ public class PnlModificarsocio extends JPanel{
 			public void focusLost(FocusEvent arg0) {
 				// TODO Auto-generated method stub
 				if(jtxt.getText().equals("")){
-					jtxt.setText("Buscar...");
+					jtxt.setText(rec.idioma[rec.eleidioma][235]);
 				}
 				
 			}
@@ -207,7 +207,7 @@ public class PnlModificarsocio extends JPanel{
     	 * Creamos el jtextfield para la busquera y le añadimos un focus listener para que se borre su contenido
     	 */
 		jtxt=new JTextField(20);
-		jtxt.setText("Buscar...");
+		jtxt.setText(rec.idioma[rec.eleidioma][235]);
 		jtxt.putClientProperty("JTextField.variant", "search");
 		jtxt.putClientProperty("JTextField.Search.PlaceholderText", Boolean.TRUE);
 		

@@ -35,8 +35,7 @@ public class SpnPreferencias extends JSplitPane{
 	PnlModificarsocio mods = PnlModificarsocio.Obtener_Instancia();
 	Component[] panlsStaff = {
 			cuenta = new JScrollPane(new PnlCuentaUsuario()),
-			new TbIdiomas(),
-			agregar = new JScrollPane(new FrmNuevapalabra())};
+			new PnlNuevoIdioma()};
 
 	public SpnPreferencias(){
 		this.setOneTouchExpandable(true);
@@ -45,8 +44,7 @@ public class SpnPreferencias extends JSplitPane{
 		cuenta.setBorder(empty);
 		
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[13],rec.idioma[rec.eleidioma][145]},
-				{recursos.icono[34],rec.idioma[rec.eleidioma][144]},
-				{recursos.icono[10],"Añadir Palabra"}};
+				{recursos.icono[34],rec.idioma[rec.eleidioma][144]}};
 		
 		
 		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {
