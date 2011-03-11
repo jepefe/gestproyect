@@ -482,131 +482,7 @@ public class PnlAlta_viajes extends JScrollPane{
 		contenedor.add(mensage,BorderLayout.NORTH);
 		contenedor.add(panel,BorderLayout.CENTER);
 		this.setViewportView(contenedor);
-		
-		
-	/*	
-		accion = new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-				comprobar_campos();
-				if(e.getActionCommand().equals("aceptar") && OKalta == true){
-					
-						ConexionDb conexdb = new ConexionDb();
-						conexdb.Conectardb();
-						
-						
-						rs = conexdb.ConsultaSQL("Select cod_part FROM PARTNER WHERE nombre ='" + cbpartner.getSelectedItem().toString()+"'");
-						if (rs!= null){
-							try {
-								rs.next();
-								String partner = Integer.toString(rs.getInt(1));
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-						
-						rs = conexdb.ConsultaSQL("Select id_pro FROM PROYECTO WHERE nombre ='" + cbproyecto.getSelectedItem().toString()+"'");
-						if (rs!= null){
-							try {
-								rs.next();
-								String proyecto = Integer.toString(rs.getInt(1));
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-						
-						String paissalida;
-						rs = conexdb.ConsultaSQL("Select id_pais FROM PAIS WHERE pais='" + cbpsalida.getSelectedItem().toString()+"'");
-						if (rs!= null){
-							try {
-								rs.next();
-								paissalida = Integer.toString(rs.getInt(1));
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-						
-						
-						rs = conexdb.ConsultaSQL("Select id_provincias FROM PROVINCIAS WHERE estado='" + cbcsalida.getSelectedItem().toString() + "'" + "AND id_pais='" + paissalida + "'");
-						if (rs!= null){
-							try {
-								rs.next();
-								String provinciasalida = Integer.toString(rs.getInt(1));
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-						
-						String paisdestino;
-						rs = conexdb.ConsultaSQL("Select id_pais FROM PAIS WHERE pais='" + cbpdestino.getSelectedItem().toString()+"'");
-						if (rs!= null){
-							try {
-								rs.next();
-								paisdestino = Integer.toString(rs.getInt(1));
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-						
-						
-						rs = conexdb.ConsultaSQL("Select id_provincias FROM PROVINCIAS WHERE estado='" + cbcdestino.getSelectedItem().toString() + "'" + "AND id_pais='" + paisdestino + "'");
-						if (rs!= null){
-							try {
-								rs.next();
-								String provinciadestino = Integer.toString(rs.getInt(1));
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-											
-						conexion.executeUpdate("INSERT INTO SUBCONTRATA (nombre,sector,pais,provincia,direccion,cod_postal,telf,observaciones) VALUES ('"+ 
-								jtxt[0].getText()+"','"+idsector+"','"+idpais+"','"+idprovincia+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+textarea.getText()+"')");
-						JOptionPane.showMessageDialog(mensage,"Subcontrata dada de alta");
-						
-						
-					for(int i=0;i<4;++i) {	
-						jtxt[i].setText("");
-					}
-					cbcsalida.removeAllItems();
-					textarea.setText(null);
-					mensage.setVisible(false);
-					PnlMod_Sub.actualizar_tabla();
-				
-					cbcdestino.removeAllItems();
-					textarea.setText(null);
-					mensage.setVisible(false);
-					PnlMod_Sub.actualizar_tabla();
-				
-				}else{
-					alerta.setText(rec.idioma[rec.eleidioma][79]);
-					mensage.setBackground(Color.decode("#ec8989"));
-					mensage.setVisible(true);
-					OKalta = false;
-				}
-				
-				
-				// Borrar cuando damos al boton cancelar
-				if( e.getActionCommand().equals("cancelar")){
-					for(int i=0;i<4;++i) {	
-						jtxt[i].setText("");
-					}
-					cbcdestino.removeAllItems();
-					cbcsalida.removeAllItems();
-					textarea.setText(null);
-					alerta.setText("");
-					mensage.setVisible(false);
-				}
-			}
-				
-			};
-*/
+	
 		
 		this.setVisible(true);
 		//filtro para solo admitir numeros en los costes
@@ -663,8 +539,17 @@ public class PnlAlta_viajes extends JScrollPane{
 		}
 		if((cbpartner.getSelectedItem() != null) && (cbproyecto.getSelectedItem() != null) && (cbpsalida.getSelectedItem() != null)&& (cbcsalida.getSelectedItem() != null)&& (cbpdestino.getSelectedItem() != null)&& (cbcdestino.getSelectedItem() != null)){	
 			
+			if(jdc2.getDate().getTime()<jdc1.getDate().getTime()){
+				OKalta = false;
+				alerta.setText(rec.idioma[rec.eleidioma][72]);
+				mensage.setBackground(Color.decode("#ec8989"));
+				mensage.setVisible(true);
+					
+				
+			}
 		}else{
-			OKalta = false;
+			OKalta = false;                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+			System.out.println(OKalta);
 			alerta.setText(rec.idioma[rec.eleidioma][79]);
 			mensage.setBackground(Color.decode("#ec8989"));
 			mensage.setVisible(true);
