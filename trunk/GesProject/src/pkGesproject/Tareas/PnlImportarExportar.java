@@ -84,8 +84,7 @@ public class PnlImportarExportar extends JPanel{
 				exportar_summary();
 				exportar_progres();
 			  	exportar_partners();
-			  	//exportar_equipment();
-			  	//System.out.println("ha ejecutado equipment");
+			  	exportar_equipment();
 			  	guardar();
 				
 			}
