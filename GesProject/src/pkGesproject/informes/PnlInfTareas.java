@@ -194,7 +194,7 @@ public class PnlInfTareas extends JPanel{
 		JScrollPane sp1 = new JScrollPane(lista1);
 		lista1.setFixedCellWidth(145);
 		lista1.setFixedCellHeight(23);
-		sp1.setColumnHeaderView(new JLabel(rec.idioma[rec.eleidioma][84])); 
+		//sp1.setColumnHeaderView(new JLabel(rec.idioma[rec.eleidioma][84])); 
 		gbc.gridx = 1; // El área de texto empieza en la columna
 		gbc.gridy = 1; 
 		gbc.gridwidth = 2; // El área de texto ocupa x columnas.
@@ -208,7 +208,7 @@ public class PnlInfTareas extends JPanel{
 		JScrollPane sp2 = new JScrollPane(lista2);
 		lista2.setFixedCellWidth(145);
 		lista2.setFixedCellHeight(23);
-		sp2.setColumnHeaderView(new JLabel(rec.idioma[rec.eleidioma][82])); 
+		//sp2.setColumnHeaderView(new JLabel(rec.idioma[rec.eleidioma][82])); 
 		gbc.gridx = 2; 
 		gbc.gridwidth = 2; // El área de texto ocupa x columnas.
 		//gbc.anchor = GridBagConstraints.WEST;
