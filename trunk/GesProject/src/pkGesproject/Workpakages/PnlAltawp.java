@@ -358,7 +358,7 @@ public class PnlAltawp extends JScrollPane{
 					//para id de proyecto
 					//se limitan la necesidad de campos obligatorios
 					if(jtxt[0].getText()== ""||jtxt[1].getText()== ""||CmbPro.getSelectedItem()==null||(jdc1.getDate()==null)||(jdc2.getDate()==null)){
-						JOptionPane.showMessageDialog( null, "Faltan campos obligatorios por rellenar"); 
+						JOptionPane.showMessageDialog( null, rec.idioma[rec.eleidioma][79]); 
 						jtxt[0].requestFocus();
 					}else{
 						rs = conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre like'"+ CmbPro.getSelectedItem().toString()+"'" );
@@ -427,7 +427,7 @@ public class PnlAltawp extends JScrollPane{
 					
 				}else{
 					System.out.println("eelseee");
-					JOptionPane.showMessageDialog( null, "La Fecha de Fin debe ser mayor que la Fecha de Inicio"); 
+					JOptionPane.showMessageDialog( null, rec.idioma[rec.eleidioma][72]); 
 					// Marcar campo FECHA con error en ROJO 
 					jdc2.setBackground(Color.red);
 				}
