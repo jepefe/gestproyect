@@ -63,7 +63,7 @@ public class PnlMod_viajes extends JPanel{
 	static int columnas;
 	static String datos[][];
 	static String auxdatos[][];
-	static String colu[] = {"Proyecto","Persona","Gastos Totales"};
+	static String colu[] = {"Proyecto","Persona","Gastos Totales"};//Proyecto, Persona, Gastos Totales
 	static String consulta = "SELECT PROYECTOS.nombre,TRAVEL_SUBSISTENCE.nombrepersona,(TRAVEL_SUBSISTENCE.coste_viaje+TRAVEL_SUBSISTENCE.coste_subsistencia)AS gastos ,ref FROM TRAVEL_SUBSISTENCE INNER JOIN PROYECTOS ON TRAVEL_SUBSISTENCE.id_pro = PROYECTOS.id_pro ORDER BY nombrepersona"; //Esta consulta cargara los datos en la tabla
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
@@ -86,7 +86,7 @@ public class PnlMod_viajes extends JPanel{
 	ActionListener event;
 	MouseListener mouse;
 	Object[] dat;
-	JDateChooser jdc1,jdc2;
+	//JDateChooser jdc1,jdc2;
 	
 	int referencia;
 	
@@ -155,11 +155,11 @@ public class PnlMod_viajes extends JPanel{
 				//llamamos al metodo eliminar
 					eliminar();
 				}
-				/*if(e.getActionCommand().equals("actualizar")){
+				if(e.getActionCommand().equals("actualizar")){
 					//llamamos al metodo actualizar
 					actualizar();
-				}
-			*/
+				}//desbloquea 161
+			
 				if(e.getActionCommand().equals("cerrar")){
 					modificar.dispose();
 				}
@@ -445,37 +445,37 @@ public class PnlMod_viajes extends JPanel{
 				rs=conexion.ConsultaSQL("SELECT PARTNER.nombre FROM PARTNER INNER JOIN TRAVEL_SUBSISTENCE ON PARTNER.cod_part = TRAVEL_SUBSISTENCE.partner WHERE TRAVEL_SUBSISTENCE.ref = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				rs.next();
 				mod.cbpartner.setSelectedItem(rs.getString(1));
-				//mod.textarea.setText(rs.getString(1));
+				//mod.textarea.setText(rs.getString(1));//
 				
 				//cargamos el proyecto
 				rs=conexion.ConsultaSQL("SELECT PROYECTOS.nombre FROM PROYECTOS INNER JOIN TRAVEL_SUBSISTENCE ON TRAVEL_SUBSISTENCE.id_pro = PROYECTOS.id_pro WHERE TRAVEL_SUBSISTENCE.ref = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				rs.next();
 				mod.cbproyecto.setSelectedItem(rs.getString(1));
-				mod.textarea.setText(rs.getString(1));
+				//mod.textarea.setText(rs.getString(1));//
 				
 				//cargamos el pais de origen
 				rs=conexion.ConsultaSQL("SELECT PAIS.pais FROM PAIS INNER JOIN TRAVEL_SUBSISTENCE ON PAIS.id_pais = TRAVEL_SUBSISTENCE.paissalida WHERE TRAVEL_SUBSISTENCE.ref = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				rs.next();
 				mod.cbpsalida.setSelectedItem(rs.getString(1));
-				//mod.textarea.setText(rs.getString(1));
+				//mod.textarea.setText(rs.getString(1));//
 				
 				//cargamos la provincia o region de origen
 				rs=conexion.ConsultaSQL("SELECT PROVINCIAS.estado FROM PROVINCIAS INNER JOIN TRAVEL_SUBSISTENCE ON PROVINCIAS.id_provincias = TRAVEL_SUBSISTENCE.ciudad_salida WHERE TRAVEL_SUBSISTENCE.ref = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				rs.next();
 				mod.cbcsalida.setSelectedItem(rs.getString(1));
-				mod.textarea.setText(rs.getString(1));
+				//mod.textarea.setText(rs.getString(1));//
 				
 				//cargamos el pais de destino
 				rs=conexion.ConsultaSQL("SELECT PAIS.pais FROM PAIS INNER JOIN TRAVEL_SUBSISTENCE ON PAIS.id_pais = TRAVEL_SUBSISTENCE.paisdestino WHERE TRAVEL_SUBSISTENCE.ref = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				rs.next();
 				mod.cbpdestino.setSelectedItem(rs.getString(1));
-				//mod.textarea.setText(rs.getString(1));
+				//mod.textarea.setText(rs.getString(1));//
 				
 				//cargamos la provincia o region de destino
 				rs=conexion.ConsultaSQL("SELECT PROVINCIAS.estado FROM PROVINCIAS INNER JOIN TRAVEL_SUBSISTENCE ON PROVINCIAS.id_provincias = TRAVEL_SUBSISTENCE.ciudad_destino WHERE TRAVEL_SUBSISTENCE.ref = '"+datos[jtblLateral.getSelectedRow()][3]+"'");
 				rs.next();
 				mod.cbcdestino.setSelectedItem(rs.getString(1));
-				mod.textarea.setText(rs.getString(1));
+				//mod.textarea.setText(rs.getString(1));//
 				
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
@@ -534,7 +534,7 @@ public class PnlMod_viajes extends JPanel{
 		    	}
 		    	System.out.println(partner);
 		    	//proyecto
-		    	rs=conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE proyecto like '"+mod.cbproyecto.getSelectedItem().toString()+"'");
+		    	rs=conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre like '"+mod.cbproyecto.getSelectedItem().toString()+"'");//correjido?
 		    	try{
 		    		rs.next();
 		    		proyecto = rs.getString(1);
@@ -584,15 +584,16 @@ public class PnlMod_viajes extends JPanel{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				System.out.println(mod.cbcdestino);
 				System.out.println(provinciadestino);
 				
-				java.sql.Date sqlDate1 = new java.sql.Date(jdc1.getDate().getTime());
-				java.sql.Date sqlDate2 = new java.sql.Date(jdc2.getDate().getTime());
+				java.sql.Date sqlDate1 = new java.sql.Date(mod.jdc1.getDate().getTime());
+				java.sql.Date sqlDate2 = new java.sql.Date(mod.jdc2.getDate().getTime());
 				System.out.println(sqlDate1);
 				System.out.println(sqlDate2);
 				
 				
-				conexion.executeUpdate("UPDATE TRAVEL_SUBSISTENE SET partner = '"+referencia+"',motivoviaje = '"+mod.jtxt[1].getText()+"', paissalida = '"+paissalida+"', ciudad_salida = '"+provinciasalida+"', ciudad_destino = '"+provinciadestino+"', motivoviaje = '"+mod.jtxt[1].getText()+"', fecha_ini = '"+sqlDate1+"', fecha_fin = '"+sqlDate2+"', coste_viaje = '"+Float.valueOf(mod.jtxt[2].getText())+"', telf = '"+Float.valueOf(mod.jtxt[3].getText())+"' WHERE TRAVEL_SUBSISTENCE.ref = '"+referencia+"' ");
+				conexion.executeUpdate("UPDATE TRAVEL_SUBSISTENCE SET partner = '"+referencia+"',motivoviaje = '"+mod.jtxt[1].getText()+"', paissalida = '"+paissalida+"', ciudad_salida = '"+provinciasalida+"', ciudad_destino = '"+provinciadestino+"', motivoviaje = '"+mod.jtxt[1].getText()+"', fecha_ini = '"+sqlDate1+"', fecha_fin = '"+sqlDate2+"', coste_viaje = '"+Float.valueOf(mod.jtxt[2].getText())+"', coste_subsistencia = '"+Float.valueOf(mod.jtxt[3].getText())+"' WHERE TRAVEL_SUBSISTENCE.ref = '"+referencia+"' ");
 				actualizar_tabla();
 				JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][231]);
 				modificar.dispose();
