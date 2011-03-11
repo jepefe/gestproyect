@@ -397,7 +397,7 @@ public class PnlAltaSub extends JScrollPane{
 										
 					conexion.executeUpdate("INSERT INTO SUBCONTRATA (nombre,sector,pais,provincia,direccion,cod_postal,telf,observaciones,wp,coste) VALUES ('"+ 
 							jtxt[0].getText()+"','"+idsector+"','"+idpais+"','"+idprovincia+"','"+jtxt[1].getText()+"','"+jtxt[2].getText()+"','"+jtxt[3].getText()+"','"+textarea.getText()+"','"+wp+"','"+jtxt[4].getText()+"')");
-					JOptionPane.showMessageDialog(mesage,"Subcontrata dada de alta");
+					JOptionPane.showMessageDialog(mesage,rec.idioma[rec.eleidioma][236]);
 					
 					
 				for(int i=0;i<5;++i) {	
