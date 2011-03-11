@@ -1,5 +1,6 @@
 package pkGesproject.Preferencias;
 
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -33,6 +35,7 @@ public class PnlCuentaUsuario extends JPanel{
 	ResultSet rs;
 	String[][] listaidiomas;
 	ActionListener accion;
+	Component aviso;
 	
 	public PnlCuentaUsuario(){
 		//llamamos al método para crear la interfaz
@@ -44,7 +47,8 @@ public class PnlCuentaUsuario extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				conexion.executeUpdate("UPDATE STAFF SET idioma = '"+listaidiomas[gbidioma.getSelectedIndex()][0]+"' WHERE id_staff = "+recursos.getIdusuario());
-				System.out.println(listaidiomas[gbidioma.getSelectedIndex()][0]);
+				
+				JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][238 ]);
 			}
 			
 		};
@@ -108,7 +112,7 @@ public class PnlCuentaUsuario extends JPanel{
 		}
 		
 		gbc.gridy = 1; // El área de texto empieza en la fila
-		this.add(jbtnaplicar = new JButton("Añadir"),gbc);
+		this.add(jbtnaplicar = new JButton(rec.idioma[rec.eleidioma][1]),gbc);
 		
 		gbc.gridx = 0; // El área de texto empieza en la columna
 		gbc.gridy = 0; // El área de texto empieza en la fila

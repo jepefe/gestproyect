@@ -152,13 +152,13 @@ public class PnlNuevoIdioma extends JPanel{
 	public void introducir_idioma(){
 		
 		//comprobar campos vacios
-		/*for(int i =0; i< reg;i++){
+		for(int i =0; i< reg;i++){
 			if(jtxt[i].getText().equals("")){
 				System.out.println("VACIO: "+i);
 				vacio = true;
 			}
 		}
-		*/
+		
 		if(vacio == true){
 			System.out.print("Los campos deben estar llenos");
 		}else{
