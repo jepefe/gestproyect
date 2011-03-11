@@ -45,7 +45,7 @@ public class PnlModificacion_Staff extends JPanel{
 	int columnas;
 	String datos[][];
 	String auxdatos[][];
-	String colu[] = {"Nombre","Apellidos","Partner"};
+	String colu[] = {rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][28],rec.idioma[rec.eleidioma][57]};
 	String consulta = "SELECT s.nombre,s.apellidos,p.nombre,s.id_staff FROM STAFF s LEFT JOIN PARTNER p ON s.cod_part = p.cod_part"; //Esta consulta cargara los datos en la tabla
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
@@ -91,7 +91,7 @@ public class PnlModificacion_Staff extends JPanel{
 			public void focusLost(FocusEvent arg0) {
 				// TODO Auto-generated method stub
 				if(jtxt.getText().equals("")){
-					jtxt.setText("Buscar...");
+					jtxt.setText(rec.idioma[rec.eleidioma][235]);
 				}
 				
 			}
@@ -202,7 +202,7 @@ public class PnlModificacion_Staff extends JPanel{
     	 * Creamos el jtextfield para la busquera y le añadimos un focus listener para que se borre su contenido
     	 */
 		jtxt=new JTextField(20);
-		jtxt.setText("Buscar...");
+		jtxt.setText(rec.idioma[rec.eleidioma][235]);
 		jtxt.putClientProperty("JTextField.variant", "search");
 		jtxt.putClientProperty("JTextField.Search.PlaceholderText", Boolean.TRUE);
 		
