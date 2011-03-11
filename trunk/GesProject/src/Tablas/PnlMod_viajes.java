@@ -521,83 +521,87 @@ public class PnlMod_viajes extends JPanel{
 	    	String provinciasalida = null;
 	    	String provinciadestino = null;
 	    	Component aviso = null;
-			int s = JOptionPane.showConfirmDialog(aviso, rec.idioma[rec.eleidioma][218]);
-			if(s==0){
-		    	conexion.Conectardb();
+	    	mod.comprobar_campos();
+	    	if(mod.OKalta == true){
+	    		mod.mensage.setVisible(false);
+	    		int s = JOptionPane.showConfirmDialog(aviso, rec.idioma[rec.eleidioma][218]);
+	    		if(s==0){
+	    			conexion.Conectardb();
 		    	//partner
-		    	rs=conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like '"+mod.cbpartner.getSelectedItem().toString()+"'");
-		    	try{
-		    		rs.next();
-		    		partner = rs.getString(1);
-		    	}catch(SQLException e1){
-		    		e1.printStackTrace();
-		    	}
-		    	System.out.println(partner);
+	    			rs=conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like '"+mod.cbpartner.getSelectedItem().toString()+"'");
+	    			try{
+	    				rs.next();
+	    				partner = rs.getString(1);
+	    			}catch(SQLException e1){
+	    				e1.printStackTrace();
+	    			}
+	    			System.out.println(partner);
 		    	//proyecto
-		    	rs=conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre like '"+mod.cbproyecto.getSelectedItem().toString()+"'");//correjido?
-		    	try{
-		    		rs.next();
-		    		proyecto = rs.getString(1);
-		    	}catch(SQLException e1){
-		    		e1.printStackTrace();
-		    	}
-		    	System.out.println(proyecto);
+	    			rs=conexion.ConsultaSQL("SELECT id_pro FROM PROYECTOS WHERE nombre like '"+mod.cbproyecto.getSelectedItem().toString()+"'");//correjido?
+	    			try{
+	    				rs.next();
+	    				proyecto = rs.getString(1);
+	    			}catch(SQLException e1){
+	    				e1.printStackTrace();
+	    			}
+	    			System.out.println(proyecto);
 				//pais de salida
-				rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+mod.cbpsalida.getSelectedItem().toString()+"'");
-				try {
-					rs.next();
-					paissalida = rs.getString(1);
-				} catch (SQLException e1) {
+	    			rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+mod.cbpsalida.getSelectedItem().toString()+"'");
+	    			try {
+	    				rs.next();
+	    				paissalida = rs.getString(1);
+	    			} catch (SQLException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				System.out.println(paissalida);
+	    				e1.printStackTrace();
+	    			}
+	    			System.out.println(paissalida);
 				
 				//pais de origen
-				rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+mod.cbpdestino.getSelectedItem().toString()+"'");
-				try {
-					rs.next();
-					paisdestino = rs.getString(1);
-				} catch (SQLException e1) {
+	    			rs=conexion.ConsultaSQL("SELECT id_pais FROM PAIS WHERE pais like '"+mod.cbpdestino.getSelectedItem().toString()+"'");
+	    			try {
+	    				rs.next();
+	    				paisdestino = rs.getString(1);
+	    			} catch (SQLException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				System.out.println(paisdestino);
+	    				e1.printStackTrace();
+	    			}
+	    			System.out.println(paisdestino);
 				
 				//provincia origen o salida
-				rs=conexion.ConsultaSQL("SELECT id_provincias FROM PROVINCIAS WHERE estado like '"+mod.cbcsalida.getSelectedItem().toString()+"'");
-				try {
-					rs.next();
-					provinciasalida = rs.getString(1);
-				} catch (SQLException e1) {
+	    			rs=conexion.ConsultaSQL("SELECT id_provincias FROM PROVINCIAS WHERE estado like '"+mod.cbcsalida.getSelectedItem().toString()+"'");
+	    			try {
+	    				rs.next();
+	    				provinciasalida = rs.getString(1);
+	    			} catch (SQLException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				System.out.println(provinciasalida);
+	    				e1.printStackTrace();
+	    			}
+	    			System.out.println(provinciasalida);
 				
 				//provincia de destino
-				rs=conexion.ConsultaSQL("SELECT id_provincias FROM PROVINCIAS WHERE estado like '"+mod.cbcdestino.getSelectedItem().toString()+"'");
-				try {
-					rs.next();
-					provinciadestino = rs.getString(1);
-				} catch (SQLException e1) {
+	    			rs=conexion.ConsultaSQL("SELECT id_provincias FROM PROVINCIAS WHERE estado like '"+mod.cbcdestino.getSelectedItem().toString()+"'");
+	    			try {
+	    				rs.next();
+	    				provinciadestino = rs.getString(1);
+	    			} catch (SQLException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				System.out.println(mod.cbcdestino);
-				System.out.println(provinciadestino);
+	    				e1.printStackTrace();
+	    			}
+	    			System.out.println(mod.cbcdestino);
+	    			System.out.println(provinciadestino);
 				
-				java.sql.Date sqlDate1 = new java.sql.Date(mod.jdc1.getDate().getTime());
-				java.sql.Date sqlDate2 = new java.sql.Date(mod.jdc2.getDate().getTime());
-				System.out.println(sqlDate1);
-				System.out.println(sqlDate2);
+	    			java.sql.Date sqlDate1 = new java.sql.Date(mod.jdc1.getDate().getTime());
+	    			java.sql.Date sqlDate2 = new java.sql.Date(mod.jdc2.getDate().getTime());
+	    			System.out.println(sqlDate1);
+	    			System.out.println(sqlDate2);
 				
 				
-				conexion.executeUpdate("UPDATE TRAVEL_SUBSISTENCE SET nombrepersona = '"+mod.jtxt[0].getText()+"', partner = '"+partner+"', id_pro = '"+proyecto+"',motivoviaje = '"+mod.jtxt[1].getText()+"', paissalida = '"+paissalida+"', ciudad_salida = '"+provinciasalida+"', paisdestino = '"+paisdestino+"', ciudad_destino = '"+provinciadestino+"', fecha_ini = '"+sqlDate1+"', fecha_fin = '"+sqlDate2+"', coste_viaje = '"+Float.valueOf(mod.jtxt[2].getText())+"', coste_subsistencia = '"+Float.valueOf(mod.jtxt[3].getText())+"' WHERE TRAVEL_SUBSISTENCE.ref = '"+referencia+"' ");
-				actualizar_tabla();
-				JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][231]);
-				modificar.dispose();
-			}
+	    			conexion.executeUpdate("UPDATE TRAVEL_SUBSISTENCE SET nombrepersona = '"+mod.jtxt[0].getText()+"', partner = '"+partner+"', id_pro = '"+proyecto+"',motivoviaje = '"+mod.jtxt[1].getText()+"', paissalida = '"+paissalida+"', ciudad_salida = '"+provinciasalida+"', paisdestino = '"+paisdestino+"', ciudad_destino = '"+provinciadestino+"', fecha_ini = '"+sqlDate1+"', fecha_fin = '"+sqlDate2+"', coste_viaje = '"+Float.valueOf(mod.jtxt[2].getText())+"', coste_subsistencia = '"+Float.valueOf(mod.jtxt[3].getText())+"' WHERE TRAVEL_SUBSISTENCE.ref = '"+referencia+"' ");
+	    			actualizar_tabla();
+	    			JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][231]);
+	    			modificar.dispose();
+	    		}
+	    	}
 	    }
 		
 	    /**
