@@ -91,7 +91,7 @@ public class PnlAsignacionStaff extends JPanel{
 	JLabel[] jlbl,jlblWp,jlblTasks;
 	String id_p = null;
 	ResultSet rp;
-	int[] projects = new int[200];
+	int[] projects = new int[200],wp = new int[100],task = new int[100],cat = new int[4];
 	ActionListener asignacion;
 	ActionListener importar;
 	JFileChooser filechooser;
@@ -99,7 +99,7 @@ public class PnlAsignacionStaff extends JPanel{
 	ConexionDb conexion= new ConexionDb();
 	HSSFWorkbook tuWorkBook = new HSSFWorkbook();
 	JButton btnAsignar,btnQuitar;
-	GpComboBox cmbProyecto = new GpComboBox();
+	GpComboBox cmbProyecto = new GpComboBox(),cmbcategoria;
 	GridBagConstraints gbc;
 	String[] columnstaff = {"Nombre","Apellidos"},columnrolstaff = {"Nombre","Apellidos","Categoria"};
 	String[][] staff,rolstaff;
@@ -107,7 +107,9 @@ public class PnlAsignacionStaff extends JPanel{
 	DefaultTableModel modelstaff = new DefaultTableModel(null,columnstaff);
 	DefaultTableModel modelcate = new DefaultTableModel(null,columnrolstaff);
 	JScrollPane tablastaff,tablarolstaff;
-	int regstaff=0;
+	String[] rango = {"Manager","Trainer","Technical","Administrative"};
+	int regstaff=0,cate = 0;
+	boolean exist=false;
 	public PnlAsignacionStaff(){
 
 		crear_tabla();
@@ -117,14 +119,49 @@ public class PnlAsignacionStaff extends JPanel{
 		
 		asignacion = new ActionListener(){
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				cargar_tabla();
+			public void actionPerformed(ActionEvent e) {
+				if(e.getActionCommand().equals("cmbproyecto")){
+					cargar_tabla();
+					cargar_combos();
+				}
+				
+				if(e.getActionCommand().equals("cmbWp")){
+					cargar_cmbtarea();
+				}
+				
+				if(e.getActionCommand().equals("asignar")){
+					asignar();
+				}
+				
+				if(e.getActionCommand().equals("quitar")){
+					
+						int f =0;
+						while(staff[f][0]!=null){
+							f++;
+						}
+						
+						Object[] fila = new Object[2];
+						for(int i = 0; i <2; i++){
+							staff[f][i] = rolstaff[jtblrolstaff.getSelectedRow()][i];
+							fila[i] = rolstaff[jtblstaff.getSelectedRow()][i];
+						}
+						modelstaff.addRow(fila);
+						modelcate.removeRow(jtblstaff.getSelectedRow());
+				}
+				
 			}
 
 		};
 
 		
 		cmbProyecto.addActionListener(asignacion);
+		cmbProyecto.setActionCommand("cmbproyecto");
+		cmbWp.addActionListener(asignacion);
+		cmbWp.setActionCommand("cmbWp");
+		btnAsignar.addActionListener(asignacion);
+		btnAsignar.setActionCommand("asignar");
+		btnQuitar.addActionListener(asignacion);
+		btnQuitar.setActionCommand("quitar");
 		this.setVisible(true);
 	}
 
@@ -152,8 +189,8 @@ public class PnlAsignacionStaff extends JPanel{
 		jlblWp = new JLabel[fieldNames.length];
 		this.add(jlblWp[i]=new JLabel("Work Packages"),gbc);
 		gbc.gridx = 4; // El área de texto empieza en la columna
-		this.add(cmbStaff= new GpComboBox(),gbc);
-		cmbStaff.setPreferredSize(new Dimension(140,30));
+		this.add(cmbWp= new GpComboBox(),gbc);
+		cmbWp.setPreferredSize(new Dimension(140,30));
 
 		gbc.gridx = 5; // El área de texto empieza en la columna
 		jlblTasks = new JLabel[fieldNames.length];
@@ -239,6 +276,7 @@ public class PnlAsignacionStaff extends JPanel{
 			rp.next();
 			regstaff = rp.getInt(1);
 			staff = new String[regstaff][columnstaff.length];
+			rolstaff = new String[regstaff][columnrolstaff.length];
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -262,6 +300,113 @@ public class PnlAsignacionStaff extends JPanel{
 		modelstaff = new DefaultTableModel(staff,columnstaff);
 		jtblstaff.setModel(modelstaff);
 	}
+	
+	public void cargar_combos(){
+		conexion.Conectardb();
+		rp = conexion.ConsultaSQL("SELECT w.nombre,w.id_wp FROM WORKPAQUETS w INNER JOIN PROYECTOS p ON w.id_pro = p.id_pro" +
+				" INNER JOIN PARTNER_PROYECTOS p_p on p.id_pro = p_p.id_pro INNER JOIN PARTNER pa ON p_p.cod_part = pa.cod_part" +
+				" WHERE pa.cod_part = "+recursos.getCodparter()+" AND p.id_pro = "+projects[cmbProyecto.getSelectedIndex()]+" ORDER BY nombre");
+		int i = 0;
+		try {
+			cmbWp.removeAllItems();
+			cmbTasks.removeAllItems();
+			while (rp.next()) {
+				wp[i] = rp.getInt(2);
+				cmbWp.addItem(rp.getString(1));
+				
+			}
+			cargar_cmbtarea();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	
+	public void cargar_cmbtarea(){
+		conexion.Conectardb();
+		if(cmbWp.getSelectedItem()!=null){
+			rp = conexion.ConsultaSQL("SELECT t.nombre,t.id_task FROM TAREAS t INNER JOIN WORKPAQUETS w ON t.id_wp = w.id_wp WHERE w.id_wp = "+wp[cmbWp.getSelectedIndex()]);
+			int i = 0;
+			try {
+				cmbTasks.removeAllItems();
+				while (rp.next()) {
+					task[i] = rp.getInt(2);
+					cmbTasks.addItem(rp.getString(1));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	public void asignar(){
+		JButton aceptar,cancelar;
+		GridBagConstraints gb = new GridBagConstraints();
+		final JDialog categoria = new JDialog();
+		categoria.setLayout(new GridBagLayout());
+		categoria.setSize(300, 200);
+		categoria.setLocationRelativeTo(null);
+		gb.gridwidth = GridBagConstraints.REMAINDER;
+		categoria.add(new JLabel(rec.idioma[rec.eleidioma][232]),gb);
+		gb.gridwidth = GridBagConstraints.REMAINDER;
+		gb.insets = new Insets(7,0,0,0);
+		categoria.add(cmbcategoria = new GpComboBox(),gb);
+		cmbcategoria.removeAllItems();
+		for(int i =0;i<4;i++){
+			cmbcategoria.addItem(rango[i]);
+			cat[i]=i+1;
+		}
+		gb.gridwidth = GridBagConstraints.RELATIVE;
+		gb.insets = new Insets(30,0,0,0);
+		categoria.add(aceptar = new JButton(rec.idioma[rec.eleidioma][1]),gb);
+		categoria.add(cancelar = new JButton(rec.idioma[rec.eleidioma][2]),gb);
+		
+		ActionListener aceptaraccion = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent a) {
+				// TODO Auto-generated method stub
+				if(a.getActionCommand().equals("aceptar")){
+					int f =0;
+					while(rolstaff[f][0]!=null){
+						f++;
+					}
+					Object[] fila = new Object[3];
+					for (int i = 0; i <2; i++) {
+						rolstaff[f][i] = staff[jtblstaff.getSelectedRow()][i];
+						fila[i] = staff[jtblstaff.getSelectedRow()][i];
+					}
+					fila[2] = rango[cmbcategoria.getSelectedIndex()];
+					modelcate.addRow(fila);
+					modelstaff.removeRow(jtblstaff.getSelectedRow());
+					
+					categoria.dispose();
+				}
+				
+				if(a.getActionCommand().equals("cancelar")){
+					categoria.dispose();
+				}
+			}
+			
+		};
+		
+		
+		aceptar.addActionListener(aceptaraccion);
+		aceptar.setActionCommand("aceptar");
+		cancelar.addActionListener(aceptaraccion);
+		cancelar.setActionCommand("cancelar");
+		categoria.setModal(true);
+		categoria.setVisible(true);
+		
+		
+	}
+	
 
 }
 
