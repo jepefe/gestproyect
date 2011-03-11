@@ -35,33 +35,34 @@ import pkGesproject.Socios.PnlAltasocio;
 import pkGesproject.Socios.PnlModificarsocio;
 
 public class PnlModificacion_Staff extends JPanel{
-	
+	Component aviso;
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
 	GesIdioma rec = GesIdioma.obtener_instancia();
-	ConexionDb conexion = new ConexionDb();
-	ResultSet rs,rs2;
+	static ConexionDb conexion = new ConexionDb();
+	static ResultSet rs;
+	ResultSet rs2;
 	JPanel panel = new JPanel();
-	int cuenta = 0;
-	int columnas;
-	String datos[][];
-	String auxdatos[][];
-	String colu[] = {rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][28],rec.idioma[rec.eleidioma][57]};
-	String consulta = "SELECT s.nombre,s.apellidos,p.nombre,s.id_staff FROM STAFF s LEFT JOIN PARTNER p ON s.cod_part = p.cod_part"; //Esta consulta cargara los datos en la tabla
+	static int cuenta = 0;
+	static int columnas;
+	static String datos[][];
+	static String auxdatos[][];
+	static String colu[] = {"Nombre","Apellidos","Partner"};
+	static String consulta = "SELECT s.nombre,s.apellidos,p.nombre,s.id_staff FROM STAFF s LEFT JOIN PARTNER p ON s.cod_part = p.cod_part"; //Esta consulta cargara los datos en la tabla
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
 			{recursos.icono[7],rec.idioma[rec.eleidioma][33]}};
 	JLabel jlbl;
 	JTextField jtxt;
 	JButton jbtn,jbtnmodificar,jbtneliminar,jbtnaceptar,jbtncancelar,jbtnactualizar;
-	Boolean llena = new Boolean(false);
+	static Boolean llena = new Boolean(false);
 	Boolean existe= new Boolean(false);
-	String[] fila;
-	JTable jtblLateral;
+	static String[] fila;
+	static JTable jtblLateral;
 	JScrollPane jspntabla;
 	FocusListener comp;
 	public static JDialog modificar;
 	static PnlModificacion_Staff instancia = new PnlModificacion_Staff();
-	DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
+	static DefaultTableModel tablemodel = new DefaultTableModel(null,colu); //Creamos el tablemodel global y le pasamos las columnas
     FocusListener foco;
     KeyListener accion,suprimir;
     ActionListener event;
@@ -138,6 +139,15 @@ public class PnlModificacion_Staff extends JPanel{
 				}
 				
 				if(e.getActionCommand().equals("eliminar")){
+					rs = conexion.ConsultaSQL("SELECT s.id_staff FROM STAFF s WHERE s.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"' AND s.apellidos LIKE '"+ datos[jtblLateral.getSelectedRow()][1]+"'");
+			    	try {
+			    		rs.next();
+						eliminarStaff(rs.getInt(1));
+					} catch (SQLException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+						actualizar_tabla();
+					}
 					//llamamos al metodo eliminar
 					//eliminar();
 				}
@@ -395,21 +405,24 @@ public class PnlModificacion_Staff extends JPanel{
      */
     public void modificar(){
     	JDialog modificar = new JDialog();
-		modificar.add(mod = new pnlAlta_staff());
+		
 		modificar.setBounds(0, 0, 600, 650);
 		modificar.setLocationRelativeTo(null);
-		mod.jbtnaceptar.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.print("te tengo");
-			}
-			
-		});
+	
 			
 		conexion.Conectardb();
     	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
+    	rs = conexion.ConsultaSQL("SELECT s.id_staff FROM STAFF s WHERE s.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"' AND s.apellidos LIKE '"+ datos[jtblLateral.getSelectedRow()][1]+"'");
+    	try {
+    		rs.next();
+			modificar.add(mod = new pnlAlta_staff(rs.getInt(1)));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+    	
+    	
     	rs = conexion.ConsultaSQL("SELECT s.nombre,s.apellidos,s.region,s.ciudad,s.direccion,s.codpostal,s.telefono,s.telefono2,s.fax,s.email,s.nick_usuario,s.foto,s.observaciones FROM STAFF s WHERE s.nombre LIKE '"+datos[jtblLateral.getSelectedRow()][0]+"' AND s.apellidos LIKE '"+ datos[jtblLateral.getSelectedRow()][1]+"'");
     	int i=1;
     	
@@ -452,7 +465,22 @@ public class PnlModificacion_Staff extends JPanel{
     /**
      * con este método podemos actualizar la tabla siempre que lo llamemos
      */
-    public void actualizar_tabla(){
+    
+    public void eliminarStaff(int id){
+    	
+    	conexion.Conectardb();
+		conexion.executeUpdate("DELETE FROM STAFF WHERE id_staff = '"+Integer.toString(id)+"'");
+		
+		actualizar_tabla();
+		
+		
+		JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][63]);
+	
+		conexion.cerrarConexion();
+    }
+    
+    
+    public static void actualizar_tabla(){
     	conexion.Conectardb();
     	//rs = conexion.ConsultaSQL("SELECT COUNT(*) FROM STAFF");
     	rs = conexion.ConsultaSQL(consulta);
