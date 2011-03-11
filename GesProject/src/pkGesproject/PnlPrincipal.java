@@ -36,6 +36,9 @@ import ar.com.fdvs.dj.domain.constants.Border;
 
 
 
+/**
+ * @author  Orion
+ */
 public class PnlPrincipal extends JPanel {
 	JPanel jpnlinfousuario = new JPanel();
 	JPanel jpncentral = new JPanel();
@@ -46,8 +49,20 @@ public class PnlPrincipal extends JPanel {
 	JPanel jpnlpartproyecto = new JPanel();
 	JPanel jpnlstaffwp = new JPanel();
 	
+	/**
+	 * @uml.property  name="jicusu"
+	 * @uml.associationEnd  
+	 */
 	JImageContainer jicusu = new JImageContainer();
+	/**
+	 * @uml.property  name="recursos"
+	 * @uml.associationEnd  
+	 */
 	RsGesproject recursos = RsGesproject.instancia;
+	/**
+	 * @uml.property  name="cdb"
+	 * @uml.associationEnd  
+	 */
 	ConexionDb cdb = new ConexionDb();
 	ResultSet rs;
 	JLabel jlbnombre = new JLabel();
@@ -81,10 +96,16 @@ public class PnlPrincipal extends JPanel {
 	JLabel jlbpartproyecto = new JLabel();
 	JComboBox jcbproyecto = new JComboBox();
 	JComboBox jcbwp = new JComboBox();
-	ActionListener alpro,alstaff;
+	ActionListener alpro;
+	ActionListener alstaff;
+	/**
+	 * @uml.property  name="rec"
+	 * @uml.associationEnd  
+	 */
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	Integer[] proyectos;
-	JTable jtblpartners,jtblstaff;
+	JTable jtblpartners;
+	JTable jtblstaff;
 	String[] partners;
 	String[] staff;
 	DefaultTableModel tablemodelpart = new DefaultTableModel();
@@ -299,6 +320,7 @@ public class PnlPrincipal extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				
 				ConexionDb cdb = new ConexionDb();
 				ResultSet rs;
 				rs = cdb.ConsultaSQL("SELECT nombre,descripcion,presupuesto,f_ini,f_fin,num_contrato FROM PROYECTOS WHERE id_pro='"+proyectos[jcbproyecto.getSelectedIndex()].toString() +"'");
@@ -313,6 +335,7 @@ public class PnlPrincipal extends JPanel {
 					
 					}
 					ActualizarPartnersProyecto(Integer.toString(proyectos[jcbproyecto.getSelectedIndex()]));
+					ActualizarWP();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -454,36 +477,6 @@ public class PnlPrincipal extends JPanel {
 		//jpnlproyecto.setOpaque(true);
 		
 		
-		ConexionDb cdb = new ConexionDb();
-		ResultSet rs;
-		rs = GesStaff.allowedWP();
-		
-		try {
-			
-			
-			if(rs.next()){
-				
-				rs.last();
-				wp = new Integer[rs.getRow()];
-				rs.beforeFirst();
-				while(rs.next()){
-					wp[rs.getRow()-1] = rs.getInt(1);
-					jcbwp.addItem(rs.getString(3));
-					
-					
-				}
-				
-				
-				
-				
-				
-				
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		//cdb.ConsultaSQL("SELECT nombre,descripcion,presupuesto,f_ini,f_fin,num_contrato,Coordinador FROM PROYECTOS WHERE id_pro='"+proyectos[jcbproyecto.getSelectedIndex()].toString() +"'");
 		
@@ -514,6 +507,49 @@ public class PnlPrincipal extends JPanel {
 			
 		};
 		jcbwp.addActionListener(alstaff);
+	}
+	
+	public void ActualizarWP(){
+		jcbwp.removeAllItems();
+		ConexionDb cdb = new ConexionDb();
+		ResultSet rs=null;
+		//rs = GesStaff.allowedWP();
+		
+		switch(recursos.representante){
+		//Devolvemos todos los WP en los que staff tiene una tarea asignada
+		case 0: rs = cdb.ConsultaSQL("SELECT * FROM WORKPAQUETS  WHERE (id_pro = (SELECT id_pro FROM PROYECTOS where nombre ='"+jcbproyecto.getSelectedItem().toString()+"')) AND (id_wp IN (SELECT id_wp FROM TAREAS WHERE id_task IN (SELECT id_task	FROM STAFF_TAREAS WHERE id_staff =" + Integer.toString(recursos.getIdusuario()) +")))");
+		break;
+		case 1:
+			//Devolvemos todos los WP del partner
+			rs = cdb.ConsultaSQL("SELECT * FROM WORKPAQUETS  WHERE (id_pro = (SELECT id_pro FROM PROYECTOS where nombre ='"+jcbproyecto.getSelectedItem().toString()+"')) AND (id_wp IN (SELECT id_wp FROM PARTNER_WORKPAQUETS WHERE cod_part = (SELECT cod_part FROM STAFF WHERE id_staff =" + Integer.toString(recursos.getIdusuario()) +")))");	
+		break;
+		}
+		try {
+			
+			
+			if(rs.next()){
+				
+				rs.last();
+				wp = new Integer[rs.getRow()];
+				rs.beforeFirst();
+				while(rs.next()){
+					wp[rs.getRow()-1] = rs.getInt(1);
+					jcbwp.addItem(rs.getString(3));
+					
+					
+				}
+				
+				
+				
+				
+				
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
