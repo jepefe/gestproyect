@@ -113,7 +113,7 @@ public class PnlMod_Sub extends JPanel{
 			public void focusLost(FocusEvent arg0) {
 				// TODO Auto-generated method stub
 				if(jtxt.getText().equals("")){
-					jtxt.setText("Buscar...");
+					jtxt.setText(rec.idioma[rec.eleidioma][235]);
 				}
 				
 			}
@@ -232,7 +232,7 @@ public class PnlMod_Sub extends JPanel{
     	 * Creamos el jtextfield para la busquera y le añadimos un focus listener para que se borre su contenido
     	 */
 		jtxt=new JTextField(20);
-		jtxt.setText("Buscar...");
+		jtxt.setText(rec.idioma[rec.eleidioma][235]);
 		jtxt.putClientProperty("JTextField.variant", "search");
 		jtxt.putClientProperty("JTextField.Search.PlaceholderText", Boolean.TRUE);
 		
@@ -486,7 +486,7 @@ public class PnlMod_Sub extends JPanel{
      */
     public void eliminar(){
     	Component aviso = null;
-		int s = JOptionPane.showConfirmDialog(aviso, "Esta seguro??");
+		int s = JOptionPane.showConfirmDialog(aviso, rec.idioma[rec.eleidioma][194]);
 		
 		if(s==0){
 			conexion.Conectardb();
@@ -505,7 +505,7 @@ public class PnlMod_Sub extends JPanel{
     	String provincia = null;
     	String wp = null;
     	Component aviso = null;
-		int s = JOptionPane.showConfirmDialog(aviso, "Esta seguro??");
+		int s = JOptionPane.showConfirmDialog(aviso, rec.idioma[rec.eleidioma][194]);
 		if(s==0){
 	    	conexion.Conectardb();
 	    	rs=conexion.ConsultaSQL("SELECT id_sector FROM SECTORES WHERE sector like '"+mod.CmbSector.getSelectedItem().toString()+"'");
@@ -542,7 +542,7 @@ public class PnlMod_Sub extends JPanel{
 			}
 			conexion.executeUpdate("UPDATE SUBCONTRATA SET nombre = '"+mod.jtxt[0].getText()+"', sector = '"+sector+"', pais = '"+pais+"', provincia = '"+provincia+"', direccion = '"+mod.jtxt[1].getText()+"', cod_postal = '"+mod.jtxt[2].getText()+"', telf = '"+mod.jtxt[3].getText()+"', observaciones = '"+mod.textarea.getText()+"', wp = '"+wp+"', coste = '"+mod.jtxt[4].getText()+"' WHERE SUBCONTRATA.cod_sub = '"+datos[jtblLateral.getSelectedRow()][3]+"' ");
 			actualizar_tabla();
-			JOptionPane.showMessageDialog(aviso,"Subcontrata Actualizada Correctamente");
+			JOptionPane.showMessageDialog(aviso,rec.idioma[rec.eleidioma][237]);
 			modificar.dispose();
 		}
     }
