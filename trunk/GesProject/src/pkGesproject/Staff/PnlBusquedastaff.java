@@ -51,7 +51,7 @@ public class PnlBusquedastaff extends JPanel{
 	
 	String datos[][];
 	String auxdatos[][];
-	String colu[] = {"Nombre","Apellidos","Partner"};
+	String colu[] = {rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][28],rec.idioma[rec.eleidioma][57]};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
 			{recursos.icono[7],rec.idioma[rec.eleidioma][33]}};
@@ -115,7 +115,7 @@ public class PnlBusquedastaff extends JPanel{
         	jtblLateral  = new JTable(tablemodel= new DefaultTableModel(datos,colu));
         	jtblLateral.setPreferredScrollableViewportSize(new Dimension(700,160));
     		jtxt=new JTextField(20);
-    		jtxt.setText("Buscar...");
+    		jtxt.setText(rec.idioma[rec.eleidioma][235]);
     		jtxt.putClientProperty("JTextField.variant", "search");
     		jtxt.putClientProperty("JTextField.Search.PlaceholderText", Boolean.TRUE);
     		jtxt.addFocusListener(new FocusListener(){
@@ -130,7 +130,7 @@ public class PnlBusquedastaff extends JPanel{
 				public void focusLost(FocusEvent arg0) {
 					// TODO Auto-generated method stub
 					if(jtxt.getText().equals("")){
-						jtxt.setText("Buscar...");
+						jtxt.setText(rec.idioma[rec.eleidioma][235]);
 					}
 					
 				}
