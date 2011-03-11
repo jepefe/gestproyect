@@ -71,6 +71,7 @@ public class FrmLogin extends JFrame implements ActionListener{
 	public FrmLogin(String titulo, int x, int y){
 		super(titulo);
 		this.setSize(x,y);
+		this.setIconImage(recursos.icono[37].getImage());
 		this.getRootPane().putClientProperty(SeaGlassRootPaneUI.UNIFIED_TOOLBAR_LOOK, Boolean.TRUE);//Esta linea es necesaria para que la barra de titulo y el jtoolbar sean homogeneos
 		this.setVisible(true);
 		this.setLayout(new BorderLayout());
