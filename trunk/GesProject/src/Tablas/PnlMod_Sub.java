@@ -57,7 +57,7 @@ import java.awt.event.KeyEvent;
 
 public class PnlMod_Sub extends JPanel{
 	RsGesproject recursos = RsGesproject.Obtener_Instancia();
-	GesIdioma rec = GesIdioma.obtener_instancia();
+	static GesIdioma rec = GesIdioma.obtener_instancia();
 	static ConexionDb conexion = new ConexionDb();
 	static ResultSet rs;
 	ResultSet rs2;
@@ -66,7 +66,7 @@ public class PnlMod_Sub extends JPanel{
 	static int columnas;
 	static String datos[][];
 	static String auxdatos[][];
-	static String colu[] = {"Nombre","Direccion","Telefono"};
+	static String colu[] = {rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][7],rec.idioma[rec.eleidioma][69]};
 	static String consulta = "SELECT nombre,direccion,telf,cod_sub FROM SUBCONTRATA ORDER BY nombre"; //Esta consulta cargara los datos en la tabla
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
