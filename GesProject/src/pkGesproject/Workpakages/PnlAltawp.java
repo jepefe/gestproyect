@@ -180,45 +180,11 @@ public class PnlAltawp extends JScrollPane{
 						}
 				CmbPro.setSelectedItem(null);
 			   	break;
-		   case (3)://listas para partner
-			// Conexion 1 BBDD
-			      conexion.Conectardb();
-			    	rs = conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER p  INNER JOIN PARTNER_PROYECTOS pp ON p.cod_part = pp.cod_part INNER JOIN PROYECTOS pr ON pp.id_pro = pr.id_pro WHERE pr.nombre = '"+CmbPro.getSelectedItem()+"' ORDER BY p.nombre");
-			    //	rs2 = conexion.ConsultaSQL("Select count(nombre) From PARTNER");
-			    	 // Cuenta para hacer la matriz dinamica
-			    	try {
-						while(rs.next()){cuenta = cuenta +1;}
-					} catch (SQLException e) {
-						e.printStackTrace();}
-			    	
-			    	Npartners = new String [cuenta] ;
-			    
-			 //Conexion 2 BBDD
-			    	rs = conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER p  INNER JOIN PARTNER_PROYECTOS pp ON p.cod_part = pp.cod_part INNER JOIN PROYECTOS pr ON pp.id_pro = pr.id_pro WHERE pr.nombre = '"+CmbPro.getSelectedItem()+"' ORDER BY p.nombre");
-			    	
-			    	 // Cuenta para hacer la matriz dinamica
-			    	int k = 0;
-			    	try {
-						while(rs.next()){
-							Npartners[k] = (rs.getString(1));
-						k++;
-						
-						}
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-			    
-			// JLIST
-		    	modelo = new DefaultListModel(); // modelos JLIST
-		    	modelo2 = new DefaultListModel(); 
-		    	
-		      listaP = new JList(modelo2); 
-			// for para pasar los datos al modelo
-		      for(int j=0; j<cuenta ; j++){
-		    	  modelo2.addElement(Npartners[j]);  
-		      }
-		      
+		   case (3)://listas para partner	
+			   
+				modelo = new DefaultListModel(); // modelos JLIST
+			  	modelo2 = new DefaultListModel(); 
+			    listaP = new JList(modelo2); 
 		       // Primer JLIST
 		      JScrollPane sp1 = new JScrollPane(listaP);
 		      listaP.setFixedCellWidth(142);
@@ -492,12 +458,19 @@ public class PnlAltawp extends JScrollPane{
 		}
 			
 		};
-		
-		
 		jbtnaceptar.setActionCommand("aceptar");
 		jbtnaceptar.addActionListener(accion);
 		jbtncancelar.setActionCommand("cancelar");
 		jbtncancelar.addActionListener(accion);
+		
+		ActionListener lista = new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				System.out.println("Entra");
+				rellena();
+			}
+		};
+		CmbPro.addActionListener(lista);
+		
 
 		ActionListener accion2 = new ActionListener(){
 
@@ -583,5 +556,51 @@ public class PnlAltawp extends JScrollPane{
 		}
 		modelo.removeAllElements();	
 	}
-	
+	/**
+	 * Metodo rella las listas.
+	 */
+	public void rellena(){
+		modelo.removeAllElements();
+		modelo2.removeAllElements();
+		listaP.removeAll();
+		// Conexion 1 BBDD
+		System.out.println("entra rellena");
+	      conexion.Conectardb();
+	    /*	rs = conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER p  INNER JOIN PARTNER_PROYECTOS pp ON p.cod_part = pp.cod_part INNER JOIN PROYECTOS pr ON pp.id_pro = pr.id_pro WHERE pr.nombre = '"+CmbPro.getSelectedItem()+"' ORDER BY p.nombre");
+	    //	rs2 = conexion.ConsultaSQL("Select count(nombre) From PARTNER");
+	    	 // Cuenta para hacer la matriz dinamica
+	    	try {
+				while(rs.next()){cuenta = cuenta +1;}
+			} catch (SQLException e) {
+				e.printStackTrace();}
+	    	
+	    	Npartners = new String [cuenta] ;
+	    */
+	 //Conexion 2 BBDD
+	    	rs = conexion.ConsultaSQL("SELECT p.nombre FROM PARTNER p  INNER JOIN PARTNER_PROYECTOS pp ON p.cod_part = pp.cod_part INNER JOIN PROYECTOS pr ON pp.id_pro = pr.id_pro WHERE pr.nombre = '"+CmbPro.getSelectedItem()+"' ORDER BY p.nombre");
+	    	
+	    	 // Cuenta para hacer la matriz dinamica
+	    	int k = 0;
+	    	try {
+	    		while(rs.next()){
+					//Npartners[k] = (rs.getString(1));				
+					modelo2.addElement(rs.getString(1));
+				k++;
+				
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    
+	// JLIST
+  	/*modelo = new DefaultListModel(); // modelos JLIST
+  	modelo2 = new DefaultListModel(); 
+  	
+    listaP = new JList(modelo2); */
+	// for para pasar los datos al modelo
+   // for(int j=0; j<cuenta ; j++){
+  	 // modelo2.addElement(Npartners[j]);  
+   // }
+	}
 }
