@@ -265,7 +265,7 @@ public class PnlInfProyecto extends JPanel{
 			}
 			
 			//hacemos la consulta con los campos correspondientes
-			String consulta = "SELECT p.id_pro,p.nombre,p.descripcion,e.espana,p.presupuesto,p.f_ini,p.f_fin,p.num_contrato FROM PROYECTOS as p " +
+			String consulta = "SELECT DISTINCT p.id_pro,p.nombre,p.descripcion,e.espana,p.presupuesto,p.f_ini,p.f_fin,p.num_contrato FROM PROYECTOS as p " +
 							"INNER JOIN ESTADOS_PROYECTO as e on p.estado = e.id_est " +
 							"ORDER BY "+orden;
 			
@@ -321,7 +321,7 @@ public class PnlInfProyecto extends JPanel{
 			}else{
 				orden = "p."+datos[1][pos];
 			}
-			String consulta = "SELECT pa.nombre AS PARTNER, p.id_pro,p.nombre,p.descripcion,e.espana,p.presupuesto,p.f_ini,p.f_fin,p.num_contrato FROM PROYECTOS as p " +
+			String consulta = "SELECT DISTINCT pa.nombre AS PARTNER, p.id_pro,p.nombre,p.descripcion,e.espana,p.presupuesto,p.f_ini,p.f_fin,p.num_contrato FROM PROYECTOS as p " +
 			"INNER JOIN PARTNER_PROYECTOS as pp on pp.id_pro = p.id_pro INNER JOIN PARTNER as pa ON pp.cod_part = pa.cod_part INNER JOIN ESTADOS_PROYECTO "+
 			" as e on p.estado = e.id_est ORDER BY PARTNER , p."+datos[1][pos];
 			
