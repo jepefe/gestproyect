@@ -50,7 +50,7 @@ public class PnlModificarsocio extends JPanel{
 	int columnas;
 	String datos[][];
 	String auxdatos[][];
-	String colu[] = {rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][69],"rec.idioma[rec.eleidioma][76]"};
+	String colu[] = {rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][69],rec.idioma[rec.eleidioma][76]};
 	String consulta = "SELECT p.nombre,p.telefono,p.telefono2,p.cod_part FROM PARTNER p ORDER BY p.nombre"; //Esta consulta cargara los datos en la tabla
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
