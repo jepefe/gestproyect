@@ -69,7 +69,7 @@ public class PnlPracticas extends JScrollPane{
 	JTextField[] jtxt;
 	JLabel[] jtxtra;
 	JLabel[] jlbl;
-	JButton jbtnaceptar, jbtncancelar, jbtnlimpiar;
+	JButton jbtnaceptar, jbtncancelar, jbtnlimpiar, jbtnatras;
 	JButton[] jbtnsubir;
 	JDateChooser jdc1,jdc2;
 	ConexionDb conexion = new ConexionDb();
@@ -308,9 +308,11 @@ public class PnlPracticas extends JScrollPane{
 			   uspanel.add(jlbl[i]=new JLabel(fieldNames[i]),gbc);
  			gbc.gridwidth = GridBagConstraints.REMAINDER;
  			uspanel.add(jtxt[i] = new JTextField(30),gbc);  
+ 			uspanel.add(jbtnatras = new JButton(rec.idioma[rec.eleidioma][243]),gbc);
  			
  			//gbc.gridwidth = GridBagConstraints.REMAINDER;
-			 //panel.add(uspanel); 
+			 //panel.add(uspanel);
+ 			//uspanel.setVisible(false);
 			   break;
 		   case (3)://pago recibido
 			   //gbc.gridwidth = 5;
@@ -1365,8 +1367,10 @@ public class PnlPracticas extends JScrollPane{
 					panel.setVisible(false);
 				}
 				
-				
+				uspanel.setVisible(true);
+				jpradio.setVisible(false);
 			}
+			
 			
 		};
 		
@@ -1734,6 +1738,21 @@ public class PnlPracticas extends JScrollPane{
 		};
 		
 		/**
+		 * se añade el action al boton atras
+		 */
+		ActionListener atras = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				uspanel.setVisible(false);
+				jpradio.setVisible(true);
+				panel.setVisible(false);
+			}
+			
+		};
+		
+		/**
 		 * se crean los action para los botnoes aceptar y limpiar campos
 		 */
 		ActionListener acfinal = new ActionListener(){
@@ -1963,17 +1982,20 @@ public class PnlPracticas extends JScrollPane{
 		jpinffinal.setVisible(true);
 		jpsoloapee.setVisible(true);
 		
-		total.add(jpradio,BorderLayout.PAGE_START);
+		total.add(jpradio,BorderLayout.LINE_START);
 		total.add(uspanel,BorderLayout.NORTH);
 		total.add(panel,BorderLayout.CENTER);
 		total.add(jpbotones,BorderLayout.SOUTH);
-		uspanel.setVisible(true);
+		jpradio.setVisible(true);
+		uspanel.setVisible(false);
 		panel.setVisible(false);
 		
 		
 		/**
 		 * aÃ±adimos los actionlistener a los objetos
 		 */
+		jbtnatras.addActionListener(atras);
+		
 		jbtncancelar.setActionCommand("limpiar");
 		jbtncancelar.addActionListener(acfinal);
 		jbtnaceptar.addActionListener(acfinal);
