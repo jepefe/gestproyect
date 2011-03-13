@@ -342,7 +342,7 @@ public class PnlInfWp extends JPanel{
 				
 				drb.addGroups(1);
 				drb.setPrintBackgroundOnOddRows(false);
-				drb.setTitle("WORKPAQUETS POR PROYECTO");
+				drb.setTitle(rec.idioma[rec.eleidioma][251]);
 				drb.setUseFullPageWidth(true);
 			} catch (ColumnBuilderException e1) {
 				// TODO Auto-generated catch block
@@ -376,7 +376,7 @@ public class PnlInfWp extends JPanel{
 				modelo.removeElement(lista1.getSelectedValue());
 			}
 		}else{
-			mensaje("No caben mas columnas en el informe!",false);
+			mensaje(rec.idioma[rec.eleidioma][248],false);
 		}
 	}
 	

@@ -91,7 +91,7 @@ public class PnlInfTareas extends JPanel{
 				// TODO Auto-generated method stub
 				if(arg0.getActionCommand().equals("generar")){
 					if(gbordenar.getSelectedItem()== null){
-					mensaje("Debe Seleccionar una columna para ordenar",false);
+					mensaje(rec.idioma[rec.eleidioma][245],false);
 					}else{
 						generar_reporte();
 					}
@@ -100,11 +100,11 @@ public class PnlInfTareas extends JPanel{
 				if(arg0.getActionCommand().equals("agrupar")){
 					if(gbagrupa.getSelectedItem().toString().equals("Ninguno")){
 						ancho = ancho-20;
-						mensaje("Ahora puede introducir mas columnas",true);
+						mensaje(rec.idioma[rec.eleidioma][246],true);
 					}else{
 						limpiar_campos();
 						ancho =20;
-						mensaje("Introduzca las columnas",true);
+						mensaje(rec.idioma[rec.eleidioma][247],true);
 						//se genera el reporte
 
 					}

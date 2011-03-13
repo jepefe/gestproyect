@@ -95,7 +95,7 @@ public class PnlInfStaff extends JPanel{
 				// TODO Auto-generated method stub
 				if(arg0.getActionCommand().equals("generar")){
 					if(gbordenar.getSelectedItem()== null){
-					mensaje("Debe Seleccionar una columna para ordenar",false);
+					mensaje(rec.idioma[rec.eleidioma][245],false);
 					}else{
 						mensaje.setVisible(false);
 						generar_reporte();
@@ -105,11 +105,11 @@ public class PnlInfStaff extends JPanel{
 				if(arg0.getActionCommand().equals("agrupar")){
 					if(gbagrupa.getSelectedItem().toString().equals("Ninguno")){
 						ancho = ancho-20;
-						mensaje("Ahora puede introducir mas columnas",true);
+						mensaje(rec.idioma[rec.eleidioma][246],true);
 					}else{
 						limpiar_campos();
 						ancho =20;
-						mensaje("Introduzca las columnas",true);
+						mensaje(rec.idioma[rec.eleidioma][247],true);
 						//se genera el reporte
 
 					}
@@ -252,7 +252,7 @@ public class PnlInfStaff extends JPanel{
 				
 			}
 		}else{
-			mensaje("No caben mas columnas en el informe", false);
+			mensaje(rec.idioma[rec.eleidioma][248], false);
 		}
 	}
 	/**
@@ -388,7 +388,7 @@ public class PnlInfStaff extends JPanel{
 				drb.addGroups(1);
 			
 				drb.setPrintBackgroundOnOddRows(false);
-				drb.setTitle("STAFF FROM PARTNER");
+				drb.setTitle(rec.idioma[rec.eleidioma][252]);
 				drb.setPrintColumnNames(true);
 				drb.setUseFullPageWidth(true);
 			

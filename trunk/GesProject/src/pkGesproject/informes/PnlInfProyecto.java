@@ -115,11 +115,11 @@ public class PnlInfProyecto extends JPanel{
 				if(arg0.getActionCommand().equals("agrupar")){
 					if(gbagrupa.getSelectedItem().toString().equals("Ninguno")){
 						ancho = ancho-20;
-						mensaje("Ahora puede introducir mas columnas",true);
+						mensaje(rec.idioma[rec.eleidioma][246],true);
 					}else{
 						limpiar_campos();
 						ancho =20;
-						mensaje("Introduzca las columnas",true);
+						mensaje(rec.idioma[rec.eleidioma][247],true);
 						//se genera el reporte
 
 					}
@@ -286,7 +286,7 @@ public class PnlInfProyecto extends JPanel{
 				}
 				
 				drb.setPrintBackgroundOnOddRows(false);
-				drb.setTitle("PROYECTOS");
+				drb.setTitle(rec.idioma[rec.eleidioma][253]);
 				//.setSubtitle("panel report was generated at " + new Date())
 				//.setPrintBackgroundOnOddRows(true)
 				drb.setUseFullPageWidth(true);
@@ -343,7 +343,7 @@ public class PnlInfProyecto extends JPanel{
 				
 				drb.addGroups(1);
 				drb.setPrintBackgroundOnOddRows(false);
-				drb.setTitle("PROYETOS POR PARTNERS");
+				drb.setTitle(rec.idioma[rec.eleidioma][254]);
 				drb.setUseFullPageWidth(true);
 			} catch (ColumnBuilderException e1) {
 				// TODO Auto-generated catch block
@@ -381,7 +381,7 @@ public class PnlInfProyecto extends JPanel{
 				
 			}
 		}else{
-			mensaje("No caben mas columnas en el informe", false);
+			mensaje(rec.idioma[rec.eleidioma][248], false);
 		}
 	}
 	/**
