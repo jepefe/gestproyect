@@ -153,7 +153,7 @@ public class PnlAltaSub extends JScrollPane{
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						}
-					
+				CmbSector.setSelectedItem(null);//inicializamos en blanco	
 					conexion.cerrarConexion();
 
 							   		
@@ -176,7 +176,7 @@ public class PnlAltaSub extends JScrollPane{
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 				}
-				
+				CmbPais.setSelectedItem(null);//inicializamos en blanco	
 
 				//Hacer que	se actulize las provincias al cambiar el pais
 				
@@ -186,8 +186,9 @@ public class PnlAltaSub extends JScrollPane{
 				CmbPais.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent arg0){
+				if(CmbPais.getSelectedItem()!= null){
 					conexion.Conectardb();
-					rs = conexion.ConsultaSQL("select id_pais FROM PAIS WHERE pais like '"+CmbPais.getSelectedItem().toString()+"'");
+					rs = conexion.ConsultaSQL("select id_pais FROM PAIS WHERE pais like '"+CmbPais.getSelectedItem()+"'");
 					
 					try {
 					rs.next();
@@ -199,12 +200,10 @@ public class PnlAltaSub extends JScrollPane{
 					}
 					
 			
-			   		   		
+				CmbProvincia.removeAllItems(); 	   		
 		   		conexion.Conectardb();
 				rs = conexion.ConsultaSQL("SELECT * FROM PROVINCIAS WHERE id_pais = "+pais);
 				try {
-					
-					CmbProvincia.removeAllItems(); 
 					while(rs.next()){	
 						CmbProvincia.addItem(rs.getString(2));
 					}
@@ -212,10 +211,12 @@ public class PnlAltaSub extends JScrollPane{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				CmbProvincia.setSelectedItem(null);//inicializamos en blanco	
 					conexion.cerrarConexion();
-				
+				}
 				}
 				});
+				
 				
 					gbc.gridwidth = GridBagConstraints.RELATIVE;
 				   	panel.add(jlbl[3]=new JLabel(fieldNames[3]),gbc);
@@ -275,7 +276,7 @@ public class PnlAltaSub extends JScrollPane{
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 								}
-							
+						CmbWP.setSelectedItem(null);//inicializamos en blanco		
 							conexion.cerrarConexion();
 					
 							
@@ -405,6 +406,10 @@ public class PnlAltaSub extends JScrollPane{
 				}
 				CmbProvincia.removeAllItems();
 				textarea.setText(null);
+				//ponemos a null los comboboxs principales
+				CmbSector.setSelectedItem(null);
+				CmbPais.setSelectedItem(null);
+				CmbWP.setSelectedItem(null);	
 				mesage.setVisible(false);
 				PnlMod_Sub.actualizar_tabla();
 			
@@ -423,6 +428,10 @@ public class PnlAltaSub extends JScrollPane{
 				}
 				CmbProvincia.removeAllItems();
 				textarea.setText(null);
+				//ponemos a null los comboboxs principales
+				CmbSector.setSelectedItem(null);
+				CmbPais.setSelectedItem(null);
+				CmbWP.setSelectedItem(null);	
 				mesage.setVisible(false);
 			}
 		}
