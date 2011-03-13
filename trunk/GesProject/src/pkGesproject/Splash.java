@@ -12,8 +12,8 @@ import javax.swing.JProgressBar;
 import javax.swing.JWindow;
 
 
-//import com.sun.awt.AWTUtilities;
-
+import com.sun.awt.AWTUtilities;
+ 
 @SuppressWarnings("serial")
 public class Splash extends JWindow{
 	Runnable cargando;
@@ -58,7 +58,7 @@ public class Splash extends JWindow{
 		jlbmsgcargando.setBounds(45, 190, 180, 50);
 		jlbmsgcargando.setForeground(Color.white);
 		
-		//AWTUtilities.setWindowOpaque(this, false);
+		AWTUtilities.setWindowOpaque(this, false);
 		panel.setDoubleBuffered(true);
 		
 
