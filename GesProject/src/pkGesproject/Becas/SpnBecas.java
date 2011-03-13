@@ -36,6 +36,7 @@ public class SpnBecas extends JSplitPane {
 	Component[] panlBecas = {
 			 
 			 practicas = new JScrollPane(new PnlPracticas()),
+			 modificar = new JScrollPane(new Pnlotra()),
 			
 			 };
 			
@@ -44,10 +45,12 @@ public class SpnBecas extends JSplitPane {
 		this.setOpaque(true);
 		
 		practicas.setBorder(empty);
+		modificar.setBorder(empty);
 		
 
 		Object[][] elementosbarralateral = new Object[][]{
 				{recursos.icono[17],rec.idioma[rec.eleidioma][196]},
+				{recursos.icono[17],rec.idioma[rec.eleidioma][241]}
 				};
 		
 		
