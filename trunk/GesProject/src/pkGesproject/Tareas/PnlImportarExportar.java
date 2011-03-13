@@ -22,7 +22,9 @@ import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -58,6 +60,7 @@ public class PnlImportarExportar extends JPanel{
 	String[] projects = new String[200];
 	ActionListener exportar;
 	ActionListener importar;
+	JFrame aviso = new JFrame();
 	JFileChooser filechooser;
 	ConexionFTP cftp=new ConexionFTP();
 	ConexionDb conexion= new ConexionDb();
@@ -85,7 +88,9 @@ public class PnlImportarExportar extends JPanel{
 				exportar_progres();
 			  	exportar_partners();
 			  	exportar_equipment();
+
 			  	guardar();
+			  JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][60]);
 				
 			}
 		
@@ -147,17 +152,43 @@ public class PnlImportarExportar extends JPanel{
 		    	
 	    	HSSFRow tuRow= tuSheet.getRow(row);
 	    	HSSFCell tuCell = tuRow.getCell(column);
-	    	//3 Ahora que tienes la celda ya puedes extraerle el contenido 
-	    	//System.out.println("Proyecto Seleccionado del Combo: "+projects[CmbPro.getSelectedIndex()]);
-	    //rs = conexion.ConsultaSQL("SELECT p.id_pro, p.f_ini, p.f_fin, p.num_contrato,p.nombre,a.nombre,pa.nombre,pa.direccion FROM PROYECTOS p INNER JOIN PARTNER_PROYECTOS pp ON p.id_pro=pp.id_pro INNER JOIN PARNERT pa ON pp.cod_part=pa.cod_part INNER JOIN ACTIONS a ON p.action=a.id_action WHERE pp.coordinador=”1” AND p.id_pro="+projects[CmbPro.getSelectedIndex()]);
-	     rs = conexion.ConsultaSQL("SELECT p.id_pro, p.f_ini, p.f_fin, p.num_contrato,p.nombre,pa.nombre,pa.direccion FROM PROYECTOS p INNER JOIN PARTNER_PROYECTOS pp ON p.id_pro=pp.id_pro INNER JOIN PARTNER pa ON pp.cod_part=pa.cod_part WHERE p.id_pro="+projects[CmbPro.getSelectedIndex()]);
-	     
+	    
+	     rs = conexion.ConsultaSQL("SELECT p.id_pro,p.f_ini,p.f_fin,p.num_contrato,p.nombre,act.nombre,pa.nombre,pa.direccion FROM PROYECTOS p INNER JOIN PARTNER_PROYECTOS pp ON p.id_pro=pp.id_pro INNER JOIN ACTIONS act ON act.id_accion=p.action INNER JOIN PARTNER pa ON pp.cod_part=pa.cod_part WHERE p.id_pro="+projects[CmbPro.getSelectedIndex()]);
+	  // rp = conexion.ConsultaSQL("SELECT p.f_ini,p.f_fin FROM PROYECTOS p INNER JOIN PARTNER_PROYECTOS pp ON p.id_pro=pp.id_pro INNER JOIN ACTIONS act ON act.id_accion=p.action INNER JOIN PARTNER pa ON pp.cod_part=pa.cod_part WHERE p.id_pro="+projects[CmbPro.getSelectedIndex()]);
+	   int i=1;
+		try {
+				while(rs.next()){
+					try {
+						rs.getString(i);
+						//rs.getString(i+1);
+						
+						tuCell.setCellValue(rs.getString(i));
+						//tuCell1.setCellValue(pais);
+						//tuCell1 = tuRow.getCell(column2);
+						tuCell = tuRow.getCell(column);
+						
+						tuRow= tuSheet.getRow(row);
+						row+=1;
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					i++;
+				
+				 }
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+	
 	      //SELECT p.id_pro, p.num_contrato,p.nombre,  "+id_p);
-	        String nombre = null;
+	       /* String nombre = null;
 	            int i=1;
 	        	try {
 					while(rs.next()){
 						nombre = rs.getString(i);
+						
 						tuRow= tuSheet.getRow(row);
 						tuCell.setCellValue(nombre);
 						row+=1;
@@ -165,7 +196,7 @@ public class PnlImportarExportar extends JPanel{
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
-				}
+				}*/
 		}
 	
 	//--------------------EXPORTAR TABLA PROGRES---------------------//
@@ -231,28 +262,26 @@ public class PnlImportarExportar extends JPanel{
     	HSSFCell tuCell = tuRow.getCell(column);
     	HSSFCell tuCell1 = tuRow.getCell(column2);
        	
-        // Se crea el contenido de la celda y se mete en ella.
-       // HSSFRichTextString texto = new HSSFRichTextString("aqui");
         rs = conexion.ConsultaSQL("SELECT p.nombre, tp.nombre FROM PARTNER p INNER JOIN TASAS_PAIS tp ON p.pais=tp.id_pais INNER JOIN PARTNER_PROYECTOS pp ON p.cod_part=pp.cod_part WHERE pp.id_pro ="+ projects[CmbPro.getSelectedIndex()]);
-        /*
-         * 
-         */
-        String value = null;
-        String pais = null;
+     
+        String value;
+        String pais;
         int i=1;
+        
           	try {
 				while(rs.next()){
 					
 					value = rs.getString(i);
-					pais = rs.getString(i);
+					pais = rs.getString(i+1);
+					
 					tuCell.setCellValue(value);
-					column+=1;
-					tuCell = tuRow.getCell(column);
 					tuCell1.setCellValue(pais);
 					tuCell1 = tuRow.getCell(column2);
+					tuCell = tuRow.getCell(column);
+					
 					tuRow= tuSheet.getRow(row);
 					row+=1;
-					i+=1;
+					
 				
 					//obtenemos filas hasta encontrar la fila null
 					if (tuSheet.getRow(row) != null){
@@ -263,34 +292,13 @@ public class PnlImportarExportar extends JPanel{
 						}
 					
 				}
-				
-				
 			
 			} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			}
-        
-     
-		System.out.println("Después del while");
-		
-		/*try {
-			while(rs.next()){
-				pais = rs.getString(2);
-				tuCell1.setCellValue(pais);
-				row+=1;
-				tuCell1 = tuRow.getCell(column2);
-				tuRow= tuSheet.getRow(row);
-				
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-         
-            
-       
-}
+  
+ }
 	
 	//--------------------EXPORTAR TABLA staff---------------------//
     
@@ -422,8 +430,8 @@ public class PnlImportarExportar extends JPanel{
 	    	
 	      	
 	   //rs = conexion.ConsultaSQL("SELECT partner,descripcion,justificacion,wp,coste_total,fecha,compra_alguiler,grado_depreciacion,meses_usara,grado_utilizacion,costes_subvencionados FROM EQUIPAMIENTOS WHERE partner = 142");
-	     rs = conexion.ConsultaSQL("SELECT e.partner,e.descripcion,e.justificacion,e.coste_total,e.fecha,e.compra_alquiler,e.grado_depreciacion, e.meses_usara, e.grado_utilizacion FROM EQUIPAMIENTOS e"); //INNER JOIN workpaquets wp ON e.wp=wp.id_wp INNER JOIN proyectos p ON wp.id_pro=p.id_pro WHERE p.id_pro=142");
-	     	
+	     //rs = conexion.ConsultaSQL("SELECT e.partner,e.descripcion,e.justificacion,e.coste_total,e.fecha,e.compra_alquiler,e.grado_depreciacion, e.meses_usara, e.grado_utilizacion FROM EQUIPAMIENTOS e INNER JOIN workpaquets wp ON e.wp=wp.id_wp INNER JOIN proyectos p ON wp.id_pro=p.id_pro WHERE p.id_pro="+projects[CmbPro.getSelectedIndex()]);
+	    	rs = conexion.ConsultaSQL("SELECT * FROM EQUIPAMIENTOS" );
 	     String value;
 	    	
 	       //String nom;
