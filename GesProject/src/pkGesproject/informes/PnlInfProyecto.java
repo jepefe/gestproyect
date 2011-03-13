@@ -105,7 +105,7 @@ public class PnlInfProyecto extends JPanel{
 				// TODO Auto-generated method stub
 				if(arg0.getActionCommand().equals("generar")){
 					if(gbordenar.getSelectedItem()== null){
-					mensaje("Debe Seleccionar una columna para ordenar",false);
+					mensaje(rec.idioma[rec.eleidioma][245],false);
 					}else{
 						mensaje.setVisible(false);
 						generar_reporte();

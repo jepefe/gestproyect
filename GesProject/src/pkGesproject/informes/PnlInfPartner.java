@@ -99,7 +99,7 @@ public class PnlInfPartner extends JPanel{
 					//se genera el reporte
 					
 					if(gbordenar.getSelectedItem() == null){
-						mensaje("Debe seleccionar una columna para ordenar",false);
+						mensaje(rec.idioma[rec.eleidioma][247],false);
 					}else{
 						mensaje.setVisible(false);
 						generar_reporte();
@@ -109,11 +109,11 @@ public class PnlInfPartner extends JPanel{
 				if(arg0.getActionCommand().equals("agrupar")){
 					if(gbagrupa.getSelectedItem().toString().equals("Ninguno")){
 						ancho = ancho-20;
-						mensaje("Ahora tiene mas espacio para introducir columnas",true);
+						mensaje(rec.idioma[rec.eleidioma][246],true);
 					}else{
 						limpiar_campos();
 						ancho = 20;
-						mensaje("Introduzca las columnas",true);
+						mensaje(rec.idioma[rec.eleidioma][247],true);
 					}
 				}
 				
@@ -349,7 +349,7 @@ public class PnlInfPartner extends JPanel{
 				
 				drb.addGroups(1);
 				drb.setPrintBackgroundOnOddRows(false);
-				drb.setTitle("PARTNERS POR PROYECTO");
+				drb.setTitle(rec.idioma[rec.eleidioma][244]);
 				drb.setUseFullPageWidth(true);
 			} catch (ColumnBuilderException e1) {
 				// TODO Auto-generated catch block
@@ -383,7 +383,7 @@ public class PnlInfPartner extends JPanel{
 				modelo.removeElement(lista1.getSelectedValue());
 			}
 		}else{
-			mensaje("No caben mas columnas en el informe!",false);
+			mensaje(rec.idioma[rec.eleidioma][248],false);
 		}
 	}
 	
