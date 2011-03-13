@@ -618,7 +618,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					if(e.getActionCommand().equals("eliminar")){
 						Component aviso = null;
-						int s = JOptionPane.showConfirmDialog(aviso, "Esta seguro??");
+						int s = JOptionPane.showConfirmDialog(aviso,rec.idioma[rec.eleidioma][250]);
 				
 						if(s==0){
 						
@@ -785,7 +785,7 @@ public class PnlAlta_TimeSheet extends JPanel{
 						jtxtta[1].setText("");
 				    	
 					}else{
-						JOptionPane.showMessageDialog( null, "Se ha de seleccionar tarea o workpaquet"); 
+						JOptionPane.showMessageDialog( null, "rec.idioma[rec.eleidioma][249]"); 
 					}
 					
 					
