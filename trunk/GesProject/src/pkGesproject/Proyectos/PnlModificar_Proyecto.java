@@ -46,7 +46,7 @@ public class PnlModificar_Proyecto extends JPanel {
 	static int columnas;
 	static String datos[][];
 	static String auxdatos[][];
-	static String colu[] = {rec.idioma[rec.eleidioma][11],rec.idioma[rec.eleidioma][13],rec.idioma[rec.eleidioma][41],rec.idioma[rec.eleidioma][173],rec.idioma[rec.eleidioma][26]};
+	static String colu[] = {rec.idioma[rec.eleidioma][55],rec.idioma[rec.eleidioma][13],rec.idioma[rec.eleidioma][41],rec.idioma[rec.eleidioma][173],rec.idioma[rec.eleidioma][26]};
 	static String consulta = "SELECT nombre,presupuesto,descripcion,f_ini,f_fin FROM PROYECTOS ORDER BY nombre"; //Esta consulta cargara los datos en la tabla
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
