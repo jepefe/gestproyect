@@ -33,14 +33,16 @@ public class SpnTareas extends JSplitPane{
 	JScrollPane miscroll,pnlasignacion;
 	Component[] panlsStaff = {
 			new PnlAltatarea(),
-			 miscroll=new JScrollPane(modificar)};
+			 miscroll=new JScrollPane(modificar),
+			 pnlasignacion= new JScrollPane(new PnlAsignacionStaff())};
 
 	public SpnTareas(){
 		this.setOneTouchExpandable(true);
 		this.setOpaque(true);
 		miscroll.setBorder(empty);
 		Object[][] elementosbarralateral = new Object[][]{{recursos.icono[22],rec.idioma[rec.eleidioma][32]},
-				{recursos.icono[23],rec.idioma[rec.eleidioma][33]}};
+				{recursos.icono[23],rec.idioma[rec.eleidioma][33]},
+				{recursos.icono[23],rec.idioma[rec.eleidioma][177]}};
 		
 		
 		jtblLateral  = new JTable(new DefaultTableModel(elementosbarralateral, new String[]{"Icono", "Descrip"})) {
