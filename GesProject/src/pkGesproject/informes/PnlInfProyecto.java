@@ -364,13 +364,15 @@ public class PnlInfProyecto extends JPanel{
 			JasperViewer.viewReport(jp,false);    //finally display the report report
 		}
 	}
+	
+	
 	/**
 	 * Metodo para agregar al  Jlist 2
 	 */
 	public void agregar(){
 		int pos = buscar(datos,(String)lista1.getModel().getElementAt(lista1.getSelectedIndex()));
 		
-		//if((ancho + dimension[pos])<=75){
+		if((ancho + dimension[pos])<=75){
 			if(lista1.getSelectedValue().equals("")){}else{
 				modelo2.addElement(lista1.getSelectedValue());
 				gbordenar.addItem(lista1.getSelectedValue());
@@ -378,9 +380,9 @@ public class PnlInfProyecto extends JPanel{
 				modelo.removeElement(lista1.getSelectedValue());
 				
 			}
-	/*	}else{
+		}else{
 			mensaje("No caben mas columnas en el informe", false);
-		}*/
+		}
 	}
 	/**
 	 * Metodo para quitar de la lista 2
