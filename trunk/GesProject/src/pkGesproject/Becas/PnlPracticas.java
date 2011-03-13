@@ -236,7 +236,7 @@ public class PnlPracticas extends JScrollPane{
 		jtxtra = new JLabel[8];
 		
 		jpradio.add(rbnada);
-		jpradio.add(jtxtra[4]=new JLabel(rec.idioma[rec.eleidioma][233]));
+		jpradio.add(jtxtra[4]=new JLabel(rec.idioma[rec.eleidioma][239]));
 		jpradio.add(rbeeres);
 		jpradio.add(jtxtra[0]=new JLabel(rec.idioma[rec.eleidioma][152]));
 	    jpradio.add(rbeerpr);
@@ -1742,7 +1742,98 @@ public class PnlPracticas extends JScrollPane{
 			public void actionPerformed(ActionEvent e4) {
 				// TODO Auto-generated method stub
 				if (e4.getActionCommand().equals("aceptar")){
+					JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][240]);
+
+					Relleno[3].setSelected(false);
+					Relleno[63].setSelected(false);
+
+					Relleno[4].setSelected(false);
+					Relleno[64].setSelected(false);
+
+					jtxt[5].setText("");
 					
+					Relleno[6].setSelected(false);
+					Relleno[66].setSelected(false);
+					
+					Relleno[7].setSelected(false);
+					Relleno[67].setSelected(false);
+					
+					jtxt[8].setText("");
+					
+					Relleno[9].setSelected(false);
+					
+					Relleno[10].setSelected(false);
+				
+					Relleno[11].setSelected(false);
+					Relleno[71].setSelected(false);
+					
+					Relleno[12].setSelected(false);
+					Relleno[72].setSelected(false);
+					
+					Relleno[13].setSelected(false);
+					Relleno[33].setSelected(false);
+					
+					Relleno[14].setSelected(false);
+					Relleno[34].setSelected(false);
+					
+					Relleno[15].setSelected(false);
+					Relleno[35].setSelected(false);
+					
+					Relleno[16].setSelected(false);
+					Relleno[36].setSelected(false);
+					
+					Relleno[17].setSelected(false);
+					Relleno[37].setSelected(false);
+					
+					Relleno[18].setSelected(false);
+					Relleno[38].setSelected(false);
+					
+					Relleno[19].setSelected(false);
+					Relleno[39].setSelected(false);
+					
+					Relleno[20].setSelected(false);
+					Relleno[40].setSelected(false);
+					
+					Relleno[21].setSelected(false);
+					Relleno[41].setSelected(false);
+					
+					Relleno[22].setSelected(false);
+					Relleno[42].setSelected(false);
+					
+					Relleno[23].setSelected(false);
+					Relleno[43].setSelected(false);
+					
+					Relleno[24].setSelected(false);
+					Relleno[44].setSelected(false);
+					
+					Relleno[25].setSelected(false);
+					Relleno[45].setSelected(false);
+					
+					Relleno[26].setSelected(false);
+					Relleno[46].setSelected(false);
+					
+					Relleno[27].setSelected(false);
+					Relleno[47].setSelected(false);
+					
+					Relleno[28].setSelected(false);
+					Relleno[48].setSelected(false);
+					
+					Relleno[29].setSelected(false);
+					Relleno[49].setSelected(false);
+					
+					Relleno[30].setSelected(false);
+					Relleno[50].setSelected(false);
+					
+					Relleno[31].setSelected(false);
+					Relleno[51].setSelected(false);
+					
+					Relleno[32].setSelected(false);
+					Relleno[52].setSelected(false);
+					
+					jpbecario.setVisible(false);
+					jpbecario.repaint();
+					panel.repaint();
+				
 				}
 				if (e4.getActionCommand().equals("limpiar")){
 					Relleno[3].setSelected(false);

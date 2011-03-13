@@ -499,9 +499,9 @@ public class PnlAltawp extends JScrollPane{
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						rs = conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like'"+CmbPar.getSelectedItem()+"'" );
+						//rs = conexion.ConsultaSQL("SELECT cod_part FROM PARTNER WHERE nombre like'"+CmbPar.getSelectedItem()+"'" );
 						
-						try {
+						/*try {
 							rs.next();
 							id_par = rs.getInt(1);
 						} catch (SQLException e1) {
@@ -509,7 +509,7 @@ public class PnlAltawp extends JScrollPane{
 							e1.printStackTrace();
 						}
 						conexdb.executeUpdate("DELETE FROM PARTNER_WORKPAQUETS WHERE id_wp='"+id_wp+"' AND cod_part='"+id_par+"'");
-						conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS (cod_part, id_wp) VALUES ('"+id_par+"','"+id_wp+"')");
+						conexdb.executeUpdate("INSERT INTO PARTNER_WORKPAQUETS (cod_part, id_wp) VALUES ('"+id_par+"','"+id_wp+"')");*/
 						conexdb.cerrarConexion();
 						jdc1.setDate(null);
 						jdc2.setDate(null);
