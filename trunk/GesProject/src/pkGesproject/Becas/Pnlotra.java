@@ -42,7 +42,7 @@ public class Pnlotra extends JPanel{
 	int cuenta=0;
 	String datos[][];
 	String auxdatos[][];
-	String colu[] = {rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][57],rec.idioma[rec.eleidioma][55]};
+	String colu[] = {rec.idioma[rec.eleidioma][3],rec.idioma[rec.eleidioma][28],rec.idioma[rec.eleidioma][242]};
 	Object[][] elementosbarralateral = new Object[][]{{recursos.icono[5],rec.idioma[rec.eleidioma][31]},
 			{recursos.icono[6],rec.idioma[rec.eleidioma][32]},
 			{recursos.icono[7],rec.idioma[rec.eleidioma][33]}};
