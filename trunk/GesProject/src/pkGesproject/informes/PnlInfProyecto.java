@@ -57,7 +57,7 @@ public class PnlInfProyecto extends JPanel{
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	DefaultListModel modelo,modelo2;
 	String[][] datos = {{"Cod Project","Name","Description","State","Budget","Start Date", "End Date","Contract Number"},
-						{"id_pro","nombre","descripcion","espana","presupuesto","f_ini","f_fin","num_contrato"}};
+						{"id_pro","nombre","descripcion","estado","presupuesto","f_ini","f_fin","num_contrato"}};
 	String[] agrupar = {"Ninguno","Partner"};
 	
 	int dimension[] = {7,15,30,10,7,8,8,15};
@@ -258,14 +258,14 @@ public class PnlInfProyecto extends JPanel{
 			String orden;
 			pos = buscar(datos,(String) gbordenar.getSelectedItem());
 			
-			if(datos[1][pos].equals("espana")){
+			if(datos[1][pos].equals("estado")){
 				orden = "e."+datos[1][pos];
 			}else{
 				orden = "p."+datos[1][pos];
 			}
 			
 			//hacemos la consulta con los campos correspondientes
-			String consulta = "SELECT DISTINCT p.id_pro,p.nombre,p.descripcion,e.estado,p.presupuesto,p.f_ini,p.f_fin,p.num_contrato FROM PROYECTOS as p " +
+			String consulta = "SELECT p.id_pro,p.nombre,p.descripcion,e.estado,p.presupuesto,p.f_ini,p.f_fin,p.num_contrato FROM PROYECTOS as p " +
 							"INNER JOIN ESTADOS_PROYECTO as e on p.estado = e.id_est " +
 							"ORDER BY "+orden;
 			
@@ -316,12 +316,12 @@ public class PnlInfProyecto extends JPanel{
 			int pos=0;
 			String orden;
 			pos = buscar(datos,(String) gbordenar.getSelectedItem());
-			if(datos[1][pos].equals("espana")){
+			if(datos[1][pos].equals("estado")){
 				orden = "e."+datos[1][pos];
 			}else{
 				orden = "p."+datos[1][pos];
 			}
-			String consulta = "SELECT DISTINCT pa.nombre AS PARTNER, p.id_pro,p.nombre,p.descripcion,e.espana,p.presupuesto,p.f_ini,p.f_fin,p.num_contrato FROM PROYECTOS as p " +
+			String consulta = "SELECT pa.nombre AS PARTNER, p.id_pro,p.nombre,p.descripcion,e.espana,p.presupuesto,p.f_ini,p.f_fin,p.num_contrato FROM PROYECTOS as p " +
 			"INNER JOIN PARTNER_PROYECTOS as pp on pp.id_pro = p.id_pro INNER JOIN PARTNER as pa ON pp.cod_part = pa.cod_part INNER JOIN ESTADOS_PROYECTO "+
 			" as e on p.estado = e.id_est ORDER BY PARTNER , p."+datos[1][pos];
 			
