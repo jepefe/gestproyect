@@ -41,6 +41,7 @@ import pkGesproject.GesIdioma;
 import pkGesproject.GpComboBox;
 import pkGesproject.LimiteDocumento;
 import pkGesproject.RsGesproject;
+import pkGesproject.Socios.PnlModificarsocio;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -400,6 +401,45 @@ public class PnlAltatarea extends JScrollPane{
 					}*/
 					
 				}
+				//////////////////////////////////////////////////
+				if(e.getActionCommand().equals("aceptar2")){
+						
+					
+				
+						ResultSet rs;
+						conexion.Conectardb();
+						rs = conexion.ConsultaSQL("SELECT id_wp FROM WORKPAQUETS W WHERE W.nombre like'"+ CmbWp.getSelectedItem().toString()+"'" );
+
+
+						String sector = null;
+						try {
+							rs.next();
+							sector = rs.getString(1);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+						rs=conexion.ConsultaSQL("SELECT id_wp FROM  WORKPAQUETS WHERE nombre like '"+CmbWp.getSelectedItem().toString()+"'");
+
+						String pais = null;
+						try {
+							rs.next();
+							pais = rs.getString(1);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+						//conexion.executeUpdate("UPDATE PARTNER SET nombre = '"+jtxt[0].getText()+"', sector = "+sector+", pais= "+pais+", direccion = '"+jtxt[1].getText()+"', codpostal = '"+jtxt[2].getText()+"', email = '"+jtxt[3].getText()+"', email2 = '"+jtxt[4].getText()+"', telefono = '"+jtxt[5].getText()+"', telefono2 = '"+jtxt[6].getText()+"', fax = '"+jtxt[7].getText()+"', observaciones = '"+textarea.getText()+"' WHERE cod_part = '"+modso.datos[modso.jtblLateral.getSelectedRow()][3]+"'");
+						
+						JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][100]);
+						PnlModificarsocio.modificar.dispose();
+						PnlModificarsocio.modificar = null;
+				
+					
+				}
+				////////////////
 			
 				if(e.getActionCommand().equals("cancelar2")){
 					System.out.print("cerrar");

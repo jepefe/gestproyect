@@ -85,6 +85,7 @@ public class PnlModificarTarea extends JPanel{
            }
     	};
     	jtblLateral.setPreferredScrollableViewportSize(new Dimension(700,160));
+    	
     	/*
     	String resul[]= new String[3];
     	conexion.Conectardb();
@@ -276,6 +277,7 @@ public class PnlModificarTarea extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					if(e.getActionCommand().equals("modificar")){
+						
 						modificar();
 						
 					}
