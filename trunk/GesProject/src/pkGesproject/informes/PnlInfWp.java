@@ -97,7 +97,7 @@ public class PnlInfWp extends JPanel{
 				if(arg0.getActionCommand().equals("generar")){
 					//se genera el reporte
 					if(gbordenar.getSelectedItem() == null){
-						mensaje("Debe seleccionar una columna para ordenar",false);
+						mensaje(rec.idioma[rec.eleidioma][245],false);
 					}else{
 						mensaje.setVisible(false);
 						generar_reporte();
@@ -107,11 +107,11 @@ public class PnlInfWp extends JPanel{
 				if(arg0.getActionCommand().equals("agrupar")){
 					if(gbagrupa.getSelectedItem().toString().equals("Ninguno")){
 						ancho = ancho-20;
-						mensaje("Ahora tiene mas espacio para introducir columnas",true);
+						mensaje(rec.idioma[rec.eleidioma][246],true);
 					}else{
 						limpiar_campos();
 						ancho = 20;
-						mensaje("Introduzca las columnas",true);
+						mensaje(rec.idioma[rec.eleidioma][247],true);
 					}
 				}
 				
