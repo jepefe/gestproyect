@@ -264,7 +264,7 @@ public class PnlInfPartner extends JPanel{
 			}
 			
 			//hacemos la consulta con los campos correspondientes
-			String consulta = "SELECT p.nombre AS proyecto,pa.cod_part,pa.nombre,pa.direccion,pa.codpostal,pa.telefono,pa.telefono2," +
+			String consulta = "SELECT DISTINCT p.nombre AS proyecto,pa.cod_part,pa.nombre,pa.direccion,pa.codpostal,pa.telefono,pa.telefono2," +
 					"pa.fax,pa.email,pa.email2,s.sector,pais.nombre FROM PARTNER pa INNER JOIN "+
 			"PARTNER_PROYECTOS pp ON pa.cod_part= pp.cod_part INNER JOIN PROYECTOS p ON pp.id_pro = p.id_pro " +
 			"INNER JOIN SECTORES s ON pa.sector = s.id_sector INNER JOIN TASAS_PAIS pais ON pa.pais = pais.id_pais ORDER BY "+orden;
@@ -326,7 +326,7 @@ public class PnlInfPartner extends JPanel{
 					orden = "pa."+datos[1][pos];
 				}
 			}
-			String consulta = "SELECT p.nombre AS proyecto,pa.cod_part,pa.nombre,pa.direccion,pa.codpostal,pa.telefono,pa.telefono2," +
+			String consulta = "SELECT DISTINCT p.nombre AS proyecto,pa.cod_part,pa.nombre,pa.direccion,pa.codpostal,pa.telefono,pa.telefono2," +
 					"pa.fax,pa.email,pa.email2,s.sector,pais.nombre FROM PARTNER pa INNER JOIN "+
 			"PARTNER_PROYECTOS pp ON pa.cod_part= pp.cod_part INNER JOIN PROYECTOS p ON pp.id_pro = p.id_pro " +
 			"INNER JOIN SECTORES s ON pa.sector = s.id_sector INNER JOIN TASAS_PAIS pais ON pa.pais = pais.id_pais ORDER BY proyecto,"+orden;
