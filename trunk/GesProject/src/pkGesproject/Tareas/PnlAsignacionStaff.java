@@ -99,9 +99,10 @@ public class PnlAsignacionStaff extends JPanel{
 	ConexionDb conexion= new ConexionDb();
 	HSSFWorkbook tuWorkBook = new HSSFWorkbook();
 	JButton btnAsignar,btnQuitar;
+	JButton btnAceptar = new JButton();
 	GpComboBox cmbProyecto = new GpComboBox(),cmbcategoria;
 	GridBagConstraints gbc;
-	String[] columnstaff = {"Nombre","Apellidos"},columnrolstaff = {"Nombre","Apellidos","Categoria"};
+	String[] columnstaff = {"ID","Nombre","Apellidos"},columnrolstaff = {"ID","Nombre","Apellidos","Categoria"};
 	String[][] staff,rolstaff;
 	JTable jtblstaff = new JTable(),jtblrolstaff= new JTable();
 	DefaultTableModel modelstaff = new DefaultTableModel(null,columnstaff);
@@ -134,8 +135,15 @@ public class PnlAsignacionStaff extends JPanel{
 				}
 				
 				if(e.getActionCommand().equals("quitar")){
+					Object[] fila = new Object[4];
+
+					for(int i=0;i<jtblrolstaff.getColumnCount()-1;i++){
+						fila[i] = modelcate.getValueAt(jtblrolstaff.getSelectedRow(), i);
+					}
+						modelstaff.addRow(fila);
+						modelcate.removeRow(jtblrolstaff.getSelectedRow());
 					
-						int f =0;
+						/*int f =0;
 						while(staff[f][0]!=null){
 							f++;
 						}
@@ -146,7 +154,8 @@ public class PnlAsignacionStaff extends JPanel{
 							fila[i] = rolstaff[jtblstaff.getSelectedRow()][i];
 						}
 						modelstaff.addRow(fila);
-						modelcate.removeRow(jtblstaff.getSelectedRow());
+						modelcate.removeRow(jtblstaff.getSelectedRow());*/
+					
 				}
 				
 			}
@@ -160,6 +169,14 @@ public class PnlAsignacionStaff extends JPanel{
 		cmbWp.setActionCommand("cmbWp");
 		btnAsignar.addActionListener(asignacion);
 		btnAsignar.setActionCommand("asignar");
+		btnAceptar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				aceptar();
+				
+			}
+		});
 		btnQuitar.addActionListener(asignacion);
 		btnQuitar.setActionCommand("quitar");
 		this.setVisible(true);
@@ -172,6 +189,7 @@ public class PnlAsignacionStaff extends JPanel{
 
 		String[] fieldNames = {rec.idioma[rec.eleidioma][178]};
 		jlbl = new JLabel[fieldNames.length];
+		btnAceptar.setText(rec.idioma[rec.eleidioma][1]);
 
 		gbc.gridx = 0; // El área de texto empieza en la columna
 		gbc.gridy = 0; // El área de texto empieza en la fila
@@ -227,6 +245,11 @@ public class PnlAsignacionStaff extends JPanel{
 		gbc.anchor = GridBagConstraints.CENTER; 
 		this.add(tablarolstaff = new JScrollPane(jtblrolstaff),gbc);
 		
+		gbc.gridx = 3; // El área de texto empieza en la columna
+		gbc.gridy = 3;
+		gbc.gridwidth = 1; // El área de texto ocupa x columnas.
+		gbc.anchor = GridBagConstraints.CENTER; 
+		this.add(btnAceptar);
 		conexion.Conectardb();
 		rp = conexion.ConsultaSQL("SELECT nombre,id_pro FROM PROYECTOS ORDER BY nombre");
 		
@@ -282,7 +305,7 @@ public class PnlAsignacionStaff extends JPanel{
 			e.printStackTrace();
 		}
 		
-		rp = conexion.ConsultaSQL("SELECT nombre,apellidos FROM STAFF WHERE cod_part = "+recursos.getCodparter()+" ORDER BY nombre");
+		rp = conexion.ConsultaSQL("SELECT id_staff,nombre,apellidos FROM STAFF WHERE cod_part = "+recursos.getCodparter()+" ORDER BY nombre");
 		for(int i =0;i< regstaff;i++){
 			try {
 				rp.next();
@@ -377,14 +400,17 @@ public class PnlAsignacionStaff extends JPanel{
 					while(rolstaff[f][0]!=null){
 						f++;
 					}
-					Object[] fila = new Object[3];
-					for (int i = 0; i <2; i++) {
-						rolstaff[f][i] = staff[jtblstaff.getSelectedRow()][i];
-						fila[i] = staff[jtblstaff.getSelectedRow()][i];
+					Object[] fila = new Object[4];
+
+					for(int i=0;i<jtblstaff.getColumnCount();i++){
+						fila[i] = modelstaff.getValueAt(jtblstaff.getSelectedRow(), i);
 					}
-					fila[2] = rango[cmbcategoria.getSelectedIndex()];
-					modelcate.addRow(fila);
-					modelstaff.removeRow(jtblstaff.getSelectedRow());
+					 	fila[3] = rango[cmbcategoria.getSelectedIndex()];
+						modelcate.addRow(fila);
+						modelstaff.removeRow(jtblstaff.getSelectedRow());
+				
+					
+					
 					
 					categoria.dispose();
 				}
@@ -406,6 +432,28 @@ public class PnlAsignacionStaff extends JPanel{
 		
 		
 	}
+	public void aceptar(){
+		for(int i=0;i<jtblrolstaff.getRowCount();i++){
+			String rangosel = null;
+			String idstaff = (String)modelcate.getValueAt(i, 0);
+			for(int j=0;j<rango.length;j++){
+				if(this.rango[j].equals((String)modelcate.getValueAt(i, 3))){
+				rangosel = Integer.toString(j+1);
+				}
+			}
+			
+			conexion.executeUpdate("INSERT INTO STAFF_TAREAS (id_staff,id_task,rango) VALUES ('"+idstaff+"','"+task[cmbTasks.getSelectedIndex()]+"','"+rangosel+"')");
+		}
+		
+		while(modelcate.getRowCount()>0){
+		modelcate.removeRow(0);
+		}
+		while(modelstaff.getRowCount()>0){
+			modelstaff.removeRow(0);
+			}
+		
+		
+		}
 	
 
 }
