@@ -47,7 +47,8 @@ public class PnlContactos extends JSplitPane{
 		this.setOrientation(JSplitPane.VERTICAL_SPLIT);
 	
 			
-		
+		this.setResizeWeight(0.4);
+
 		recursos.instanciacontactos=this;
 		jpnlcont.setLayout(new BorderLayout());
 		this.setOpaque(true);
