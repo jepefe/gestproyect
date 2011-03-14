@@ -410,8 +410,8 @@ public class PnlPrincipal extends JPanel {
 		
 	//	tablemodelpart = new DefaultTableModel();
 		if(tablemodelpart.getRowCount()!=0){
-		for(int i=0;i<tablemodelpart.getRowCount();i++){
-			tablemodelpart.removeRow(i);
+		while(tablemodelpart.getRowCount()>0){
+			tablemodelpart.removeRow(0);
 		}
 		}
 		try {
@@ -486,6 +486,7 @@ public class PnlPrincipal extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				ConexionDb cdb = new ConexionDb();
 				ResultSet rs;
+				if(jcbwp.getSelectedItem()!=null){
 				rs = cdb.ConsultaSQL("SELECT nombre,descripcion,presupuesto,f_ini,f_fin FROM WORKPAQUETS WHERE id_wp='"+wp[jcbwp.getSelectedIndex()].toString() +"'");
 				try {
 					while(rs.next()){
@@ -500,6 +501,7 @@ public class PnlPrincipal extends JPanel {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				}
 				}
 				
 				
@@ -613,8 +615,8 @@ public class PnlPrincipal extends JPanel {
 		
 		//jtblstaff= null;
 		//tablemodelstaff=new DefaultTableModel();
-		for(int i=0;i<tablemodelstaff.getRowCount();i++){
-			tablemodelstaff.removeRow(i);
+		while(tablemodelstaff.getRowCount()>0){
+			tablemodelstaff.removeRow(0);
 		}
 		try {
 			if(rs.next()){
