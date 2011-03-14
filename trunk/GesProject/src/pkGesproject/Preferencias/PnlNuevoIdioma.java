@@ -2,6 +2,7 @@ package pkGesproject.Preferencias;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,11 +15,15 @@ import java.sql.SQLException;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+
+import com.google.api.translate.Language;
+import com.google.api.translate.Translate;
 
 import pkGesproject.ConexionDb;
 import pkGesproject.ConexionDbUnica;
@@ -41,7 +46,8 @@ public class PnlNuevoIdioma extends JPanel{
 	Border blackline;
 	boolean vacio = false;
 	ActionListener accion;
-	
+	Component aviso;
+	String nuevo[];
 	public PnlNuevoIdioma(){
 		crear_interfaz();
 		
@@ -52,6 +58,8 @@ public class PnlNuevoIdioma extends JPanel{
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("anadir")){
 					introducir_idioma();
+					//traducir("Catalán",Language.CATALAN);
+					
 				}
 				
 				if(e.getActionCommand().equals("limpiar")){
@@ -158,9 +166,9 @@ public class PnlNuevoIdioma extends JPanel{
 				vacio = true;
 			}
 		}
-		
 		if(vacio == true){
-			System.out.print("Los campos deben estar llenos");
+			
+			JOptionPane.showMessageDialog(aviso, rec.idioma[rec.eleidioma][255]);
 		}else{
 			conexion.executeUpdate("ALTER TABLE IDIOMA ADD "+txtidioma.getText()+" VARCHAR(200)");
 			
@@ -170,5 +178,45 @@ public class PnlNuevoIdioma extends JPanel{
 			
 			conexion.executeUpdate("INSERT INTO LISTA_IDIOMAS (columna,titulo) VALUES ('"+txtidioma.getText()+"','"+txtidioma.getText()+"')");
 		}
+	}
+	
+	public void traducir(String columna,Language lenguasalida){
+		String translatedText = null;
+		//rs = conexion.ConsultaSQL("SELECT COUNT(ingles) FROM IDIOMA");
+		
+			reg = 255;
+			nuevo = new String[reg];
+		
+		
+		rs = conexion.ConsultaSQL("SELECT ingles FROM IDIOMA");
+		for(int i = 1;i<reg+1;i++){
+			
+			try {
+				rs.next();
+				translatedText = rs.getString(1);
+				try {
+					Translate.setHttpReferrer("http://code.google.com/p/google-api-translate-java/");
+					nuevo[i-1] = Translate.execute(translatedText,Language.ENGLISH, lenguasalida);
+					nuevo[i-1] = nuevo[i-1].replace("'", "\'");
+					System.out.println(nuevo[i-1]);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
+		for(int i = 1; i<=reg;i++){
+			conexion.executeUpdate("UPDATE IDIOMA SET "+columna+" = '"+nuevo[i-1].replace("'", "\\'")+"' WHERE id_idi = "+i);
+			System.out.println(nuevo[i-1]);
+		}
+		
 	}
 }
