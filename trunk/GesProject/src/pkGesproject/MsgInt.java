@@ -1,5 +1,7 @@
 package pkGesproject;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Vector;
 
@@ -14,7 +16,7 @@ import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.packet.RosterPacket;
 
 public class MsgInt implements RosterListener{
-	
+	String nombre;
 	 XMPPConnection connection;
 	 RsGesproject recursos =  RsGesproject.instancia;
 	 Vector<Contacto> contactos = new Vector<Contacto>();
@@ -53,8 +55,22 @@ public class MsgInt implements RosterListener{
 	 public void mostrarContactos(PnlContactos pnlcont) {
 	       
 	        roster.addRosterListener(this);
-	       if(roster.getGroup("Florida")!=null){
-	        Collection<RosterEntry> entries = roster.getGroup("Florida").getEntries();
+	       ResultSet rs =  ConexionDbUnica.instancia.ConsultaSQL("SELECT nombre FROM PARTNER WHERE cod_part='"+recursos.getCodparter()+"'");
+	       try {
+			if(rs.next()){
+			   try {
+				nombre = rs.getString(1);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			   }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	       if(roster.getGroup(nombre)!=null){
+	        Collection<RosterEntry> entries = roster.getGroup(nombre).getEntries();
 
 	        System.out.println("\n\n" + entries.size() + " buddy(ies):");
 	        for (RosterEntry r : entries) {

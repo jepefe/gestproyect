@@ -20,8 +20,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import  sun.audio.*;   
+import  java.io.*;
+import java.net.URL;
 
 import org.jivesoftware.smack.packet.Presence;
+
+import com.sun.jndi.toolkit.url.Uri;
 
 @SuppressWarnings("serial")
 public class PnlContactos extends JSplitPane{
@@ -33,10 +38,15 @@ public class PnlContactos extends JSplitPane{
 	GesIdioma rec = GesIdioma.obtener_instancia();
 	ActionListener al;
 	JPanel jpnlcont = new JPanel();
+	AudioStream as;
+	
+	
 	public PnlContactos(){
 		jcbEstado.addItem(rec.idioma[rec.eleidioma][184]);
 		jcbEstado.addItem(rec.idioma[rec.eleidioma][185]);
 		this.setOrientation(JSplitPane.VERTICAL_SPLIT);
+	
+			
 		
 		recursos.instanciacontactos=this;
 		jpnlcont.setLayout(new BorderLayout());
@@ -155,6 +165,10 @@ public class PnlContactos extends JSplitPane{
 		tablemodelcont.addRow(obj);
 		
 		
+	}
+	public void sonidonuevomensaje(){
+
+		AudioPlayer.player.start(getClass().getResourceAsStream("imagenes/msg.wav"));
 	}
 
 }

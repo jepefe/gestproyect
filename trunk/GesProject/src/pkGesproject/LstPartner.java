@@ -51,8 +51,8 @@ public class LstPartner extends JPanel{
 		constraints.gridy = 0;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 2; 
-		constraints.weighty = 1.0; 
-		constraints.weightx = 1.0; 
+		//constraints.weighty = 1.0; 
+		//constraints.weightx = 1.0; 
 		this.add(jlbllogo,constraints);
 		constraints.weighty = 0.0;
 		constraints.anchor=GridBagConstraints.WEST;

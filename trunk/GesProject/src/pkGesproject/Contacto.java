@@ -273,6 +273,7 @@ public class Contacto extends JPanel implements MessageListener{
 
 			jpContacto.setOpaque(true);
 			jpContacto.setBackground(Color.orange);
+			recursos.instanciacontactos.sonidonuevomensaje();
 			recursos.getRfrmppal().repaint();
 		}else{
 			jpContacto.setOpaque(false);
