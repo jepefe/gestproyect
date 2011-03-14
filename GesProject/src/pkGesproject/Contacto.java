@@ -257,7 +257,7 @@ public class Contacto extends JPanel implements MessageListener{
 	@Override
 	public void processMessage(Chat arg0, Message msg) {
 		// TODO Auto-generated method stub
-		conversacion = conversacion +"<b>"+nombre+":</b><br BACKGROUND-COLOR:blue>"+msg.getBody()+"<br>";
+		conversacion = conversacion +"<b>"+nombre+":</b><br>"+msg.getBody()+"<br>";
 		jtxachat.setText(conversacion);
 		jtxachat.setCaretPosition(jtxachat.getDocument().getLength());
 		System.out.println(msg.getBody()+"\n");
