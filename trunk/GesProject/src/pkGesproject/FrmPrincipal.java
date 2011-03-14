@@ -254,20 +254,24 @@ public class FrmPrincipal extends JFrame {
 			recursos.progresocarga =5;
 			recursos.txtcarga = rec.idioma[rec.eleidioma][190];
 			spntareas = new SpnTareas();
+			spnpreferencias = new SpnPreferencias();
 			recursos.progresocarga =10;
 			recursos.txtcarga = rec.idioma[rec.eleidioma][193];
 			jtlbFrmppal.add(jbtnTimesheet);
 			jtlbFrmppal.add(jbtnTareas);
+			jtlbFrmppal.add(jbtnPreferencias);
 			pnlcontactos = new PnlContactos();
 
 		}break;
 		case 3:{
 			jtlbFrmppal.add(jbtnInicio);
+			recursos.progresocarga =6;
 			recursos.txtcarga = "Loading  Time Sheets";
 			pnltimesheet = new JScrollPane(new PnlAlta_TimeSheet());
-			
+			spnpreferencias = new SpnPreferencias();
 			recursos.progresocarga =10;
 			jtlbFrmppal.add(jbtnTimesheet);
+			jtlbFrmppal.add(jbtnPreferencias);
 			pnlcontactos = new PnlContactos();
 
 		}break;
