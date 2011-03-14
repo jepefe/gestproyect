@@ -88,7 +88,6 @@ public class Contacto extends JPanel implements MessageListener{
 		//jpContacto.setPreferredSize(new Dimension(250,50));
 		//this.setPreferredSize(new Dimension(250,300));
 		//this.setMinimumSize(new Dimension(250,90));
-
 		constraints.anchor=GridBagConstraints.LINE_START;
 		constraints.fill = GridBagConstraints.WEST;
 		constraints.gridx = 0; 
