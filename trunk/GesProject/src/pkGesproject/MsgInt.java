@@ -6,12 +6,18 @@ import java.util.Collection;
 import java.util.Vector;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
+import org.jivesoftware.smack.PacketCollector;
+import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.Roster;
 import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.RosterListener;
 import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.filter.PacketFilter;
+import org.jivesoftware.smack.filter.PacketTypeFilter;
+import org.jivesoftware.smack.packet.Message;
+import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.packet.RosterPacket;
 
@@ -45,8 +51,8 @@ public class MsgInt implements RosterListener{
       //  connection.sendPacket(new Presence(Presence.Type.unavailable));
         roster = connection.getRoster();
         roster.setSubscriptionMode(Roster.SubscriptionMode.accept_all);
-        roster.setDefaultSubscriptionMode(Roster.SubscriptionMode.accept_all);
-        
+        //roster.setDefaultSubscriptionMode(Roster.SubscriptionMode.accept_all);
+        paquetes();
         
        
        
@@ -78,6 +84,7 @@ public class MsgInt implements RosterListener{
 	            recursos.instanciacontactos.AnyadirAContactos(usuario);
 	        }
 	       }
+	       
 	    }
 
 	@Override
@@ -100,15 +107,20 @@ public class MsgInt implements RosterListener{
 
 	@Override
 	public void presenceChanged(Presence p) {
+		
 		for(Contacto c:contactos){
 			String usuario = p.getFrom().substring(0,p.getFrom().indexOf("@")); //Quitamos la parte del servidor
 			
 			if(c.usuario.equals(usuario)){
 				c.cambiarEstado(p.getType().name());
+			
 			}
+			
+			
 		}
 		
 	}
+	
 	
 	public void consultarEstado(){
 		
@@ -118,6 +130,45 @@ public class MsgInt implements RosterListener{
 		}
 		
 		}
+	public void paquetes(){
+		PacketFilter pf = new PacketTypeFilter(Message.class);
+	    PacketListener myListener = new PacketListener() {
+	        public void processPacket(Packet packet) {
+	            if (packet instanceof Message) {
+	                Message msg = (Message) packet;
+	                int encontrado = 0;
+	                String usuario = msg.getFrom().substring(0,msg.getFrom().indexOf("@")); //Quitamos la parte del servidor
+	        		for(Contacto c:contactos){
+	        			
+	      
+	        			if(c.usuario.equals(usuario)){
+	        			
+	        				encontrado =1;
+	        			}
+	        		}
+	        		
+	        		if(encontrado==0){
+	        			recursos.instanciacontactos.AnyadirAContactos(msg.getFrom().substring(0,msg.getFrom().indexOf("@")));
+	        			
+	        			for(Contacto c:contactos){
+		        			
+	        			      
+		        		/*	if(c.usuario.equals(usuario)){
+		        				c.conversacion = c.conversacion +"<b>"+nombre+":</b><br>"+msg.getBody()+"<br>";
+		        				c.jtxachat.setText(c.conversacion);
+			        			c.jtxachat.setCaretPosition(c.jtxachat.getDocument().getLength());
+		        			}*/
+		        		}
+	        			consultarEstado();
+	        		}
+	           
+	            }
+	           
+	        }
+	    };
+	    
+	    connection.addPacketListener(myListener,pf);
+	}
 	
 		
 	}

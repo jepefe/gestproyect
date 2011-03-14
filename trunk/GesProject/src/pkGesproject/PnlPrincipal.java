@@ -13,6 +13,8 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.ImageObserver;
 import java.io.FileNotFoundException;
 import java.sql.ResultSet;
@@ -27,10 +29,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+
+import org.jivesoftware.smack.XMPPException;
 
 import ar.com.fdvs.dj.domain.constants.Border;
 
@@ -265,18 +270,25 @@ public class PnlPrincipal extends JPanel {
 		jlbprocontrato.setText(" "+rec.idioma[rec.eleidioma][101]+": ");
 		jcbproyecto.setPreferredSize(new Dimension(300,20));
 		jpnlproyecto.setLayout(new GridBagLayout());
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.insets = new Insets(0,0,5,0);
+		
+		  gbc.gridwidth = GridBagConstraints.REMAINDER;
+          gbc.weightx=1.0;
+          gbc.weighty=0.0;
+          gbc.anchor = GridBagConstraints.CENTER;
+  //      gbc.insets = new Insets(0,0,3,0);
         jpnlproyecto.add(jcbproyecto,gbc);
        // gbc.gridwidth = GridBagConstraints.REMAINDER;
-		
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx=1.0;
+        gbc.weighty=0.0;
+        gbc.anchor = GridBagConstraints.LINE_START;
 		
 		jpnlproyecto.add(jlbpronom,gbc);
 		jpnlproyecto.add(jlbprofini,gbc);
 		jpnlproyecto.add(jlbproffin,gbc);
 		jpnlproyecto.add(jlbpropresu,gbc);
 		jpnlproyecto.add(jlbprocontrato,gbc);
+		gbc.weighty=1.0;
 		jpnlproyecto.add(jlbprodesc,gbc);
 		jpncentral.add(jpnlproyecto);
 		//jpnlproyecto.setVisible(true);
@@ -301,7 +313,7 @@ public class PnlPrincipal extends JPanel {
 					
 					
 				}
-				
+				jcbproyecto.setSelectedItem(null);
 				
 				
 				
@@ -349,10 +361,14 @@ public class PnlPrincipal extends JPanel {
 	}
 	
 	public void ActualizarPartnersProyecto(){
-		jpnlpartproyecto.setLayout(new BoxLayout(jpnlpartproyecto, 1));
+		jpnlpartproyecto.setLayout(new BorderLayout());
+		//jpnlpartproyecto.setLayout(new BoxLayout(jpnlpartproyecto, 1));
 		jlbpartproyecto.setText(rec.idioma[rec.eleidioma][179]);
-		jlbpartproyecto.setFont(new Font(Font.SANS_SERIF, Font.BOLD,30));
-		jpnlpartproyecto.add(jlbpartproyecto);
+		jlbpartproyecto.setHorizontalTextPosition(SwingConstants.CENTER);
+		jlbpartproyecto.setFont(new Font(Font.SANS_SERIF, Font.BOLD,15));
+		jlbpartproyecto.setSize(jpnlpartproyecto.getWidth(),jpnlpartproyecto.getHeight());
+		jpnlpartproyecto.add(jlbpartproyecto,BorderLayout.NORTH);
+		
 		jpnlpartproyecto.setVisible(true);
 		jpnlpartproyecto.setOpaque(true);
 	//	jpnlpartproyecto.setBackground(Color.gray);
@@ -385,15 +401,17 @@ public class PnlPrincipal extends JPanel {
 
 				    if (isSelected) {
 				      panel.setBackground(table.getSelectionBackground());
+				      panel.setOpaque(true);
 				    }else{
 				      panel.setBackground(table.getSelectionForeground());
+				      panel.setOpaque(false);
 				    }
 				    return panel;
 				  }
 			
 			});
         jtblpartners.setRowHeight(50);
-		jpnlpartproyecto.add(jtblpartners);
+		jpnlpartproyecto.add(jtblpartners,BorderLayout.CENTER);
 		
 		
 		
@@ -448,31 +466,25 @@ public class PnlPrincipal extends JPanel {
 	public void CargarWP(){
 		GridBagConstraints gbc = new GridBagConstraints();
 	   
-		jlbwpnom.setText(" "+rec.idioma[rec.eleidioma][3]+": ");
-		jlbwpdes.setText(" "+rec.idioma[rec.eleidioma][41]+": ");
-		jlbwppresu.setText(" "+rec.idioma[rec.eleidioma][13]+": ");
-		jlbwpfini.setText(" "+rec.idioma[rec.eleidioma][25]+": ");
-		jlbwpffin.setText(" "+rec.idioma[rec.eleidioma][26]+": ");
-		jcbwp.setPreferredSize(new Dimension(300,20));
-		jpnlwp.setLayout(new GridBagLayout());
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.weightx=1.0;
-		gbc.weighty=0.0;
-		gbc.anchor = GridBagConstraints.CENTER;
-	//	gbc.insets = new Insets(0,0,3,0);
-		jpnlwp.add(jcbwp,gbc);
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.weightx=1.0;
-		gbc.weighty=0.0;
-		gbc.anchor = GridBagConstraints.LINE_START;
-		//gbc.insets = new Insets(0,0,3,0);
-		jpnlwp.add(jlbwpnom,gbc);
-		jpnlwp.add(jlbwpfini,gbc);
-		jpnlwp.add(jlbwpffin,gbc);
-		jpnlwp.add(jlbwppresu,gbc);
-		gbc.weighty=1.0;
-		jpnlwp.add(jlbwpdes,gbc);
-		jpncentral.add(jpnlwp);
+	    jpnlwp.setLayout(new GridBagLayout());
+	    gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx=1.0;
+        gbc.weighty=0.0;
+        gbc.anchor = GridBagConstraints.CENTER;
+//      gbc.insets = new Insets(0,0,3,0);
+        jpnlwp.add(jcbwp,gbc);
+gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx=1.0;
+        gbc.weighty=0.0;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        //gbc.insets = new Insets(0,0,3,0);
+        jpnlwp.add(jlbwpnom,gbc);
+        jpnlwp.add(jlbwpfini,gbc);
+        jpnlwp.add(jlbwpffin,gbc);
+        jpnlwp.add(jlbwppresu,gbc);
+        gbc.weighty=1.0;
+        jpnlwp.add(jlbwpdes,gbc);
+        jpncentral.add(jpnlwp);
 		//jpnlproyecto.setVisible(true);
 		//jpnlproyecto.setOpaque(true);
 		
@@ -556,10 +568,12 @@ public class PnlPrincipal extends JPanel {
 	
 	
 	public void ActualizarStaffWp(){
-		jpnlstaffwp.setLayout(new BoxLayout(jpnlstaffwp, 1));
+		//jpnlstaffwp.setLayout(new BoxLayout(jpnlstaffwp, 1));
+		jpnlstaffwp.setLayout(new BorderLayout());
 		jlbstaffwp.setText(rec.idioma[rec.eleidioma][180]);
-		jlbstaffwp.setFont(new Font(Font.SANS_SERIF, Font.BOLD,30));
-		jpnlstaffwp.add(jlbstaffwp);
+		jlbstaffwp.setHorizontalTextPosition(SwingConstants.CENTER);
+		jlbstaffwp.setFont(new Font(Font.SANS_SERIF, Font.BOLD,15));
+		jpnlstaffwp.add(jlbstaffwp, BorderLayout.NORTH);
 		//jpnlpartproyecto.add(jlbpartproyecto);
 		jpnlstaffwp.setVisible(true);
 		jpnlstaffwp.setOpaque(true);
@@ -593,17 +607,29 @@ public class PnlPrincipal extends JPanel {
 
 				    if (isSelected) {
 				      panel.setBackground(table.getSelectionBackground());
+				      panel.setOpaque(true);
 				    }else{
 				      panel.setBackground(table.getSelectionForeground());
+				      panel.setOpaque(false);
 				    }
 				    return panel;
 				  }
 			
 			});
         jtblstaff.setRowHeight(50);
-		jpnlstaffwp.add(jtblstaff);
+		jpnlstaffwp.add(jtblstaff, BorderLayout.CENTER);
 		jtblstaff.revalidate();
 		
+		jtblstaff.addMouseListener(new MouseAdapter(){
+		     public void mouseClicked(MouseEvent e){
+		      if (e.getClickCount() == 2){
+		    	  recursos.instanciacontactos.AnyadirAContactos(((LstStaff)tablemodelstaff.getValueAt(jtblstaff.getSelectedRow(), 0)).usuario);
+		    	  recursos.instanciamsg.consultarEstado();
+		    	
+		         System.out.println(" double click" );
+		         }
+		      }
+		     } );
 		
 		
 	}

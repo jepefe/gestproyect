@@ -74,7 +74,7 @@ public class LstPartner extends JPanel{
 		this.add(jlblcontacto,constraints);
 	//	constraints.weighty = 0.0;
 		
-		this.setOpaque(true);
+		this.setOpaque(false);
 		this.setVisible(true);
 		
 		

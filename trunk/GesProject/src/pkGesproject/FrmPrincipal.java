@@ -178,7 +178,7 @@ public class FrmPrincipal extends JFrame {
 		recursos.progresocarga =9;
 		recursos.txtcarga = rec.idioma[rec.eleidioma][192];
 		pnltimesheet = new JScrollPane(new PnlAlta_TimeSheet());
-		pnltimesheet = new JScrollPane(new PnlAlta_TimeSheet());
+		//pnltimesheet = new JScrollPane(new PnlAlta_TimeSheet());
 		recursos.progresocarga =10;
 		recursos.txtcarga = rec.idioma[rec.eleidioma][193];
 	//	nueva = new FrmNuevapalabra();
@@ -204,13 +204,46 @@ public class FrmPrincipal extends JFrame {
 		
 		}break;
 		case 1:{
-			jtlbFrmppal.add(jbtnInicio);
-			recursos.txtcarga = "Loading  Time Sheets";
+			recursos.progresocarga =1;
+			recursos.txtcarga = rec.idioma[rec.eleidioma][186];
+			spnstaff = new SpnStaff();
+			recursos.progresocarga =2;
+			recursos.progresocarga =4;
+			recursos.txtcarga = rec.idioma[rec.eleidioma][188];
+			spnproyectos = new SpnProyectos();
+			recursos.progresocarga =5;
+			recursos.txtcarga = rec.idioma[rec.eleidioma][189];
+			spnworkpack = new SpnWorkpack();
+			recursos.progresocarga =6;
+			recursos.txtcarga = rec.idioma[rec.eleidioma][190];
+			spntareas = new SpnTareas();
+			recursos.progresocarga =7;
+			spninformes = new SpnInformes();
+			recursos.txtcarga = rec.idioma[rec.eleidioma][191];
+			spntablas = new SpnTablas();
+			recursos.progresocarga =9;
+			recursos.txtcarga = rec.idioma[rec.eleidioma][192];
 			pnltimesheet = new JScrollPane(new PnlAlta_TimeSheet());
-			jtlbFrmppal.add(jbtnTimesheet);
-			add(ppal);
+			//pnltimesheet = new JScrollPane(new PnlAlta_TimeSheet());
 			recursos.progresocarga =10;
+			recursos.txtcarga = rec.idioma[rec.eleidioma][193];
+		//	nueva = new FrmNuevapalabra();
 			pnlcontactos = new PnlContactos();
+			spnpreferencias = new SpnPreferencias();
+			spnbecas = new SpnBecas();
+			jtlbFrmppal.add(jbtnInicio);
+			jbtnInicio.setSelected(true);
+			jtlbFrmppal.add(jbtnUsuarios);
+			jtlbFrmppal.add(jbtnProyectos);
+			jtlbFrmppal.add(jbtnWorkpack);
+			jtlbFrmppal.add(jbtnTareas);
+			jtlbFrmppal.add(jbtnTablas);
+			jtlbFrmppal.add(jbtnTimesheet);
+			jtlbFrmppal.add(jbtnInformes);
+			jtlbFrmppal.add(jbtnBecas);
+			jtlbFrmppal.add(jbtnPreferencias);
+			//jtlbFrmppal.add(jbtnAgregar);
+			repaint();
 
 
 		}break;
@@ -218,8 +251,13 @@ public class FrmPrincipal extends JFrame {
 			jtlbFrmppal.add(jbtnInicio);
 			recursos.txtcarga = "Loading  Time Sheets";
 			pnltimesheet = new JScrollPane(new PnlAlta_TimeSheet());
+			recursos.progresocarga =5;
+			recursos.txtcarga = rec.idioma[rec.eleidioma][190];
+			spntareas = new SpnTareas();
 			recursos.progresocarga =10;
+			recursos.txtcarga = rec.idioma[rec.eleidioma][193];
 			jtlbFrmppal.add(jbtnTimesheet);
+			jtlbFrmppal.add(jbtnTareas);
 			pnlcontactos = new PnlContactos();
 
 		}break;
@@ -227,6 +265,7 @@ public class FrmPrincipal extends JFrame {
 			jtlbFrmppal.add(jbtnInicio);
 			recursos.txtcarga = "Loading  Time Sheets";
 			pnltimesheet = new JScrollPane(new PnlAlta_TimeSheet());
+			
 			recursos.progresocarga =10;
 			jtlbFrmppal.add(jbtnTimesheet);
 			pnlcontactos = new PnlContactos();

@@ -7,6 +7,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -28,6 +31,7 @@ public class LstStaff extends JPanel{
 	String codigo;
 	String nombre;
 	String contacto;
+	String usuario;
 	GridBagConstraints constraints = new GridBagConstraints();
 	RsGesproject recursos = RsGesproject.instancia;
 	
@@ -75,8 +79,22 @@ public class LstStaff extends JPanel{
 		this.add(jlblcontacto,constraints);
 		//constraints.weighty = 0.0;
 		
-		this.setOpaque(true);
+		this.setOpaque(false);
 		this.setVisible(true);
+		
+		
+		
+		MouseListener mouseListener = new MouseAdapter() {
+		      public void mouseClicked(MouseEvent mouseEvent) {
+		       
+		        if (mouseEvent.getClickCount() == 2) {
+		        recursos.instanciacontactos.AnyadirAContactos(usuario);
+		        }
+		      }
+		    };
+		
+		this.addMouseListener(mouseListener);
+		
 		
 		
 	}
@@ -84,12 +102,13 @@ public class LstStaff extends JPanel{
 	
 	
 	public void CargaDatos(){
-		rs = cdb.ConsultaSQL("SELECT nombre,apellidos,telefono,email FROM STAFF WHERE id_staff='"+codigo+"'");
+		rs = cdb.ConsultaSQL("SELECT nombre,apellidos,telefono,email,nick_usuario FROM STAFF WHERE id_staff='"+codigo+"'");
 		try {
 			if(rs.next()){
 					nombre = rs.getString(1) +" "+ rs.getString(2);;
 					jlblnombre.setText(nombre);
 					contacto = rs.getString(3) +" - "+ rs.getString(4);
+					usuario = rs.getString(5);
 					jlblcontacto.setText(contacto);
 					
 			}
