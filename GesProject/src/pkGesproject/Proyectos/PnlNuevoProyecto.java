@@ -51,21 +51,23 @@ public class PnlNuevoProyecto extends JScrollPane{
 	JTextArea textarea;
 	JTextField[] jtxt;
 	char caracter;
-	String Npartners[] ;	// array con partners
+	static String Npartners[] ;	// array con partners
 	JDateChooser jdc1,jdc2;
 	Date dateini, datefin ;
 	JFrame aviso = new JFrame();
 	JButton jbtnaceptar, jbtncancelar;
 	JButton jbtnaceptar2, jbtncancelar2;
-	ConexionDb conexion = new ConexionDb();
-	ResultSet rs, rs2;
+	static ConexionDb conexion = new ConexionDb();
+	static ResultSet rs;
+	ResultSet rs2;
 	
 	ResultSet rsv;
 	
-	DefaultListModel modelo;  // listas Partners (lista2)
-	DefaultListModel modelo2;
-	public JList listaP ,listaP2 ;    
-	int cuenta =0; // cuenta para array dinamica.
+	static DefaultListModel modelo;  // listas Partners (lista2)
+	static DefaultListModel modelo2;
+	public static JList listaP ;
+	public JList listaP2;    
+	static int cuenta =0; // cuenta para array dinamica.
 	int idPro; // total partners. para saber ID.
 	int id_partner,id_partner2; // id partner. // id para poder borrar
 	
@@ -365,7 +367,7 @@ public class PnlNuevoProyecto extends JScrollPane{
 	/**
 	 *  Metodo de actualizar  los JLIST
 	 */
-	public void actualiza_lista(){
+	public static void actualiza_lista(){
 		conexion.Conectardb();
 		rs = conexion.ConsultaSQL("SELECT nombre FROM PARTNER");
 		//	rs2 = conexion.ConsultaSQL("Select count(nombre) From PARTNER");
@@ -393,12 +395,13 @@ public class PnlNuevoProyecto extends JScrollPane{
 			e.printStackTrace();
 		}
 
-		//modelo2.removeAllElements();
+		
 		
 		// JLIST
 		modelo = new DefaultListModel(); // modelos JLIST
 		modelo2 = new DefaultListModel(); 
-
+		modelo2.removeAllElements();
+		
 		listaP = new JList(modelo2); 
 		// for para pasar los datos al modelo
 		for(int j=0; j<cuenta ; j++){
